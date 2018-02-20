@@ -2,6 +2,30 @@ const categorySeparator = '<sep gap="36"/>';
 
 const blockSeparator = '<sep gap="36"/>'; // At default scale, about 28px
 
+
+const robot  = function (isStage, targetId) {  //modified_by_Yaroslav  //robot category
+
+  return `
+  <category name="Robot" colour="#00AF41" secondaryColour="#00AF41">
+      ${isStage ? `
+      <label text="Stage selected: no robot blocks"></label>
+      ` : `
+      <block type="robot_movesteps">
+          <value name="STEPS">
+              <shadow type="math_number">
+                  <field name="NUM">10</field>
+              </shadow>
+          </value>
+      </block>
+      ${blockSeparator}
+
+      `}
+      ${categorySeparator}
+  </category>
+  `;
+
+}
+
 const motion = function (isStage, targetId) {
     return `
     <category name="Motion" colour="#4C97FF" secondaryColour="#3373CC">
@@ -669,6 +693,7 @@ const makeToolboxXML = function (isStage, targetId, categoriesXML) {
 
     const everything = [
         xmlOpen,
+        robot(isStage, targetId),gap, //modified_by_Yaroslav //toolbox generator main
         motion(isStage, targetId), gap,
         looks(isStage, targetId), gap,
         sound(isStage, targetId), gap,
