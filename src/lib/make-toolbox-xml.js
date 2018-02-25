@@ -10,10 +10,10 @@ const robot  = function (isStage, targetId) {  //modified_by_Yaroslav  //robot c
       ${isStage ? `
       <label text="Stage selected: no robot blocks"></label>
       ` : `
-      <block type="robot_movesteps">
-          <value name="STEPS">
+      <block type="robot_motors_on_for_seconds">
+          <value name="SECONDS">
               <shadow type="math_number">
-                  <field name="NUM">10</field>
+                  <field name="NUM">1</field>
               </shadow>
           </value>
       </block>
