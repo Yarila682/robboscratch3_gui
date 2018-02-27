@@ -17,7 +17,145 @@ const robot  = function (isStage, targetId) {  //modified_by_Yaroslav  //robot c
               </shadow>
           </value>
       </block>
+
+      <block type="robot_motors_on">
+
+      </block>
+
+
+      <block type="robot_motors_off">
+
+      </block>
+
+      <block type="robot_set_direction_to">
+          <value name="ROBOT_DIRECTION">
+              <shadow type="robot_directions"/>
+          </value>
+      </block>
+
       ${blockSeparator}
+
+      <block type="robot_motors_on_for_steps">
+          <value name="STEPS">
+              <shadow type="math_number">
+                  <field name="NUM">1</field>
+              </shadow>
+          </value>
+      </block>
+
+
+      <block type="robot_reset_trip_meters">
+
+      </block>
+
+
+      ${blockSeparator}
+
+      <block type="robot_turnright">
+          <value name="DEGREES">
+              <shadow type="math_number">
+                  <field name="NUM">15</field>
+              </shadow>
+          </value>
+      </block>
+      <block type="robot_turnleft">
+          <value name="DEGREES">
+              <shadow type="math_number">
+                  <field name="NUM">15</field>
+              </shadow>
+          </value>
+      </block>
+
+        ${blockSeparator}
+
+        <block type="robot_set_motors_power">
+            <value name="POWER">
+                <shadow type="math_number">
+                    <field name="NUM">30</field>
+                </shadow>
+            </value>
+        </block>
+
+        <block type="robot_set_motors_power_left_right_separately">
+            <value name="POWER_LEFT">
+                <shadow type="math_number">
+                    <field name="NUM">30</field>
+                </shadow>
+            </value>
+            <value name="POWER_RIGHT">
+                <shadow type="math_number">
+                    <field name="NUM">30</field>
+                </shadow>
+            </value>
+        </block>
+
+        <block type="robot_set_motors_left_right_power_and_direction_separately">
+            <value name="ROBOT_LEFT_MOTOR_DIRECTION">
+                <shadow type="robot_one_motor_directions"/>
+            </value>
+            <value name="ROBOT_RIGHT_MOTOR_DIRECTION">
+                <shadow type="robot_one_motor_directions"/>
+            </value>
+            <value name="POWER_LEFT">
+                <shadow type="math_number">
+                    <field name="NUM">30</field>
+                </shadow>
+            </value>
+            <value name="POWER_RIGHT">
+                <shadow type="math_number">
+                    <field name="NUM">30</field>
+                </shadow>
+            </value>
+        </block>
+
+        ${blockSeparator}
+
+        <block type="robot_get_sensor_data">
+            <value name="ROBOT_SENSORS">
+                <shadow type="robot_sensors"/>
+            </value>
+        </block>
+
+        <block type="robot_get_rgb_sensor_data">
+            <value name="ROBOT_SENSORS_FOR_RGB">
+                <shadow type="robot_sensors_for_rgb"/>
+            </value>
+            <value name="RGB_VALUES">
+                <shadow type="rgb_values"/>
+            </value>
+        </block>
+
+        <block type="robot_start_button_pressed">
+
+        </block>
+
+        ${blockSeparator}
+
+        <block type="robot_turn_led_on">
+            <value name="ROBOT_POSITION">
+                <shadow type="robot_positions"/>
+            </value>
+        </block>
+
+        <block type="robot_turn_led_off">
+            <value name="ROBOT_POSITION">
+                <shadow type="robot_positions"/>
+            </value>
+        </block>
+
+        <block type="robot_claw_closed">
+            <value name="CLAW_CLOSED_PERCENT">
+                <shadow type="math_number">
+                    <field name="NUM">15</field>
+                </shadow>
+            </value>
+        </block>
+
+        <block type="robot_claw_state">
+            <value name="CLAW_STATES">
+                <shadow type="claw_states"/>
+            </value>
+        </block>
 
       `}
       ${categorySeparator}
