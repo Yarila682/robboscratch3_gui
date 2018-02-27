@@ -1,0 +1,64 @@
+
+#sensor_pallete{
+
+    margin-left: 20%;
+    margin-top: 5%;
+
+
+
+
+}
+
+.btn_trigger_extension_pack{
+
+    margin-top: 20%;
+    display: block;
+
+
+}
+
+.btn_trigger_sensor_choose_window{
+
+
+  margin-top: 21%;
+  display: block;
+
+}
+
+#robot_sensors{
+
+    display: inline-block;
+
+    border: 2px outset rgba(0,0,0,0.5);
+
+    box-shadow: 4px 4px 10px rgba(0,0,0,0.5);
+
+}
+
+
+#laboratory_sensors{
+
+    display: inline-block;
+    margin-left: 5%;
+
+    border: 2px outset rgba(0,0,0,0.5);
+
+    box-shadow: 4px 4px 10px rgba(0,0,0,0.5);
+
+}
+
+.sensor_panel_tittle{
+
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#b4ddb4+0,83c783+17,52b152+33,008a00+67,005700+83,002400+100;Green+3D+%231 */
+  background: #b4ddb4; /* Old browsers */
+  background: -moz-linear-gradient(top, #b4ddb4 0%, #83c783 17%, #52b152 33%, #008a00 67%, #005700 83%, #002400 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(top, #b4ddb4 0%,#83c783 17%,#52b152 33%,#008a00 67%,#005700 83%,#002400 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to bottom, #b4ddb4 0%,#83c783 17%,#52b152 33%,#008a00 67%,#005700 83%,#002400 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b4ddb4', endColorstr='#002400',GradientType=0 ); /* IE6-9 */
+
+
+height: 30px;
+
+text-align: center;
+
+}

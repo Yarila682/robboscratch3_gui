@@ -11,6 +11,9 @@ import vmListenerHOC from '../lib/vm-listener-hoc.jsx';
 
 import GUIComponent from '../components/gui/gui.jsx';
 
+import { DragDropContext } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
+
 class GUI extends React.Component {
     constructor (props) {
         super(props);
@@ -80,6 +83,6 @@ const mapDispatchToProps = dispatch => ({
 const ConnectedGUI = connect(
     mapStateToProps,
     mapDispatchToProps,
-)(GUI);
+)( DragDropContext(HTML5Backend)(GUI));
 
 export default vmListenerHOC(ConnectedGUI);
