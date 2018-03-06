@@ -50,6 +50,21 @@ const ActionDropSensorChooseWindow = function(top,left){
 
 }
 
+const ActionTriggerSensorsPalette = function(){
+
+
+  return {
+    type: "TRIGGER_SENSORS_PALETTE",
+    payload:{
+
+
+
+    }
+  };
+
+
+}
+
 const ActionTriggerSensorName = function(payload){
 
 let data;
@@ -90,5 +105,6 @@ export {
     ActionTriggerExtensionPack,
     ActionTriggerSensorChooseWindow,
     ActionDropSensorChooseWindow,
-    ActionTriggerSensorName
+    ActionTriggerSensorName,
+    ActionTriggerSensorsPalette
 };

@@ -1,63 +1,4 @@
-
-#sensor_pallete{
-
-    margin-left: 6%;
-    margin-top: 2%;
-
-    height:90%;
-
-
-
-
-}
-
-.btn_trigger_extension_pack{
-
-    margin-top: 20%;
-    display: block;
-
-
-}
-
-.btn_trigger_sensor_choose_window{
-
-
-  margin-top: 21%;
-  display: block;
-
-}
-
-#robot_sensors{
-
-    display: inline-block;
-
-    border: 2px outset rgba(0,0,0,0.5);
-
-    box-shadow: 4px 4px 10px rgba(0,0,0,0.5);
-
-    height:100%;
-
-    vertical-align: top;
-
-}
-
-
-#laboratory_sensors{
-
-    display: inline-block;
-    margin-left: 5%;
-
-    border: 2px outset rgba(0,0,0,0.5);
-
-    box-shadow: 4px 4px 10px rgba(0,0,0,0.5);
-
-   height:100%;
-
-   vertical-align: top;
-
-}
-
-.sensor_panel_tittle{
+.sensors_panel_collapsed{
 
   /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#b4ddb4+0,83c783+17,52b152+33,008a00+67,005700+83,002400+100;Green+3D+%231 */
   background: #b4ddb4; /* Old browsers */
@@ -68,7 +9,13 @@
 
 
 height: 30px;
+width:80%;
+margin: 20px auto;
 
 text-align: center;
+
+/*border: 2px outset rgba(0,0,0,0.5);*/
+
+box-shadow: 4px 4px 10px rgba(0,0,0,0.5);
 
 }

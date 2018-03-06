@@ -46,7 +46,7 @@ switch (action.type) {
 
 
     console.log('reducer: DROP_SENSOR_CHOOSE_WINDOW');
-    sensors_choose_window_state = Object.assign({}, state);;
+    sensors_choose_window_state = Object.assign({}, state);
 
     sensors_choose_window_state.sensors_choose_window_drag_top = action.payload.top;
     sensors_choose_window_state.sensors_choose_window_drag_left = action.payload.left;

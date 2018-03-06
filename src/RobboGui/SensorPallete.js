@@ -8,11 +8,19 @@ import SensorChooseWindowComponent from './SensorChooseWindowComponent';
 
 import {ActionTriggerExtensionPack} from './actions/sensor_actions';
 import {ActionTriggerSensorChooseWindow} from './actions/sensor_actions';
+import {ActionTriggerSensorsPalette} from './actions/sensor_actions';
 
 
 
 class SensorPallete extends Component {
 
+
+  triggerSensorsPalette(){
+
+    console.log("triggerSensorsPalette");
+    this.props.onTriggerSensorsPalette();
+
+  }
 
   triggerExtensionPack(){
 
@@ -38,7 +46,7 @@ class SensorPallete extends Component {
 
           <div id={styles.robot_sensors}>
 
-              <div id="robot-sensors-tittle" className={styles.sensor_panel_tittle}> Robot   </div>
+              <div id="robot-sensors-tittle" className={styles.sensor_panel_tittle} onClick={this.triggerSensorsPalette.bind(this)}> Robot   </div>
 
                 <SensorDataBlockComponent key={this.props.robot_special_sensors[0].sensor_id} sensorId={this.props.robot_special_sensors[0].sensor_id}
                                    deviceName={this.props.robot_special_sensors[0].sensor_device_name} sensorType={this.props.robot_special_sensors[0].sensor_type}
@@ -156,9 +164,7 @@ class SensorPallete extends Component {
 
 
 
-            <button className={styles.btn_trigger_extension_pack} onClick = {this.triggerExtensionPack.bind(this)}>Trigger extension pack   </button>
 
-            <button className={styles.btn_trigger_sensor_choose_window} onClick = {this.triggerSensorChooseWindow.bind(this)}>Trigger sensor choose window  </button>
 
       </div>
   );
@@ -182,10 +188,15 @@ const mapDispatchToProps = dispatch => ({
       dispatch(ActionTriggerExtensionPack());
     },
 
-     onTriggerSensorChooseWindow: (sensor_caller_id) => {
+  onTriggerSensorChooseWindow: (sensor_caller_id) => {
 
          dispatch(ActionTriggerSensorChooseWindow(sensor_caller_id));
        },
+
+  onTriggerSensorsPalette: () => {
+
+           dispatch(ActionTriggerSensorsPalette());
+         }
 
 
 });

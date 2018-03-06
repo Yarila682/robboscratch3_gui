@@ -27,12 +27,36 @@ import addExtensionIcon from './icon--extensions.svg';
 
 import RobboGui from '../../RobboGui/RobboGui';
 
+import { ItemTypes } from '../../RobboGui/drag_constants';
+import {ActionDropSensorChooseWindow} from '../../RobboGui/actions/sensor_actions';
+
+import { connect } from 'react-redux';
+
+import { DropTarget } from 'react-dnd';
+
 const messages = defineMessages({
     addExtension: {
         id: 'gui.gui.addExtension',
         description: 'Button to add an extension in the target pane',
         defaultMessage: 'Add Extension'
     }
+});
+
+const Target = {
+  drop(props,monitor) {
+
+    let coords = monitor.getClientOffset();
+
+    props.onSensorChooseWindowDrop(coords.y, coords.x);
+  }
+};
+
+
+const  collect = (connect, monitor) =>  ({
+
+    connectDropTarget: connect.dropTarget(),
+    isOver: monitor.isOver()
+
 });
 
 const GUIComponent = props => {
@@ -47,6 +71,8 @@ const GUIComponent = props => {
         onExtensionButtonClick,
         onTabSelect,
         tabIndex,
+        connectDropTarget,
+        isOver,
         ...componentProps
     } = props;
     if (children) {
@@ -69,6 +95,10 @@ const GUIComponent = props => {
     const isRendererSupported = Renderer.isSupported();
 
     return (
+
+     connectDropTarget(
+
+       <div className={styles.pageWrapper}>
         <Box
             className={styles.pageWrapper}
             {...componentProps}
@@ -156,6 +186,7 @@ const GUIComponent = props => {
                             }}</MediaQuery>
                             {/* eslint-enable arrow-body-style */}
                         </Box>
+                         <RobboGui/>
                         <Box className={styles.targetWrapper}>
                             <TargetPane
                                 vm={vm}
@@ -165,6 +196,8 @@ const GUIComponent = props => {
                 </Box>
             </Box>
         </Box>
+      </div>
+      )
     );
 };
 GUIComponent.propTypes = {
@@ -177,9 +210,35 @@ GUIComponent.propTypes = {
     onTabSelect: PropTypes.func,
     previewInfoVisible: PropTypes.bool,
     tabIndex: PropTypes.number,
-    vm: PropTypes.instanceOf(VM).isRequired
+    vm: PropTypes.instanceOf(VM).isRequired,
+    connectDropTarget: PropTypes.func,
+    isOver: PropTypes.bool,
+    onSensorChooseWindowDrop :  PropTypes.func
 };
 GUIComponent.defaultProps = {
     basePath: './'
 };
-export default injectIntl(GUIComponent);
+
+const mapStateToProps =  state => ({
+
+
+
+
+  });
+
+const mapDispatchToProps = dispatch => ({
+
+  onSensorChooseWindowDrop: (top,left) => {
+
+      dispatch(ActionDropSensorChooseWindow(top,left));
+    }
+});
+
+
+export default connect(
+        mapStateToProps,
+        mapDispatchToProps
+
+    ) (DropTarget(ItemTypes.SENSOR_CHOOSE_WINDOW, Target, collect)(injectIntl(GUIComponent)));
+
+//export default injectIntl(GUIComponent);
