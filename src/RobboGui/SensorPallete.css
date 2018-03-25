@@ -72,3 +72,24 @@ height: 30px;
 text-align: center;
 
 }
+
+.robot_connection_status{
+
+    border-width: 2px;
+    border-radius: 5px;
+    border-style: solid;
+    display: inline-block;
+    margin: 5px 5px;
+}
+
+.robot_status_connected{
+
+    background-color: green;
+
+}
+
+.robot_status_disconnected{
+
+    background-color: red;
+
+}

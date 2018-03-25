@@ -1,4 +1,6 @@
 
+
+
 const ActionTriggerExtensionPack = function(){
 
 
@@ -100,11 +102,100 @@ if (payload.startsWith("robot-")){
 
 }
 
+var RobotsConnectionStatusCheckInterval;
+
+const  ActionRobotsConnectionStatusCheck = function(robot_number,RCA){
+
+  return {
+
+      type: 'ROBOT_CONNECTION_STATUS_CHECK',
+      payload:{
+
+          robot_number:robot_number,
+          RCA:RCA
+      }
+  }
+
+}
+
+const ActionRobotsConnectionStatusCheckStart = function(robot_number,RCA){
+
+
+  return (dispatch) => {
+    RobotsConnectionStatusCheckInterval =   setInterval(() => {
+
+          dispatch(ActionRobotsConnectionStatusCheck(robot_number,RCA));
+      }, 100);
+  };
+
+
+
+}
+
+const ActionSearchRobotDevices = function(RCA){
+
+
+    return {
+
+
+      type: 'ROBOT_SEARCH_DEVICES',
+      payload:{
+
+
+          RCA:RCA
+      }
+
+
+    }
+
+}
+
+const ActionRobotStopSearchProcess = function(RCA){
+
+
+    return {
+
+
+      type: 'ROBOT_STOP_SEARCH_PROCESS',
+      payload:{
+
+
+          RCA:RCA
+      }
+
+
+    }
+
+}
+
+const ActionRobotStopDataRecievingProcess = function(RCA){
+
+
+    return {
+
+
+      type: 'ROBOT_STOP_DATA_RECIEVING_PROCESS',
+      payload:{
+
+
+          RCA:RCA
+      }
+
+
+    }
+
+}
+
 export {
 
     ActionTriggerExtensionPack,
     ActionTriggerSensorChooseWindow,
     ActionDropSensorChooseWindow,
     ActionTriggerSensorName,
-    ActionTriggerSensorsPalette
+    ActionTriggerSensorsPalette,
+    ActionRobotsConnectionStatusCheckStart,
+    ActionSearchRobotDevices,
+    ActionRobotStopSearchProcess,
+    ActionRobotStopDataRecievingProcess
+
 };

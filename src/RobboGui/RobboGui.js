@@ -6,7 +6,9 @@ import SensorPaletteCollapsed from './SensorPaletteCollapsed';
 import { ItemTypes } from './drag_constants';
 import { DropTarget } from 'react-dnd';
 import SensorChooseWindowComponent from './SensorChooseWindowComponent';
-//import {ActionTriggerSensorsPalette} from './actions/sensor_actions';
+import {ActionSearchRobotDevices} from './actions/sensor_actions';
+import {ActionRobotStopSearchProcess} from './actions/sensor_actions';
+import {ActionRobotStopDataRecievingProcess}  from './actions/sensor_actions';
 import styles from './RobboGui.css'
 
 
@@ -31,10 +33,44 @@ class RobboGui extends Component {
 
 
 
+  componentWillReceiveProps (props) {
+
+
+
+
+  }
+
+  searchRobotDevices(){
+
+    console.log("searchRobotDevices");
+    this.props.searchRobotDevices(this.props.vm.getRCA());
+
+  }
+
+  stopSearchProcess(){
+
+    console.log("stopSearchProcess");
+    this.props.stopSearchProcess(this.props.vm.getRCA());
+
+
+  }
+
+  stopDataRecievingProcess(){
+
+
+    console.log("stopDataRecievingProcess");
+    this.props.stopDataRecievingProcess(this.props.vm.getRCA());
+
+  }
+
+
 
   render() {
 
 //  return this.props.connectDropTarget(
+
+
+  this.RCA =  this.props.vm.getRCA();
 
   return (
 
@@ -48,10 +84,16 @@ class RobboGui extends Component {
                   )}>
 
          {
-              (!this.props.sensorsPalette.sensors_pallete_collapsed)?  <SensorPallete />: <SensorPaletteCollapsed />
+              (!this.props.sensorsPalette.sensors_pallete_collapsed)?  <SensorPallete RCA={this.RCA} />: <SensorPaletteCollapsed />
 
 
          }
+
+
+              <button className="connector-start-stop" onClick={this.searchRobotDevices.bind(this)}>Connector test!</button>
+             <button className="connector-start-stop" onClick={this.stopSearchProcess.bind(this)}>Connector stop!</button>
+             <button className="connector-start-stop" onClick={this.stopDataRecievingProcess.bind(this)}>Stop data recieve!</button>
+
 
 
           <SensorChooseWindowComponent key="SensorChooseWindowComponent" isShowing={this.props.sensorsChooseWindow.sensors_choose_window_showing}
@@ -59,6 +101,9 @@ class RobboGui extends Component {
            CallerSensorId={this.props.sensorsChooseWindow.sensors_choose_window_sensor_caller}
            SensorCallerDeviceName={this.props.sensorsChooseWindow.sensors_choose_window_sensor_caller_device_name}
            CallerSensorType={this.props.sensorsChooseWindow.sensors_choose_window_sensor_caller_type}/>
+
+
+
 
 
     </div>
@@ -81,16 +126,26 @@ const mapStateToProps =  state => ({
 
 const mapDispatchToProps = dispatch => ({
 
-  // onSensorChooseWindowDrop: (top,left) => {
-  //
-  //     dispatch(ActionDropSensorChooseWindow(top,left));
-  //   }
+  searchRobotDevices: (RCA) => {
+
+      dispatch(ActionSearchRobotDevices(RCA));
+    },
 
 
-  // onTriggerSensorsPalette: () => {
-  //
-  //     dispatch(ActionTriggerSensorsPalette());
-  //   }
+    stopSearchProcess: (RCA) => {
+
+
+          dispatch(ActionRobotStopSearchProcess(RCA));
+
+    },
+
+    stopDataRecievingProcess: (RCA) => {
+
+            dispatch(ActionRobotStopDataRecievingProcess(RCA));
+
+    }
+
+
 
 
 });

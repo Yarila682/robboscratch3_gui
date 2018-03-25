@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import styles from './SensorPallete.css';
@@ -9,10 +10,23 @@ import SensorChooseWindowComponent from './SensorChooseWindowComponent';
 import {ActionTriggerExtensionPack} from './actions/sensor_actions';
 import {ActionTriggerSensorChooseWindow} from './actions/sensor_actions';
 import {ActionTriggerSensorsPalette} from './actions/sensor_actions';
+import {ActionRobotsConnectionStatusCheckStart} from './actions/sensor_actions';
 
 
 
 class SensorPallete extends Component {
+
+
+  componentDidMount () {
+
+
+      //console.log("triggerSensorsPalette");
+      //this.props.startSensorsGetDataLoop();
+
+      console.log("startRobotsConnectionStatusCheck");
+      this.props.startRobotsConnectionStatusCheck(0,this.props.RCA);
+
+  }
 
 
   triggerSensorsPalette(){
@@ -46,7 +60,29 @@ class SensorPallete extends Component {
 
           <div id={styles.robot_sensors}>
 
-              <div id="robot-sensors-tittle" className={styles.sensor_panel_tittle} onClick={this.triggerSensorsPalette.bind(this)}> Robot   </div>
+              <div id="robot-sensors-tittle" className={styles.sensor_panel_tittle} onClick={this.triggerSensorsPalette.bind(this)}>
+
+                  Robot
+
+                 <div id="robot-connection-status" className={classNames(
+
+                               {[styles.robot_connection_status]: true},
+                               {[styles.robot_status_connected]: this.props.robots[0].robot_connected},
+                               {[styles.robot_status_disconnected]: !this.props.robots[0].robot_connected}
+
+
+                               )}>
+
+                                {
+
+                                    (this.props.robots[0].robot_connected)? "Robot connected": "Robot disconnected"
+
+                                }
+
+                 </div>
+
+
+              </div>
 
                 <SensorDataBlockComponent key={this.props.robot_special_sensors[0].sensor_id} sensorId={this.props.robot_special_sensors[0].sensor_id}
                                    deviceName={this.props.robot_special_sensors[0].sensor_device_name} sensorType={this.props.robot_special_sensors[0].sensor_type}
@@ -178,7 +214,8 @@ const mapStateToProps =  state => ({
       lab_external_sensors:  state.lab_external_sensors,
       robot_special_sensors: state.robot_special_sensors,
       lab_special_sensors:  state.lab_special_sensors,
-      sensors_choose_window: state.sensors_choose_window
+      sensors_choose_window: state.sensors_choose_window,
+      robots:state.robots
   });
 
 const mapDispatchToProps = dispatch => ({
@@ -196,7 +233,13 @@ const mapDispatchToProps = dispatch => ({
   onTriggerSensorsPalette: () => {
 
            dispatch(ActionTriggerSensorsPalette());
-         }
+         },
+
+  startRobotsConnectionStatusCheck: (robot_number,RCA) => {
+
+       dispatch(ActionRobotsConnectionStatusCheckStart(robot_number,RCA));
+
+  }
 
 
 });

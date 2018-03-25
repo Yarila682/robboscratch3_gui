@@ -186,7 +186,7 @@ const GUIComponent = props => {
                             }}</MediaQuery>
                             {/* eslint-enable arrow-body-style */}
                         </Box>
-                         <RobboGui/>
+                         <RobboGui vm={vm}/>
                         <Box className={styles.targetWrapper}>
                             <TargetPane
                                 vm={vm}

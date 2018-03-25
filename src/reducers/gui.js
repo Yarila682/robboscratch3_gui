@@ -18,6 +18,8 @@ import lab_special_sensors  from '../RobboGui/reducers/lab_special_sensors'
 import trash_reducer from '../RobboGui/reducers/trash_reducer';
 import sensors_choose_window from '../RobboGui/reducers/sensors_choose_window';
 import sensors_palette from '../RobboGui/reducers/sensors_palette';
+import robots from '../RobboGui/reducers/robots';
+
 
 export default combineReducers({
     colorPicker: colorPickerReducer,
@@ -38,5 +40,6 @@ export default combineReducers({
     lab_special_sensors: lab_special_sensors,
     trash_reducer:trash_reducer,
     sensors_choose_window:sensors_choose_window,
-    sensors_palette:sensors_palette
+    sensors_palette:sensors_palette,
+    robots:robots
 });
