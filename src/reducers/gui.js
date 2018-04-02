@@ -19,6 +19,7 @@ import trash_reducer from '../RobboGui/reducers/trash_reducer';
 import sensors_choose_window from '../RobboGui/reducers/sensors_choose_window';
 import sensors_palette from '../RobboGui/reducers/sensors_palette';
 import robots from '../RobboGui/reducers/robots';
+import extension_pack from '../RobboGui/reducers/extension_pack';
 
 
 export default combineReducers({
@@ -41,5 +42,6 @@ export default combineReducers({
     trash_reducer:trash_reducer,
     sensors_choose_window:sensors_choose_window,
     sensors_palette:sensors_palette,
-    robots:robots
+    robots:robots,
+    extension_pack:extension_pack
 });

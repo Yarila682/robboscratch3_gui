@@ -9,6 +9,7 @@ import SensorChooseWindowComponent from './SensorChooseWindowComponent';
 import {ActionSearchRobotDevices} from './actions/sensor_actions';
 import {ActionRobotStopSearchProcess} from './actions/sensor_actions';
 import {ActionRobotStopDataRecievingProcess}  from './actions/sensor_actions';
+import {ActionTriggerExtensionPack} from './actions/sensor_actions';
 import styles from './RobboGui.css'
 
 
@@ -63,6 +64,14 @@ class RobboGui extends Component {
 
   }
 
+  triggerExtensionPack(){
+
+    console.log("triggerExtensionPack");
+    this.props.onTriggerExtensionPack();
+
+
+  }
+
 
 
   render() {
@@ -93,6 +102,7 @@ class RobboGui extends Component {
               <button className="connector-start-stop" onClick={this.searchRobotDevices.bind(this)}>Connector test!</button>
              <button className="connector-start-stop" onClick={this.stopSearchProcess.bind(this)}>Connector stop!</button>
              <button className="connector-start-stop" onClick={this.stopDataRecievingProcess.bind(this)}>Stop data recieve!</button>
+             <button className="connector-start-stop" onClick={this.triggerExtensionPack.bind(this)}>Trigger extension pack</button>
 
 
 
@@ -143,7 +153,11 @@ const mapDispatchToProps = dispatch => ({
 
             dispatch(ActionRobotStopDataRecievingProcess(RCA));
 
-    }
+    },
+    onTriggerExtensionPack: () => {
+
+        dispatch(ActionTriggerExtensionPack());
+      }
 
 
 

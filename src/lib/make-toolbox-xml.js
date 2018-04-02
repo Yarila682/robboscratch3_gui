@@ -3,7 +3,7 @@ const categorySeparator = '<sep gap="36"/>';
 const blockSeparator = '<sep gap="36"/>'; // At default scale, about 28px
 
 
-const robot  = function (isStage, targetId) {  //modified_by_Yaroslav  //robot category
+const robot  = function (isStage, targetId,isExtensionPackActivated) {  //modified_by_Yaroslav  //robot category
 
   return `
   <category name="Robot" colour="#00AF41" secondaryColour="#00AF41">
@@ -116,14 +116,22 @@ const robot  = function (isStage, targetId) {  //modified_by_Yaroslav  //robot c
             </value>
         </block>
 
-        <block type="robot_get_rgb_sensor_data">
-            <value name="ROBOT_SENSORS_FOR_RGB">
-                <shadow type="robot_sensors_for_rgb"/>
-            </value>
-            <value name="RGB_VALUES">
-                <shadow type="rgb_values"/>
-            </value>
-        </block>
+        ${isExtensionPackActivated?
+
+          `<block type="robot_get_rgb_sensor_data">
+              <value name="ROBOT_SENSORS_FOR_RGB">
+                  <shadow type="robot_sensors_for_rgb"/>
+              </value>
+              <value name="RGB_VALUES">
+                  <shadow type="rgb_values"/>
+              </value>
+          </block>`:``
+
+
+
+        }
+
+
 
         <block type="robot_start_button_pressed">
 
@@ -143,19 +151,27 @@ const robot  = function (isStage, targetId) {  //modified_by_Yaroslav  //robot c
             </value>
         </block>
 
-        <block type="robot_claw_closed">
-            <value name="CLAW_CLOSED_PERCENT">
-                <shadow type="math_number">
-                    <field name="NUM">15</field>
-                </shadow>
-            </value>
-        </block>
+        ${blockSeparator}
 
-        <block type="robot_claw_state">
-            <value name="CLAW_STATES">
-                <shadow type="claw_states"/>
-            </value>
-        </block>
+        ${isExtensionPackActivated?
+
+          `<block type="robot_claw_closed">
+                <value name="CLAW_CLOSED_PERCENT">
+                    <shadow type="math_number">
+                        <field name="NUM">15</field>
+                    </shadow>
+                </value>
+            </block>
+
+            <block type="robot_claw_state">
+                <value name="CLAW_STATES">
+                    <shadow type="claw_states"/>
+                </value>
+            </block>`:``
+
+        }
+
+
 
       `}
       ${categorySeparator}
@@ -826,12 +842,12 @@ const xmlClose = '</xml>';
  * @param {string?} categoriesXML - null for default toolbox, or an XML string with <category> elements.
  * @returns {string} - a ScratchBlocks-style XML document for the contents of the toolbox.
  */
-const makeToolboxXML = function (isStage, targetId, categoriesXML) {
+const makeToolboxXML = function (isStage, targetId, isExtensionPackActivated, categoriesXML) {
     const gap = [categorySeparator];
 
     const everything = [
         xmlOpen,
-        robot(isStage, targetId),gap, //modified_by_Yaroslav //toolbox generator main
+        robot(isStage, targetId,isExtensionPackActivated),gap, //modified_by_Yaroslav //toolbox generator main
         motion(isStage, targetId), gap,
         looks(isStage, targetId), gap,
         sound(isStage, targetId), gap,

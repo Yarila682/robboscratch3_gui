@@ -35,7 +35,8 @@ class NewVersionSensorComponent extends Component {
 
                     <div>
 
-                        <CommonFieldsSensorComponent NameFieldText={`${this.props.fieldText}`} sensorId={this.props.sensorId} />
+                        <CommonFieldsSensorComponent NameFieldText={`${this.props.fieldText}`} sensorId={this.props.sensorId}
+                            sensorName={this.props.sensorName} sensorData={this.props.sensorData} />
 
                         <div  className={classNames(
 

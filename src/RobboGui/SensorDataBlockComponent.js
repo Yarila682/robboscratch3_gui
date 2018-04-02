@@ -22,7 +22,8 @@ class SensorDataBlockComponent extends Component {
 
 
 
-                  <CommonFieldsSensorComponent NameFieldText={`${this.props.sensorFieldText}`} sensorId={this.props.sensorId} />
+                  <CommonFieldsSensorComponent NameFieldText={`${this.props.sensorFieldText}`} sensorId={this.props.sensorId}
+                    sensorName={this.props.sensorName} sensorData={this.props.sensorData}/>
 
 
 

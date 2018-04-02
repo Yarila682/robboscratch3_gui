@@ -1,11 +1,16 @@
-
+var RCA_local;
 
 
 const ActionTriggerExtensionPack = function(){
 
 
   return {
-    type: 'TRIGGER_EXTENSION_PACK'
+    type: 'TRIGGER_EXTENSION_PACK',
+    payload:{
+
+
+        RCA:RCA_local
+    }
   };
 
 
@@ -79,7 +84,10 @@ if (payload.startsWith("robot-")){
 
   return {
     type: 'TRIGGER_ROBOT_SENSOR_NAME',
-    payload:data
+    payload:{
+      sensor_name_data:data,
+      RCA:RCA_local
+    }
   };
 
 }else if (payload.startsWith("lab-")){
@@ -88,7 +96,10 @@ if (payload.startsWith("robot-")){
 
   return {
     type: 'TRIGGER_LAB_SENSOR_NAME',
-    payload:data
+    payload:{
+      sensor_name_data:data,
+      RCA:RCA_local
+    }
   };
 
 }
@@ -120,12 +131,46 @@ const  ActionRobotsConnectionStatusCheck = function(robot_number,RCA){
 
 const ActionRobotsConnectionStatusCheckStart = function(robot_number,RCA){
 
+  RCA_local = RCA
+
 
   return (dispatch) => {
     RobotsConnectionStatusCheckInterval =   setInterval(() => {
 
           dispatch(ActionRobotsConnectionStatusCheck(robot_number,RCA));
       }, 100);
+  };
+
+
+
+}
+
+var RobotGetDataInterval;
+
+const  ActionRobotGetData = function(robot_number,RCA){
+
+  return {
+
+      type: 'ROBOT_GET_SENSORS_DATA',
+      payload:{
+
+          robot_number:robot_number,
+          RCA:RCA
+      }
+  }
+
+}
+
+const ActionRobotGetDataStart = function(robot_number){
+
+
+
+
+  return (dispatch) => {
+    RobotGetDataInterval =   setInterval(() => {
+
+          dispatch(ActionRobotGetData(robot_number,RCA_local));
+      }, 25);
   };
 
 
@@ -186,6 +231,30 @@ const ActionRobotStopDataRecievingProcess = function(RCA){
 
 }
 
+const ActionTriggerOldAnalogSensorState = function(payload){
+
+
+
+  let data = payload.split("_");
+
+  let device_name = data[0];
+  let caller_sensor_id = Number.parseInt(data[1].replace("sensor-",""));
+
+
+
+  return {
+    type: 'TRIGGER_OLD_ANALOG_SENSOR_STATE',
+
+    payload:{
+
+        caller_sensor_id:caller_sensor_id,
+        RCA:RCA_local
+
+    }
+  }
+
+}
+
 export {
 
     ActionTriggerExtensionPack,
@@ -196,6 +265,8 @@ export {
     ActionRobotsConnectionStatusCheckStart,
     ActionSearchRobotDevices,
     ActionRobotStopSearchProcess,
-    ActionRobotStopDataRecievingProcess
+    ActionRobotStopDataRecievingProcess,
+    ActionRobotGetDataStart,
+    ActionTriggerOldAnalogSensorState
 
 };

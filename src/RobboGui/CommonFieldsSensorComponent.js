@@ -10,6 +10,8 @@ class CommonFieldsSensorComponent extends Component {
 
   render() {
 
+    var sensors_data = this.props.sensorData;
+
       return  (
 
         <div className={styles.sensor_block_field} >
@@ -20,7 +22,65 @@ class CommonFieldsSensorComponent extends Component {
             </div>
             <div className={styles.sensor_block_field}>
 
-                  {"--"}
+                  {
+                      (() => {
+
+                            if ((this.props.sensorName  == "nosensor") || (typeof(this.props.sensorName)  == "undefined") || (typeof(sensors_data)  == "undefined") ){
+
+                                return (
+
+                                     <div>
+
+                                        {"---"}
+
+                                     </div>
+                                )
+
+
+                            }else if (this.props.sensorName  == "color"){
+
+
+
+                              return (
+
+                                 <div style={{
+
+                                       backgroundColor: `rgb(${sensors_data[0]},${sensors_data[1]},${sensors_data[2]})`,
+
+                                       }}>
+
+                                      color
+
+                                 </div>
+                              )
+
+
+                            }else if (Array.isArray(sensors_data) ){
+
+
+
+
+                               return (   <div>
+
+                                                {sensors_data[3]}
+
+                                          </div>)
+                            }else{
+
+
+                              return (   <div>
+
+                                               {sensors_data}
+
+                                         </div>)
+
+                            }
+
+
+                        })()
+
+
+                  }
 
             </div>
         </div>

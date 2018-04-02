@@ -86,7 +86,8 @@ class Blocks extends React.Component {
             this.props.toolboxXML !== nextProps.toolboxXML ||
             this.props.extensionLibraryVisible !== nextProps.extensionLibraryVisible ||
             this.props.customProceduresVisible !== nextProps.customProceduresVisible ||
-            this.props.locale !== nextProps.locale
+            this.props.locale !== nextProps.locale ||
+            this.props.extension_pack.is_extension_pack_activated !== nextProps.extension_pack.is_extension_pack_activated //not original
         );
     }
     componentDidUpdate (prevProps) {
@@ -99,6 +100,16 @@ class Blocks extends React.Component {
             this.workspace.updateToolbox(this.props.toolboxXML);
             this.workspace.toolbox_.setSelectedCategoryByName(selectedCategoryName);
         }
+
+          if (this.props.extension_pack.is_extension_pack_activated !== prevProps.extension_pack.is_extension_pack_activated){
+
+            const dynamicBlocksXML = this.props.vm.runtime.getBlocksXML();
+            const target = this.props.vm.editingTarget;
+            const toolboxXML = makeToolboxXML(target.isStage, target.id, this.props.extension_pack.is_extension_pack_activated, dynamicBlocksXML);
+            this.props.updateToolboxState(toolboxXML);
+
+          }
+
         if (this.props.isVisible === prevProps.isVisible) {
             return;
         }
@@ -194,7 +205,7 @@ class Blocks extends React.Component {
         if (this.props.vm.editingTarget) {
             const target = this.props.vm.editingTarget;
             const dynamicBlocksXML = this.props.vm.runtime.getBlocksXML();
-            const toolboxXML = makeToolboxXML(target.isStage, target.id, dynamicBlocksXML);
+            const toolboxXML = makeToolboxXML(target.isStage, target.id,this.props.extension_pack.is_extension_pack_activated,dynamicBlocksXML);
             this.props.updateToolboxState(toolboxXML);
         }
 
@@ -222,7 +233,7 @@ class Blocks extends React.Component {
         this.ScratchBlocks.defineBlocksWithJsonArray(blocksInfo.map(blockInfo => blockInfo.json));
         const dynamicBlocksXML = this.props.vm.runtime.getBlocksXML();
         const target = this.props.vm.editingTarget;
-        const toolboxXML = makeToolboxXML(target.isStage, target.id, dynamicBlocksXML);
+        const toolboxXML = makeToolboxXML(target.isStage, target.id, this.props.extension_pack.is_extension_pack_activated, dynamicBlocksXML);
         this.props.updateToolboxState(toolboxXML);
     }
     handleBlocksInfoUpdate (blocksInfo) {
@@ -381,7 +392,8 @@ const mapStateToProps = state => ({
     locale: state.intl.locale,
     messages: state.intl.messages,
     toolboxXML: state.toolbox.toolboxXML,
-    customProceduresVisible: state.customProcedures.active
+    customProceduresVisible: state.customProcedures.active,
+    extension_pack: state.extension_pack
 });
 
 const mapDispatchToProps = dispatch => ({

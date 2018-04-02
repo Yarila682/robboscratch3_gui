@@ -1,6 +1,6 @@
 
 var sensor_types = ["ANALOG","DIGITAL"];
-var sensor_names = ["NOSENSOR","ULTRASONIC","COLOR"];
+var sensor_names = ["nosensor","ULTRASONIC","COLOR"];
 var sensor_version = [""]
 
 class SensorsAPI{

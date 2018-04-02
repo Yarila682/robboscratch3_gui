@@ -31,9 +31,11 @@ class SensorComponent extends Component {
                   case "robot":
 
                       return (this.props.isSensorVersionNew)
-                                ?<NewVersionSensorComponent sensorId={this.props.sensorId} sensorPictureUrl={this.props.sensorPictureUrl}  fieldText={this.props.sensorFieldText}  />
+                                ?<NewVersionSensorComponent sensorId={this.props.sensorId} sensorPictureUrl={this.props.sensorPictureUrl}  fieldText={this.props.sensorFieldText}
+                                sensorName={this.props.sensorName} sensorData={this.props.sensorData}      />
 
-                                :<OldVersionSensorComponent   sensorId={this.props.sensorId} fieldText={this.props.sensorFieldText}/>
+                                :<OldVersionSensorComponent   sensorId={this.props.sensorId} fieldText={this.props.sensorFieldText}
+                                sensorName={this.props.sensorName} sensorData={this.props.sensorData}/>
 
 
 
@@ -44,7 +46,8 @@ class SensorComponent extends Component {
                   case "lab":
 
                           if  (this.props.isSensorVersionNew)
-                            return    <NewVersionSensorComponent sensorId={this.props.sensorId} sensorPictureUrl={this.props.sensorPictureUrl}  fieldText={this.props.sensorFieldText} />
+                            return    <NewVersionSensorComponent sensorId={this.props.sensorId} sensorPictureUrl={this.props.sensorPictureUrl}  fieldText={this.props.sensorFieldText}
+                                            sensorName={this.props.sensor_name} sensorData={this.props.sensor_data}      />
 
 
 

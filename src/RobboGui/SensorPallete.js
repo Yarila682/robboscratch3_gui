@@ -11,6 +11,7 @@ import {ActionTriggerExtensionPack} from './actions/sensor_actions';
 import {ActionTriggerSensorChooseWindow} from './actions/sensor_actions';
 import {ActionTriggerSensorsPalette} from './actions/sensor_actions';
 import {ActionRobotsConnectionStatusCheckStart} from './actions/sensor_actions';
+import {ActionRobotGetDataStart} from  './actions/sensor_actions';
 
 
 
@@ -25,6 +26,9 @@ class SensorPallete extends Component {
 
       console.log("startRobotsConnectionStatusCheck");
       this.props.startRobotsConnectionStatusCheck(0,this.props.RCA);
+
+      console.log("startRobotGetData");
+      this.props.startRobotGetData(0);
 
   }
 
@@ -86,11 +90,15 @@ class SensorPallete extends Component {
 
                 <SensorDataBlockComponent key={this.props.robot_special_sensors[0].sensor_id} sensorId={this.props.robot_special_sensors[0].sensor_id}
                                    deviceName={this.props.robot_special_sensors[0].sensor_device_name} sensorType={this.props.robot_special_sensors[0].sensor_type}
-                                   sensorFieldText={this.props.robot_special_sensors[0].sensor_field_text} />
+                                   sensorFieldText={this.props.robot_special_sensors[0].sensor_field_text}
+                                   sensorName={this.props.robot_special_sensors[0].sensor_name}
+                                    sensorData={this.props.robot_special_sensors[0].sensor_data} />
 
                 <SensorDataBlockComponent key={this.props.robot_special_sensors[1].sensor_id} sensorId={this.props.robot_special_sensors[1].sensor_id}
                                                       deviceName={this.props.robot_special_sensors[1].sensor_device_name} sensorType={this.props.robot_special_sensors[1].sensor_type}
-                                                      sensorFieldText={this.props.robot_special_sensors[1].sensor_field_text} />
+                                                      sensorFieldText={this.props.robot_special_sensors[1].sensor_field_text}
+                                                      sensorName={this.props.robot_special_sensors[1].sensor_name}
+                                                      sensorData={this.props.robot_special_sensors[1].sensor_data} />
 
             {
 
@@ -106,7 +114,8 @@ class SensorPallete extends Component {
                        return   <SensorComponent key={index} index={index} sensorId={sensor.sensor_id} isSensorVersionNew={sensor.is_sensor_version_new}
                                    sensorPictureUrl={sensorPictureUrl}
                                    deviceName={sensor.sensor_device_name} sensorType={sensor.sensor_type}
-                                   sensorFieldText={sensor.sensor_field_text}/>
+                                   sensorFieldText={sensor.sensor_field_text} sensorName={sensor.sensor_name}
+                                   sensorData={sensor.sensor_data} />
 
 
 
@@ -122,7 +131,9 @@ class SensorPallete extends Component {
 
             <SensorDataBlockComponent key={this.props.robot_special_sensors[2].sensor_id} sensorId={this.props.robot_special_sensors[2].sensor_id}
                                deviceName={this.props.robot_special_sensors[2].sensor_device_name} sensorType={this.props.robot_special_sensors[2].sensor_type}
-                               sensorFieldText={this.props.robot_special_sensors[2].sensor_field_text} />
+                               sensorFieldText={this.props.robot_special_sensors[2].sensor_field_text}
+                               sensorName={this.props.robot_special_sensors[2].sensor_name}
+                               sensorData={this.props.robot_special_sensors[2].sensor_data} />
 
           </div>
 
@@ -169,7 +180,8 @@ class SensorPallete extends Component {
                                                components.push(<SensorComponent key={index} index={index} sensorId={sensor.sensor_id} isSensorVersionNew={sensor.is_sensor_version_new}
                                                            sensorPictureUrl={sensorPictureUrl}
                                                            deviceName={sensor.sensor_device_name} sensorType={sensor.sensor_type}
-                                                           sensorFieldText={sensor.sensor_field_text}/>);
+                                                           sensorFieldText={sensor.sensor_field_text} sensorName={sensor.sensor_name}
+                                                           sensorData={sensor.sensor_data} />);
 
 
 
@@ -238,6 +250,12 @@ const mapDispatchToProps = dispatch => ({
   startRobotsConnectionStatusCheck: (robot_number,RCA) => {
 
        dispatch(ActionRobotsConnectionStatusCheckStart(robot_number,RCA));
+
+  },
+
+  startRobotGetData: (robot_number) => {
+
+      dispatch(ActionRobotGetDataStart(robot_number));
 
   }
 
