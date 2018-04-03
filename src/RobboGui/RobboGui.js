@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import SensorPallete from './SensorPallete';
+import ColorCorrectorTableComponent from './ColorCorrectorTableComponent';
 import SensorPaletteCollapsed from './SensorPaletteCollapsed';
 import { ItemTypes } from './drag_constants';
 import { DropTarget } from 'react-dnd';
@@ -10,6 +11,7 @@ import {ActionSearchRobotDevices} from './actions/sensor_actions';
 import {ActionRobotStopSearchProcess} from './actions/sensor_actions';
 import {ActionRobotStopDataRecievingProcess}  from './actions/sensor_actions';
 import {ActionTriggerExtensionPack} from './actions/sensor_actions';
+import {ActionTriggerColorCorrectorTable} from './actions/sensor_actions';
 import styles from './RobboGui.css'
 
 
@@ -41,6 +43,8 @@ class RobboGui extends Component {
 
   }
 
+
+
   searchRobotDevices(){
 
     console.log("searchRobotDevices");
@@ -69,6 +73,13 @@ class RobboGui extends Component {
     console.log("triggerExtensionPack");
     this.props.onTriggerExtensionPack();
 
+
+  }
+
+  triggerColorCorrectorTable(sensor_caller_id){
+
+    console.log("triggerColorCorrectorTable");
+    this.props.onTriggerColorCorrectorTable(sensor_caller_id);
 
   }
 
@@ -103,6 +114,7 @@ class RobboGui extends Component {
              <button className="connector-start-stop" onClick={this.stopSearchProcess.bind(this)}>Connector stop!</button>
              <button className="connector-start-stop" onClick={this.stopDataRecievingProcess.bind(this)}>Stop data recieve!</button>
              <button className="connector-start-stop" onClick={this.triggerExtensionPack.bind(this)}>Trigger extension pack</button>
+            <button className="connector-start-stop" onClick={this.triggerColorCorrectorTable.bind(this,0)}>Trigger color corrector table!</button>
 
 
 
@@ -113,6 +125,8 @@ class RobboGui extends Component {
            CallerSensorType={this.props.sensorsChooseWindow.sensors_choose_window_sensor_caller_type}/>
 
 
+
+         <ColorCorrectorTableComponent/>
 
 
 
@@ -157,10 +171,13 @@ const mapDispatchToProps = dispatch => ({
     onTriggerExtensionPack: () => {
 
         dispatch(ActionTriggerExtensionPack());
-      }
+      },
 
 
+      onTriggerColorCorrectorTable:  (sensor_caller_id) => {
 
+          dispatch(ActionTriggerColorCorrectorTable(sensor_caller_id));
+        }
 
 });
 

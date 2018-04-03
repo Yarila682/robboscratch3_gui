@@ -29,6 +29,7 @@ import RobboGui from '../../RobboGui/RobboGui';
 
 import { ItemTypes } from '../../RobboGui/drag_constants';
 import {ActionDropSensorChooseWindow} from '../../RobboGui/actions/sensor_actions';
+import {ActionDropColorCorrectorWindow} from '../../RobboGui/actions/sensor_actions'
 
 import { connect } from 'react-redux';
 
@@ -47,7 +48,24 @@ const Target = {
 
     let coords = monitor.getClientOffset();
 
-    props.onSensorChooseWindowDrop(coords.y, coords.x);
+    let item = monitor.getItem();
+
+    if (item.element_type == ItemTypes.SENSOR_CHOOSE_WINDOW){
+
+      props.onSensorChooseWindowDrop(coords.y, coords.x);
+
+      console.log(`Drop: SensorChooseWindow y:${coords.y}  x:${coords.x}`);
+
+
+    }else if (item.element_type == ItemTypes.COLOR_CORRECTOR_WINDOW){
+
+        props.onColorCorrectorWindowDrop(coords.y, coords.x);
+
+        console.log(`Drop: ColorCorrectorWindow y:${coords.y}  x:${coords.x}`);
+
+    }
+
+
   }
 };
 
@@ -231,7 +249,14 @@ const mapDispatchToProps = dispatch => ({
   onSensorChooseWindowDrop: (top,left) => {
 
       dispatch(ActionDropSensorChooseWindow(top,left));
-    }
+    },
+
+    onColorCorrectorWindowDrop: (top,left) => {
+
+        dispatch(ActionDropColorCorrectorWindow(top,left));
+      }
+
+
 });
 
 
@@ -239,6 +264,6 @@ export default connect(
         mapStateToProps,
         mapDispatchToProps
 
-    ) (DropTarget(ItemTypes.SENSOR_CHOOSE_WINDOW, Target, collect)(injectIntl(GUIComponent)));
+    ) (DropTarget([ItemTypes.SENSOR_CHOOSE_WINDOW,ItemTypes.COLOR_CORRECTOR_WINDOW], Target, collect)(injectIntl(GUIComponent)));
 
 //export default injectIntl(GUIComponent);

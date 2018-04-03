@@ -255,6 +255,40 @@ const ActionTriggerOldAnalogSensorState = function(payload){
 
 }
 
+const ActionTriggerColorCorrectorTable = function(sensor_caller_id){
+
+
+return {
+    type: 'TRIGGER_COLOR_CORRECTOR_TABLE',
+
+    payload:{
+
+        sensor_caller_id:sensor_caller_id,
+
+
+    }
+  }
+
+}
+
+const ActionDropColorCorrectorWindow = function(top,left){
+
+
+  return {
+    type: 'COLOR_CORRECTOR_TABLE_DROP',
+    payload:{
+
+        position_top:top,
+        position_left:left
+
+    }
+  };
+
+
+}
+
+
+
 export {
 
     ActionTriggerExtensionPack,
@@ -267,6 +301,8 @@ export {
     ActionRobotStopSearchProcess,
     ActionRobotStopDataRecievingProcess,
     ActionRobotGetDataStart,
-    ActionTriggerOldAnalogSensorState
+    ActionTriggerOldAnalogSensorState,
+    ActionTriggerColorCorrectorTable,
+    ActionDropColorCorrectorWindow
 
 };

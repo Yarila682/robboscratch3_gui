@@ -2,8 +2,8 @@
 
 const initialState = {
   sensors_choose_window_showing:false,
-  sensors_choose_window_drag_top:100,
-  sensors_choose_window_drag_left:100,
+  sensors_choose_window_drag_top:400,
+  sensors_choose_window_drag_left:400,
   sensors_choose_window_sensor_caller:0,
   sensors_choose_window_sensor_caller_type:"ANALOG",
   sensors_choose_window_sensor_caller_device_name:"robot"

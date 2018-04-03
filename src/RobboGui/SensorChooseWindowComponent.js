@@ -11,7 +11,10 @@ import { DragSource } from 'react-dnd';
 
 const SensorChooseWindowSource = {
   beginDrag(props) {
-    return {};
+    return {
+
+          element_type: ItemTypes.SENSOR_CHOOSE_WINDOW
+    };
   }
 };
 

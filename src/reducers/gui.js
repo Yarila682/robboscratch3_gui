@@ -20,6 +20,7 @@ import sensors_choose_window from '../RobboGui/reducers/sensors_choose_window';
 import sensors_palette from '../RobboGui/reducers/sensors_palette';
 import robots from '../RobboGui/reducers/robots';
 import extension_pack from '../RobboGui/reducers/extension_pack';
+import color_corrector_table from '../RobboGui/reducers/color_corrector_table'
 
 
 export default combineReducers({
@@ -43,5 +44,7 @@ export default combineReducers({
     sensors_choose_window:sensors_choose_window,
     sensors_palette:sensors_palette,
     robots:robots,
-    extension_pack:extension_pack
+    extension_pack:extension_pack,
+    color_corrector_table:color_corrector_table
+    
 });
