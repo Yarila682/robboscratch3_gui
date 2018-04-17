@@ -52,7 +52,7 @@ const immutable_copy = function(data_structure_element){
 
 }
 
-const color_filter = function(filter_table_table){
+const color_filter = function(filter_color_table){
 
 
 

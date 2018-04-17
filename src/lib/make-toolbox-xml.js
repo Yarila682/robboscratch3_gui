@@ -3,6 +3,105 @@ const categorySeparator = '<sep gap="36"/>';
 const blockSeparator = '<sep gap="36"/>'; // At default scale, about 28px
 
 
+const laboratory  = function (isStage, targetId,isExternalSensorsActivated) {  //modified_by_Yaroslav  //laboratory category
+
+  return `
+  <category name="Laboratory" colour="#AAAAAA" secondaryColour="#AAAAAA">
+      ${isStage ? `
+      <label text="Stage selected: no laboratory blocks"></label>
+      ` : `
+
+      <block type="lab_led_turn_on">
+          <value name="LED_NUMS">
+              <shadow type="led_nums"/>
+          </value>
+      </block>
+
+      <block type="lab_led_turn_off">
+          <value name="LED_NUMS">
+              <shadow type="led_nums"/>
+          </value>
+      </block>
+
+      <block type="lab_color_led_turn_on">
+          <value name="LED_COLORS">
+              <shadow type="led_colors"/>
+          </value>
+      </block>
+
+      <block type="lab_color_led_turn_off">
+          <value name="LED_COLORS">
+              <shadow type="led_colors"/>
+          </value>
+      </block>
+
+      <block type="lab_sensor">
+          <value name="LAB_SENSOR">
+              <shadow type="lab_sensors"/>
+          </value>
+      </block>
+
+      <block type="lab_button_pressed">
+          <value name="BUTTON_NUMBER">
+              <shadow type="button_numbers"/>
+          </value>
+      </block>
+
+        ${isExternalSensorsActivated?
+
+          ` <block type="lab_external_sensor">
+                <value name="LAB_EXTERNAL_SENSOR">
+                    <shadow type="lab_external_sensors"/>
+                </value>
+            </block>
+
+            `:``
+
+        }
+
+        ${blockSeparator}
+
+        <block type="lab_analog_pin">
+              <value name="LAB_ANALOG_PIN">
+                  <shadow type="lab_analog_pins"/>
+              </value>
+          </block>
+
+          <block type="lab_digital_pin">
+                <value name="LAB_DIGITAL_PIN">
+                    <shadow type="lab_digital_pins_stack1"/>
+                </value>
+            </block>
+
+            <block type="lab_digital_pin_set_on_off">
+                <value name="LAB_DIGITAL_PIN">
+                    <shadow type="lab_digital_pins_stack2"/>
+                </value>
+                <value name="LAB_DIGITAL_PIN_STATE">
+                    <shadow type="lab_digital_pins_states"/>
+                </value>
+
+            </block>
+
+            <block type="lab_digital_pin_set_pwm_value">
+                <value name="LAB_DIGITAL_PIN">
+                    <shadow type="lab_digital_pins_stack2"/>
+                </value>
+                <value name="PWM_VALUE">
+                    <shadow type="math_number">
+                        <field name="NUM">0</field>
+                    </shadow>
+                </value>
+
+            </block>
+
+      `}
+      ${categorySeparator}
+  </category>
+  `;
+
+}
+
 const robot  = function (isStage, targetId,isExtensionPackActivated) {  //modified_by_Yaroslav  //robot category
 
   return `
@@ -845,8 +944,11 @@ const xmlClose = '</xml>';
 const makeToolboxXML = function (isStage, targetId, isExtensionPackActivated, categoriesXML) {
     const gap = [categorySeparator];
 
+    const isExternalSensorsActivated = true; //modified_by_Yaroslav
+
     const everything = [
         xmlOpen,
+        laboratory(isStage, targetId,isExternalSensorsActivated),gap, //modified_by_Yaroslav
         robot(isStage, targetId,isExtensionPackActivated),gap, //modified_by_Yaroslav //toolbox generator main
         motion(isStage, targetId), gap,
         looks(isStage, targetId), gap,
