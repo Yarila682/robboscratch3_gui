@@ -139,7 +139,28 @@ class SensorPallete extends Component {
 
         <div id={styles.laboratory_sensors}>
 
-            <div id="laboratory-sensors-tittle" className={styles.sensor_panel_tittle}>Laboratory   </div>
+            <div id="laboratory-sensors-tittle" className={styles.sensor_panel_tittle}>Laboratory
+
+
+              <div id="laboratory-connection-status" className={classNames(
+
+                            {[styles.laboratory_connection_status]: true},
+                            {[styles.laboratory_status_connected]: this.props.laboratories[0].laboratory_connected},
+                            {[styles.laboratory_status_disconnected]: !this.props.laboratories[0].laboratory_connected}
+
+
+                            )}>
+
+                             {
+
+                                 (this.props.laboratories[0].laboratory_connected)? "Laboratory connected": "Laboratory disconnected"
+
+                             }
+
+              </div>
+
+
+            </div>
 
             {
 
@@ -227,7 +248,8 @@ const mapStateToProps =  state => ({
       robot_special_sensors: state.robot_special_sensors,
       lab_special_sensors:  state.lab_special_sensors,
       sensors_choose_window: state.sensors_choose_window,
-      robots:state.robots
+      robots:state.robots,
+      laboratories: state.laboratories
   });
 
 const mapDispatchToProps = dispatch => ({

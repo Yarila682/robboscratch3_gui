@@ -8,6 +8,7 @@ import { ItemTypes } from './drag_constants';
 import { DropTarget } from 'react-dnd';
 import SensorChooseWindowComponent from './SensorChooseWindowComponent';
 import {ActionSearchRobotDevices} from './actions/sensor_actions';
+import {ActionSearchLaboratoryDevices} from './actions/sensor_actions';
 import {ActionRobotStopSearchProcess} from './actions/sensor_actions';
 import {ActionRobotStopDataRecievingProcess}  from './actions/sensor_actions';
 import {ActionTriggerExtensionPack} from './actions/sensor_actions';
@@ -45,17 +46,28 @@ class RobboGui extends Component {
 
 
 
-  searchRobotDevices(){
+  searchDevices(){
 
-    console.log("searchRobotDevices");
-    this.props.searchRobotDevices(this.props.vm.getRCA());
+    console.log("searchDevices");
+
+
+    this.props.vm.getDCA().searchAllDevices();
+
+    //this.props.searchRobotDevices(this.props.vm.getRCA());
+  //  this.props.searchLaboratoryDevices(this.props.vm.getLCA());
+
+    this.props.vm.getRCA().searchRobotDevices();
+    this.props.vm.getLCA().searchLaboratoryDevices();
 
   }
 
   stopSearchProcess(){
 
     console.log("stopSearchProcess");
-    this.props.stopSearchProcess(this.props.vm.getRCA());
+  //  this.props.stopSearchProcess(this.props.vm.getRCA());
+
+  this.props.vm.getRCA().stopSearchProcess();
+  this.props.vm.getLCA().stopSearchProcess();
 
 
   }
@@ -64,7 +76,10 @@ class RobboGui extends Component {
 
 
     console.log("stopDataRecievingProcess");
-    this.props.stopDataRecievingProcess(this.props.vm.getRCA());
+  //  this.props.stopDataRecievingProcess(this.props.vm.getRCA());
+
+  this.props.vm.getRCA().stopDataRecievingProcess();
+  this.props.vm.getLCA().stopDataRecievingProcess();
 
   }
 
@@ -89,8 +104,9 @@ class RobboGui extends Component {
 
 //  return this.props.connectDropTarget(
 
-
+  this.DCA =  this.props.vm.getDCA();
   this.RCA =  this.props.vm.getRCA();
+  this.LCA =  this.props.vm.getLCA();
 
   return (
 
@@ -110,8 +126,8 @@ class RobboGui extends Component {
          }
 
 
-              <button className="connector-start-stop" onClick={this.searchRobotDevices.bind(this)}>Connector test!</button>
-             <button className="connector-start-stop" onClick={this.stopSearchProcess.bind(this)}>Connector stop!</button>
+              <button className="connector-start-stop" onClick={this.searchDevices.bind(this)}>Search devices</button>
+             <button className="connector-start-stop" onClick={this.stopSearchProcess.bind(this)}>Stop searching</button>
              <button className="connector-start-stop" onClick={this.stopDataRecievingProcess.bind(this)}>Stop data recieve!</button>
              <button className="connector-start-stop" onClick={this.triggerExtensionPack.bind(this)}>Trigger extension pack</button>
             <button className="connector-start-stop" onClick={this.triggerColorCorrectorTable.bind(this,0)}>Trigger color corrector table!</button>
@@ -154,6 +170,11 @@ const mapDispatchToProps = dispatch => ({
 
       dispatch(ActionSearchRobotDevices(RCA));
     },
+
+    // searchLaboratoryDevices: (LCA) => {
+    //
+    //     dispatch(ActionSearchLaboratoryDevices(LCA));
+    //   },
 
 
     stopSearchProcess: (RCA) => {

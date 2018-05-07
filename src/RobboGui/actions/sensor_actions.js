@@ -1,4 +1,5 @@
 var RCA_local;
+var LCA_local;
 
 
 const ActionTriggerExtensionPack = function(){
@@ -195,6 +196,26 @@ const ActionSearchRobotDevices = function(RCA){
 
 }
 
+const ActionSearchLaboratoryDevices = function(LCA){
+
+
+      LCA_local = LCA;
+
+    return {
+
+
+      type: 'LABORATORY_SEARCH_DEVICES',
+      payload:{
+
+
+          LCA:LCA
+      }
+
+
+    }
+
+}
+
 const ActionRobotStopSearchProcess = function(RCA){
 
 
@@ -303,6 +324,7 @@ export {
     ActionRobotGetDataStart,
     ActionTriggerOldAnalogSensorState,
     ActionTriggerColorCorrectorTable,
-    ActionDropColorCorrectorWindow
+    ActionDropColorCorrectorWindow,
+    ActionSearchLaboratoryDevices
 
 };
