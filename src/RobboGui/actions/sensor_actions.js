@@ -114,6 +114,39 @@ if (payload.startsWith("robot-")){
 
 }
 
+var LaboratoriesConnectionStatusCheckInterval;
+
+const  ActionLaboratoriesConnectionStatusCheck = function(laboratory_number,LCA){
+
+  return {
+
+      type: 'LABORATORY_CONNECTION_STATUS_CHECK',
+      payload:{
+
+          laboratory_number:laboratory_number,
+          LCA:LCA
+      }
+  }
+
+}
+
+const ActionLaboratoriesConnectionStatusCheckStart = function(laboratory_number,LCA){
+
+  LCA_local = LCA
+
+
+  return (dispatch) => {
+    LaboratoriesConnectionStatusCheckInterval =   setInterval(() => {
+
+          dispatch(ActionLaboratoriesConnectionStatusCheck(laboratory_number,LCA));
+      }, 100);
+  };
+
+
+
+}
+
+
 var RobotsConnectionStatusCheckInterval;
 
 const  ActionRobotsConnectionStatusCheck = function(robot_number,RCA){
@@ -318,6 +351,7 @@ export {
     ActionTriggerSensorName,
     ActionTriggerSensorsPalette,
     ActionRobotsConnectionStatusCheckStart,
+    ActionLaboratoriesConnectionStatusCheckStart,
     ActionSearchRobotDevices,
     ActionRobotStopSearchProcess,
     ActionRobotStopDataRecievingProcess,

@@ -27,7 +27,7 @@ const initialState = init_state();
 
 const  reducer = function (state, action) {
 
-    let robots = [];
+    let laboratories = [];
 
   if (typeof state === 'undefined') state = initialState;
 
@@ -39,14 +39,14 @@ switch (action.type) {
 
 
 
-            robots = [...state];
+            laboratories = [...state];
 
 
 
-            laboratory[0].laboratory_connected =   action.payload.LCA.isLaboratoryConnected(0);
+            laboratories[0].laboratory_connected =   action.payload.LCA.isLaboratoryConnected(0);
 
 
-            return robots;
+            return laboratories;
 
 
     break;

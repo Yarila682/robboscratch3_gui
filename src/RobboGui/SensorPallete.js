@@ -11,6 +11,7 @@ import {ActionTriggerExtensionPack} from './actions/sensor_actions';
 import {ActionTriggerSensorChooseWindow} from './actions/sensor_actions';
 import {ActionTriggerSensorsPalette} from './actions/sensor_actions';
 import {ActionRobotsConnectionStatusCheckStart} from './actions/sensor_actions';
+import {ActionLaboratoriesConnectionStatusCheckStart} from './actions/sensor_actions';
 import {ActionRobotGetDataStart} from  './actions/sensor_actions';
 
 
@@ -26,6 +27,9 @@ class SensorPallete extends Component {
 
       console.log("startRobotsConnectionStatusCheck");
       this.props.startRobotsConnectionStatusCheck(0,this.props.RCA);
+
+      console.log("startLaboratoriesConnectionStatusCheck");
+      this.props.startLaboratoriesConnectionStatusCheck(0,this.props.LCA);
 
       console.log("startRobotGetData");
       this.props.startRobotGetData(0);
@@ -272,6 +276,12 @@ const mapDispatchToProps = dispatch => ({
   startRobotsConnectionStatusCheck: (robot_number,RCA) => {
 
        dispatch(ActionRobotsConnectionStatusCheckStart(robot_number,RCA));
+
+  },
+
+  startLaboratoriesConnectionStatusCheck: (laboratory_number,LCA) => {
+
+       dispatch(ActionLaboratoriesConnectionStatusCheckStart(laboratory_number,LCA));
 
   },
 
