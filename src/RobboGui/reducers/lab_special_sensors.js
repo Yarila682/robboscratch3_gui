@@ -1,4 +1,5 @@
-import SensorsAPI from '../sensors_api'
+import SensorsAPI from '../sensors_api';
+import {immutable_copy} from '../lib/lib.js';
 
 function init_state(){
 
@@ -14,8 +15,8 @@ function init_state(){
             sensor_name:`lab-button`,
             sensor_type: `lab-button`,
             is_sensor_version_new: true,
-            sensor_active: false,
-            sensor_data:{value:"test"},
+            sensor_active: true,
+            sensor_data:[],
             sensor_device_name:"lab",
             sensor_field_text:`Button ${i + 1} :`
 
@@ -30,7 +31,7 @@ function init_state(){
         sensor_name:`lab-light`,
         sensor_type:`lab-light`,
         is_sensor_version_new: true,
-        sensor_active: false,
+        sensor_active: true,
         sensor_data:{value:"test"},
         sensor_device_name:"lab",
         sensor_field_text:`Light :`
@@ -43,7 +44,7 @@ function init_state(){
         sensor_name:`lab-sound`,
         sensor_type:`lab-sound`,
         is_sensor_version_new: true,
-        sensor_active: false,
+        sensor_active: true,
         sensor_data:{value:"test"},
         sensor_device_name:"lab",
         sensor_field_text:`Sound :`
@@ -52,14 +53,14 @@ function init_state(){
 
   sensors[7]= {
 
-        sensor_id:`lab-lever`,
-        sensor_name:`lab-lever`,
-        sensor_type:`lab-lever`,
+        sensor_id:`lab-slider`,
+        sensor_name:`lab-slider`,
+        sensor_type:`lab-slider`,
         is_sensor_version_new: true,
-        sensor_active: false,
+        sensor_active: true,
         sensor_data:{value:"test"},
         sensor_device_name:"lab",
-        sensor_field_text:`Lever:`
+        sensor_field_text:`Slider:`
 
   }
 
@@ -79,20 +80,16 @@ const  reducer = function (state, action) {
 
 switch (action.type) {
 
-  case 'TEST':
+  case 'LABORATORY_GET_SENSORS_DATA':
+
+
+  sensors = immutable_copy(state);
+
+  sensors = handler_laboratory_get_sensors_data(sensors,action.payload);
 
 
 
-
-
-
-
-
-            
-
-
-    break;
-
+return sensors;
 
 
   default:
@@ -110,7 +107,30 @@ switch (action.type) {
 }
 
 
+const handler_laboratory_get_sensors_data = function (initial_sensors_state,payload){
 
+
+    let sensors_state = initial_sensors_state;
+
+
+    for (i=0;i<5;i++){
+
+      if (sensors_state[i].sensor_active){
+
+            sensors_state[i].sensor_data = payload.LCA.islaboratoryButtonPressed(i + 1);
+      }
+
+    }
+
+
+
+
+
+
+
+    return sensors_state;
+
+}
 
 
 export {

@@ -211,6 +211,39 @@ const ActionRobotGetDataStart = function(robot_number){
 
 }
 
+
+var LaboratoryGetDataInterval;
+
+const  ActionLaboratoryGetData = function(laboratory_number,LCA){
+
+  return {
+
+      type: 'LABORATORY_GET_SENSORS_DATA',
+      payload:{
+
+          laboratory_number:laboratory_number,
+          LCA:LCA
+      }
+  }
+
+}
+
+const ActionLaboratoryGetDataStart = function(laboratory_number){
+
+
+
+
+  return (dispatch) => {
+    LaboratoryGetDataInterval =   setInterval(() => {
+
+          dispatch(ActionLaboratoryGetData(robot_number,LCA_local));
+      }, 25);
+  };
+
+
+
+}
+
 const ActionSearchRobotDevices = function(RCA){
 
 
@@ -356,6 +389,7 @@ export {
     ActionRobotStopSearchProcess,
     ActionRobotStopDataRecievingProcess,
     ActionRobotGetDataStart,
+    ActionLaboratoryGetDataStart,
     ActionTriggerOldAnalogSensorState,
     ActionTriggerColorCorrectorTable,
     ActionDropColorCorrectorWindow,

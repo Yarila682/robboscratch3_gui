@@ -45,7 +45,7 @@ class SaveButton extends React.Component {
                 tooltipId="save-button"
             >
                 <ButtonComponent
-                    disabled
+                    disabled 
                     onClick={this.handleClick}
                     {...props}
                 >

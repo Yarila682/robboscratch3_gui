@@ -18,7 +18,7 @@ const initialState = {
     [MODAL_COSTUME_LIBRARY]: false,
     [MODAL_EXTENSION_LIBRARY]: false,
     [MODAL_FEEDBACK_FORM]: false,
-    [MODAL_PREVIEW_INFO]: true,
+    [MODAL_PREVIEW_INFO]: false, //true //modified_by_Yaroslav
     [MODAL_SOUND_LIBRARY]: false,
     [MODAL_SPRITE_LIBRARY]: false,
     [MODAL_SOUND_RECORDER]: false
