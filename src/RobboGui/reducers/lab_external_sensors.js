@@ -1,4 +1,5 @@
-import SensorsAPI from '../sensors_api'
+import SensorsAPI from '../sensors_api';
+import {immutable_copy} from '../lib/lib.js';
 
 function init_state(){
 
@@ -15,7 +16,7 @@ function init_state(){
             sensor_type:  SensorsAPI.getSensorInitType(),
             is_sensor_version_new: true,
             sensor_active: false,
-            sensor_data:{value:"test"},
+            sensor_data:[],
             sensor_device_name:"lab",
             sensor_field_text:`Analog ${i} :`
 
@@ -28,7 +29,7 @@ function init_state(){
         sensor_type:  "DIGITAL",
         is_sensor_version_new: true,
         sensor_active: false,
-        sensor_data:{value:"test"},
+        sensor_data:[],
         sensor_device_name:"lab",
         sensor_field_text:`DIGITAL :`
 
@@ -58,7 +59,7 @@ switch (action.type) {
 
 
 
-            sensors = [...state];
+              sensors = immutable_copy(state);
 
             sensors = handler_trigger_sensor_name(sensors,action.payload);
 
@@ -68,6 +69,17 @@ switch (action.type) {
 
 
     break;
+
+    case 'LABORATORY_GET_SENSORS_DATA':
+
+
+    sensors = immutable_copy(state);
+
+    sensors = handler_laboratory_get_sensors_data(sensors,action.payload);
+
+
+
+  return sensors;
 
   default:
 
@@ -83,6 +95,32 @@ switch (action.type) {
 
 }
 
+const handler_laboratory_get_sensors_data = function (initial_sensors_state,payload){
+
+
+    let sensors_state = initial_sensors_state;
+
+
+    for (i=0;i<2;i++){
+
+      if (sensors_state[i].sensor_active){
+
+            sensors_state[i].sensor_data = payload.LCA.getSensorData("A"+i,sensors_state[i].sensor_name);
+      }
+
+    }
+
+
+    if (sensors_state[i].sensor_active){
+
+        sensors_state[2].sensor_data = payload.LCA.labDigitalPinState(0,"D13");
+    }
+
+
+return sensors_state;
+
+}
+
 
 const handler_trigger_sensor_name = function (initial_sensors_state,payload){
 
@@ -95,8 +133,17 @@ const handler_trigger_sensor_name = function (initial_sensors_state,payload){
 
     sensors_state[sensor_id].sensor_name = sensor_name;
 
+    payload.LCA.setSensorType("A" + sensor_id,sensor_name)
 
 
+    if (sensor_name != "nosensor"){
+
+          sensors_state[sensor_id].sensor_active = true;
+
+    }else{
+
+      sensors_state[sensor_id].sensor_active = false;
+    }
 
 
 

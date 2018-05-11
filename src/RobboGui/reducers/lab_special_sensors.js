@@ -32,7 +32,7 @@ function init_state(){
         sensor_type:`lab-light`,
         is_sensor_version_new: true,
         sensor_active: true,
-        sensor_data:{value:"test"},
+        sensor_data:[],
         sensor_device_name:"lab",
         sensor_field_text:`Light :`
 
@@ -45,7 +45,7 @@ function init_state(){
         sensor_type:`lab-sound`,
         is_sensor_version_new: true,
         sensor_active: true,
-        sensor_data:{value:"test"},
+        sensor_data:[],
         sensor_device_name:"lab",
         sensor_field_text:`Sound :`
 
@@ -58,7 +58,7 @@ function init_state(){
         sensor_type:`lab-slider`,
         is_sensor_version_new: true,
         sensor_active: true,
-        sensor_data:{value:"test"},
+        sensor_data:[],
         sensor_device_name:"lab",
         sensor_field_text:`Slider:`
 
@@ -122,7 +122,16 @@ const handler_laboratory_get_sensors_data = function (initial_sensors_state,payl
 
     }
 
+        //light
+        sensors_state[5].sensor_data = payload.LCA.getSensorData("light");
 
+
+        //sound
+        sensors_state[6].sensor_data = payload.LCA.getSensorData("sound");
+
+
+        //slider
+        sensors_state[7].sensor_data = payload.LCA.getSensorData("slider");
 
 
 

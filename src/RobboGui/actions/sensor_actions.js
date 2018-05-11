@@ -99,7 +99,7 @@ if (payload.startsWith("robot-")){
     type: 'TRIGGER_LAB_SENSOR_NAME',
     payload:{
       sensor_name_data:data,
-      RCA:RCA_local
+      LCA:LCA_local
     }
   };
 

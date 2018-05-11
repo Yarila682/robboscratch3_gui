@@ -13,6 +13,7 @@ import {ActionTriggerSensorsPalette} from './actions/sensor_actions';
 import {ActionRobotsConnectionStatusCheckStart} from './actions/sensor_actions';
 import {ActionLaboratoriesConnectionStatusCheckStart} from './actions/sensor_actions';
 import {ActionRobotGetDataStart} from  './actions/sensor_actions';
+import {ActionLaboratoryGetDataStart} from './actions/sensor_actions';
 
 
 
@@ -33,6 +34,9 @@ class SensorPallete extends Component {
 
       console.log("startRobotGetData");
       this.props.startRobotGetData(0);
+
+      console.log("startLaboratoryGetData");
+      this.props.startLaboratoryGetData(0);
 
   }
 
@@ -180,7 +184,8 @@ class SensorPallete extends Component {
 
                                                   components.push(<SensorDataBlockComponent key={sensor.sensor_id} sensorId={sensor.sensor_id}
                                                                       deviceName={sensor.sensor_device_name} sensorType={sensor.sensor_type}
-                                                                      sensorFieldText={sensor.sensor_field_text} />
+                                                                      sensorFieldText={sensor.sensor_field_text}  sensorName={sensor.sensor_name}
+                                                                      sensorData={sensor.sensor_data}  />
 
 
                                                                   );
@@ -288,6 +293,12 @@ const mapDispatchToProps = dispatch => ({
   startRobotGetData: (robot_number) => {
 
       dispatch(ActionRobotGetDataStart(robot_number));
+
+  },
+
+  startLaboratoryGetData: (laboratory_number) => {
+
+      dispatch(ActionLaboratoryGetDataStart(laboratory_number));
 
   }
 
