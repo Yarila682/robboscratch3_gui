@@ -236,7 +236,7 @@ const ActionLaboratoryGetDataStart = function(laboratory_number){
   return (dispatch) => {
     LaboratoryGetDataInterval =   setInterval(() => {
 
-          dispatch(ActionLaboratoryGetData(robot_number,LCA_local));
+          dispatch(ActionLaboratoryGetData(laboratory_number,LCA_local));
       }, 25);
   };
 

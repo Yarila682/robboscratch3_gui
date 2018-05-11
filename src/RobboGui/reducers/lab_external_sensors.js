@@ -100,6 +100,7 @@ const handler_laboratory_get_sensors_data = function (initial_sensors_state,payl
 
     let sensors_state = initial_sensors_state;
 
+    let i = 0;
 
     for (i=0;i<2;i++){
 
@@ -113,7 +114,7 @@ const handler_laboratory_get_sensors_data = function (initial_sensors_state,payl
 
     if (sensors_state[i].sensor_active){
 
-        sensors_state[2].sensor_data = payload.LCA.labDigitalPinState(0,"D13");
+        sensors_state[2].sensor_data = (payload.LCA.labDigitalPinState(0,"D13") == true)?"true":"false";
     }
 
 
@@ -126,7 +127,7 @@ const handler_trigger_sensor_name = function (initial_sensors_state,payload){
 
     let sensors_state = initial_sensors_state;
 
-    let data = payload.split("_");
+    let data = payload.sensor_name_data.split("_");
 
     let sensor_name = data[0].replace("sensor-name-","");
     let sensor_id =   data[1].replace("CallerSensorId-","");
