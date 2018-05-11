@@ -118,7 +118,7 @@ const handler_laboratory_get_sensors_data = function (initial_sensors_state,payl
 
       if (sensors_state[i].sensor_active){
 
-            sensors_state[i].sensor_data = (payload.LCA.islaboratoryButtonPressed(i + 1) == true)?"true":"false";
+            sensors_state[i].sensor_data = (payload.LCA.islaboratoryButtonPressed(0,i + 1) == true)?"true":"false";
       }
 
     }

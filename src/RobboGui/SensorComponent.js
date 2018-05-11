@@ -47,7 +47,7 @@ class SensorComponent extends Component {
 
                           if  (this.props.isSensorVersionNew)
                             return    <NewVersionSensorComponent sensorId={this.props.sensorId} sensorPictureUrl={this.props.sensorPictureUrl}  fieldText={this.props.sensorFieldText}
-                                            sensorName={this.props.sensor_name} sensorData={this.props.sensor_data}      />
+                                            sensorName={this.props.sensorName} sensorData={this.props.sensorData}      />
 
 
 
