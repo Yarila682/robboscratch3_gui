@@ -82,13 +82,13 @@ class ColorCorrectorTableComponent extends Component {
        lcs_3.addEventListener("input",this.handleSliderChange.bind(this,"left-color-slider-3"), false);
 
        let rcs_1 = document.getElementById("right-color-slider-1");
-       rcs_1.addEventListener("input",this.handleSliderChange.bind(this,"right-color-slider-1"), false);
+       rcs_1.addEventListener("input",this.handleSliderChange.bind(this,"right-color-slider-1",this.props.RCA,this.props.color_corrector_table.sensor_caller_id), false);
 
        let rcs_2 = document.getElementById("right-color-slider-2");
-       rcs_2.addEventListener("input",this.handleSliderChange.bind(this,"right-color-slider-2"), false);
+       rcs_2.addEventListener("input",this.handleSliderChange.bind(this,"right-color-slider-2",this.props.RCA,this.props.color_corrector_table.sensor_caller_id), false);
 
        let rcs_3 = document.getElementById("right-color-slider-3");
-       rcs_3.addEventListener("input",this.handleSliderChange.bind(this,"right-color-slider-3"), false);
+       rcs_3.addEventListener("input",this.handleSliderChange.bind(this,"right-color-slider-3",this.props.RCA,this.props.color_corrector_table.sensor_caller_id), false);
 
 
 
@@ -102,7 +102,7 @@ class ColorCorrectorTableComponent extends Component {
 
 
 
-  handleSliderChange(slider_id,event){
+  handleSliderChange(slider_id,RCA,sensor_caller_id,event){
 
     function isInteger(num) {
       return (num ^ 0) === num;
@@ -295,6 +295,15 @@ class ColorCorrectorTableComponent extends Component {
 
        }
 
+          let red_color_slider_value      =   document.getElementById("right-color-slider-1").value;
+          let green_color_slider_value    =   document.getElementById("right-color-slider-2").value;
+          let blue_color_slider_value     =   document.getElementById("right-color-slider-3").value;
+
+
+
+
+          RCA.setColorKoefs(sensor_caller_id,red_color_slider_value,green_color_slider_value, blue_color_slider_value);
+
      }else{
 
           document.getElementById(slider_id+"-value").innerHTML =  document.getElementById(slider_id).value + "%";
@@ -316,6 +325,50 @@ class ColorCorrectorTableComponent extends Component {
 
     mouse_coords.x = event.clientX;
     mouse_coords.y = event.clientY;
+
+  }
+
+  automaticCollorCorrection(RCA,sensor_caller_id){
+
+        RCA.colorAutoCorection(sensor_caller_id);
+
+
+
+       document.getElementById("right-color-slider-1").value = RCA.getColorKoefs(sensor_caller_id,"red");
+       document.getElementById("right-color-slider-2").value = RCA.getColorKoefs(sensor_caller_id,"green");
+       document.getElementById("right-color-slider-3").value = RCA.getColorKoefs(sensor_caller_id,"blue");
+
+
+        document.getElementById("right-color-slider-1"+"-value").innerHTML =  document.getElementById("right-color-slider-1").value + "%";
+        document.getElementById("right-color-slider-2"+"-value").innerHTML =  document.getElementById("right-color-slider-2").value + "%";
+        document.getElementById("right-color-slider-3"+"-value").innerHTML =  document.getElementById("right-color-slider-3").value + "%";
+
+  }
+
+  onButtonApplyChangesClick(RCA, sensor_id){
+
+       console.log("onButtonApplyChangesClick" );
+
+
+       var color_corrector_table_object = {};
+
+       colors_arr.forEach(function(color,color_index){
+
+
+             let color_name = color.toLowerCase();
+
+               color_corrector_table_object[color_name] = {};
+
+             correctors_arr.forEach(function(corrector,corrector_index){
+
+                   color_corrector_table_object[color_name][corrector] = document.getElementById(`color-${color_name}-corrector-${corrector}`).value;
+
+             });
+
+       });
+
+
+        RCA.setColorFilterTable(sensor_id, color_corrector_table_object );
 
   }
 
@@ -566,7 +619,8 @@ class ColorCorrectorTableComponent extends Component {
                                     </div>
 
                                     <div className={styles.automatic_correcton_button_right}>
-                                          <button>Automatic correction</button>
+                                          <button  onClick={this.automaticCollorCorrection.bind(this,this.props.RCA,
+                                                    this.props.color_corrector_table.sensor_caller_id)} >Automatic correction</button>
 
                                     </div>
 
@@ -674,6 +728,7 @@ class ColorCorrectorTableComponent extends Component {
                           <button className={styles.buttons}>Close</button>
                           <button className={styles.buttons} onClick={this.onButtonSaveClick.bind(this)}>Save</button>
                           <button className={styles.buttons} onClick={this.onButtonLoadClick.bind(this)}>Load</button>
+                          <button className={styles.buttons} onClick={this.onButtonApplyChangesClick.bind(this, this.props.RCA)}>Apply changes</button>
 
                         </div>
 

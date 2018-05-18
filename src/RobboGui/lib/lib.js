@@ -58,9 +58,21 @@ const color_filter = function(filter_color_table){
 
 }
 
+
+const color_corrector = function(rgb_array){
+
+
+
+    
+
+
+
+
+}
+
 export {
 
     immutable_copy,
     color_filter,
-
+    color_corrector
 };

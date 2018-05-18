@@ -142,7 +142,7 @@ class RobboGui extends Component {
 
 
 
-         <ColorCorrectorTableComponent/>
+         <ColorCorrectorTableComponent RCA={this.RCA}/>
 
 
 
