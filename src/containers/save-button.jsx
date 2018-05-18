@@ -20,6 +20,8 @@ class SaveButton extends React.Component {
         // Download project data into a file - create link element,
         // simulate click on it, and then remove it.
         const saveLink = document.createElement('a');
+        saveLink.setAttribute("target","_blank");
+
         document.body.appendChild(saveLink);
 
         const data = new Blob([json], {type: 'text'});
@@ -45,7 +47,7 @@ class SaveButton extends React.Component {
                 tooltipId="save-button"
             >
                 <ButtonComponent
-                    disabled 
+                    enabled
                     onClick={this.handleClick}
                     {...props}
                 >

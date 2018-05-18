@@ -22,9 +22,9 @@ class SpriteSelectorItem extends React.Component {
     handleDelete () {
         // @todo add i18n here
         // eslint-disable-next-line no-alert
-        if (window.confirm('Are you sure you want to delete this?')) {
+      //  if (window.confirm('Are you sure you want to delete this?')) {  //modified_by_Yaroslav
             this.props.onDeleteButtonClick(this.props.id);
-        }
+      //  }
     }
     handleDuplicate (e) {
         e.stopPropagation(); // To prevent from bubbling back to handleClick

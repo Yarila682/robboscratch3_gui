@@ -19,13 +19,13 @@ const LoadButtonComponent = ({
             tooltipId="load-button"
         >
             <ButtonComponent
-                disabled
+                enabled
                 onClick={onClick}
             >
                 {title}
             </ButtonComponent>
             <input
-                disabled
+                enabled
                 className={styles.fileInput}
                 ref={inputRef}
                 type="file"

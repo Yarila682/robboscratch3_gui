@@ -200,7 +200,7 @@ const handler_robot_get_sensors_data = function (initial_sensors_state,payload){
             if (sensor.sensor_name == "color"){
 
 
-                  sensor.sensor_data = payload.RCA.getSensorData(sensor_index);
+                  sensor.sensor_data = payload.RCA.colorFilter(sensor_index)
 
             }else{
 
