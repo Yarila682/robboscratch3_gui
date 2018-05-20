@@ -728,7 +728,7 @@ class ColorCorrectorTableComponent extends Component {
                           <button className={styles.buttons}>Close</button>
                           <button className={styles.buttons} onClick={this.onButtonSaveClick.bind(this)}>Save</button>
                           <button className={styles.buttons} onClick={this.onButtonLoadClick.bind(this)}>Load</button>
-                          <button className={styles.buttons} onClick={this.onButtonApplyChangesClick.bind(this, this.props.RCA)}>Apply changes</button>
+                          <button className={styles.buttons} onClick={this.onButtonApplyChangesClick.bind(this, this.props.RCA, this.props.color_corrector_table.sensor_caller_id)}>Apply changes</button>
 
                         </div>
 
