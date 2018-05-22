@@ -40,6 +40,18 @@ class CommonFieldsSensorComponent extends Component {
                             }else if (this.props.sensorName  == "color"){
 
 
+                              if (sensors_data[0] == -1){
+
+                                return (
+
+                                     <div>
+
+                                        {"---"}
+
+                                     </div>
+                                )
+
+                              }else{
 
                               return (
 
@@ -53,6 +65,8 @@ class CommonFieldsSensorComponent extends Component {
 
                                  </div>
                               )
+
+                            }
 
 
                             }else if (Array.isArray(sensors_data) ){

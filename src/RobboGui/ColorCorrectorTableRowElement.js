@@ -9,8 +9,7 @@ import ColorCorrectorTableColElement from './ColorCorrectorTableColElement';
 
 class ColorCorrectorTableRowElement extends Component {
 
-
-
+    
 
   render() {
 
@@ -20,6 +19,8 @@ class ColorCorrectorTableRowElement extends Component {
     var value = this.props.colorIntervalValue;
 
     var col_id_to_corrector_arr = ["R","G","B","Bright"];
+
+    var color_filter_table = this.props.RCA.getColorFilterTable(this.props.sensorID);
 
       return  (
 
@@ -49,7 +50,8 @@ class ColorCorrectorTableRowElement extends Component {
                     col_id_to_corrector_arr.map(function(corrector,index){
 
 
-                          return   <ColorCorrectorTableColElement key={`color-row-${row_id}-col-${index+2}`} rowId={row_id} colId={index+2} colorName={color_name} correctorName={corrector} colorIntervalValue={value}/>
+                          return   <ColorCorrectorTableColElement key={`color-row-${row_id}-col-${index+2}`} rowId={row_id} colId={index+2} colorName={color_name} correctorName={corrector}
+                                                                  colorIntervalValue={color_filter_table[color_name.toLowerCase()][corrector]}/>
                     })
 
               }

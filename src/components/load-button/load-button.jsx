@@ -14,10 +14,7 @@ const LoadButtonComponent = ({
     ...props
 }) => (
     <span {...props}>
-        <ComingSoonTooltip
-            place="bottom"
-            tooltipId="load-button"
-        >
+
             <ButtonComponent
                 enabled
                 onClick={onClick}
@@ -31,7 +28,7 @@ const LoadButtonComponent = ({
                 type="file"
                 onChange={onChange}
             />
-        </ComingSoonTooltip>
+        
     </span>
 );
 

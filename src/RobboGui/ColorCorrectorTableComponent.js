@@ -98,8 +98,32 @@ class ColorCorrectorTableComponent extends Component {
        let cctc = ReactDOM.findDOMNode(this);
        cctc.addEventListener("dragstart",this.handleDragStart.bind(this,"dragstart"), false);
 
-  }
 
+
+}
+
+    componentDidUpdate () {
+
+
+      //update colors filter table
+      var color_corrector_table_object = this.props.RCA.getColorFilterTable(this.props.color_corrector_table.sensor_caller_id);
+
+      colors_arr.forEach(function(color,color_index){
+
+
+            let color_name = color.toLowerCase();
+
+
+
+            correctors_arr.forEach(function(corrector,corrector_index){
+
+                 document.getElementById(`color-${color_name}-corrector-${corrector}`).value =  color_corrector_table_object[color_name][corrector];
+
+            });
+
+      });
+
+    }
 
 
   handleSliderChange(slider_id,RCA,sensor_caller_id,event){
@@ -395,15 +419,74 @@ class ColorCorrectorTableComponent extends Component {
         });
 
 
-        var pom = document.createElement('a');
+      //  var pom = document.createElement('a');
 
         var contents = new Blob([JSON.stringify(color_corrector_table_object,null,' ')], {type : 'application/json'});
 
-        pom.setAttribute('href', URL.createObjectURL(contents, {
-           type: "application/json"
-        }));
-        pom.setAttribute('download', "color_corrector_table"+ ".json");
-        pom.click();
+
+        function exportToFileEntry(fileEntry) {
+
+
+
+
+
+
+              chrome.fileSystem.getDisplayPath(fileEntry, function(path) {
+
+              });
+
+
+
+                fileEntry.createWriter(function(fileWriter) {
+
+                  var truncated = false;
+              //    var blob = new Blob([contents]);
+
+                  fileWriter.onwriteend = function(e) {
+                    // if (!truncated) {
+                    //   truncated = true;
+                    //   // You need to explicitly set the file size to truncate
+                    //   // any content that might have been there before
+                    //   this.truncate(blob.size);
+                    //
+                    //   console.log(`Saving color table  to ${path} completed`);
+                    //
+                    //   return;
+                    // }
+
+                      console.log(`Saving color table to ${path} completed`);
+
+                //    status.innerText = 'Export to '+fileDisplayPath+' completed';
+                  };
+
+                  fileWriter.onerror = function(e) {
+
+                    console.log(`Saving color table failed: ${e.toString()}`);
+
+                  };
+
+                  fileWriter.write(contents);
+
+                });
+
+    }
+
+
+        chrome.fileSystem.chooseEntry( {
+
+              type: 'saveFile',
+              suggestedName: `color_table.json`,   //  suggestedName: `project-${timestamp}.json`,
+              accepts: [ { description: 'Robboscratch3 color table files (*.json)',
+                          extensions: ['json']} ],
+              acceptsAllTypes: true
+              }, exportToFileEntry);
+
+
+        // pom.setAttribute('href', URL.createObjectURL(contents, {
+        //    type: "application/json"
+        // }));
+        // pom.setAttribute('download', "color_corrector_table"+ ".json");
+        // pom.click();
   }
 
 
@@ -477,6 +560,9 @@ class ColorCorrectorTableComponent extends Component {
     var top   =  this.props.color_corrector_table.position_top;
     var left  =  this.props.color_corrector_table.position_left;
 
+    var sensor_caller_id = this.props.color_corrector_table.sensor_caller_id;
+    var RCA = this.props.RCA;
+
 
 
     return this.props.connectDragSource(
@@ -507,7 +593,7 @@ class ColorCorrectorTableComponent extends Component {
 
                           id="color-corrector-table-tittle">
 
-                        Color corrector {this.props.color_corrector_table.sensor_caller_id}
+                        Color corrector {this.props.color_corrector_table.sensor_caller_id+1}
 
                     </div>
 
@@ -712,7 +798,8 @@ class ColorCorrectorTableComponent extends Component {
 
                                         colors_arr.map(function(color_name,index){
 
-                                          return    <ColorCorrectorTableRowElement key={`color-row-${index+2}`} rowId={index+2} colorName={color_name} colorIntervalValue={"20-30"}/>
+                                          return    <ColorCorrectorTableRowElement key={`color-row-${index+2}`} rowId={index+2} colorName={color_name} colorIntervalValue={"20-30"} RCA={RCA}
+                                                                                    sensorID={sensor_caller_id} />
 
                                         })
 

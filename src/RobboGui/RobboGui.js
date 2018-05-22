@@ -13,6 +13,7 @@ import {ActionRobotStopSearchProcess} from './actions/sensor_actions';
 import {ActionRobotStopDataRecievingProcess}  from './actions/sensor_actions';
 import {ActionTriggerExtensionPack} from './actions/sensor_actions';
 import {ActionTriggerColorCorrectorTable} from './actions/sensor_actions';
+import RobboMenu from './RobboMenu';
 import styles from './RobboGui.css'
 
 
@@ -143,6 +144,8 @@ class RobboGui extends Component {
 
 
          <ColorCorrectorTableComponent RCA={this.RCA}/>
+
+         <RobboMenu VM={this.props.vm} />
 
 
 
