@@ -128,10 +128,7 @@ class RobboGui extends Component {
 
 
 
-             <button className="connector-start-stop" onClick={this.stopSearchProcess.bind(this)}>Stop searching</button>
-             <button className="connector-start-stop" onClick={this.stopDataRecievingProcess.bind(this)}>Stop data recieve!</button>
-             <button className="connector-start-stop" onClick={this.triggerExtensionPack.bind(this)}>Trigger extension pack</button>
-            <button className="connector-start-stop" onClick={this.triggerColorCorrectorTable.bind(this,0)}>Trigger color corrector table!</button>
+            
 
 
 

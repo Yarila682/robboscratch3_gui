@@ -10,7 +10,8 @@ function init_state(){
 
             laboratory_number:i,
             laboratory_status: "DISCONNECTED",
-            laboratory_connected: false
+            laboratory_connected: false,
+            laboratory_is_searching:false
 
 
       }
@@ -44,6 +45,7 @@ switch (action.type) {
 
 
             laboratories[0].laboratory_connected =   action.payload.LCA.isLaboratoryConnected(0);
+            laboratories[0].laboratory_is_searching   =   action.payload.LCA.isLaboratorySearching();
 
 
             return laboratories;

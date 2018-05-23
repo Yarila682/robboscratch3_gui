@@ -17,6 +17,23 @@ const ActionTriggerExtensionPack = function(){
 
 }
 
+const ActionTriggerLabExtSensors = function(){
+
+
+  return {
+    
+    type: 'TRIGGER_LAB_EXT_SENSORS',
+
+    payload:{
+
+
+        LCA:LCA_local
+    }
+  };
+
+
+}
+
 const ActionTriggerSensorChooseWindow = function(payload){
 
 
@@ -406,6 +423,7 @@ export {
     ActionTriggerColorCorrectorTable,
     ActionDropColorCorrectorWindow,
     ActionSearchLaboratoryDevices,
-    ActionTriggerRobboMenu
+    ActionTriggerRobboMenu,
+    ActionTriggerLabExtSensors
 
 };

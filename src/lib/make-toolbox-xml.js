@@ -941,10 +941,10 @@ const xmlClose = '</xml>';
  * @param {string?} categoriesXML - null for default toolbox, or an XML string with <category> elements.
  * @returns {string} - a ScratchBlocks-style XML document for the contents of the toolbox.
  */
-const makeToolboxXML = function (isStage, targetId, isExtensionPackActivated, categoriesXML) {
+const makeToolboxXML = function (isStage, targetId, isExtensionPackActivated, isExternalSensorsActivated,categoriesXML) {
     const gap = [categorySeparator];
 
-    const isExternalSensorsActivated = true; //modified_by_Yaroslav
+  //  const isExternalSensorsActivated = true; //modified_by_Yaroslav
 
     const everything = [
         xmlOpen,

@@ -10,7 +10,8 @@ function init_state(){
 
             robot_number:i,
             robot_status: "DISCONNECTED",
-            robot_connected: false
+            robot_connected: false,
+            robot_is_searching:false
 
 
       }
@@ -43,7 +44,8 @@ switch (action.type) {
 
 
 
-            robots[0].robot_connected =   action.payload.RCA.isRobotConnected(0);
+            robots[0].robot_connected     =   action.payload.RCA.isRobotConnected(0);
+            robots[0].robot_is_searching  =   action.payload.RCA.isRobotSearching();
 
 
             return robots;

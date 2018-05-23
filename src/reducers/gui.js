@@ -23,6 +23,7 @@ import laboratories from '../RobboGui/reducers/laboratories';
 import extension_pack from '../RobboGui/reducers/extension_pack';
 import color_corrector_table from '../RobboGui/reducers/color_corrector_table'
 import robbo_menu from '../RobboGui/reducers/robbo_menu'
+import settings from '../RobboGui/reducers/settings'
 
 
 export default combineReducers({
@@ -49,6 +50,7 @@ export default combineReducers({
     laboratories:laboratories,
     extension_pack:extension_pack,
     color_corrector_table:color_corrector_table,
-    robbo_menu:robbo_menu
+    robbo_menu:robbo_menu,
+    settings:settings
 
 });

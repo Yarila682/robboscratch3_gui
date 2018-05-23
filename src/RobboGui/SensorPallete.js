@@ -76,7 +76,12 @@ class SensorPallete extends Component {
 
                   Robot
 
-                  <div id="robot-searching-icon" className={styles.robot_loading_icon}>
+                  <div id="robot-searching-icon" className={classNames(
+
+                                {[styles.robot_loading_icon]: true},
+                                {[styles.robot_loading_icon_hidden]: ((this.props.robots[0].robot_connected) || (!this.props.robots[0].robot_is_searching))},
+                                {[styles.robot_loading_icon_showing]: ((this.props.robots[0].robot_is_searching) && (!this.props.robots[0].robot_connected))}
+                                  )}>
 
 
                   </div>
@@ -154,6 +159,15 @@ class SensorPallete extends Component {
 
             <div id="laboratory-sensors-tittle" className={styles.sensor_panel_tittle}>Laboratory
 
+              <div id="laboratory-searching-icon" className={classNames(
+
+                            {[styles.laboratory_loading_icon]: true},
+                            {[styles.laboratory_loading_icon_hidden]: (( this.props.laboratories[0].laboratory_connected) || (!this.props.laboratories[0].laboratory_is_searching))},
+                            {[styles.laboratory_loading_icon_showing]: ((this.props.laboratories[0].laboratory_is_searching) && (!this.props.laboratories[0].laboratory_connected))}
+                              )}>
+
+
+              </div>
 
               <div id="laboratory-connection-status" className={classNames(
 
@@ -202,6 +216,8 @@ class SensorPallete extends Component {
                                                                               );
 
 
+                                          if (this.props.settings.is_lab_ext_enabled){                                      
+
                                           this.props.lab_external_sensors.map((sensor, index) =>
 
                                              {
@@ -223,6 +239,8 @@ class SensorPallete extends Component {
                                              }
 
                                                                               )
+
+                                                            }
 
 
 
@@ -263,7 +281,8 @@ const mapStateToProps =  state => ({
       lab_special_sensors:  state.lab_special_sensors,
       sensors_choose_window: state.sensors_choose_window,
       robots:state.robots,
-      laboratories: state.laboratories
+      laboratories: state.laboratories,
+      settings:state.settings
   });
 
 const mapDispatchToProps = dispatch => ({
