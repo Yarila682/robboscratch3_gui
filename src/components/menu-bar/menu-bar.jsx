@@ -17,6 +17,8 @@ import styles from './menu-bar.css';
 import feedbackIcon from './icon--feedback.svg';
 import scratchLogo from './scratch-logo.svg';
 
+import {ActionTriggerRobboMenu} from '../../RobboGui/actions/sensor_actions.js'; //Robbo //modified_by_Yaroslav
+
 const MenuBar = props => (
     <Box
         className={classNames({
@@ -35,25 +37,15 @@ const MenuBar = props => (
             <SaveButton className={styles.menuItem} />
             <LoadButton className={styles.menuItem} />
             <LanguageSelector className={styles.menuItem} />
+            <div className={styles.trigger_robbo_menu} onClick={props.onTriggerRobboMenu}>
+
+                  Trigger robbo menu.
+            </div>
+
+          
         </div>
         <div className={styles.feedbackButtonWrapper}>
-            <Button
-                className={styles.feedbackButton}
-                onClick={props.onGiveFeedback}
-            >
-                <img
-                    className={styles.feedbackButtonIcon}
-                    draggable={false}
-                    src={feedbackIcon}
-                />
-                <span className={styles.feedbackText}>
-                    <FormattedMessage
-                        defaultMessage="Give Feedback"
-                        description="Label for feedback form modal button"
-                        id="gui.menuBar.giveFeedback"
-                    />
-                </span>
-            </Button>
+
         </div>
     </Box>
 );
@@ -65,8 +57,14 @@ MenuBar.propTypes = {
 const mapStateToProps = () => ({});
 
 const mapDispatchToProps = dispatch => ({
+
     onGiveFeedback: () => {
         dispatch(openFeedbackForm());
+    },
+
+    onTriggerRobboMenu: () => {
+
+          dispatch(ActionTriggerRobboMenu());
     }
 });
 

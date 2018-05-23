@@ -76,6 +76,11 @@ class SensorPallete extends Component {
 
                   Robot
 
+                  <div id="robot-searching-icon" className={styles.robot_loading_icon}>
+
+
+                  </div>
+
                  <div id="robot-connection-status" className={classNames(
 
                                {[styles.robot_connection_status]: true},

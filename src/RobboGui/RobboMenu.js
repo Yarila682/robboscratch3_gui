@@ -73,18 +73,15 @@ class RobboMenu extends Component {
 
       <div id="robbo-menu" className={classNames(
 
-                    {[styles.robbo_menu]: true}
-
+                    {[styles.robbo_menu]: true},
+                    {[styles.robbo_menu_show]:   this.props.robbo_menu.isShowing},
+                    {[styles.robbo_menu_hidden]: !this.props.robbo_menu.isShowing}
 
 
                     )}>
 
 
-          <div id="search-devices" onClick={this.searchDevices.bind(this)} className={classNames(
-
-                        {[styles.robbo_menu_item]: true}
-
-                          )}> Search devices  </div>
+        
 
           <div id="stop-search-process" onClick={this.stopSearchProcess.bind(this)} className={classNames(
 
@@ -151,7 +148,7 @@ class RobboMenu extends Component {
 const mapStateToProps =  state => ({
 
 
-
+    robbo_menu: state.robbo_menu
 
 
   });

@@ -127,7 +127,7 @@ class RobboGui extends Component {
          }
 
 
-              <button className="connector-start-stop" onClick={this.searchDevices.bind(this)}>Search devices</button>
+
              <button className="connector-start-stop" onClick={this.stopSearchProcess.bind(this)}>Stop searching</button>
              <button className="connector-start-stop" onClick={this.stopDataRecievingProcess.bind(this)}>Stop data recieve!</button>
              <button className="connector-start-stop" onClick={this.triggerExtensionPack.bind(this)}>Trigger extension pack</button>
@@ -147,7 +147,7 @@ class RobboGui extends Component {
 
          <RobboMenu VM={this.props.vm} />
 
-
+        <button className={styles.robbo_search_devices} onClick={this.searchDevices.bind(this)}>Search devices</button>
 
     </div>
   );

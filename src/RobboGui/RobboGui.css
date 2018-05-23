@@ -19,3 +19,18 @@
 
 
 }
+
+.robbo_search_devices{
+
+  position: absolute;
+  top:1%;
+  left:600px;
+
+  width:200px;
+  height: 30px;
+
+    color: white;
+    background-color: #005700;
+    border-radius: 10px;
+
+}

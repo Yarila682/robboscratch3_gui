@@ -116,3 +116,18 @@ text-align: center;
     background-color: red;
 
 }
+
+.robot_loading_icon{
+
+     background-image: url(/build/static/robbo_assets/searching.gif);
+    /* background-size: 30px; */
+    min-width: 20px;
+    min-height: 20px;
+    /* max-width: 30px; */
+    display: inline-block;
+    margin-left: 5px;
+    margin-right: 5px;
+
+    display:none;
+
+}

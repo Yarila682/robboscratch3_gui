@@ -374,7 +374,19 @@ const ActionDropColorCorrectorWindow = function(top,left){
 
 }
 
+const ActionTriggerRobboMenu = function(){
 
+  return {
+
+    type: 'TRIGGER_ROBBO_MENU',
+    payload:{
+
+
+
+    }
+  };
+
+}
 
 export {
 
@@ -393,6 +405,7 @@ export {
     ActionTriggerOldAnalogSensorState,
     ActionTriggerColorCorrectorTable,
     ActionDropColorCorrectorWindow,
-    ActionSearchLaboratoryDevices
+    ActionSearchLaboratoryDevices,
+    ActionTriggerRobboMenu
 
 };
