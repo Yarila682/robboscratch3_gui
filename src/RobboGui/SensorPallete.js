@@ -79,8 +79,8 @@ class SensorPallete extends Component {
                   <div id="robot-searching-icon" className={classNames(
 
                                 {[styles.robot_loading_icon]: true},
-                                {[styles.robot_loading_icon_hidden]: ((this.props.robots[0].robot_connected) || (!this.props.robots[0].robot_is_searching))},
-                                {[styles.robot_loading_icon_showing]: ((this.props.robots[0].robot_is_searching) && (!this.props.robots[0].robot_connected))}
+                                {[styles.robot_loading_icon_hidden]: (/*(this.props.robots[0].robot_connected) || */(!this.props.robots[0].robot_is_searching))},
+                                {[styles.robot_loading_icon_showing]: ((this.props.robots[0].robot_is_searching) /*&& (!this.props.robots[0].robot_connected)*/)}
                                   )}>
 
 
@@ -216,7 +216,7 @@ class SensorPallete extends Component {
                                                                               );
 
 
-                                          if (this.props.settings.is_lab_ext_enabled){                                      
+                                          if (this.props.settings.is_lab_ext_enabled){
 
                                           this.props.lab_external_sensors.map((sensor, index) =>
 

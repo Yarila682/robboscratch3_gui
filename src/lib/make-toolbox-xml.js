@@ -35,6 +35,16 @@ const laboratory  = function (isStage, targetId,isExternalSensorsActivated) {  /
           </value>
       </block>
 
+      <block type="lab_play_note">
+          <value name="LAB_NOTE">
+              <shadow type="math_number">
+                  <field name="NUM">48</field>
+              </shadow>
+          </value>
+      </block>
+
+
+
       <block type="lab_sensor">
           <value name="LAB_SENSOR">
               <shadow type="lab_sensors"/>
