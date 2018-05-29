@@ -28,6 +28,15 @@ const getStageSize = (
             stageSize.width = window.innerWidth;
             stageSize.height = stageSize.width * .75;
         }
+    }else{
+
+          if (window.innerHeight <= 800){
+
+            stageSize.width = 310;
+            stageSize.height = 190;
+
+          }
+
     }
 
     return stageSize;

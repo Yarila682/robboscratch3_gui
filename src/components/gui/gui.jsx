@@ -145,7 +145,7 @@ const GUIComponent = props => {
                                 <Tab className={tabClassNames.tab}>Blocks</Tab>
                                 <Tab className={tabClassNames.tab}>Costumes</Tab>
                                 <Tab className={tabClassNames.tab}>Sounds</Tab>
-                                <Tab className={tabClassNames.tab}>Robbo</Tab>
+                                
                             </TabList>
                             <TabPanel className={tabClassNames.tabPanel}>
                                 <Box className={styles.blocksWrapper}>
@@ -180,9 +180,7 @@ const GUIComponent = props => {
                             <TabPanel className={tabClassNames.tabPanel}>
                                 {tabIndex === 2 ? <SoundTab vm={vm} /> : null}
                             </TabPanel>
-                            <TabPanel className={tabClassNames.tabPanel}>
-                                {tabIndex === 3 ?   <RobboGui/> : null}
-                            </TabPanel>
+
                         </Tabs>
                     </Box>
 

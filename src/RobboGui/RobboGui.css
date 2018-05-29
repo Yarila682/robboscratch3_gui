@@ -12,13 +12,31 @@
 
 }
 
-.content_expand{
+@media (max-height:900px) {
+
+  .content_expand{
 
 
-    height:35%;
+      height:40%;
 
+
+  }
 
 }
+
+@media (min-height:901px) {
+
+  .content_expand{
+
+
+      height:35%;
+
+
+  }
+
+}
+
+
 
 .robbo_search_devices{
 
@@ -33,4 +51,16 @@
     background-color: #005700;
     border-radius: 10px;
 
+}
+
+.version{
+
+
+      font-size: 10pt;
+      font-weight: bold;
+      margin-left: 20px;
+      margin-top: 20px;
+      position:absolute;
+      top:1px;
+      right:10px;
 }

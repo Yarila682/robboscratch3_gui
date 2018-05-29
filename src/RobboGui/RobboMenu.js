@@ -91,24 +91,14 @@ class RobboMenu extends Component {
 
 
 
-          <div id="stop-search-process" onClick={this.stopSearchProcess.bind(this)} className={classNames(
-
-                        {[styles.robbo_menu_item]: true}
-
-                          )}> Stop searching  </div>
-
-          <div id="stop-data-recieve"   onClick={this.stopDataRecievingProcess.bind(this)} className={classNames(
-
-                        {[styles.robbo_menu_item]: true}
-
-                          )}> Stop data recieve  </div>
+        
 
 
           <div id="trigger-extension-pack" onClick={this.triggerExtensionPack.bind(this)} className={classNames(
 
                         {[styles.robbo_menu_item]: true}
 
-                          )}> Trigger extension pack  </div>
+                      )}> Extension pack  </div>
 
                         <div id="trigger-lab-ext-sensors" onClick={this.triggerLabExtSensors.bind(this)} className={classNames(
 
@@ -117,37 +107,37 @@ class RobboMenu extends Component {
                       )}> Laboratory external sensors </div>
 
 
-                    <hr/> 
+                    <hr/>
 
           <div id="trigger-color-corrector-table-0" onClick={this.triggerColorCorrectorTable.bind(this,0)} className={classNames(
 
                         {[styles.robbo_menu_item]: true}
 
-                          )}> Trigger color corrector table for sensor 1 </div>
+                      )}> Color sensor correction 1 </div>
 
           <div id="trigger-color-corrector-table-1" onClick={this.triggerColorCorrectorTable.bind(this,1)} className={classNames(
 
                         {[styles.robbo_menu_item]: true}
 
-                          )}> Trigger color corrector table for sensor 2 </div>
+                          )}>Color sensor correction 2 </div>
 
           <div id="trigger-color-corrector-table-2" onClick={this.triggerColorCorrectorTable.bind(this,2)} className={classNames(
 
                         {[styles.robbo_menu_item]: true}
 
-                          )}> Trigger color corrector table for sensor 3 </div>
+                          )}> Color sensor correction 3 </div>
 
           <div id="trigger-color-corrector-table-3" onClick={this.triggerColorCorrectorTable.bind(this,3)} className={classNames(
 
                         {[styles.robbo_menu_item]: true}
 
-                          )}> Trigger color corrector table for sensor 4 </div>
+                          )}> Color sensor correction 4 </div>
 
           <div id="trigger-color-corrector-table-4" onClick={this.triggerColorCorrectorTable.bind(this,4)} className={classNames(
 
                         {[styles.robbo_menu_item]: true}
 
-                          )}> Trigger color corrector table for sensor 5 </div>
+                          )}>Color sensor correction 5 </div>
 
 
       </div>

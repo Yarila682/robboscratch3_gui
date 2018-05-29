@@ -162,8 +162,8 @@ class SensorPallete extends Component {
               <div id="laboratory-searching-icon" className={classNames(
 
                             {[styles.laboratory_loading_icon]: true},
-                            {[styles.laboratory_loading_icon_hidden]: (( this.props.laboratories[0].laboratory_connected) || (!this.props.laboratories[0].laboratory_is_searching))},
-                            {[styles.laboratory_loading_icon_showing]: ((this.props.laboratories[0].laboratory_is_searching) && (!this.props.laboratories[0].laboratory_connected))}
+                            {[styles.laboratory_loading_icon_hidden]: (/*( this.props.laboratories[0].laboratory_connected) ||*/ (!this.props.laboratories[0].laboratory_is_searching))},
+                            {[styles.laboratory_loading_icon_showing]: ((this.props.laboratories[0].laboratory_is_searching) /* && (!this.props.laboratories[0].laboratory_connected)*/)}
                               )}>
 
 

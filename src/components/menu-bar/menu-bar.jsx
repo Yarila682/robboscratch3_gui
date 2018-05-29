@@ -39,10 +39,10 @@ const MenuBar = props => (
             <LanguageSelector className={styles.menuItem} />
             <div className={styles.trigger_robbo_menu} onClick={props.onTriggerRobboMenu}>
 
-                  Trigger robbo menu.
+                Robbo menu
             </div>
 
-          
+
         </div>
         <div className={styles.feedbackButtonWrapper}>
 

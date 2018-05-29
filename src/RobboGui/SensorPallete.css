@@ -1,5 +1,40 @@
 
-#sensor_pallete{
+@media (max-height:900px) {
+
+  #sensor_pallete{
+
+      margin-left: 6%;
+      margin-top: 2%;
+
+      height:90%;
+
+      font-size: 7pt;
+
+
+
+
+  }
+
+}
+
+@media (min-height:901px) {
+
+  #sensor_pallete{
+
+      margin-left: 6%;
+      margin-top: 2%;
+
+      height:90%;
+
+      font-size: 9pt;
+
+
+  }
+
+}
+
+
+/*#sensor_pallete{
 
     margin-left: 6%;
     margin-top: 2%;
@@ -9,7 +44,7 @@
 
 
 
-}
+} */
 
 .btn_trigger_extension_pack{
 
