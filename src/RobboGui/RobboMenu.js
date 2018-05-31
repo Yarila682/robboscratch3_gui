@@ -68,6 +68,13 @@ class RobboMenu extends Component {
 
   }
 
+  triggerLogging(){
+
+        console.log("triggerLogging");
+        this.DCA.triggerLogging();
+
+  }
+
   render() {
 
 //  return this.props.connectDropTarget(
@@ -91,7 +98,7 @@ class RobboMenu extends Component {
 
 
 
-        
+
 
 
           <div id="trigger-extension-pack" onClick={this.triggerExtensionPack.bind(this)} className={classNames(
@@ -105,6 +112,12 @@ class RobboMenu extends Component {
                         {[styles.robbo_menu_item]: true}
 
                       )}> Laboratory external sensors </div>
+
+                    <div id="trigger-logging" onClick={this.triggerLogging.bind(this)} className={classNames(
+
+                      {[styles.robbo_menu_item]: true}
+
+                    )}> Trigger logging </div>
 
 
                     <hr/>
