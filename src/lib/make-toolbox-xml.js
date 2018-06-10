@@ -3,6 +3,150 @@ const categorySeparator = '<sep gap="36"/>';
 const blockSeparator = '<sep gap="36"/>'; // At default scale, about 28px
 
 
+const quadcopter = function (isStage, targetId){ //modified_by_Yaroslav  //quadcopter category
+
+  return `
+  <category name="Quadcopter" colour="#FF0000" secondaryColour="#FF0000">
+      ${isStage ? `
+      <label text="Stage selected: no quadcopter blocks"></label>
+      ` : `
+
+      <block type="copter_fly_up">
+
+      </block>
+
+      <block type="copter_land">
+
+      </block>
+
+      <block type="copter_status">
+
+      </block>
+
+      <block type="copter_fly_forward">
+          <value name="CENTIMETERS">
+              <shadow type="math_number">
+                  <field name="NUM">10</field>
+              </shadow>
+          </value>
+      </block>
+
+      <block type="copter_fly_backward">
+          <value name="CENTIMETERS">
+              <shadow type="math_number">
+                  <field name="NUM">10</field>
+              </shadow>
+          </value>
+      </block>
+
+      <block type="copter_change_x_by">
+          <value name="DISTANCE_DELTA">
+              <shadow type="math_number">
+                  <field name="NUM">10</field>
+              </shadow>
+          </value>
+      </block>
+
+      <block type="copter_change_y_by">
+          <value name="DISTANCE_DELTA">
+              <shadow type="math_number">
+                  <field name="NUM">10</field>
+              </shadow>
+          </value>
+      </block>
+
+      <block type="copter_change_z_by">
+          <value name="DISTANCE_DELTA">
+              <shadow type="math_number">
+                  <field name="NUM">10</field>
+              </shadow>
+          </value>
+      </block>
+
+      <block type="copter_x_coord">
+
+      </block>
+
+      <block type="copter_y_coord">
+
+      </block>
+
+      <block type="copter_z_coord">
+
+      </block>
+
+      <block type="copter_fly_for_seconds_to_coords">
+          <value name="SECONDS">
+              <shadow type="math_number">
+                  <field name="NUM">1</field>
+              </shadow>
+          </value>
+          <value name="X_COORD">
+              <shadow type="math_number">
+                  <field name="NUM">0</field>
+              </shadow>
+          </value>
+          <value name="Y_COORD">
+              <shadow type="math_number">
+                  <field name="NUM">0</field>
+              </shadow>
+          </value>
+          <value name="Z_COORD">
+              <shadow type="math_number">
+                  <field name="NUM">0</field>
+              </shadow>
+          </value>
+      </block>
+
+      <block type="copter_fly_to_coords">
+        <value name="X_COORD">
+              <shadow type="math_number">
+                  <field name="NUM">0</field>
+              </shadow>
+          </value>
+          <value name="Y_COORD">
+              <shadow type="math_number">
+                  <field name="NUM">0</field>
+              </shadow>
+          </value>
+          <value name="Z_COORD">
+              <shadow type="math_number">
+                  <field name="NUM">0</field>
+              </shadow>
+          </value>
+      </block>
+
+      <block type="copter_rotate">
+        <value name="DEGREES">
+              <shadow type="math_number">
+                  <field name="NUM">180</field>
+              </shadow>
+          </value>
+
+      </block>
+
+      <block type="copter_set_direction">
+        <value name="DIRECTION">
+              <shadow type="math_number">
+                  <field name="NUM">0</field>
+              </shadow>
+          </value>
+
+      </block>
+
+      <block type="copter_direction">
+
+      </block>
+
+      `}
+      ${categorySeparator}
+  </category>
+  `;
+
+
+
+}
+
 const laboratory  = function (isStage, targetId,isExternalSensorsActivated) {  //modified_by_Yaroslav  //laboratory category
 
   return `
@@ -958,6 +1102,7 @@ const makeToolboxXML = function (isStage, targetId, isExtensionPackActivated, is
 
     const everything = [
         xmlOpen,
+        quadcopter(isStage, targetId), gap, //modified_by_Yaroslav
         laboratory(isStage, targetId,isExternalSensorsActivated),gap, //modified_by_Yaroslav
         robot(isStage, targetId,isExtensionPackActivated),gap, //modified_by_Yaroslav //toolbox generator main
         motion(isStage, targetId), gap,
