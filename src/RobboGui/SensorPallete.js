@@ -97,7 +97,7 @@ class SensorPallete extends Component {
 
                                 {
 
-                                    (this.props.robots[0].robot_connected)? "Robot connected": "Robot disconnected"
+                                    (this.props.robots[0].robot_connected)? "Connected": "Disconnected"
 
                                 }
 
@@ -180,7 +180,7 @@ class SensorPallete extends Component {
 
                              {
 
-                                 (this.props.laboratories[0].laboratory_connected)? "Laboratory connected": "Laboratory disconnected"
+                                 (this.props.laboratories[0].laboratory_connected)? "Connected": "Disconnected"
 
                              }
 
