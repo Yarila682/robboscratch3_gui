@@ -15,12 +15,14 @@ class RobboMenu extends Component {
     console.log("searchDevices");
 
 
-    this.DCA.searchAllDevices();
+  //  this.DCA.searchAllDevices();
 
 
 
-    this.RCA.searchRobotDevices();
-    this.LCA.searchLaboratoryDevices();
+  //  this.RCA.searchRobotDevices();
+//    this.LCA.searchLaboratoryDevices();
+
+//    this.QCA.searchQuadcopterDevices();
 
   }
 

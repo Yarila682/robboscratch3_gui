@@ -1,3 +1,24 @@
+
+.quadcopterPreview{
+
+  display: inline-block;
+
+  border: 2px outset rgba(0,0,0,0.5);
+
+  box-shadow: 4px 4px 10px rgba(0,0,0,0.5);
+
+  height:30px;
+  width:60px;
+
+  vertical-align: top;
+
+  margin-top: 5px;
+  margin-left: 20px;
+
+
+}
+
+
 .quadcopter_connection_status{
 
     border-width: 2px;
@@ -5,6 +26,8 @@
     border-style: solid;
     display: inline-block;
     margin: 5px 5px;
+    min-height: 15px;
+    min-width: 15px;
 }
 
 .quadcopter_status_connected{

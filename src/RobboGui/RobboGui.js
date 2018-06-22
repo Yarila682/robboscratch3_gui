@@ -52,13 +52,15 @@ class RobboGui extends Component {
     console.log("searchDevices");
 
 
-    this.props.vm.getDCA().searchAllDevices();
+  //  this.props.vm.getDCA().searchAllDevices();
 
     //this.props.searchRobotDevices(this.props.vm.getRCA());
   //  this.props.searchLaboratoryDevices(this.props.vm.getLCA());
 
-    this.props.vm.getRCA().searchRobotDevices();
-    this.props.vm.getLCA().searchLaboratoryDevices();
+  //  this.props.vm.getRCA().searchRobotDevices();
+  //  this.props.vm.getLCA().searchLaboratoryDevices();
+
+      this.QCA.searchQuadcopterDevices();
 
   }
 
@@ -125,7 +127,7 @@ class RobboGui extends Component {
           <div className={styles.version}> Robbo Scratch ver. 3.0.0 BETA     </div>
 
          {
-              (!this.props.sensorsPalette.sensors_pallete_collapsed)?  <SensorPallete RCA={this.RCA} LCA={this.LCA} />: <SensorPaletteCollapsed />
+              (!this.props.sensorsPalette.sensors_pallete_collapsed)?  <SensorPallete RCA={this.RCA} LCA={this.LCA} QCA={this.QCA} />: <SensorPaletteCollapsed />
 
 
          }

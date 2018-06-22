@@ -6,6 +6,8 @@ import SensorComponent from './SensorComponent';
 import SensorDataBlockComponent  from './SensorDataBlockComponent'
 import SensorChooseWindowComponent from './SensorChooseWindowComponent';
 
+import QuadcopterPreviewComponent from './QuadcopterPreviewComponent';
+
 
 import {ActionTriggerExtensionPack} from './actions/sensor_actions';
 import {ActionTriggerSensorChooseWindow} from './actions/sensor_actions';
@@ -26,7 +28,7 @@ class SensorPallete extends Component {
       //console.log("triggerSensorsPalette");
       //this.props.startSensorsGetDataLoop();
 
-      console.log("startRobotsConnectionStatusCheck");
+    /*  console.log("startRobotsConnectionStatusCheck");
       this.props.startRobotsConnectionStatusCheck(0,this.props.RCA);
 
       console.log("startLaboratoriesConnectionStatusCheck");
@@ -36,7 +38,7 @@ class SensorPallete extends Component {
       this.props.startRobotGetData(0);
 
       console.log("startLaboratoryGetData");
-      this.props.startLaboratoryGetData(0);
+      this.props.startLaboratoryGetData(0); */
 
   }
 
@@ -263,7 +265,7 @@ class SensorPallete extends Component {
 
 
 
-
+        <QuadcopterPreviewComponent QCA={this.props.QCA} quadcopterIndex={0} />
 
 
 
