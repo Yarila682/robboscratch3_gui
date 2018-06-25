@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import styles from  './QuadcopterPreviewComponent.css'
+import {ActionTriggerDraggableWindow} from './actions/sensor_actions'
 
 
 
@@ -91,7 +92,7 @@ class QuadcopterPreviewComponent extends Component {
 
     return (
 
-          <div id={`quadcopter-preview-${this.props.quadcopterIndex}`} className={styles.quadcopterPreview}>
+          <div id={`quadcopter-preview-${this.props.quadcopterIndex}`} className={styles.quadcopterPreview} onClick={this.props.onTriggerQuadcopterPallete}>
 
 
                 <div id={`quadcopter-${this.props.quadcopterIndex}-preview-pic`}  className={styles.quadcopterPreviewPic} >
@@ -145,7 +146,10 @@ const mapStateToProps =  state => ({
 
 const mapDispatchToProps = dispatch => ({
 
+  onTriggerQuadcopterPallete: () => {
 
+      dispatch(ActionTriggerDraggableWindow(0));
+    }
 
 
 });

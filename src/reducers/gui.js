@@ -21,9 +21,10 @@ import sensors_palette from '../RobboGui/reducers/sensors_palette';
 import robots from '../RobboGui/reducers/robots';
 import laboratories from '../RobboGui/reducers/laboratories';
 import extension_pack from '../RobboGui/reducers/extension_pack';
-import color_corrector_table from '../RobboGui/reducers/color_corrector_table'
-import robbo_menu from '../RobboGui/reducers/robbo_menu'
-import settings from '../RobboGui/reducers/settings'
+import color_corrector_table from '../RobboGui/reducers/color_corrector_table';
+import robbo_menu from '../RobboGui/reducers/robbo_menu';
+import settings from '../RobboGui/reducers/settings';
+import draggable_window from '../RobboGui/reducers/draggable_window'
 
 
 export default combineReducers({
@@ -51,6 +52,7 @@ export default combineReducers({
     extension_pack:extension_pack,
     color_corrector_table:color_corrector_table,
     robbo_menu:robbo_menu,
-    settings:settings
+    settings:settings,
+    draggable_window: draggable_window
 
 });

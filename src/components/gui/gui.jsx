@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
+import ReactDOM from 'react-dom';
 import {defineMessages, injectIntl, intlShape} from 'react-intl';
 import {Tab, Tabs, TabList, TabPanel} from 'react-tabs';
 import MediaQuery from 'react-responsive';
@@ -30,6 +31,7 @@ import RobboGui from '../../RobboGui/RobboGui';
 import { ItemTypes } from '../../RobboGui/drag_constants';
 import {ActionDropSensorChooseWindow} from '../../RobboGui/actions/sensor_actions';
 import {ActionDropColorCorrectorWindow} from '../../RobboGui/actions/sensor_actions'
+import {ActionDropDraggableWindow} from '../../RobboGui/actions/sensor_actions'
 
 import { connect } from 'react-redux';
 
@@ -44,7 +46,7 @@ const messages = defineMessages({
 });
 
 const Target = {
-  drop(props,monitor) {
+  drop(props,monitor,component) {
 
     let coords = monitor.getClientOffset();
 
@@ -63,7 +65,24 @@ const Target = {
 
         console.log(`Drop: ColorCorrectorWindow y:${coords.y}  x:${coords.x}`);
 
+    }else if (item.element_type == ItemTypes.DRAGGABLE_WINDOW){
+      //
+      // let id = ReactDOM.findDOMNode(component).id;
+      //
+      // let data = id.split("-");
+
+
+    //  let draggable_window_id = Number.parseInt(data[1]);
+
+         let draggable_window_id = item.draggableWindowId;
+
+        props.onDraggableWindowDrop(coords.y, coords.x,draggable_window_id);
+
+        console.log(`Drop: DRAGGABLE_WINDOW id: ${draggable_window_id} y:${coords.y}  x:${coords.x}`);
+
     }
+
+
 
 
   }
@@ -145,7 +164,7 @@ const GUIComponent = props => {
                                 <Tab className={tabClassNames.tab}>Blocks</Tab>
                                 <Tab className={tabClassNames.tab}>Costumes</Tab>
                                 <Tab className={tabClassNames.tab}>Sounds</Tab>
-                                
+
                             </TabList>
                             <TabPanel className={tabClassNames.tabPanel}>
                                 <Box className={styles.blocksWrapper}>
@@ -252,7 +271,12 @@ const mapDispatchToProps = dispatch => ({
     onColorCorrectorWindowDrop: (top,left) => {
 
         dispatch(ActionDropColorCorrectorWindow(top,left));
-      }
+      },
+
+    onDraggableWindowDrop: (top,left, draggable_window_id) => {
+
+          dispatch(ActionDropDraggableWindow(top,left, draggable_window_id));
+        }
 
 
 });
@@ -262,6 +286,6 @@ export default connect(
         mapStateToProps,
         mapDispatchToProps
 
-    ) (DropTarget([ItemTypes.SENSOR_CHOOSE_WINDOW,ItemTypes.COLOR_CORRECTOR_WINDOW], Target, collect)(injectIntl(GUIComponent)));
+    ) (DropTarget([ItemTypes.SENSOR_CHOOSE_WINDOW,ItemTypes.COLOR_CORRECTOR_WINDOW,ItemTypes.DRAGGABLE_WINDOW], Target, collect)(injectIntl(GUIComponent)));
 
 //export default injectIntl(GUIComponent);

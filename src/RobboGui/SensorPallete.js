@@ -7,6 +7,8 @@ import SensorDataBlockComponent  from './SensorDataBlockComponent'
 import SensorChooseWindowComponent from './SensorChooseWindowComponent';
 
 import QuadcopterPreviewComponent from './QuadcopterPreviewComponent';
+import QuadcopterPalleteComponent from './QuadcopterPalleteComponent';
+import DraggableWindowComponent from './DraggableWindowComponent';
 
 
 import {ActionTriggerExtensionPack} from './actions/sensor_actions';
@@ -266,6 +268,14 @@ class SensorPallete extends Component {
 
 
         <QuadcopterPreviewComponent QCA={this.props.QCA} quadcopterIndex={0} />
+
+
+        <DraggableWindowComponent draggableWindowId={0}>
+
+              <QuadcopterPalleteComponent quadcopterIndex={0}/>
+
+        </DraggableWindowComponent>
+
 
 
 

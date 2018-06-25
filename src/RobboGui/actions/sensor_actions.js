@@ -21,7 +21,7 @@ const ActionTriggerLabExtSensors = function(){
 
 
   return {
-    
+
     type: 'TRIGGER_LAB_EXT_SENSORS',
 
     payload:{
@@ -391,6 +391,39 @@ const ActionDropColorCorrectorWindow = function(top,left){
 
 }
 
+const ActionDropDraggableWindow = function(top,left, draggable_window_id){
+
+
+  return {
+    type: 'DRAGGABLE_WINDOW_DROP',
+    payload:{
+
+        position_top:top,
+        position_left:left,
+        draggable_window_id: draggable_window_id
+
+    }
+  };
+
+
+}
+
+const ActionTriggerDraggableWindow = function(draggable_window_id){
+
+
+  return {
+    type: 'DRAGGABLE_WINDOW_TRIGGER',
+    payload:{
+
+
+        draggable_window_id: draggable_window_id
+
+    }
+  };
+
+
+}
+
 const ActionTriggerRobboMenu = function(){
 
   return {
@@ -422,6 +455,8 @@ export {
     ActionTriggerOldAnalogSensorState,
     ActionTriggerColorCorrectorTable,
     ActionDropColorCorrectorWindow,
+    ActionDropDraggableWindow,
+    ActionTriggerDraggableWindow,
     ActionSearchLaboratoryDevices,
     ActionTriggerRobboMenu,
     ActionTriggerLabExtSensors
