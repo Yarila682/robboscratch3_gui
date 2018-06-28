@@ -272,7 +272,7 @@ class SensorPallete extends Component {
 
         <DraggableWindowComponent draggableWindowId={0}>
 
-              <QuadcopterPalleteComponent quadcopterIndex={0}/>
+              <QuadcopterPalleteComponent QCA={this.props.QCA} quadcopterIndex={0}/>
 
         </DraggableWindowComponent>
 
