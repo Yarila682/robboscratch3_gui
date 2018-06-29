@@ -32,6 +32,10 @@ class QuadcopterPalleteComponent extends Component {
 
     var z_coord_sensor_value_field  = z_coord_sensor_component.children[0].children[1].children[0];
 
+    var yaw_sensor_component = document.getElementById(`quadcopter_sensor-data-block-copter-${this.props.quadcopterIndex}-yaw_type-analog`);
+
+    var yaw_sensor_value_field  = yaw_sensor_component.children[0].children[1].children[0];
+
 
 
     var getDataLoopInterval = setInterval(() => {
@@ -43,6 +47,8 @@ class QuadcopterPalleteComponent extends Component {
           y_coord_sensor_value_field.innerHTML = this.props.QCA.get_coord("Y");
 
           z_coord_sensor_value_field.innerHTML = this.props.QCA.get_coord("Z");
+
+          yaw_sensor_value_field.innerHTML     = this.props.QCA.get_coord("W");
 
 
     },50);
@@ -97,6 +103,12 @@ class QuadcopterPalleteComponent extends Component {
                                                                                             sensorFieldText={`Z coord: `}
                                                                                             sensorName={`coord-z`}
                                                                                             sensorData={`0`} />
+
+            <SensorDataBlockComponent key={`copter-${this.props.quadcopterIndex}-yaw`} sensorId={`copter-${this.props.quadcopterIndex}-yaw`}
+              deviceName={`quadcopter`} sensorType={`analog`}
+              sensorFieldText={`Yaw: `}
+              sensorName={`yaw`}
+              sensorData={`0`} />
 
 
           </div>
