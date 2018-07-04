@@ -6,6 +6,64 @@ import {ActionTriggerExtensionPack} from './actions/sensor_actions';
 import {ActionTriggerLabExtSensors} from  './actions/sensor_actions';
 import {ActionTriggerColorCorrectorTable} from './actions/sensor_actions';
 
+import {defineMessages, intlShape, injectIntl, FormattedMessage} from 'react-intl';
+
+
+const messages = defineMessages({
+    extension_pack: {
+        id: 'gui.RobboMenu.extension_pack',
+        description: ' ',
+        defaultMessage: 'Расширенный набор датчиков '
+    },
+    lab_ext_sensors: {
+        id: 'gui.RobboMenu.lab_ext_sensors',
+        description: ' ',
+        defaultMessage: 'Внешние сенсоры лаборатории'
+    },
+    trigger_logging:{
+
+      id: 'gui.RobboMenu.trigger_logging',
+      description: ' ',
+      defaultMessage: 'Переключить логгирование'
+
+    },
+    color_sensor_correction1:{
+
+      id: 'gui.RobboMenu.color_sensor_correction1',
+      description: ' ',
+      defaultMessage: 'Таблица корррекции датчика цвета 1'
+
+    },
+    color_sensor_correction2:{
+
+      id: 'gui.RobboMenu.color_sensor_correction2',
+      description: ' ',
+      defaultMessage: 'Таблица корррекции датчика цвета 2'
+
+    },
+    color_sensor_correction3:{
+
+      id: 'gui.RobboMenu.color_sensor_correction3',
+      description: ' ',
+      defaultMessage: 'Таблица корррекции датчика цвета 3'
+
+    },
+    color_sensor_correction4:{
+
+      id: 'gui.RobboMenu.color_sensor_correction4',
+      description: ' ',
+      defaultMessage: 'Таблица корррекции датчика цвета 4'
+
+    },
+    color_sensor_correction5:{
+
+      id: 'gui.RobboMenu.color_sensor_correction5',
+      description: ' ',
+      defaultMessage: 'Таблица корррекции датчика цвета 5'
+
+    }
+});
+
 
 class RobboMenu extends Component {
 
@@ -107,19 +165,19 @@ class RobboMenu extends Component {
 
                         {[styles.robbo_menu_item]: true}
 
-                      )}> Extension pack  </div>
+                      )}> {this.props.intl.formatMessage(messages.extension_pack)}  </div>
 
                         <div id="trigger-lab-ext-sensors" onClick={this.triggerLabExtSensors.bind(this)} className={classNames(
 
                         {[styles.robbo_menu_item]: true}
 
-                      )}> Laboratory external sensors </div>
+                      )}> {this.props.intl.formatMessage(messages.lab_ext_sensors)} </div>
 
                     <div id="trigger-logging" onClick={this.triggerLogging.bind(this)} className={classNames(
 
                       {[styles.robbo_menu_item]: true}
 
-                    )}> Trigger logging </div>
+                    )}> {this.props.intl.formatMessage(messages.trigger_logging)} </div>
 
 
                     <hr/>
@@ -128,31 +186,31 @@ class RobboMenu extends Component {
 
                         {[styles.robbo_menu_item]: true}
 
-                      )}> Color sensor correction 1 </div>
+                      )}> {this.props.intl.formatMessage(messages.color_sensor_correction1)} </div>
 
           <div id="trigger-color-corrector-table-1" onClick={this.triggerColorCorrectorTable.bind(this,1)} className={classNames(
 
                         {[styles.robbo_menu_item]: true}
 
-                          )}>Color sensor correction 2 </div>
+                      )}>{this.props.intl.formatMessage(messages.color_sensor_correction2)} </div>
 
           <div id="trigger-color-corrector-table-2" onClick={this.triggerColorCorrectorTable.bind(this,2)} className={classNames(
 
                         {[styles.robbo_menu_item]: true}
 
-                          )}> Color sensor correction 3 </div>
+                      )}>{this.props.intl.formatMessage(messages.color_sensor_correction3)} </div>
 
           <div id="trigger-color-corrector-table-3" onClick={this.triggerColorCorrectorTable.bind(this,3)} className={classNames(
 
                         {[styles.robbo_menu_item]: true}
 
-                          )}> Color sensor correction 4 </div>
+                      )}> {this.props.intl.formatMessage(messages.color_sensor_correction4)} </div>
 
           <div id="trigger-color-corrector-table-4" onClick={this.triggerColorCorrectorTable.bind(this,4)} className={classNames(
 
                         {[styles.robbo_menu_item]: true}
 
-                          )}>Color sensor correction 5 </div>
+                      )}>{this.props.intl.formatMessage(messages.color_sensor_correction5)} </div>
 
 
       </div>
@@ -196,9 +254,9 @@ const mapDispatchToProps = dispatch => ({
 
 });
 
-export default connect(
+export default injectIntl(connect(
 
   mapStateToProps,
   mapDispatchToProps
 
-)(RobboMenu);
+)(RobboMenu));
