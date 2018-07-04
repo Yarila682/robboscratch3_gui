@@ -52,15 +52,15 @@ class RobboGui extends Component {
     console.log("searchDevices");
 
 
-  //  this.props.vm.getDCA().searchAllDevices();
+   this.props.vm.getDCA().searchAllDevices();
 
-    //this.props.searchRobotDevices(this.props.vm.getRCA());
-  //  this.props.searchLaboratoryDevices(this.props.vm.getLCA());
+   //  this.props.searchRobotDevices(this.props.vm.getRCA());
+   // this.props.searchLaboratoryDevices(this.props.vm.getLCA());
 
-  //  this.props.vm.getRCA().searchRobotDevices();
-  //  this.props.vm.getLCA().searchLaboratoryDevices();
+   this.props.vm.getRCA().searchRobotDevices();
+   this.props.vm.getLCA().searchLaboratoryDevices();
 
-      this.QCA.searchQuadcopterDevices();
+   this.QCA.searchQuadcopterDevices();
 
   }
 

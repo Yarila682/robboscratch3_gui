@@ -30,7 +30,7 @@ class SensorPallete extends Component {
       //console.log("triggerSensorsPalette");
       //this.props.startSensorsGetDataLoop();
 
-    /*  console.log("startRobotsConnectionStatusCheck");
+      console.log("startRobotsConnectionStatusCheck");
       this.props.startRobotsConnectionStatusCheck(0,this.props.RCA);
 
       console.log("startLaboratoriesConnectionStatusCheck");
@@ -40,7 +40,7 @@ class SensorPallete extends Component {
       this.props.startRobotGetData(0);
 
       console.log("startLaboratoryGetData");
-      this.props.startLaboratoryGetData(0); */
+      this.props.startLaboratoryGetData(0); 
 
   }
 
