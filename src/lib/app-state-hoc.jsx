@@ -7,6 +7,21 @@ import thunk from 'redux-thunk';
 import {intlInitialState, IntlProvider} from '../reducers/intl.js';
 import reducer from '../reducers/gui';
 
+import {connect} from 'react-redux';
+
+import IntlStateWrapper from './intl-state-hoc.jsx';
+
+import IntlWrapper from './intl-wrapper.jsx';
+
+
+
+// import defaultsDeep from 'lodash.defaultsdeep';
+// import guiMessages from 'scratch-l10n/locales/gui-msgs';
+// import paintMessages from 'scratch-l10n/locales/paint-msgs';
+// import penMessages from 'scratch-l10n/locales/pen-msgs';
+
+//const combinedMessages = defaultsDeep({}, guiMessages.messages, paintMessages.messages, penMessages.messages);
+
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const enhancer = composeEnhancers(
     applyMiddleware(
@@ -26,14 +41,34 @@ import ErrorBoundary from '../containers/error-boundary.jsx';
 const AppStateHOC = function (WrappedComponent) {
     const AppStateWrapper = ({...props}) => (
         <Provider store={store}>
-            <IntlProvider>
-                <ErrorBoundary>
-                    <WrappedComponent {...props} />
-                </ErrorBoundary>
-            </IntlProvider>
+          <IntlWrapper>
+            <IntlStateWrapper>
+              <ErrorBoundary>
+                  <WrappedComponent {...props} />
+              </ErrorBoundary>
+            </IntlStateWrapper>
+
+          </IntlWrapper>
+
+
         </Provider>
     );
+
+  //   function mapStateToProps(state) {
+  //
+  //      new_intl: state.intl
+  // }
+  //
+  // function mapDispatchToProps(dispatch) {
+  //   return {
+  //
+  //   };
+  // }
+  // return connect(mapStateToProps, mapDispatchToProps)(AppStateWrapper);
+
     return AppStateWrapper;
 };
+
+
 
 export default AppStateHOC;

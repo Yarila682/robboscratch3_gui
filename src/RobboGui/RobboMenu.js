@@ -13,53 +13,53 @@ const messages = defineMessages({
     extension_pack: {
         id: 'gui.RobboMenu.extension_pack',
         description: ' ',
-        defaultMessage: 'Расширенный набор датчиков '
+        defaultMessage: 'Extension pack '
     },
     lab_ext_sensors: {
         id: 'gui.RobboMenu.lab_ext_sensors',
         description: ' ',
-        defaultMessage: 'Внешние сенсоры лаборатории'
+        defaultMessage: 'Laboratory external sensors'
     },
     trigger_logging:{
 
       id: 'gui.RobboMenu.trigger_logging',
       description: ' ',
-      defaultMessage: 'Переключить логгирование'
+      defaultMessage: 'Trigger logging'
 
     },
     color_sensor_correction1:{
 
       id: 'gui.RobboMenu.color_sensor_correction1',
       description: ' ',
-      defaultMessage: 'Таблица корррекции датчика цвета 1'
+      defaultMessage: 'Color sensor correction 1'
 
     },
     color_sensor_correction2:{
 
       id: 'gui.RobboMenu.color_sensor_correction2',
       description: ' ',
-      defaultMessage: 'Таблица корррекции датчика цвета 2'
+      defaultMessage: 'Color sensor correction 2'
 
     },
     color_sensor_correction3:{
 
       id: 'gui.RobboMenu.color_sensor_correction3',
       description: ' ',
-      defaultMessage: 'Таблица корррекции датчика цвета 3'
+      defaultMessage: 'Color sensor correction 3'
 
     },
     color_sensor_correction4:{
 
       id: 'gui.RobboMenu.color_sensor_correction4',
       description: ' ',
-      defaultMessage: 'Таблица корррекции датчика цвета 4'
+      defaultMessage: 'Color sensor correction 4'
 
     },
     color_sensor_correction5:{
 
       id: 'gui.RobboMenu.color_sensor_correction5',
       description: ' ',
-      defaultMessage: 'Таблица корррекции датчика цвета 5'
+      defaultMessage: 'Color sensor correction 5'
 
     }
 });

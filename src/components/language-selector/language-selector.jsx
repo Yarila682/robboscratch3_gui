@@ -13,17 +13,14 @@ const LanguageSelector = ({
     ...props
 }) => (
     <Box {...props}>
-        <ComingSoonTooltip
-            place="bottom"
-            tooltipId="language-selector"
-        >
+
             <div className={styles.group}>
                 <img
                     className={styles.languageIcon}
                     src={languageIcon}
                 />
                 <select
-                    disabled
+                    enabled
                     aria-label="language selector"
                     className={styles.languageSelect}
                     value={currentLocale}
@@ -39,7 +36,7 @@ const LanguageSelector = ({
                     ))}
                 </select>
             </div>
-        </ComingSoonTooltip>
+
     </Box>
 );
 
