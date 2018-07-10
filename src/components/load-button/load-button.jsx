@@ -6,6 +6,17 @@ import {ComingSoonTooltip} from '../coming-soon/coming-soon.jsx';
 
 import styles from './load-button.css';
 
+import {defineMessages, intlShape, injectIntl, FormattedMessage} from 'react-intl';
+
+const messages = defineMessages({
+    load_project: {
+
+        id: 'gui.menuBar.load_project',
+        description: ' ',
+        defaultMessage: 'Load'
+    }
+});
+
 const LoadButtonComponent = ({
     inputRef,
     onChange,
@@ -19,7 +30,7 @@ const LoadButtonComponent = ({
                 enabled
                 onClick={onClick}
             >
-                {title}
+                {props.intl.formatMessage(messages.load_project)}
             </ButtonComponent>
             <input
                 enabled
@@ -28,7 +39,7 @@ const LoadButtonComponent = ({
                 type="file"
                 onChange={onChange}
             />
-        
+
     </span>
 );
 
@@ -42,4 +53,4 @@ LoadButtonComponent.propTypes = {
 LoadButtonComponent.defaultProps = {
     title: 'Load'
 };
-export default LoadButtonComponent;
+export default injectIntl(LoadButtonComponent);

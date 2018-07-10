@@ -68,7 +68,7 @@ class Blocks extends React.Component {
             this.props.options,
             {toolbox: this.props.toolboxXML}
         );
-        this.workspace = this.ScratchBlocks.inject(this.blocks, workspaceConfig,"ru");
+        this.workspace = this.ScratchBlocks.inject(this.blocks, workspaceConfig,this.props.locale);
 
         // @todo change this when blockly supports UI events
         addFunctionListener(this.workspace, 'translate', this.onWorkspaceMetricsChange);

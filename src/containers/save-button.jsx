@@ -6,6 +6,17 @@ import {connect} from 'react-redux';
 import ButtonComponent from '../components/button/button.jsx';
 import {ComingSoonTooltip} from '../components/coming-soon/coming-soon.jsx';
 
+import {defineMessages, intlShape, injectIntl, FormattedMessage} from 'react-intl';
+
+const messages = defineMessages({
+    save_project: {
+
+        id: 'gui.menuBar.save_project',
+        description: ' ',
+        defaultMessage: 'Save'
+    }
+});
+
 
 class SaveButton extends React.Component {
     constructor (props) {
@@ -108,7 +119,7 @@ class SaveButton extends React.Component {
                     onClick={this.handleClick}
                     {...props}
                 >
-                    Save
+                  {props.intl.formatMessage(messages.save_project)}
                 </ButtonComponent>
 
         );
@@ -123,7 +134,7 @@ const mapStateToProps = state => ({
     saveProjectSb3: state.vm.saveProjectSb3.bind(state.vm)
 });
 
-export default connect(
+export default injectIntl(connect(
     mapStateToProps,
     () => ({}) // omit dispatch prop
-)(SaveButton);
+)(SaveButton));

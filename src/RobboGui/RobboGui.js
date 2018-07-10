@@ -14,7 +14,18 @@ import {ActionRobotStopDataRecievingProcess}  from './actions/sensor_actions';
 import {ActionTriggerExtensionPack} from './actions/sensor_actions';
 import {ActionTriggerColorCorrectorTable} from './actions/sensor_actions';
 import RobboMenu from './RobboMenu';
-import styles from './RobboGui.css'
+import styles from './RobboGui.css';
+
+import {defineMessages, intlShape, injectIntl, FormattedMessage} from 'react-intl';
+
+const messages = defineMessages({
+    search_devices: {
+
+        id: 'gui.RobboGui.search_devices',
+        description: ' ',
+        defaultMessage: 'Search devices'
+    }
+});
 
 
 // const Target = {
@@ -150,7 +161,7 @@ class RobboGui extends Component {
 
          <RobboMenu VM={this.props.vm} />
 
-        <button className={styles.robbo_search_devices} onClick={this.searchDevices.bind(this)}>Search devices</button>
+        <button className={styles.robbo_search_devices} onClick={this.searchDevices.bind(this)}>{this.props.intl.formatMessage(messages.search_devices)} </button>
 
     </div>
   );
@@ -216,10 +227,10 @@ const mapDispatchToProps = dispatch => ({
 // };
 
 
-export default connect(
+export default injectIntl(connect(
   mapStateToProps,
   mapDispatchToProps
-)(RobboGui);
+)(RobboGui));
 
 // export default connect(
 //         mapStateToProps,

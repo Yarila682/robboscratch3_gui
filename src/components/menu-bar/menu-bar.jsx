@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import {connect} from 'react-redux';
-import {FormattedMessage} from 'react-intl';
+
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -18,6 +18,17 @@ import feedbackIcon from './icon--feedback.svg';
 import scratchLogo from './scratch-logo.svg';
 
 import {ActionTriggerRobboMenu} from '../../RobboGui/actions/sensor_actions.js'; //Robbo //modified_by_Yaroslav
+
+import {defineMessages, intlShape, injectIntl, FormattedMessage} from 'react-intl';
+
+const messages = defineMessages({
+    robbo_menu: {
+
+        id: 'gui.menuBar.robbo_menu',
+        description: ' ',
+        defaultMessage: 'Robbo menu'
+    }
+});
 
 const MenuBar = props => (
     <Box
@@ -39,7 +50,7 @@ const MenuBar = props => (
             <LanguageSelector className={styles.menuItem} />
             <div className={styles.trigger_robbo_menu} onClick={props.onTriggerRobboMenu}>
 
-                Robbo menu
+              {props.intl.formatMessage(messages.robbo_menu)}
             </div>
 
 
@@ -68,7 +79,7 @@ const mapDispatchToProps = dispatch => ({
     }
 });
 
-export default connect(
+export default injectIntl(connect(
     mapStateToProps,
     mapDispatchToProps
-)(MenuBar);
+)(MenuBar));
