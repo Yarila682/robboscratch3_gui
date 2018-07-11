@@ -15,7 +15,7 @@ function init_state(){
             sensor_active: false,
             sensor_data:undefined,
             sensor_device_name:"robot",
-            sensor_field_text:`Path left :`
+            sensor_field_text:`Левый путь :`
 
       }
 
@@ -28,7 +28,7 @@ function init_state(){
             sensor_active: false,
             sensor_data:undefined,
             sensor_device_name:"robot",
-            sensor_field_text:`Path right :`
+            sensor_field_text:`Правый путь :`
 
       }
 
@@ -41,7 +41,7 @@ function init_state(){
             sensor_active: false,
             sensor_data:undefined,
             sensor_device_name:"robot",
-            sensor_field_text:`Button pushed :`
+            sensor_field_text:`Кнопка нажата :`
 
       }
 

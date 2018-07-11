@@ -40,7 +40,7 @@ class SensorPallete extends Component {
       this.props.startRobotGetData(0);
 
       console.log("startLaboratoryGetData");
-      this.props.startLaboratoryGetData(0); 
+      this.props.startLaboratoryGetData(0);
 
   }
 
@@ -78,7 +78,7 @@ class SensorPallete extends Component {
 
               <div id="robot-sensors-tittle" className={styles.sensor_panel_tittle} onClick={this.triggerSensorsPalette.bind(this)}>
 
-                  Robot
+                  Робот
 
                   <div id="robot-searching-icon" className={classNames(
 
@@ -101,7 +101,7 @@ class SensorPallete extends Component {
 
                                 {
 
-                                    (this.props.robots[0].robot_connected)? "Connected": "Disconnected"
+                                    (this.props.robots[0].robot_connected)? "Подключено": "Отключено"
 
                                 }
 
@@ -161,7 +161,7 @@ class SensorPallete extends Component {
 
         <div id={styles.laboratory_sensors}>
 
-            <div id="laboratory-sensors-tittle" className={styles.sensor_panel_tittle}>Laboratory
+            <div id="laboratory-sensors-tittle" className={styles.sensor_panel_tittle}>Лаборатория
 
               <div id="laboratory-searching-icon" className={classNames(
 
@@ -184,7 +184,7 @@ class SensorPallete extends Component {
 
                              {
 
-                                 (this.props.laboratories[0].laboratory_connected)? "Connected": "Disconnected"
+                                 (this.props.laboratories[0].laboratory_connected)? "Подключено": "Отключено"
 
                              }
 

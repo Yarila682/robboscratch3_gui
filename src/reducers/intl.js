@@ -17,8 +17,8 @@ Object.keys(localeData).forEach(locale => {
 
 const intlInitialState = {
     intl: {
-        defaultLocale: 'en',
-        locale: 'en',
+        defaultLocale: 'ru',
+        locale: 'ru',
         messages: combinedMessages.en.messages
     }
 };

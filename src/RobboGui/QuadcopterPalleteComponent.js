@@ -76,37 +76,37 @@ class QuadcopterPalleteComponent extends Component {
 
                 <div id="quadcopter-tittle" className={styles.quadcopter_panel_tittle}>
 
-                    Quadcopter
+                    Квадракоптер
 
                 </div>
 
                 <SensorDataBlockComponent key={`copter-${this.props.quadcopterIndex}-battery-level`} sensorId={`copter-${this.props.quadcopterIndex}-battery-level`}
                                    deviceName={`quadcopter`} sensorType={`analog`}
-                                   sensorFieldText={`Battery level: `}
+                                   sensorFieldText={`Уровень заряда: `}
                                    sensorName={`battery-level`}
                                    sensorData={`---`} />
 
                <SensorDataBlockComponent key={`copter-${this.props.quadcopterIndex}-coord-x`} sensorId={`copter-${this.props.quadcopterIndex}-coord-x`}
                                                       deviceName={`quadcopter`} sensorType={`analog`}
-                                                      sensorFieldText={`X coord: `}
+                                                      sensorFieldText={`X координата: `}
                                                       sensorName={`coord-x`}
                                                       sensorData={`0`} />
 
               <SensorDataBlockComponent key={`copter-${this.props.quadcopterIndex}-coord-y`} sensorId={`copter-${this.props.quadcopterIndex}-coord-y`}
                                                                                              deviceName={`quadcopter`} sensorType={`analog`}
-                                                                                             sensorFieldText={`Y coord: `}
+                                                                                             sensorFieldText={`Y координата: `}
                                                                                              sensorName={`coord-y`}
                                                                                              sensorData={`0`} />
 
             <SensorDataBlockComponent key={`copter-${this.props.quadcopterIndex}-coord-z`} sensorId={`copter-${this.props.quadcopterIndex}-coord-z`}
                                                                                             deviceName={`quadcopter`} sensorType={`analog`}
-                                                                                            sensorFieldText={`Z coord: `}
+                                                                                            sensorFieldText={`Z координата: `}
                                                                                             sensorName={`coord-z`}
                                                                                             sensorData={`0`} />
 
             <SensorDataBlockComponent key={`copter-${this.props.quadcopterIndex}-yaw`} sensorId={`copter-${this.props.quadcopterIndex}-yaw`}
               deviceName={`quadcopter`} sensorType={`analog`}
-              sensorFieldText={`Yaw: `}
+              sensorFieldText={`Угол поворота: `}
               sensorName={`yaw`}
               sensorData={`0`} />
 

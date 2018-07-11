@@ -37,7 +37,7 @@ class SpriteInfo extends React.Component {
             >
                 <div className={classNames(styles.row, styles.rowPrimary)}>
                     <div className={styles.group}>
-                        <Label text="Sprite">
+                        <Label text="Спрайт">
                             <BufferedInput
                                 className={styles.spriteInput}
                                 disabled={this.props.disabled}
@@ -102,7 +102,7 @@ class SpriteInfo extends React.Component {
                         <MediaQuery minWidth={layout.fullSizeMinWidth}>
                             <Label
                                 secondary
-                                text="Show"
+                                text="Показать"
                             />
                         </MediaQuery>
                         <div>
@@ -149,7 +149,7 @@ class SpriteInfo extends React.Component {
                     <div className={classNames(styles.group, styles.largerInput)}>
                         <Label
                             secondary
-                            text="Size"
+                            text="Размер"
                         >
                             <BufferedInput
                                 small
@@ -165,7 +165,7 @@ class SpriteInfo extends React.Component {
                     <div className={classNames(styles.group, styles.largerInput)}>
                         <Label
                             secondary
-                            text="Direction"
+                            text="Направление"
                         >
                             <BufferedInput
                                 small

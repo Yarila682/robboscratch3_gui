@@ -7,7 +7,35 @@ import ScratchBlocks from 'scratch-blocks';
  */
 export default function (vm) {
 
-    const jsonForMenuBlock = function (name, menuOptionsFn, colors, start) {
+  const Messages = {
+
+      ru:{
+
+        MOUSE_POINTER: "указатель мыши",
+        RANDOM_POS :    "случайная позиция",
+        EDGE: "край",
+        STAGE: "сцена",
+        MYSELF: "себя",
+        PREVIOUS_BACKDROP: "предыдущий фон",
+        NEXT_BACKDROP: "следующий фон"
+
+      },
+
+    en:{
+
+      MOUSE_POINTER :  "mouse-pointer",
+      RANDOM_POS :    "random position",
+      EDGE: "edge",
+      STAGE: "stage",
+      MYSELF: "myself",
+      PREVIOUS_BACKDROP: "previous backdrop",
+      NEXT_BACKDROP: "next backdrop"
+
+      }
+
+  };
+
+    const jsonForMenuBlock = function (name, menuOptionsFn, colors, start,locale) {
         return {
             message0: '%1',
             args0: [
@@ -15,7 +43,7 @@ export default function (vm) {
                     type: 'field_dropdown',
                     name: name,
                     options: function () {
-                        return start.concat(menuOptionsFn());
+                        return start.concat(menuOptionsFn(locale));
                     }
                 }
             ],
@@ -42,10 +70,10 @@ export default function (vm) {
         return [['', '']];
     };
 
-    const backdropsMenu = function () {
+    const backdropsMenu = function (locale) {
         if (vm.runtime.targets[0] && vm.runtime.targets[0].sprite.costumes.length > 0) {
             return vm.runtime.targets[0].sprite.costumes.map(costume => [costume.name, costume.name])
-                .concat([['next backdrop', 'next backdrop'], ['previous backdrop', 'previous backdrop']]);
+                .concat([[Messages[locale]["NEXT_BACKDROP"], 'next backdrop'], [Messages[locale]["PREVIOUS_BACKDROP"], 'previous backdrop']]);
         }
         return [['', '']];
     };
@@ -66,7 +94,7 @@ export default function (vm) {
         return sprites;
     };
 
-    const cloneMenu = function () {
+    const cloneMenu = function (locale) {
         if (vm.editingTarget && vm.editingTarget.isStage) {
             const menu = spriteMenu();
             if (menu.length === 0) {
@@ -74,7 +102,7 @@ export default function (vm) {
             }
             return menu;
         }
-        return [['myself', '_myself_']].concat(spriteMenu());
+        return [[  Messages[locale]["MYSELF"], '_myself_']].concat(spriteMenu());
     };
 
     const soundColors = ScratchBlocks.Colours.sounds;
@@ -97,65 +125,65 @@ export default function (vm) {
         this.jsonInit(json);
     };
 
-    ScratchBlocks.Blocks.looks_backdrops.init = function () {
-        const json = jsonForMenuBlock('BACKDROP', backdropsMenu, looksColors, []);
+    ScratchBlocks.Blocks.looks_backdrops.init = function (locale) {
+        const json = jsonForMenuBlock('BACKDROP', backdropsMenu, looksColors, [],locale);
         this.jsonInit(json);
     };
 
-    ScratchBlocks.Blocks.motion_pointtowards_menu.init = function () {
+    ScratchBlocks.Blocks.motion_pointtowards_menu.init = function (locale) {
         const json = jsonForMenuBlock('TOWARDS', spriteMenu, motionColors, [
-            ['mouse-pointer', '_mouse_']
+          [Messages[locale]["MOUSE_POINTER"], '_mouse_']
         ]);
         this.jsonInit(json);
     };
 
-    ScratchBlocks.Blocks.motion_goto_menu.init = function () {
+    ScratchBlocks.Blocks.motion_goto_menu.init = function (locale) {
         const json = jsonForMenuBlock('TO', spriteMenu, motionColors, [
-            ['random position', '_random_'],
-            ['mouse-pointer', '_mouse_']
+            [Messages[locale]["MOUSE_POINTER"], '_mouse_'],
+            [Messages[locale]["RANDOM_POS"] , '_random_']
         ]);
         this.jsonInit(json);
     };
 
-    ScratchBlocks.Blocks.motion_glideto_menu.init = function () {
+    ScratchBlocks.Blocks.motion_glideto_menu.init = function (locale) {
         const json = jsonForMenuBlock('TO', spriteMenu, motionColors, [
-            ['random position', '_random_'],
-            ['mouse-pointer', '_mouse_']
+            [Messages[locale]["MOUSE_POINTER"], '_mouse_'],
+            [Messages[locale]["RANDOM_POS"] , '_random_']
         ]);
         this.jsonInit(json);
     };
 
-    ScratchBlocks.Blocks.sensing_of_object_menu.init = function () {
+    ScratchBlocks.Blocks.sensing_of_object_menu.init = function (locale) {
         const json = jsonForMenuBlock('OBJECT', spriteMenu, sensingColors, [
-            ['Stage', '_stage_']
+            [Messages[locale]["STAGE"], '_stage_']
         ]);
         this.jsonInit(json);
     };
 
-    ScratchBlocks.Blocks.sensing_videoonmenutwo.init = function () {
+    ScratchBlocks.Blocks.sensing_videoonmenutwo.init = function (locale) {
         const json = jsonForMenuBlock('VIDEOONMENU2', spriteMenu, sensingColors, [
-            ['stage', 'STAGE']
+            [Messages[locale]["STAGE"], 'STAGE']
         ]);
         this.jsonInit(json);
     };
 
-    ScratchBlocks.Blocks.sensing_distancetomenu.init = function () {
+    ScratchBlocks.Blocks.sensing_distancetomenu.init = function (locale) {
         const json = jsonForMenuBlock('DISTANCETOMENU', spriteMenu, sensingColors, [
-            ['mouse-pointer', '_mouse_']
+              [Messages[locale]["MOUSE_POINTER"], '_mouse_']
         ]);
         this.jsonInit(json);
     };
 
-    ScratchBlocks.Blocks.sensing_touchingobjectmenu.init = function () {
+    ScratchBlocks.Blocks.sensing_touchingobjectmenu.init = function (locale) {
         const json = jsonForMenuBlock('TOUCHINGOBJECTMENU', spriteMenu, sensingColors, [
-            ['mouse-pointer', '_mouse_'],
-            ['edge', '_edge_']
+            [Messages[locale]["MOUSE_POINTER"], '_mouse_'],
+            [Messages[locale]["EDGE"], '_edge_']
         ]);
         this.jsonInit(json);
     };
 
-    ScratchBlocks.Blocks.control_create_clone_of_menu.init = function () {
-        const json = jsonForMenuBlock('CLONE_OPTION', cloneMenu, controlColors, []);
+    ScratchBlocks.Blocks.control_create_clone_of_menu.init = function (locale) {
+        const json = jsonForMenuBlock('CLONE_OPTION', cloneMenu, controlColors, [],locale);
         this.jsonInit(json);
     };
 

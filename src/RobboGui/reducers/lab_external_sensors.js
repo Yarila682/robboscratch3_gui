@@ -18,7 +18,7 @@ function init_state(){
             sensor_active: false,
             sensor_data:[],
             sensor_device_name:"lab",
-            sensor_field_text:`Analog ${i} :`
+            sensor_field_text:`Аналог ${i} :`
 
       }
 
@@ -31,7 +31,7 @@ function init_state(){
         sensor_active: false,
         sensor_data:[],
         sensor_device_name:"lab",
-        sensor_field_text:`DIGITAL :`
+        sensor_field_text:`Цифровой :`
 
       }
 

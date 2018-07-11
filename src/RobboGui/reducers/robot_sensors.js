@@ -18,7 +18,7 @@ function init_state(){
             sensor_active: false,
             sensor_data:[],
             sensor_device_name:"robot",
-            sensor_field_text:`Sensor ${i + 1} :`
+            sensor_field_text:`Сенсор ${i + 1} :`
 
       }
 
