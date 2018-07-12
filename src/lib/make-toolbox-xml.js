@@ -100,6 +100,10 @@ const quadcopter = function (isStage, targetId){ //modified_by_Yaroslav  //quadc
 
       </block>
 
+      <block type="copter_yaw">
+
+      </block>
+
       <block type="copter_fly_for_seconds_to_coords">
           <value name="SECONDS">
               <shadow type="math_number">
