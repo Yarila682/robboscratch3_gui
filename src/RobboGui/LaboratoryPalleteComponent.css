@@ -1,5 +1,4 @@
-
-.quadcopter_palette{
+.lab_palette{
 
     display: inline-block;
     margin-left: 5%;
@@ -18,7 +17,7 @@
 
 }
 
-.quadcopter_panel_tittle{
+.lab_panel_tittle{
 
   /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#b4ddb4+0,83c783+17,52b152+33,008a00+67,005700+83,002400+100;Green+3D+%231 */
   background: #b4ddb4; /* Old browsers */

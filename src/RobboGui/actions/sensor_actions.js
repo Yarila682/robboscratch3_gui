@@ -212,15 +212,15 @@ const  ActionRobotGetData = function(robot_number,RCA){
 
 }
 
-const ActionRobotGetDataStart = function(robot_number){
+const ActionRobotGetDataStart = function(robot_number,RCA){
 
-
+  RCA_local = RCA;
 
 
   return (dispatch) => {
     RobotGetDataInterval =   setInterval(() => {
 
-          dispatch(ActionRobotGetData(robot_number,RCA_local));
+          dispatch(ActionRobotGetData(robot_number,RCA));
       }, 300); //25
   };
 
@@ -245,9 +245,9 @@ const  ActionLaboratoryGetData = function(laboratory_number,LCA){
 
 }
 
-const ActionLaboratoryGetDataStart = function(laboratory_number){
+const ActionLaboratoryGetDataStart = function(laboratory_number,LCA){
 
-
+  LCA_local = LCA;
 
 
   return (dispatch) => {
