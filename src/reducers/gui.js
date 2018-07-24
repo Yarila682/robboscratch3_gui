@@ -24,7 +24,8 @@ import extension_pack from '../RobboGui/reducers/extension_pack';
 import color_corrector_table from '../RobboGui/reducers/color_corrector_table';
 import robbo_menu from '../RobboGui/reducers/robbo_menu';
 import settings from '../RobboGui/reducers/settings';
-import draggable_window from '../RobboGui/reducers/draggable_window'
+import draggable_window from '../RobboGui/reducers/draggable_window';
+import devices_firmware_flasher from '../RobboGui/reducers/devices_firmware_flasher';
 
 
 export default combineReducers({
@@ -53,6 +54,7 @@ export default combineReducers({
     color_corrector_table:color_corrector_table,
     robbo_menu:robbo_menu,
     settings:settings,
-    draggable_window: draggable_window
+    draggable_window: draggable_window,
+    devices_firmware_flasher:devices_firmware_flasher
 
 });

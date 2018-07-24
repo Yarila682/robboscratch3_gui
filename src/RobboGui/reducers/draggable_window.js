@@ -1,7 +1,7 @@
 function init_state(){
 
   let draggable_windows = [];
-  let draggable_windows_count = 3;
+  let draggable_windows_count = 4;
   let i = 0;
 
   for (i=0;i<draggable_windows_count;i++){
@@ -77,6 +77,40 @@ switch (action.type) {
         break;
 
 
+        case 'DRAGGABLE_WINDOW_CREATE':
+
+
+
+
+          draggable_windows = [...state];
+
+            var draggable_window_id =  action.payload.draggable_window_id;
+
+
+            if (typeof(draggable_windows[draggable_window_id]) === 'undefined'){
+
+              draggable_windows[draggable_window_id]= {
+
+                     position_top:400,
+                     position_left: 400,
+                     isShowing: false
+
+
+
+              }
+
+            }
+
+
+
+
+
+
+
+          return draggable_windows;
+
+
+            break;
 
 
 

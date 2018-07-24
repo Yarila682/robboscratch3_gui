@@ -424,6 +424,22 @@ const ActionTriggerDraggableWindow = function(draggable_window_id){
 
 }
 
+const ActionCreateDraggableWindow = function(draggable_window_id){
+
+
+  return {
+    type: 'DRAGGABLE_WINDOW_CREATE',
+    payload:{
+
+
+        draggable_window_id: draggable_window_id
+
+    }
+  };
+
+
+}
+
 const ActionTriggerRobboMenu = function(){
 
   return {
@@ -435,6 +451,87 @@ const ActionTriggerRobboMenu = function(){
 
     }
   };
+
+}
+
+const  ActionFirmwareFlasherPushDevice = function(device){
+
+  return {
+
+      type: 'FIRMWARE_FLASHER_PUSH_DEVICE',
+      payload:{
+
+        device:device
+      }
+  }
+
+}
+
+const ActionFirmwareFlasherGetDevicesInfo = function(DCA,RCA,LCA,QCA){
+
+ var device = {};
+
+
+  return (dispatch) => {
+  //  LaboratoryGetDataInterval =   setInterval(() => {
+
+
+          DCA.searchPorts((port) => {
+
+                var port_path =  port.path;
+
+                device.port = port_path;
+
+                RCA.checkRobotByPort(port.path,(result) => {
+
+                      if (result.code === 0){
+
+                        device.id = result.device.id;
+                        device.firmware_version = result.device.firmware_version;
+
+
+                            dispatch(ActionFirmwareFlasherPushDevice(device));
+
+                              device = {};
+
+                      }else{
+
+                            LCA.checkLabByPort(port.path, (result)=>{
+
+                              if (result.code === 0){
+
+                                device.id = result.device.id;
+                                device.firmware_version = result.device.firmware_version;
+
+                                    dispatch(ActionFirmwareFlasherPushDevice(device));
+
+                                      device = {};
+
+                              }else{
+
+                                    device.id = -1;
+                                    device.firmware_version = -1;
+
+                                    dispatch(ActionFirmwareFlasherPushDevice(device));
+
+                                    device = {};
+                                }
+
+                            });
+
+                      }
+
+
+                });
+
+          });
+
+
+
+    //  }, 300);
+  };
+
+
 
 }
 
@@ -457,8 +554,10 @@ export {
     ActionDropColorCorrectorWindow,
     ActionDropDraggableWindow,
     ActionTriggerDraggableWindow,
+    ActionCreateDraggableWindow ,
     ActionSearchLaboratoryDevices,
     ActionTriggerRobboMenu,
-    ActionTriggerLabExtSensors
+    ActionTriggerLabExtSensors,
+    ActionFirmwareFlasherGetDevicesInfo
 
 };

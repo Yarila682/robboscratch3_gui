@@ -63,16 +63,49 @@ const color_corrector = function(rgb_array){
 
 
 
-    
+
 
 
 
 
 }
 
+function setProps (object, props) {
+    for (var i in props) {
+        object[i] = props[i];
+    }
+}
+
+
+const createDiv = function (parent, x, y, w, h, styles,inner_content,attributes) {
+    var el = document.createElement('div');
+    // el.style.position = 'absolute';
+    // el.style.top = y + 'px';
+    // el.style.left = x + 'px';
+    // if (w) {
+    //     el.style.width = w + 'px';
+    // }
+    // if (h) {
+    //     el.style.height = h + 'px';
+    // }
+    setProps(el.style, styles);
+
+ if (inner_content)
+    el.innerHTML = inner_content;
+
+     for (let attr in attributes){
+
+      el.setAttribute(attr, attributes[attr])
+    }
+
+    parent.appendChild(el);
+    return el;
+}
+
 export {
 
     immutable_copy,
     color_filter,
-    color_corrector
+    color_corrector,
+    createDiv
 };

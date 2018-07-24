@@ -14,6 +14,8 @@ import {ActionRobotStopDataRecievingProcess}  from './actions/sensor_actions';
 import {ActionTriggerExtensionPack} from './actions/sensor_actions';
 import {ActionTriggerColorCorrectorTable} from './actions/sensor_actions';
 import RobboMenu from './RobboMenu';
+import FirmwareFlasherComponent from './FirmwareFlasherComponent';
+import DraggableWindowComponent from './DraggableWindowComponent';
 import styles from './RobboGui.css';
 
 import {defineMessages, intlShape, injectIntl, FormattedMessage} from 'react-intl';
@@ -143,9 +145,11 @@ class RobboGui extends Component {
 
          }
 
+         <DraggableWindowComponent draggableWindowId={3}>
 
+            <FirmwareFlasherComponent DCA={this.DCA} RCA={this.RCA} LCA={this.LCA} QCA={this.QCA} />
 
-
+          </DraggableWindowComponent>
 
 
 

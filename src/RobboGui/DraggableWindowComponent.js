@@ -8,6 +8,8 @@ import PropTypes from 'prop-types';
 import { ItemTypes } from './drag_constants';
 import { DragSource } from 'react-dnd';
 
+//import {ActionCreateDraggableWindow }  from './actions/sensor_actions';
+
 const DraggableWindowSource = {
   beginDrag(props) {
     return {
@@ -28,7 +30,12 @@ function collect(connect, monitor) {
 class DraggableWindowComponent extends Component {
 
 
+  componentDidMount () {
 
+      //  this.props.onCreateDraggableWindow(this.props.draggableWindowId);
+
+
+  }
 
 
   render(){
@@ -39,9 +46,19 @@ class DraggableWindowComponent extends Component {
 
       var draggable_window_id =  this.props.draggableWindowId;
 
-     var top   =  this.props.draggable_window[draggable_window_id].position_top;
-     var left  =  this.props.draggable_window[draggable_window_id].position_left;
-     var isShowing =  this.props.draggable_window[draggable_window_id].isShowing;
+      var top   = 400;
+      var left  =  400;
+      var isShowing =  false;
+
+      if (typeof(this.props.draggable_window[draggable_window_id]) != 'undefined'){
+
+         top   =  this.props.draggable_window[draggable_window_id].position_top;
+         left  =  this.props.draggable_window[draggable_window_id].position_left;
+         isShowing =  this.props.draggable_window[draggable_window_id].isShowing;
+
+      }
+
+
 
 
 
@@ -57,7 +74,7 @@ class DraggableWindowComponent extends Component {
 
                           style={{
 
-                                position: 'absolute',
+                                position: 'fixed',
                                 top: `${top}px`,
                                 left: `${left}px`,
                                 }}
@@ -91,6 +108,10 @@ class DraggableWindowComponent extends Component {
     const mapDispatchToProps = dispatch => ({
 
 
+      // onCreateDraggableWindow: (draggable_window_id) => {
+      //
+      //     dispatch(ActionCreateDraggableWindow(draggable_window_id));
+      //   }
 
 
     });

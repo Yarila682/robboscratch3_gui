@@ -5,6 +5,7 @@ import classNames from 'classnames';
 import {ActionTriggerExtensionPack} from './actions/sensor_actions';
 import {ActionTriggerLabExtSensors} from  './actions/sensor_actions';
 import {ActionTriggerColorCorrectorTable} from './actions/sensor_actions';
+import {ActionTriggerDraggableWindow} from './actions/sensor_actions'
 
 import {defineMessages, intlShape, injectIntl, FormattedMessage} from 'react-intl';
 
@@ -25,6 +26,13 @@ const messages = defineMessages({
       id: 'gui.RobboMenu.trigger_logging',
       description: ' ',
       defaultMessage: 'Trigger logging'
+
+    },
+    trigger_firmware_flasher:{
+
+      id: 'gui.RobboMenu.trigger_firmware_flasher',
+      description: ' ',
+      defaultMessage: 'Trigger firmware flasher'
 
     },
     color_sensor_correction1:{
@@ -135,6 +143,13 @@ class RobboMenu extends Component {
 
   }
 
+  triggerFirmwareFlasher(){
+
+
+        this.props.onTriggerFirmwareFlasher();
+
+  }
+
   render() {
 
 //  return this.props.connectDropTarget(
@@ -178,6 +193,14 @@ class RobboMenu extends Component {
                       {[styles.robbo_menu_item]: true}
 
                     )}> {this.props.intl.formatMessage(messages.trigger_logging)} </div>
+
+                  <div id="trigger-firmware-flasher" onClick={this.triggerFirmwareFlasher.bind(this)} className={classNames(
+
+                      {[styles.robbo_menu_item]: true}
+
+                    )}> {this.props.intl.formatMessage(messages.trigger_firmware_flasher)} </div>
+
+
 
 
                     <hr/>
@@ -250,7 +273,12 @@ const mapDispatchToProps = dispatch => ({
       onTriggerColorCorrectorTable:  (sensor_caller_id) => {
 
           dispatch(ActionTriggerColorCorrectorTable(sensor_caller_id));
-        }
+        },
+
+        onTriggerFirmwareFlasher: () => {
+
+            dispatch(ActionTriggerDraggableWindow(3));
+          }
 
 });
 
