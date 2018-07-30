@@ -488,6 +488,7 @@ const ActionFirmwareFlasherGetDevicesInfo = function(DCA,RCA,LCA,QCA){
 
                         device.id = result.device.id;
                         device.firmware_version = result.device.firmware_version;
+                        device.serial_number= result.device.serial_number;
 
 
                             dispatch(ActionFirmwareFlasherPushDevice(device));
@@ -502,6 +503,7 @@ const ActionFirmwareFlasherGetDevicesInfo = function(DCA,RCA,LCA,QCA){
 
                                 device.id = result.device.id;
                                 device.firmware_version = result.device.firmware_version;
+                                device.serial_number= result.device.serial_number;
 
                                     dispatch(ActionFirmwareFlasherPushDevice(device));
 
@@ -511,6 +513,7 @@ const ActionFirmwareFlasherGetDevicesInfo = function(DCA,RCA,LCA,QCA){
 
                                     device.id = -1;
                                     device.firmware_version = -1;
+                                    device.serial_number = -1;
 
                                     dispatch(ActionFirmwareFlasherPushDevice(device));
 

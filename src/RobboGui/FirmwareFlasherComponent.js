@@ -35,6 +35,11 @@ import DraggableWindowComponent from './DraggableWindowComponent';
         id: 'gui.FirmwareFlasherComponent.device_firmware',
         description: ' ',
         defaultMessage: 'Device firmware'
+    },
+    device_serial:{
+        id: 'gui.FirmwareFlasherComponent.device_serial',
+        description: ' ',
+        defaultMessage: 'Device serial number'
     }
 
   });
@@ -91,9 +96,17 @@ class FirmwareFlasherComponent extends Component {
 
                 </div>
 
+
+
                 <div id="devices-header-device-port" className={styles.devices_header_element}>
 
                       {this.props.intl.formatMessage(messages.device_port)}
+
+                </div>
+
+                <div id="devices-header-device-serial" className={styles.devices_header_element}>
+
+                      {this.props.intl.formatMessage(messages.device_serial)}
 
                 </div>
 
@@ -121,7 +134,7 @@ class FirmwareFlasherComponent extends Component {
 
 
 
-                 return  <FirmwareFlasherDeviceComponent flashingStatusComponentId={index} draggableWindowId={4+index}  key={index} devicePort={device.port} deviceId={device.id} deviceFirmwareVersion={device.firmware_version} DCA={this.DCA} RCA={this.RCA} LCA={this.LCA}/>
+                 return  <FirmwareFlasherDeviceComponent flashingStatusComponentId={index} draggableWindowId={4+index}  key={index} deviceSerial={device.serial_number} devicePort={device.port} deviceId={device.id} deviceFirmwareVersion={device.firmware_version} DCA={this.DCA} RCA={this.RCA} LCA={this.LCA}/>
 
 
 

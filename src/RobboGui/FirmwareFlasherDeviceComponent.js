@@ -62,6 +62,8 @@ class FirmwareFlasherDeviceComponent extends Component {
 
     var flashingStatusComponent = document.getElementById(`firmware-flasher-flashing-status-component-${cId}`).children[2];
 
+    var block_ids_component = null;
+
     flashingStatusComponent.innerHTML = "";
 
     var config = {};
@@ -84,15 +86,47 @@ class FirmwareFlasherDeviceComponent extends Component {
               this.LCA.stopDataRecievingProcess();
     }
 
+    var styles = {
+
+          margin: '20px 10px',
+          fontWeight:'bold',
+          fontSize:"16px"
+
+    }
+
+      block_ids_component = createDiv(flashingStatusComponent,null,null,null,null,styles,"",{id:"uploading-component"});
+
     this.DCA.flashFirmware(this.props.devicePort,config,(status) => {
 
-          var styles = {
+           styles = {
 
                 margin: '10px'
 
           }
 
-          createDiv(flashingStatusComponent,null,null,null,null,styles,status,null);
+          if ( (status.indexOf("Block") == -1) && (status.indexOf("Programming") == -1)  && (status.indexOf("Uploading") == -1) ){
+
+              createDiv(flashingStatusComponent,null,null,null,null,styles,status,null);
+                block_ids_component.innerHTML = "";
+
+          }else{
+
+              if (block_ids_component == null){
+
+              //      block_ids_component = createDiv(flashingStatusComponent,null,null,null,null,styles,"",{id:"block-ids-component"});
+
+
+              }else{
+
+                      block_ids_component.innerHTML = status;
+
+
+              }
+
+
+          }
+
+
 
     });
 
@@ -162,6 +196,12 @@ class FirmwareFlasherDeviceComponent extends Component {
           <div id="firmware-flasher-device-port" className={styles.firmware_flasher_device_element}>
 
                 {this.props.devicePort}
+
+          </div>
+
+          <div id="firmware-flasher-device-serial" className={styles.firmware_flasher_device_element}>
+
+                {this.props.deviceSerial}
 
           </div>
 
