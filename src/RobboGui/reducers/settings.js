@@ -3,6 +3,7 @@ const initialState = {
   is_lab_ext_enabled:false,
 
 
+
 };
 
 const  reducer = function (state, action) {
@@ -30,6 +31,21 @@ switch (action.type) {
 
 
     break;
+
+
+    // case 'TRIGGER_NEED_LABGUAGE_RELOAD':
+    //
+    //
+    // sensors_pallete_state = Object.assign({}, state);
+    //
+    // sensors_pallete_state.need_language_reload= !sensors_pallete_state.need_language_reload;
+    //
+    //
+    //
+    // return sensors_pallete_state;
+    //
+    //
+    //   break;
 
 
 

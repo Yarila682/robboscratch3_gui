@@ -454,6 +454,23 @@ const ActionTriggerRobboMenu = function(){
 
 }
 
+// const ActionTriggerNeedLanguageReload = function(){
+//
+//   return {
+//
+//     type: 'TRIGGER_NEED_LABGUAGE_RELOAD',
+//     payload:{
+//
+//
+//
+//     }
+//   };
+//
+// }
+
+
+
+
 const  ActionFirmwareFlasherPushDevice = function(device){
 
   return {
@@ -561,6 +578,7 @@ export {
     ActionSearchLaboratoryDevices,
     ActionTriggerRobboMenu,
     ActionTriggerLabExtSensors,
-    ActionFirmwareFlasherGetDevicesInfo
+    ActionFirmwareFlasherGetDevicesInfo,
+  //  ActionTriggerNeedLanguageReload
 
 };

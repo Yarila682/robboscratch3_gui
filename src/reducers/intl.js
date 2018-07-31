@@ -19,7 +19,7 @@ const intlInitialState = {
     intl: {
         defaultLocale: 'ru',
         locale: 'ru',
-        messages: combinedMessages.en.messages
+        messages: combinedMessages.ru.messages  //combinedMessages.en.messages
     }
 };
 

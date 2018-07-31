@@ -13,6 +13,8 @@ import {ActionRobotStopSearchProcess} from './actions/sensor_actions';
 import {ActionRobotStopDataRecievingProcess}  from './actions/sensor_actions';
 import {ActionTriggerExtensionPack} from './actions/sensor_actions';
 import {ActionTriggerColorCorrectorTable} from './actions/sensor_actions';
+//import {ActionTriggerNeedLanguageReload} from './actions/sensor_actions';
+
 import RobboMenu from './RobboMenu';
 import FirmwareFlasherComponent from './FirmwareFlasherComponent';
 import DraggableWindowComponent from './DraggableWindowComponent';
@@ -220,6 +222,13 @@ const mapDispatchToProps = dispatch => ({
 
           dispatch(ActionTriggerColorCorrectorTable(sensor_caller_id));
         }
+
+        // onTriggerNeedLanguageReload:  () => {
+        //
+        //     dispatch(ActionTriggerNeedLanguageReload());
+        //   }
+
+
 
 });
 
