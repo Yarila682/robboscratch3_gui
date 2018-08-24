@@ -58,10 +58,11 @@ class CommonFieldsSensorComponent extends Component {
                                  <div style={{
 
                                        backgroundColor: `rgb(${sensors_data[0]},${sensors_data[1]},${sensors_data[2]})`,
+                                       marginWidth: `40px`
 
                                        }}>
 
-                                      color
+
 
                                  </div>
                               )
