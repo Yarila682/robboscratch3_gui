@@ -99,6 +99,7 @@ class ColorCorrectorTableComponent extends Component {
        cctc.addEventListener("dragstart",this.handleDragStart.bind(this,"dragstart"), false);
 
 
+       this.updateColorBox();
 
 }
 
@@ -125,6 +126,30 @@ class ColorCorrectorTableComponent extends Component {
 
     }
 
+
+    updateColorBox(){
+
+
+        setInterval(() => {
+
+            var color_box = document.getElementById(`color-box-${this.props.color_corrector_table.sensor_caller_id}`);
+
+            var sensors_data = this.props.RCA.colorFilter(this.props.color_corrector_table.sensor_caller_id);
+
+            if (sensors_data[0] != -1){
+
+              color_box.style.backgroundColor = `rgb(${sensors_data[0]},${sensors_data[1]},${sensors_data[2]})`;
+              color_box.style.minWidth = '40px';
+              color_box.style.minHeight = '40px';
+
+
+            }
+
+
+
+        },300);
+
+    }
 
   handleSliderChange(slider_id,RCA,sensor_caller_id,event){
 
@@ -659,6 +684,17 @@ class ColorCorrectorTableComponent extends Component {
 
                                         </div>
 
+
+                              </div>
+
+                              <div id={`color-box-${sensor_caller_id}`}
+
+                                    className={classNames(
+
+                                    {[styles.data_block]: true}
+
+
+                                    )}>
 
                               </div>
 
