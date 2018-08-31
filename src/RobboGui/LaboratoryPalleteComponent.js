@@ -6,6 +6,53 @@ import SensorComponent from './SensorComponent';
 
 import {ActionLaboratoryGetDataStart} from  './actions/sensor_actions';
 
+import {defineMessages, intlShape, injectIntl, FormattedMessage} from 'react-intl';
+
+
+
+const messages = defineMessages({
+
+    button: {
+        id: 'gui.RobboGui.LaboratoryPalette.button',
+        description: ' ',
+        defaultMessage: 'Button '
+    },
+
+    light: {
+        id: 'gui.RobboGui.LaboratoryPalette.light',
+        description: ' ',
+        defaultMessage: 'Light: '
+    },
+
+    sound: {
+        id: 'gui.RobboGui.LaboratoryPalette.sound',
+        description: ' ',
+        defaultMessage: 'Sound: '
+    },
+
+    slider: {
+        id: 'gui.RobboGui.LaboratoryPalette.slider',
+        description: ' ',
+        defaultMessage: 'Slider: '
+    },
+    analog: {
+        id: 'gui.RobboGui.LaboratoryPalette.analog',
+        description: ' ',
+        defaultMessage: 'Analog '
+    },
+    digital: {
+        id: 'gui.RobboGui.LaboratoryPalette.digital',
+        description: ' ',
+        defaultMessage: 'Digital: '
+    },
+    laboratory: {
+        id: 'gui.RobboGui.LaboratoryPalette.laboratory',
+        description: ' ',
+        defaultMessage: 'Laboratory'
+    }
+
+  });
+
 
 
 class LaboratoryPalleteComponent extends Component {
@@ -42,7 +89,7 @@ class LaboratoryPalleteComponent extends Component {
 
             <div id="lab-tittle" className={styles.lab_panel_tittle}>
 
-                Лаборатория
+                {this.props.intl.formatMessage(messages.laboratory)}
 
             </div>
 
@@ -58,9 +105,44 @@ class LaboratoryPalleteComponent extends Component {
 
                                                     {
 
+                                                        let field_text = "";
+
+                                                      if (index < 5){
+
+                                                          field_text  = this.props.intl.formatMessage(messages.button) + " "  + (index + 1).toString() + ": ";
+
+                                                      }
+
+                                                      switch (index) {
+                                                        case 5:
+
+                                                              field_text  = this.props.intl.formatMessage(messages.light);
+
+
+                                                          break;
+
+                                                          case 6:
+
+                                                                field_text  = this.props.intl.formatMessage(messages.sound);
+
+
+                                                            break;
+
+                                                          case 7:
+
+                                                                  field_text  = this.props.intl.formatMessage(messages.slider);
+
+
+                                                              break;
+
+                                                        default:
+
+                                                      }
+
+
                                                   components.push(<SensorDataBlockComponent key={sensor.sensor_id} sensorId={sensor.sensor_id}
                                                                       deviceName={sensor.sensor_device_name} sensorType={sensor.sensor_type}
-                                                                      sensorFieldText={sensor.sensor_field_text}  sensorName={sensor.sensor_name}
+                                                                      sensorFieldText={field_text}  sensorName={sensor.sensor_name}
                                                                       sensorData={sensor.sensor_data}  />
 
 
@@ -79,16 +161,35 @@ class LaboratoryPalleteComponent extends Component {
 
                                              {
 
-
+                                                  let field_text = "";
 
                                                let sensorPictureUrl = `./static/robbo_assets/16/${sensor.sensor_device_name}_sensor_${sensor.sensor_name}.png`;
 
+
+                                               if (index < 2){
+
+                                                   field_text  = this.props.intl.formatMessage(messages.analog) + " "  + (index + 1).toString() + ": ";
+
+                                               }
+
+                                               switch (index) {
+                                                 case 2:
+
+                                                       field_text  = this.props.intl.formatMessage(messages.digital);
+
+
+                                                   break;
+
+
+                                                 default:
+
+                                               }
 
 
                                                components.push(<SensorComponent key={index} index={index} sensorId={sensor.sensor_id} isSensorVersionNew={sensor.is_sensor_version_new}
                                                            sensorPictureUrl={sensorPictureUrl}
                                                            deviceName={sensor.sensor_device_name} sensorType={sensor.sensor_type}
-                                                           sensorFieldText={sensor.sensor_field_text} sensorName={sensor.sensor_name}
+                                                           sensorFieldText={field_text} sensorName={sensor.sensor_name}
                                                            sensorData={sensor.sensor_data} />);
 
 
@@ -146,7 +247,7 @@ const mapDispatchToProps = dispatch => ({
 
 });
 
-export default connect(
+export default injectIntl(connect(
   mapStateToProps,
   mapDispatchToProps
-)(LaboratoryPalleteComponent);
+)(LaboratoryPalleteComponent));

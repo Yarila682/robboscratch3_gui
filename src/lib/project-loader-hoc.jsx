@@ -27,9 +27,30 @@ const ProjectLoaderHOC = function (WrappedComponent) {
         }
         componentDidUpdate (prevProps, prevState) {
 
+          let json_valid = true;
+          let json = {};
+
           this.checkLocallySavedProject().then((result) => {
 
-              if ((result.file_exists) && (this.state.projectId !== prevState.projectId)){
+            if (result.file_exists){
+
+              try {
+
+                  json = JSON.parse(result);
+                  json_valid = true;
+
+              }catch(e){
+
+                  console.error('Failed to parse project. Error: ' + e );
+                  json_valid = false;
+
+
+              }
+            }
+
+              if ((result.file_exists) && (this.state.projectId !== prevState.projectId) && (json_valid)){
+
+
 
                 this.setState({
                     projectData: result.file

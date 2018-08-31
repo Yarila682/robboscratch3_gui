@@ -7,6 +7,8 @@ import { ItemTypes } from './drag_constants';
 import { DragSource } from 'react-dnd';
 import ColorCorrectorTableRowElement from './ColorCorrectorTableRowElement';
 
+import {defineMessages, intlShape, injectIntl, FormattedMessage} from 'react-intl';
+
 
 var mouse_coords = {x:0,y:0};
 
@@ -63,6 +65,35 @@ function collect(connect, monitor) {
     isDragging: monitor.isDragging()
   }
 }
+const messages = defineMessages({
+
+  mautocor: {
+      id: 'gui.ColorCorrectorTable.auto_correction',
+      description: ' ',
+      defaultMessage: 'Automatic correction'
+  },
+  mclose:{
+      id: 'gui.ColorCorrectorTable.close',
+      description: ' ',
+      defaultMessage: 'Close'
+  },
+  mload:{
+      id: 'gui.ColorCorrectorTable.load',
+      description: ' ',
+      defaultMessage: 'Load'
+  },
+  msave:{
+      id: 'gui.ColorCorrectorTable.save',
+      description: ' ',
+      defaultMessage: 'Save'
+  },
+  mapply:{
+      id: 'gui.ColorCorrectorTable.apply_changes',
+      description: ' ',
+      defaultMessage: 'Apply changes'
+  }
+
+});
 
 
 
@@ -662,7 +693,7 @@ class ColorCorrectorTableComponent extends Component {
 
                                         <div>
                                           <div className={styles.automatic_correcton_button_left}>
-                                                <button>Automatic correction</button>
+                                                <button>{this.props.intl.formatMessage(messages.mautocor)}</button>
 
                                           </div>
 
@@ -742,7 +773,7 @@ class ColorCorrectorTableComponent extends Component {
 
                                     <div className={styles.automatic_correcton_button_right}>
                                           <button  onClick={this.automaticCollorCorrection.bind(this,this.props.RCA,
-                                                    this.props.color_corrector_table.sensor_caller_id)} >Automatic correction</button>
+                                                    this.props.color_corrector_table.sensor_caller_id)} > {this.props.intl.formatMessage(messages.mautocor)}</button>
 
                                     </div>
 
@@ -848,10 +879,10 @@ class ColorCorrectorTableComponent extends Component {
 
                         <div id="buttons-row" className={styles.row}>
 
-                          <button className={styles.buttons}>Close</button>
-                          <button className={styles.buttons} onClick={this.onButtonSaveClick.bind(this)}>Save</button>
-                          <button className={styles.buttons} onClick={this.onButtonLoadClick.bind(this)}>Load</button>
-                          <button className={styles.buttons} onClick={this.onButtonApplyChangesClick.bind(this, this.props.RCA, this.props.color_corrector_table.sensor_caller_id)}>Apply changes</button>
+                          <button className={styles.buttons}>{this.props.intl.formatMessage(messages.mclose)}</button>
+                          <button className={styles.buttons} onClick={this.onButtonSaveClick.bind(this)}>{this.props.intl.formatMessage(messages.msave)}</button>
+                          <button className={styles.buttons} onClick={this.onButtonLoadClick.bind(this)}>{this.props.intl.formatMessage(messages.mload)}</button>
+                          <button className={styles.buttons} onClick={this.onButtonApplyChangesClick.bind(this, this.props.RCA, this.props.color_corrector_table.sensor_caller_id)}>{this.props.intl.formatMessage(messages.mapply)}</button>
 
                         </div>
 
@@ -890,7 +921,7 @@ const mapDispatchToProps = dispatch => ({
 
 
 
-export default connect(
+export default injectIntl(connect(
   mapStateToProps,
   mapDispatchToProps
-)(DragSource(ItemTypes.COLOR_CORRECTOR_WINDOW, ColorCorrectorWindowSource, collect)(ColorCorrectorTableComponent));
+)(DragSource(ItemTypes.COLOR_CORRECTOR_WINDOW, ColorCorrectorWindowSource, collect)(ColorCorrectorTableComponent)));

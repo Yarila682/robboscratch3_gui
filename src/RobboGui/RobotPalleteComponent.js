@@ -6,6 +6,42 @@ import SensorComponent from './SensorComponent';
 
 import {ActionRobotGetDataStart} from  './actions/sensor_actions';
 
+import {defineMessages, intlShape, injectIntl, FormattedMessage} from 'react-intl';
+
+
+
+const messages = defineMessages({
+
+    sensor: {
+        id: 'gui.RobboGui.RobotPalette.sensor',
+        description: ' ',
+        defaultMessage: 'Sensor '
+    },
+
+    path_left: {
+        id: 'gui.RobboGui.RobotPalette.path_left',
+        description: ' ',
+        defaultMessage: 'Path left: '
+    },
+
+    path_right: {
+        id: 'gui.RobboGui.RobotPalette.path_right',
+        description: ' ',
+        defaultMessage: 'Path right: '
+    },
+
+    start_button_pushed: {
+        id: 'gui.RobboGui.RobotPalette.start_button_pushed',
+        description: ' ',
+        defaultMessage: 'Start button pushed: '
+    },
+    robot: {
+        id: 'gui.RobboGui.RobotPalette.robot',
+        description: ' ',
+        defaultMessage: 'Robot'
+    }
+
+  });
 
 
 class RobotPalleteComponent extends Component {
@@ -42,19 +78,19 @@ class RobotPalleteComponent extends Component {
 
             <div id="robot-tittle" className={styles.robot_panel_tittle}>
 
-                Робот
+              {this.props.intl.formatMessage(messages.robot)}
 
             </div>
 
             <SensorDataBlockComponent key={this.props.robot_special_sensors[0].sensor_id} sensorId={this.props.robot_special_sensors[0].sensor_id}
                                deviceName={this.props.robot_special_sensors[0].sensor_device_name} sensorType={this.props.robot_special_sensors[0].sensor_type}
-                               sensorFieldText={this.props.robot_special_sensors[0].sensor_field_text}
+                               sensorFieldText={this.props.intl.formatMessage(messages.path_left)}
                                sensorName={this.props.robot_special_sensors[0].sensor_name}
                                 sensorData={this.props.robot_special_sensors[0].sensor_data} />
 
             <SensorDataBlockComponent key={this.props.robot_special_sensors[1].sensor_id} sensorId={this.props.robot_special_sensors[1].sensor_id}
                                                   deviceName={this.props.robot_special_sensors[1].sensor_device_name} sensorType={this.props.robot_special_sensors[1].sensor_type}
-                                                  sensorFieldText={this.props.robot_special_sensors[1].sensor_field_text}
+                                                  sensorFieldText={this.props.intl.formatMessage(messages.path_right)}
                                                   sensorName={this.props.robot_special_sensors[1].sensor_name}
                                                   sensorData={this.props.robot_special_sensors[1].sensor_data} />
 
@@ -67,12 +103,12 @@ class RobotPalleteComponent extends Component {
 
                    let sensorPictureUrl = `./static/robbo_assets/16/${sensor.sensor_device_name}_sensor_${sensor.sensor_name}.png`;
 
-
+                    let field_text  = this.props.intl.formatMessage(messages.sensor) + " "  + (index + 1).toString() + ": ";
 
                    return   <SensorComponent key={index} index={index} sensorId={sensor.sensor_id} isSensorVersionNew={sensor.is_sensor_version_new}
                                sensorPictureUrl={sensorPictureUrl}
                                deviceName={sensor.sensor_device_name} sensorType={sensor.sensor_type}
-                               sensorFieldText={sensor.sensor_field_text} sensorName={sensor.sensor_name}
+                               sensorFieldText={field_text} sensorName={sensor.sensor_name}
                                sensorData={sensor.sensor_data} />
 
 
@@ -89,7 +125,7 @@ class RobotPalleteComponent extends Component {
 
         <SensorDataBlockComponent key={this.props.robot_special_sensors[2].sensor_id} sensorId={this.props.robot_special_sensors[2].sensor_id}
                            deviceName={this.props.robot_special_sensors[2].sensor_device_name} sensorType={this.props.robot_special_sensors[2].sensor_type}
-                           sensorFieldText={this.props.robot_special_sensors[2].sensor_field_text}
+                           sensorFieldText={this.props.intl.formatMessage(messages.start_button_pushed)}
                            sensorName={this.props.robot_special_sensors[2].sensor_name}
                            sensorData={this.props.robot_special_sensors[2].sensor_data} />
 
@@ -123,7 +159,7 @@ const mapDispatchToProps = dispatch => ({
 
 });
 
-export default connect(
+export default injectIntl(connect(
   mapStateToProps,
   mapDispatchToProps
-)(RobotPalleteComponent);
+)(RobotPalleteComponent));
