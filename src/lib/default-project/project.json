@@ -39,22 +39,39 @@
             "costumes": [{
                     "costumeName": "costume1",
                     "baseLayerID": 0,
-                    "baseLayerMD5": "09dc888b0b7df19f70d81588ae73420e.svg",
+                    "baseLayerMD5": "ROB1_end.svg",
                     "bitmapResolution": 1,
-                    "rotationCenterX": 47,
-                    "rotationCenterY": 55
+                    "rotationCenterX": 67,
+                    "rotationCenterY": 95
                 },
                 {
                     "costumeName": "costume2",
-                    "baseLayerID": 1,
-                    "baseLayerMD5": "3696356a03a8d938318876a593572843.svg",
+                    "baseLayerID": 0,
+                    "baseLayerMD5": "ROB2_end.svg",
                     "bitmapResolution": 1,
-                    "rotationCenterX": 47,
-                    "rotationCenterY": 55
-                }],
+                    "rotationCenterX": 67,
+                    "rotationCenterY": 95
+                },
+                {
+                    "costumeName": "costume3",
+                    "baseLayerID": 0,
+                    "baseLayerMD5": "ROB3_end.svg",
+                    "bitmapResolution": 1,
+                    "rotationCenterX": 67,
+                    "rotationCenterY": 95
+                },
+                {
+                    "costumeName": "costume4",
+                    "baseLayerID": 0,
+                    "baseLayerMD5": "ROB4_end.svg",
+                    "bitmapResolution": 1,
+                    "rotationCenterX": 67,
+                    "rotationCenterY": 95
+                }
+             ],
             "currentCostumeIndex": 0,
-            "scratchX": 0,
-            "scratchY": 0,
+            "scratchX": 7,
+            "scratchY": -4,
             "scale": 1,
             "direction": 90,
             "rotationStyle": "normal",

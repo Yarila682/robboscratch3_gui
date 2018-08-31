@@ -23,46 +23,53 @@ class RobotPreviewComponent extends Component {
 
            robot_searching_icon = document.getElementById(`robot-${self.props.robotIndex}-searching-icon`);
 
-          if (self.robot_is_searching){
+           if (typeof(robot_searching_icon) != 'undefined'){
+
+             if (self.robot_is_searching){
 
 
 
 
-             robot_searching_icon.classList.remove(styles.robot_loading_icon_hidden);
-             robot_searching_icon.classList.remove(styles.robot_loading_icon_showing);
-             robot_searching_icon.classList.add(styles.robot_loading_icon_showing);
+                robot_searching_icon.classList.remove(styles.robot_loading_icon_hidden);
+                robot_searching_icon.classList.remove(styles.robot_loading_icon_showing);
+                robot_searching_icon.classList.add(styles.robot_loading_icon_showing);
 
 
-          }else{
+             }else{
 
 
-            robot_searching_icon.classList.remove(styles.robot_loading_icon_hidden);
-            robot_searching_icon.classList.remove(styles.robot_loading_icon_showing);
-            robot_searching_icon.classList.add(styles.robot_loading_icon_hidden);
+               robot_searching_icon.classList.remove(styles.robot_loading_icon_hidden);
+               robot_searching_icon.classList.remove(styles.robot_loading_icon_showing);
+               robot_searching_icon.classList.add(styles.robot_loading_icon_hidden);
 
 
-          }
+             }
 
-          robot_connection_status = document.getElementById(`robot-${self.props.robotIndex}-connection-status`);
+             robot_connection_status = document.getElementById(`robot-${self.props.robotIndex}-connection-status`);
 
-          if (self.isRobotConnected){
-
-
+             if (self.isRobotConnected){
 
 
-             robot_connection_status.classList.remove(styles.robot_status_connected);
-             robot_connection_status.classList.remove(styles.robot_status_disconnected);
-             robot_connection_status.classList.add(styles.robot_status_connected);
-
-          }else{
 
 
-            robot_connection_status.classList.remove(styles.robot_status_disconnected);
-            robot_connection_status.classList.remove(styles.robot_status_connected);
-            robot_connection_status.classList.add(styles.robot_status_disconnected);
+                robot_connection_status.classList.remove(styles.robot_status_connected);
+                robot_connection_status.classList.remove(styles.robot_status_disconnected);
+                robot_connection_status.classList.add(styles.robot_status_connected);
+
+             }else{
 
 
-          }
+               robot_connection_status.classList.remove(styles.robot_status_disconnected);
+               robot_connection_status.classList.remove(styles.robot_status_connected);
+               robot_connection_status.classList.add(styles.robot_status_disconnected);
+
+
+             }  
+
+
+           }
+
+
 
 
 

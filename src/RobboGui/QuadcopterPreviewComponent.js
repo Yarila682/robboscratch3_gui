@@ -23,46 +23,53 @@ class QuadcopterPreviewComponent extends Component {
 
            copter_searching_icon = document.getElementById(`quadcopter-${self.props.quadcopterIndex}-searching-icon`);
 
-          if (self.quadcopter_is_searching){
+           if (typeof( copter_searching_icon) != 'undefined'){
+
+
+             if (self.quadcopter_is_searching){
 
 
 
 
-             copter_searching_icon.classList.remove(styles.quadcopter_loading_icon_hidden);
-             copter_searching_icon.classList.remove(styles.quadcopter_loading_icon_showing);
-             copter_searching_icon.classList.add(styles.quadcopter_loading_icon_showing);
+                copter_searching_icon.classList.remove(styles.quadcopter_loading_icon_hidden);
+                copter_searching_icon.classList.remove(styles.quadcopter_loading_icon_showing);
+                copter_searching_icon.classList.add(styles.quadcopter_loading_icon_showing);
 
 
-          }else{
+             }else{
 
 
-            copter_searching_icon.classList.remove(styles.quadcopter_loading_icon_hidden);
-            copter_searching_icon.classList.remove(styles.quadcopter_loading_icon_showing);
-            copter_searching_icon.classList.add(styles.quadcopter_loading_icon_hidden);
+               copter_searching_icon.classList.remove(styles.quadcopter_loading_icon_hidden);
+               copter_searching_icon.classList.remove(styles.quadcopter_loading_icon_showing);
+               copter_searching_icon.classList.add(styles.quadcopter_loading_icon_hidden);
 
 
-          }
+             }
 
-          copter_connection_status = document.getElementById(`quadcopter-${self.props.quadcopterIndex}-connection-status`);
+             copter_connection_status = document.getElementById(`quadcopter-${self.props.quadcopterIndex}-connection-status`);
 
-          if (self.isQuadcopterConnected){
-
-
+             if (self.isQuadcopterConnected){
 
 
-             copter_connection_status.classList.remove(styles.quadcopter_status_connected);
-             copter_connection_status.classList.remove(styles.quadcopter_status_disconnected);
-             copter_connection_status.classList.add(styles.quadcopter_status_connected);
-
-          }else{
 
 
-            copter_connection_status.classList.remove(styles.quadcopter_status_disconnected);
-            copter_connection_status.classList.remove(styles.quadcopter_status_connected);
-            copter_connection_status.classList.add(styles.quadcopter_status_disconnected);
+                copter_connection_status.classList.remove(styles.quadcopter_status_connected);
+                copter_connection_status.classList.remove(styles.quadcopter_status_disconnected);
+                copter_connection_status.classList.add(styles.quadcopter_status_connected);
+
+             }else{
 
 
-          }
+               copter_connection_status.classList.remove(styles.quadcopter_status_disconnected);
+               copter_connection_status.classList.remove(styles.quadcopter_status_connected);
+               copter_connection_status.classList.add(styles.quadcopter_status_disconnected);
+
+
+             }
+
+           }
+
+
 
 
 

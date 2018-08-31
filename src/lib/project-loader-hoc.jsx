@@ -15,6 +15,7 @@ const ProjectLoaderHOC = function (WrappedComponent) {
             super(props);
             this.fetchProjectId = this.fetchProjectId.bind(this);
             this.updateProject = this.updateProject.bind(this);
+            this.checkLocallySavedProject = this.checkLocallySavedProject.bind(this); //modified_by_Yaroslav
             this.state = {
                 projectId: null,
                 projectData: null
@@ -25,18 +26,111 @@ const ProjectLoaderHOC = function (WrappedComponent) {
             this.updateProject();
         }
         componentDidUpdate (prevProps, prevState) {
-            if (this.state.projectId !== prevState.projectId) {
-                storage
-                    .load(storage.AssetType.Project, this.state.projectId, storage.DataFormat.JSON)
-                    .then(projectAsset => projectAsset && this.setState({
-                        projectData: projectAsset.data.toString()
-                    }))
-                    .catch(err => log.error(err));
-            }
+
+          this.checkLocallySavedProject().then((result) => {
+
+              if ((result.file_exists) && (this.state.projectId !== prevState.projectId)){
+
+                this.setState({
+                    projectData: result.file
+                })
+
+
+              }else if (this.state.projectId !== prevState.projectId) {
+                  storage
+                      .load(storage.AssetType.Project, this.state.projectId, storage.DataFormat.JSON)
+                      .then(projectAsset => projectAsset && this.setState({
+                          projectData: projectAsset.data.toString()
+                      }))
+                      .catch(err => log.error(err));
+              }
+
+          } ).catch();
+
+            // if (this.state.projectId !== prevState.projectId) {
+            //     storage
+            //         .load(storage.AssetType.Project, this.state.projectId, storage.DataFormat.JSON)
+            //         .then(projectAsset => projectAsset && this.setState({
+            //             projectData: projectAsset.data.toString()
+            //         }))
+            //         .catch(err => log.error(err));
+            // }
         }
         componentWillUnmount () {
             window.removeEventListener('hashchange', this.updateProject);
         }
+
+        checkLocallySavedProject(){
+
+                return new Promise((resolve,reject)=>{
+
+                  function errorHandler(e){
+                    console.error("file error during checkLocallySavedProject: " + e);
+                  };
+
+                  function onInitFs(fs) {
+                     console.log('Opened file system: ' + fs.name);
+
+
+                     fs.root.getFile("auto-saved" + "." + "json", {create: false}, function(fileEntry) {
+
+                       fileEntry.file(function(file) {
+                            var reader = new FileReader();
+
+                            reader.onloadend = function(e) {
+                               console.log("Read completed for " + "auto-saved" + "." + "json" + ". length=" + this.result.length);
+
+                               let res = {};
+                               res.file_exists = true;
+                               res.file = this.result;
+                               res.err = null;
+
+                               resolve(res);
+                            };
+
+                            reader.readAsText(file);
+                         });
+
+
+                     }, function(e){
+
+                       let res = {};
+
+                       res.file_exists = false;
+                       res.file = null;
+                       res.err = e;
+
+                       resolve(res);
+
+                     });
+                  };
+
+
+                  //window.requestFileSystem  = window.requestFileSystem || window.webkitRequestFileSystem;
+                  //window.requestFileSystem(window.TEMPORARY, 5*1024*1024 /*5MB*/, onInitFs, errorHandler);
+                  navigator.webkitPersistentStorage.requestQuota(50*1024*1024,
+                     function(grantedBytes){
+                        console.log("checkLocallySavedProject byte granted=" + grantedBytes);
+                        window.webkitRequestFileSystem(PERSISTENT, grantedBytes, onInitFs, errorHandler);
+                     }, errorHandler
+                  );
+
+                //   window.webkitRequestFileSystem(window.PERSISTENT, 50*1024*1024, onInitFs, errorHandler);
+
+                });
+
+        }
+
+        // checkLocallySavedProject(){
+        //
+        //         return new Promise((resolve,reject)=>{
+        //
+        //
+        //
+        //         });
+        //
+        // }
+
         fetchProjectId () {
             return window.location.hash.substring(1);
         }

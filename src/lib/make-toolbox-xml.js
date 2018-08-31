@@ -3,10 +3,11 @@ const categorySeparator = '<sep gap="36"/>';
 const blockSeparator = '<sep gap="36"/>'; // At default scale, about 28px
 
 
-const quadcopter = function (isStage, targetId){ //modified_by_Yaroslav  //quadcopter category
+const quadcopter = function (isStage, targetId,messages){ //modified_by_Yaroslav  //quadcopter category
+
 
   return `
-  <category name="Квадракоптер" colour="#FF0000" secondaryColour="#FF0000">
+  <category name="${messages['blocks.categories.quadcopter']}" colour="#FF0000" secondaryColour="#FF0000">
       ${isStage ? `
       <label text="Stage selected: no quadcopter blocks"></label>
       ` : `
@@ -174,10 +175,10 @@ const quadcopter = function (isStage, targetId){ //modified_by_Yaroslav  //quadc
 
 }
 
-const laboratory  = function (isStage, targetId,isExternalSensorsActivated) {  //modified_by_Yaroslav  //laboratory category
+const laboratory  = function (isStage, targetId,isExternalSensorsActivated,messages) {  //modified_by_Yaroslav  //laboratory category
 
   return `
-  <category name="Лаборатория" colour="#AAAAAA" secondaryColour="#AAAAAA">
+  <category name="${messages['blocks.categories.laboratory']}" colour="#AAAAAA" secondaryColour="#AAAAAA">
       ${isStage ? `
       <label text="Stage selected: no laboratory blocks"></label>
       ` : `
@@ -283,10 +284,10 @@ const laboratory  = function (isStage, targetId,isExternalSensorsActivated) {  /
 
 }
 
-const robot  = function (isStage, targetId,isExtensionPackActivated) {  //modified_by_Yaroslav  //robot category
+const robot  = function (isStage, targetId,isExtensionPackActivated,messages) {  //modified_by_Yaroslav  //robot category
 
   return `
-  <category name="Робот" colour="#00AF41" secondaryColour="#00AF41">
+  <category name="${messages['blocks.categories.robot']}" colour="#00AF41" secondaryColour="#00AF41">
       ${isStage ? `
       <label text="Stage selected: no robot blocks"></label>
       ` : `
@@ -460,9 +461,9 @@ const robot  = function (isStage, targetId,isExtensionPackActivated) {  //modifi
 
 }
 
-const motion = function (isStage, targetId) {
+const motion = function (isStage, targetId,messages) {
     return `
-    <category name="Движение" colour="#4C97FF" secondaryColour="#3373CC">
+    <category name="${messages['blocks.categories.motion']}" colour="#4C97FF" secondaryColour="#3373CC">
         ${isStage ? `
         <label text="Stage selected: no motion blocks"></label>
         ` : `
@@ -590,9 +591,9 @@ const motion = function (isStage, targetId) {
     `;
 };
 
-const looks = function (isStage, targetId) {
+const looks = function (isStage, targetId,messages) {
     return `
-    <category name="Внешность" colour="#9966FF" secondaryColour="#774DCB">
+    <category name="${messages['blocks.categories.looks']}" colour="#9966FF" secondaryColour="#774DCB">
         ${isStage ? '' : `
         <block type="looks_sayforsecs">
             <value name="MESSAGE">
@@ -718,9 +719,9 @@ const looks = function (isStage, targetId) {
     `;
 };
 
-const sound = function () {
+const sound = function (isStage, targetId,messages) {
     return `
-    <category name="Звук" colour="#D65CD6" secondaryColour="#BD42BD">
+    <category name="${messages['blocks.categories.sound']}" colour="#D65CD6" secondaryColour="#BD42BD">
         <block type="sound_play">
             <value name="SOUND_MENU">
                 <shadow type="sound_sounds_menu"/>
@@ -769,9 +770,9 @@ const sound = function () {
     `;
 };
 
-const events = function () {
+const events = function (isStage, targetId,messages) {
     return `
-    <category name="События" colour="#FFD500" secondaryColour="#CC9900">
+    <category name="${messages['blocks.categories.events']}" colour="#FFD500" secondaryColour="#CC9900">
         <block type="event_whenflagclicked"/>
         <block type="event_whenkeypressed">
         </block>
@@ -804,9 +805,9 @@ const events = function () {
     `;
 };
 
-const control = function (isStage) {
+const control = function (isStage, targetId,messages) {
     return `
-    <category name="Управление" colour="#FFAB19" secondaryColour="#CF8B17">
+    <category name="${messages['blocks.categories.control']}" colour="#FFAB19" secondaryColour="#CF8B17">
         <block type="control_wait">
             <value name="DURATION">
                 <shadow type="math_positive_number">
@@ -851,9 +852,9 @@ const control = function (isStage) {
     `;
 };
 
-const sensing = function (isStage) {
+const sensing = function (isStage, targetId,messages) {
     return `
-    <category name="Сенсоры" colour="#4CBFE6" secondaryColour="#2E8EB8">
+    <category name="${messages['blocks.categories.sensing']}" colour="#4CBFE6" secondaryColour="#2E8EB8">
         ${isStage ? '' : `
             <block type="sensing_touchingobject">
                 <value name="TOUCHINGOBJECTMENU">
@@ -917,9 +918,9 @@ const sensing = function (isStage) {
     `;
 };
 
-const operators = function () {
+const operators = function (isStage, targetId,messages) {
     return `
-    <category name="Операторы" colour="#40BF4A" secondaryColour="#389438">
+    <category name="${messages['blocks.categories.operators']}" colour="#40BF4A" secondaryColour="#389438">
         <block type="operator_add">
             <value name="NUM1">
                 <shadow type="math_number">
@@ -1099,16 +1100,16 @@ const operators = function () {
     `;
 };
 
-const variables = function () {
+const variables = function (isStage, targetId,messages) {
     return `
-    <category name="Переменные" colour="#FF8C1A" secondaryColour="#DB6E00" custom="VARIABLE">
+    <category name="${messages['blocks.categories.variables']}" colour="#FF8C1A" secondaryColour="#DB6E00" custom="VARIABLE">
     </category>
     `;
 };
 
-const myBlocks = function () {
+const myBlocks = function (isStage, targetId,messages) {
     return `
-    <category name="Мои блоки" colour="#FF6680" secondaryColour="#FF4D6A" custom="PROCEDURE">
+    <category name="${messages['blocks.categories.myBlocks']}" colour="#FF6680" secondaryColour="#FF4D6A" custom="PROCEDURE">
     </category>
     `;
 };
@@ -1122,25 +1123,64 @@ const xmlClose = '</xml>';
  * @param {string?} categoriesXML - null for default toolbox, or an XML string with <category> elements.
  * @returns {string} - a ScratchBlocks-style XML document for the contents of the toolbox.
  */
-const makeToolboxXML = function (isStage, targetId, isExtensionPackActivated, isExternalSensorsActivated,categoriesXML) {
+//const makeToolboxXML = function (isStage, targetId, isExtensionPackActivated, isExternalSensorsActivated,categoriesXML) {
+
+const makeToolboxXML = function (isStage, targetId, config,categoriesXML) {
     const gap = [categorySeparator];
 
-  //  const isExternalSensorsActivated = true; //modified_by_Yaroslav
+    const defaultMessages = {
+
+          "blocks.categories.quadcopter":"Quadcopter",
+          "blocks.categories.robot":"Robot",
+          "blocks.categories.laboratory":"Laboratory",
+          "blocks.categories.motion":"Motion",
+          "blocks.categories.looks":"Looks",
+          "blocks.categories.sound":"Sound",
+          "blocks.categories.events":"Events",
+          "blocks.categories.control":"Control",
+          "blocks.categories.sensing":"Sensing",
+          "blocks.categories.operators":"Operators",
+          "blocks.categories.variables":"Variables",
+          "blocks.categories.myBlocks":"My blocks"
+
+
+
+    }
+
+
+    var  isExternalSensorsActivated = false;
+    var  isExtensionPackActivated   = true;
+
+    var locale = 'ru';
+    var messages = defaultMessages;
+
+
+if (typeof(config) != 'undefined'){
+
+    isExternalSensorsActivated = config.isExternalSensorsActivated;
+    isExtensionPackActivated   = config.isExtensionPackActivated;
+
+   locale = config.locale;
+   messages = config.messages;
+
+}
+
+
 
     const everything = [
         xmlOpen,
-        quadcopter(isStage, targetId), gap, //modified_by_Yaroslav
-        laboratory(isStage, targetId,isExternalSensorsActivated),gap, //modified_by_Yaroslav
-        robot(isStage, targetId,isExtensionPackActivated),gap, //modified_by_Yaroslav //toolbox generator main
-        motion(isStage, targetId), gap,
-        looks(isStage, targetId), gap,
-        sound(isStage, targetId), gap,
-        events(isStage, targetId), gap,
-        control(isStage, targetId), gap,
-        sensing(isStage, targetId), gap,
-        operators(isStage, targetId), gap,
-        variables(isStage, targetId), gap,
-        myBlocks(isStage, targetId)
+        quadcopter(isStage, targetId,messages), gap, //modified_by_Yaroslav
+        laboratory(isStage, targetId,isExternalSensorsActivated,messages),gap, //modified_by_Yaroslav
+        robot(isStage, targetId,isExtensionPackActivated,messages),gap, //modified_by_Yaroslav //toolbox generator main
+        motion(isStage, targetId,messages), gap,
+        looks(isStage, targetId,messages), gap,
+        sound(isStage, targetId,messages), gap,
+        events(isStage, targetId,messages), gap,
+        control(isStage, targetId,messages), gap,
+        sensing(isStage, targetId,messages), gap,
+        operators(isStage, targetId,messages), gap,
+        variables(isStage, targetId,messages), gap,
+        myBlocks(isStage, targetId,messages)
     ];
 
     if (categoriesXML) {

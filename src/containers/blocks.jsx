@@ -106,7 +106,14 @@ class Blocks extends React.Component {
 
             const dynamicBlocksXML = this.props.vm.runtime.getBlocksXML();
             const target = this.props.vm.editingTarget;
-            const toolboxXML = makeToolboxXML(target.isStage, target.id, this.props.extension_pack.is_extension_pack_activated,this.props.robbo_settings.is_lab_ext_enabled, dynamicBlocksXML);
+
+            var config = {};
+            config.isExternalSensorsActivated = this.props.robbo_settings.is_lab_ext_enabled;
+            config.isExtensionPackActivated   = this.props.extension_pack.is_extension_pack_activated;
+            config.locale = this.props.locale;
+            config.messages = this.props.messages;
+            const toolboxXML = makeToolboxXML(target.isStage, target.id, config, dynamicBlocksXML);
+
             this.props.updateToolboxState(toolboxXML);
 
           }
@@ -206,7 +213,14 @@ class Blocks extends React.Component {
         if (this.props.vm.editingTarget) {
             const target = this.props.vm.editingTarget;
             const dynamicBlocksXML = this.props.vm.runtime.getBlocksXML();
-            const toolboxXML = makeToolboxXML(target.isStage, target.id,this.props.extension_pack.is_extension_pack_activated,this.props.robbo_settings.is_lab_ext_enabled,dynamicBlocksXML);
+
+            var config = {};
+            config.isExternalSensorsActivated = this.props.robbo_settings.is_lab_ext_enabled;
+            config.isExtensionPackActivated   = this.props.extension_pack.is_extension_pack_activated;
+            config.locale = this.props.locale;
+            config.messages = this.props.messages;
+            const toolboxXML = makeToolboxXML(target.isStage, target.id, config, dynamicBlocksXML);
+
             this.props.updateToolboxState(toolboxXML);
         }
 
@@ -234,7 +248,14 @@ class Blocks extends React.Component {
         this.ScratchBlocks.defineBlocksWithJsonArray(blocksInfo.map(blockInfo => blockInfo.json));
         const dynamicBlocksXML = this.props.vm.runtime.getBlocksXML();
         const target = this.props.vm.editingTarget;
-        const toolboxXML = makeToolboxXML(target.isStage, target.id, this.props.extension_pack.is_extension_pack_activated,this.props.robbo_settings.is_lab_ext_enabled ,dynamicBlocksXML);
+
+        var config = {};
+        config.isExternalSensorsActivated = this.props.robbo_settings.is_lab_ext_enabled;
+        config.isExtensionPackActivated   = this.props.extension_pack.is_extension_pack_activated;
+        config.locale = this.props.locale;
+        config.messages = this.props.messages;
+        const toolboxXML = makeToolboxXML(target.isStage, target.id, config, dynamicBlocksXML);
+
         this.props.updateToolboxState(toolboxXML);
     }
     handleBlocksInfoUpdate (blocksInfo) {

@@ -37,6 +37,11 @@ const messages = defineMessages({
         defaultMessage: 'Stage Size Toggle - Un-full screen',
         description: 'Button to get out of full screen mode',
         id: 'gui.gui.stageSizeUnFull'
+    },
+    fullscreenControl: {
+        defaultMessage: 'Full Screen Control',
+        description: 'Button to enter/exit full screen mode',
+        id: 'gui.stageHeader.fullscreenControl'
     }
 });
 
@@ -71,7 +76,7 @@ const StageHeaderComponent = function (props) {
                             className={styles.stageButtonIcon}
                             draggable={false}
                             src={unFullScreenIcon}
-                            title="Full Screen Control"
+                            title={props.intl.formatMessage(messages.fullscreenControl)}
                         />
                     </Button>
                 </Box>
@@ -133,7 +138,7 @@ const StageHeaderComponent = function (props) {
                                     className={styles.stageButtonIcon}
                                     draggable={false}
                                     src={fullScreenIcon}
-                                    title="Full Screen Control"
+                                    title={props.intl.formatMessage(messages.fullscreenControl)}
                                 />
                             </Button>
                         </div>

@@ -23,46 +23,54 @@ class LaboratoryPreviewComponent extends Component {
 
            lab_searching_icon = document.getElementById(`lab-${self.props.labIndex}-searching-icon`);
 
-          if (self.lab_is_searching){
+            if (typeof( lab_searching_icon) != 'undefined'){
+
+
+              if (self.lab_is_searching){
 
 
 
 
-             lab_searching_icon.classList.remove(styles.lab_loading_icon_hidden);
-             lab_searching_icon.classList.remove(styles.lab_loading_icon_showing);
-             lab_searching_icon.classList.add(styles.lab_loading_icon_showing);
+                 lab_searching_icon.classList.remove(styles.lab_loading_icon_hidden);
+                 lab_searching_icon.classList.remove(styles.lab_loading_icon_showing);
+                 lab_searching_icon.classList.add(styles.lab_loading_icon_showing);
 
 
-          }else{
+              }else{
 
 
-            lab_searching_icon.classList.remove(styles.lab_loading_icon_hidden);
-            lab_searching_icon.classList.remove(styles.lab_loading_icon_showing);
-            lab_searching_icon.classList.add(styles.lab_loading_icon_hidden);
+                lab_searching_icon.classList.remove(styles.lab_loading_icon_hidden);
+                lab_searching_icon.classList.remove(styles.lab_loading_icon_showing);
+                lab_searching_icon.classList.add(styles.lab_loading_icon_hidden);
 
 
-          }
+              }
 
-          lab_connection_status = document.getElementById(`lab-${self.props.labIndex}-connection-status`);
+              lab_connection_status = document.getElementById(`lab-${self.props.labIndex}-connection-status`);
 
-          if (self.isLabConnected){
-
-
+              if (self.isLabConnected){
 
 
-             lab_connection_status.classList.remove(styles.lab_status_connected);
-             lab_connection_status.classList.remove(styles.lab_status_disconnected);
-             lab_connection_status.classList.add(styles.lab_status_connected);
-
-          }else{
 
 
-            lab_connection_status.classList.remove(styles.lab_status_disconnected);
-            lab_connection_status.classList.remove(styles.lab_status_connected);
-            lab_connection_status.classList.add(styles.lab_status_disconnected);
+                 lab_connection_status.classList.remove(styles.lab_status_connected);
+                 lab_connection_status.classList.remove(styles.lab_status_disconnected);
+                 lab_connection_status.classList.add(styles.lab_status_connected);
+
+              }else{
 
 
-          }
+                lab_connection_status.classList.remove(styles.lab_status_disconnected);
+                lab_connection_status.classList.remove(styles.lab_status_connected);
+                lab_connection_status.classList.add(styles.lab_status_disconnected);
+
+
+              }
+
+
+
+            }
+
 
 
 
