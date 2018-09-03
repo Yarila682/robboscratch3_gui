@@ -40,37 +40,87 @@ class GUI extends React.Component {
 
          fs.root.getFile(name + "." + extension, {create: true}, function(fileEntry) {
 
-            fileEntry.createWriter(function(fileWriter) {
+           fileEntry.remove(function() {
 
-               fileWriter.onwriteend = function(e) {
+             fs.root.getFile(name + "." + extension, {create: true}, function(fileEntry) {
 
-                  console.log('Write completed.');
+                fileEntry.createWriter(function(fileWriter) {
 
-                  if((callback) && ((data instanceof Blob))){
-                    console.log('Data is  a blob. ');
-                    // callback();
-                  }
-               }
+                   fileWriter.onwriteend = function(e) {
 
-               fileWriter.onerror = function(e) {
-                  console.log('Write failed: ' + e.toString());
-               };
+                      console.log('Write completed.');
 
-                if (!(data instanceof Blob)){
+                      if((callback) && ((data instanceof Blob))){
+                        console.log('Data is  a blob. ');
+                        // callback();
+                      }
+                   }
 
-               var bb = new Blob([data], {type: 'text'}); // Note: window.WebKitBlobBuilder in Chrome 12.
-               fileWriter.write(bb);
+                   fileWriter.onerror = function(e) {
+                      console.log('Write failed: ' + e.toString());
+                   };
 
-             }else{
+                    if (!(data instanceof Blob)){
 
-                fileWriter.write(data);
+                   var bb = new Blob([data], {type: 'text'}); // Note: window.WebKitBlobBuilder in Chrome 12.
+                   fileWriter.write(bb);
+
+                 }else{
+
+                    fileWriter.write(data);
 
 
-             }
+                 }
 
-            });
-         }, errorHandler);
+                });
+             }, errorHandler);
+
+              });
+
+              }, errorHandler);
+
+
+
       };
+
+
+      // function onInitFs(fs) {
+      //    console.log('Opened file system: ' + fs.name);
+      //
+      //
+      //    fs.root.getFile(name + "." + extension, {create: true}, function(fileEntry) {
+      //
+      //       fileEntry.createWriter(function(fileWriter) {
+      //
+      //          fileWriter.onwriteend = function(e) {
+      //
+      //             console.log('Write completed.');
+      //
+      //             if((callback) && ((data instanceof Blob))){
+      //               console.log('Data is  a blob. ');
+      //               // callback();
+      //             }
+      //          }
+      //
+      //          fileWriter.onerror = function(e) {
+      //             console.log('Write failed: ' + e.toString());
+      //          };
+      //
+      //           if (!(data instanceof Blob)){
+      //
+      //          var bb = new Blob([data], {type: 'text'}); // Note: window.WebKitBlobBuilder in Chrome 12.
+      //          fileWriter.write(bb);
+      //
+      //        }else{
+      //
+      //           fileWriter.write(data);
+      //
+      //
+      //        }
+      //
+      //       });
+      //    }, errorHandler);
+      // };
 
 
       //window.requestFileSystem  = window.requestFileSystem || window.webkitRequestFileSystem;
@@ -98,6 +148,8 @@ class GUI extends React.Component {
     autoSaveProject(){
 
         const json = this.props.vm.saveProjectSb3();
+
+        console.log("project data to save: " + json);
 
         this.autoSaveProjectToInternallChromeFolder(json,"auto-saved","json");
 
