@@ -24,7 +24,7 @@
         width: 100%;
     */
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    background-color: $motion-primary;
+    background-color: #00b040;
 
     color: white;
 }
@@ -65,7 +65,7 @@
     line-height: $menu-bar-height;
     cursor: pointer;
     text-decoration: none;
-    color: $motion-tertiary;
+    color:white;
     user-select: none;
 }
 

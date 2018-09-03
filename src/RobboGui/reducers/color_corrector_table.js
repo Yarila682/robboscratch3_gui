@@ -6,8 +6,8 @@ const initialState = {
 
   isShowing:false,
   sensor_caller_id:0,
-  position_top: 500,
-  position_left: 500,
+  position_top: 200,
+  position_left: 200,
   tables: []
 
 };

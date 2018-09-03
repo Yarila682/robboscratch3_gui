@@ -661,7 +661,8 @@ class ColorCorrectorTableComponent extends Component {
 
                                   className={classNames(
 
-                                        {[styles.data_block]: true}
+                                        {[styles.data_block]: true},
+                                        {[styles.display_none]: true}
 
 
                                         )}>

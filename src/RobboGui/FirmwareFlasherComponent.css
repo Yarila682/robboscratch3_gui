@@ -1,21 +1,73 @@
-.firmware_flasher_component{
 
-    display: inline-block;
-    margin-left: 5%;
+@media (max-height:900px) {
 
-    border: 2px outset rgba(0,0,0,0.5);
+  .firmware_flasher_component{
 
-    box-shadow: 4px 4px 10px rgba(0,0,0,0.5);
+      display: inline-block;
+      margin-left: 5%;
 
-   height:100%;
+      border: 2px outset rgba(0,0,0,0.5);
 
-   min-width: 815px;
+      box-shadow: 4px 4px 10px rgba(0,0,0,0.5);
 
-   vertical-align: top;
+     height:100%;
 
-   background-color: white;
+     min-width: 815px;
+
+     vertical-align: top;
+
+     background-color: white;
+
+     font-size: 12px;
+
+  }
+
+  .devices_header_element{
+
+      display: inline-block;
+      padding-left: 3px;
+      padding-right: 3px;
+      width: 160px;
+
+  }
 
 }
+
+@media (min-height:901px) {
+
+  .firmware_flasher_component{
+
+      display: inline-block;
+      margin-left: 5%;
+
+      border: 2px outset rgba(0,0,0,0.5);
+
+      box-shadow: 4px 4px 10px rgba(0,0,0,0.5);
+
+     height:100%;
+
+     min-width: 815px;
+
+     vertical-align: top;
+
+     background-color: white;
+
+  }
+
+  .devices_header_element{
+
+      display: inline-block;
+      padding-left: 5px;
+      padding-right: 5px;
+      width: 160px;
+
+  }
+}
+
+
+
+
+
 
 .firmware_flasher_component_tittle{
 
@@ -42,14 +94,5 @@ text-align: center;
 .devices_header{
 
 
-
-}
-
-.devices_header_element{
-
-    display: inline-block;
-    padding-left: 5px;
-    padding-right: 5px;
-    width: 160px;
 
 }

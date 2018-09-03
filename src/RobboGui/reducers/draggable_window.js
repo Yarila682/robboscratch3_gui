@@ -8,8 +8,8 @@ function init_state(){
 
       draggable_windows[i]= {
 
-             position_top:400,
-             position_left: 400,
+             position_top:200,
+             position_left: 200,
              isShowing: false
 
 

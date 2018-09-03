@@ -46,8 +46,8 @@ class DraggableWindowComponent extends Component {
 
       var draggable_window_id =  this.props.draggableWindowId;
 
-      var top   = 400;
-      var left  =  400;
+      var top   = 200;
+      var left  =  200;
       var isShowing =  false;
 
       if (typeof(this.props.draggable_window[draggable_window_id]) != 'undefined'){
