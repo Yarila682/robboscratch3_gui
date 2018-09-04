@@ -5,6 +5,7 @@ import SensorDataBlockComponent  from './SensorDataBlockComponent';
 import SensorComponent from './SensorComponent';
 
 import {ActionLaboratoryGetDataStart} from  './actions/sensor_actions';
+import {ActionTriggerDraggableWindow} from './actions/sensor_actions'
 
 import {defineMessages, intlShape, injectIntl, FormattedMessage} from 'react-intl';
 
@@ -75,6 +76,13 @@ class LaboratoryPalleteComponent extends Component {
 
   }
 
+  onThisWindowClose(){
+
+    console.log("LaboartoryPalette close");
+    this.props.onLaboratoryPaletteWindowClose(2);
+
+  }
+
 
   render() {
 
@@ -90,6 +98,10 @@ class LaboratoryPalleteComponent extends Component {
             <div id="lab-tittle" className={styles.lab_panel_tittle}>
 
                 {this.props.intl.formatMessage(messages.laboratory)}
+
+                  <div className={styles.close_icon} onClick={this.onThisWindowClose.bind(this)}>
+
+                  </div>
 
             </div>
 
@@ -243,7 +255,13 @@ const mapDispatchToProps = dispatch => ({
 
       dispatch(ActionLaboratoryGetDataStart(robot_number,LCA));
 
-  }
+  },
+
+
+  onLaboratoryPaletteWindowClose: () => {
+
+      dispatch(ActionTriggerDraggableWindow(2));
+    }
 
 });
 

@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import styles from  './QuadcopterPalleteComponent.css';
 import SensorDataBlockComponent  from './SensorDataBlockComponent'
 
+import {ActionTriggerDraggableWindow} from './actions/sensor_actions'
+
 import {defineMessages, intlShape, injectIntl, FormattedMessage} from 'react-intl';
 
 
@@ -49,7 +51,12 @@ const messages = defineMessages({
 
 class QuadcopterPalleteComponent extends Component {
 
+  onThisWindowClose(){
 
+    console.log("QuadcopterPalette close");
+    this.props.onQuadcopterPaletteWindowClose(0);
+
+  }
 
   startGetDataLoop(){
 
@@ -120,6 +127,10 @@ class QuadcopterPalleteComponent extends Component {
 
                     {this.props.intl.formatMessage(messages.quadcopter)}
 
+                      <div className={styles.close_icon} onClick={this.onThisWindowClose.bind(this)}>
+
+                      </div>  
+
                 </div>
 
                 <SensorDataBlockComponent key={`copter-${this.props.quadcopterIndex}-battery-level`} sensorId={`copter-${this.props.quadcopterIndex}-battery-level`}
@@ -174,6 +185,11 @@ const mapStateToProps =  state => ({
 const mapDispatchToProps = dispatch => ({
 
 
+
+  onQuadcopterPaletteWindowClose: () => {
+
+      dispatch(ActionTriggerDraggableWindow(0));
+    }
 
 });
 

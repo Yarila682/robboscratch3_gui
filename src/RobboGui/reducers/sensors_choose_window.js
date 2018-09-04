@@ -41,6 +41,24 @@ switch (action.type) {
 
     break;
 
+
+    case 'HIDE_SENSOR_CHOOSE_WINDOW':
+
+
+
+
+    sensors_choose_window_state = Object.assign({}, state);;
+
+    sensors_choose_window_state.sensors_choose_window_showing = false;
+
+
+
+
+    return sensors_choose_window_state;
+
+
+      break;
+
     case 'DROP_SENSOR_CHOOSE_WINDOW':
 
 

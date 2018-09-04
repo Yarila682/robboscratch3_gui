@@ -7,6 +7,8 @@ import { ItemTypes } from './drag_constants';
 import { DragSource } from 'react-dnd';
 import ColorCorrectorTableRowElement from './ColorCorrectorTableRowElement';
 
+import {ActionTriggerColorCorrectorTable} from './actions/sensor_actions';
+
 import {defineMessages, intlShape, injectIntl, FormattedMessage} from 'react-intl';
 
 
@@ -611,6 +613,13 @@ class ColorCorrectorTableComponent extends Component {
   }
 
 
+  onThisWindowClose(){
+
+    console.log("ColorCorrectorTable close");
+    this.props.onCloseColorCorrectorTable(this.props.color_corrector_table.sensor_caller_id);
+
+  }
+
   render() {
 
     var top   =  this.props.color_corrector_table.position_top;
@@ -880,7 +889,7 @@ class ColorCorrectorTableComponent extends Component {
 
                         <div id="buttons-row" className={styles.row}>
 
-                          <button className={styles.buttons}>{this.props.intl.formatMessage(messages.mclose)}</button>
+                          <button className={styles.buttons} onClick={this.onThisWindowClose.bind(this)}>{this.props.intl.formatMessage(messages.mclose)}</button>
                           <button className={styles.buttons} onClick={this.onButtonSaveClick.bind(this)}>{this.props.intl.formatMessage(messages.msave)}</button>
                           <button className={styles.buttons} onClick={this.onButtonLoadClick.bind(this)}>{this.props.intl.formatMessage(messages.mload)}</button>
                           <button className={styles.buttons} onClick={this.onButtonApplyChangesClick.bind(this, this.props.RCA, this.props.color_corrector_table.sensor_caller_id)}>{this.props.intl.formatMessage(messages.mapply)}</button>
@@ -915,7 +924,10 @@ const mapStateToProps =  state => ({
 
 const mapDispatchToProps = dispatch => ({
 
+  onCloseColorCorrectorTable:  (sensor_caller_id) => {
 
+      dispatch(ActionTriggerColorCorrectorTable(sensor_caller_id));
+    }
 
 
 });

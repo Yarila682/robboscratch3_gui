@@ -92,6 +92,34 @@ const ActionTriggerSensorsPalette = function(){
 
 const ActionTriggerSensorName = function(payload){
 
+
+
+
+  return (dispatch) => {
+
+
+          dispatch(TriggerSensorName(payload));
+          dispatch(HideSensorChooseWindow(payload));
+
+  };
+
+
+
+}
+
+const HideSensorChooseWindow = function(){
+
+  return {
+    type: 'HIDE_SENSOR_CHOOSE_WINDOW',
+    payload:{
+
+    }
+  };
+
+}
+
+const TriggerSensorName = function(payload){
+
 let data;
 
 console.log('ActionTriggerSensorName: ' + payload );

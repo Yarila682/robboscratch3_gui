@@ -6,6 +6,7 @@ import styles from './FirmwareFlasherComponent.css';
 import {defineMessages, intlShape, injectIntl, FormattedMessage} from 'react-intl';
 
 import {ActionFirmwareFlasherGetDevicesInfo}  from './actions/sensor_actions';
+import {ActionTriggerDraggableWindow} from './actions/sensor_actions';
 
 import FirmwareFlasherDeviceComponent from './FirmwareFlasherDeviceComponent';
 
@@ -54,6 +55,13 @@ class FirmwareFlasherComponent extends Component {
 
   }
 
+  onThisWindowClose(){
+
+    console.log("FirmwareFlasher close");
+    this.props.onFirmwareFlasherWindowClose(3);
+
+  }
+
 
   componentDidMount () {
 
@@ -79,6 +87,11 @@ class FirmwareFlasherComponent extends Component {
           <div id="FirmwareFlasherComponent-tittle" className={styles.firmware_flasher_component_tittle}>
 
               FirmwareFlasher
+
+              <div className={styles.close_icon} onClick={this.onThisWindowClose.bind(this)}>
+
+
+              </div>
 
           </div>
 
@@ -197,7 +210,13 @@ const mapDispatchToProps = dispatch => ({
 
       dispatch(ActionFirmwareFlasherGetDevicesInfo(DCA,RCA,LCA,QCA));
 
-  }
+  },
+
+
+    onFirmwareFlasherWindowClose: () => {
+
+        dispatch(ActionTriggerDraggableWindow(3));
+      }
 
 
 });

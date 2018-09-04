@@ -5,6 +5,7 @@ import SensorDataBlockComponent  from './SensorDataBlockComponent';
 import SensorComponent from './SensorComponent';
 
 import {ActionRobotGetDataStart} from  './actions/sensor_actions';
+import {ActionTriggerDraggableWindow} from './actions/sensor_actions';
 
 import {defineMessages, intlShape, injectIntl, FormattedMessage} from 'react-intl';
 
@@ -65,6 +66,13 @@ class RobotPalleteComponent extends Component {
   }
 
 
+  onThisWindowClose(){
+
+    console.log("RobotPalette close");
+    this.props.onRobotPaletteWindowClose(1);
+
+  }
+
   render() {
 
 
@@ -79,6 +87,11 @@ class RobotPalleteComponent extends Component {
             <div id="robot-tittle" className={styles.robot_panel_tittle}>
 
               {this.props.intl.formatMessage(messages.robot)}
+
+              <div className={styles.close_icon} onClick={this.onThisWindowClose.bind(this)}>
+
+
+              </div>
 
             </div>
 
@@ -155,7 +168,12 @@ const mapDispatchToProps = dispatch => ({
 
       dispatch(ActionRobotGetDataStart(robot_number,RCA));
 
-  }
+  },
+
+  onRobotPaletteWindowClose: () => {
+
+      dispatch(ActionTriggerDraggableWindow(1));
+    }
 
 });
 
