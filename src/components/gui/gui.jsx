@@ -42,6 +42,21 @@ const messages = defineMessages({
         id: 'gui.gui.addExtension',
         description: 'Button to add an extension in the target pane',
         defaultMessage: 'Add Extension'
+    },
+    blocks: {
+        id: 'gui.gui.blocks',
+        description: '',
+        defaultMessage: 'Blocks'
+    },
+    costumes: {
+        id: 'gui.gui.costumes',
+        description: '',
+        defaultMessage: 'Costumes'
+    },
+    sound: {
+        id: 'gui.gui.sound',
+        description: '',
+        defaultMessage: 'Sound'
     }
 });
 
@@ -161,9 +176,9 @@ const GUIComponent = props => {
                             onSelect={onTabSelect}
                         >
                             <TabList className={tabClassNames.tabList}>
-                                <Tab className={tabClassNames.tab}>Блоки</Tab>
-                                <Tab className={tabClassNames.tab}>Костюмы</Tab>
-                                <Tab className={tabClassNames.tab}>Звук</Tab>
+                                <Tab className={tabClassNames.tab}>{intl.formatMessage(messages.blocks)}</Tab>
+                                <Tab className={tabClassNames.tab}>{intl.formatMessage(messages.costumes)}</Tab>
+                                <Tab className={tabClassNames.tab}>{intl.formatMessage(messages.sound)}</Tab>
 
                             </TabList>
                             <TabPanel className={tabClassNames.tabPanel}>
