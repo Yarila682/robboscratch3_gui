@@ -36,7 +36,9 @@ const ProjectLoaderHOC = function (WrappedComponent) {
 
               try {
 
-                  json = JSON.parse(result);
+                  console.log("saved_project: " + result.file);
+
+                  json = JSON.parse(result.file);
                   json_valid = true;
 
               }catch(e){
