@@ -116,14 +116,14 @@ class SensorPallete extends Component {
 
 const mapStateToProps =  state => ({
 
-      robot_sensors:state.scratchGui.robot_sensors,
-      lab_external_sensors:state.scratchGui.lab_external_sensors,
-      robot_special_sensors:state.scratchGui.robot_special_sensors,
-      lab_special_sensors:state.scratchGui.lab_special_sensors,
-      sensors_choose_window:state.scratchGui.sensors_choose_window,
-      robots:state.scratchGui.robots,
-      laboratories:state.scratchGui.laboratories,
-      settings:state.scratchGui.settings
+      // robot_sensors:state.scratchGui.robot_sensors,
+      // lab_external_sensors:state.scratchGui.lab_external_sensors,
+      // robot_special_sensors:state.scratchGui.robot_special_sensors,
+      // lab_special_sensors:state.scratchGui.lab_special_sensors,
+      // sensors_choose_window:state.scratchGui.sensors_choose_window,
+      // robots:state.scratchGui.robots,
+      // laboratories:state.scratchGui.laboratories,
+      // settings:state.scratchGui.settings
   });
 
 const mapDispatchToProps = dispatch => ({
