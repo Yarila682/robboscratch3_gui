@@ -66,5 +66,6 @@ switch (action.type) {
 
 export {
     reducer as default,
+    initialState as settings_InitialState
 
 };

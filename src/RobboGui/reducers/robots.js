@@ -126,5 +126,5 @@ switch (action.type) {
 
 export {
     reducer as default,
-
+    initialState as robots_InitialState
 };

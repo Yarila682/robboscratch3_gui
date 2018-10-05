@@ -156,5 +156,6 @@ const handler_trigger_sensor_name = function (initial_sensors_state,payload){
 
 export {
     reducer as default,
+    initialState as lab_external_sensors_InitialState
 
 };

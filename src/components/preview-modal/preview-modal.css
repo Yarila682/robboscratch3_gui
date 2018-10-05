@@ -1,6 +1,7 @@
 @import "../../css/colors.css";
 @import "../../css/units.css";
 @import "../../css/typography.css";
+@import "../../css/z-index.css";
 
 .modal-overlay {
     position: fixed;
@@ -8,14 +9,14 @@
     left: 0;
     right: 0;
     bottom: 0;
-    z-index: 1000;
-    background-color: hsla(215, 100%, 65%, .9);
+    z-index: $z-index-modal;
+    background-color: $ui-modal-overlay;
 }
 
 .modal-content {
     margin: 100px auto;
     outline: none;
-    border: .25rem solid hsla(0, 100%, 100%, .25);
+    border: .25rem solid $ui-white-transparent;
     padding: 0;
     border-radius: $space;
     user-select: none;
@@ -34,7 +35,7 @@
 }
 
 .body {
-    background: $ui-pane-gray;
+    background: $ui-white;
     padding: 1.5rem 2.25rem;
     text-align: center;
 }
@@ -51,7 +52,7 @@
 .button-row button {
     border: 1px solid $motion-primary;
     border-radius: 0.25rem;
-    padding: 0.5rem 2rem;
+    padding: 0.5rem 1.5rem;
     background: white;
     font-weight: bold;
     font-size: .875rem;
@@ -66,15 +67,33 @@
 .button-row button.no-button {
     color: $motion-primary;
 }
-.button-row button + button {
+
+.button-row button.view-project-button {
+    background: $extensions-primary;
+    border-color: $extensions-primary;
+    color: white;
+}
+
+[dir="ltr"] .button-row button + button {
     margin-left: 0.5rem;
 }
 
+[dir="rtl"] .button-row button + button {
+    margin-right: 0.5rem;
+}
+
 .cat-icon {
-    margin-left: .125rem;
     width: 1.5rem;
     height: 1.5rem;
     vertical-align: middle;
+}
+
+[dir="ltr"] .cat-icon {
+    margin-left: .125rem;
+}
+
+[dir="rtl"] .cat-icon {
+    margin-right: .125rem;
 }
 
 .faq-link-text {

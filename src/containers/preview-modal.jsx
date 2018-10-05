@@ -2,13 +2,14 @@ import bindAll from 'lodash.bindall';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {connect} from 'react-redux';
-import platform from 'platform';
+
+import tabletFullScreen from '../lib/tablet-full-screen';
 
 import PreviewModalComponent from '../components/preview-modal/preview-modal.jsx';
-import BrowserModalComponent from '../components/browser-modal/browser-modal.jsx';
 
 import {
-    closePreviewInfo
+    closePreviewInfo,
+    openImportInfo
 } from '../reducers/modals';
 
 class PreviewModal extends React.Component {
@@ -16,7 +17,8 @@ class PreviewModal extends React.Component {
         super(props);
         bindAll(this, [
             'handleTryIt',
-            'handleCancel'
+            'handleCancel',
+            'handleViewProject'
         ]);
 
         this.state = {
@@ -25,40 +27,46 @@ class PreviewModal extends React.Component {
     }
     handleTryIt () {
         this.setState({previewing: true});
+        // try to run in fullscreen mode on tablets.
+        tabletFullScreen();
         this.props.onTryIt();
     }
     handleCancel () {
         window.location.replace('https://scratch.mit.edu');
     }
-    supportedBrowser () {
-        if (platform.name === 'IE') {
-            return false;
-        }
-        return true;
+    handleViewProject () {
+        this.props.onViewProject();
     }
     render () {
-        return (this.supportedBrowser() ?
+        return (
             <PreviewModalComponent
+                isRtl={this.props.isRtl}
                 previewing={this.state.previewing}
                 onCancel={this.handleCancel}
                 onTryIt={this.handleTryIt}
-            /> :
-            <BrowserModalComponent
-                onBack={this.handleCancel}
+                onViewProject={this.handleViewProject}
             />
         );
     }
 }
 
 PreviewModal.propTypes = {
-    onTryIt: PropTypes.func
+    isRtl: PropTypes.bool,
+    onTryIt: PropTypes.func,
+    onViewProject: PropTypes.func
 };
 
-const mapStateToProps = () => ({});
+const mapStateToProps = state => ({
+    isRtl: state.locales.isRtl
+});
 
 const mapDispatchToProps = dispatch => ({
     onTryIt: () => {
         dispatch(closePreviewInfo());
+    },
+    onViewProject: () => {
+        dispatch(closePreviewInfo());
+        dispatch(openImportInfo());
     }
 });
 

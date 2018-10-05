@@ -10,11 +10,14 @@ const isUndefined = a => typeof a === 'undefined';
  *     with given target ID. The name of the target sprite when the monitor was created
  * @param {string} block.opcode - The opcode of the monitor
  * @param {object} block.params - Extra params to the monitor block
- * @param {string} block.value - The monitor value
+ * @param {string|number|Array} block.value - The monitor value
+ * @param {VirtualMachine} block.vm - the VM instance which owns the block
  * @return {object} The adapted monitor with label and category
  */
-export default function ({id, spriteName, opcode, params, value}) {
-    let {label, category, labelFn} = OpcodeLabels(opcode);
+export default function ({id, spriteName, opcode, params, value, vm}) {
+    // Extension monitors get their labels from the Runtime through `getLabelForOpcode`.
+    // Other monitors' labels are hard-coded in `OpcodeLabels`.
+    let {label, category, labelFn} = (vm && vm.runtime.getLabelForOpcode(opcode)) || OpcodeLabels(opcode);
 
     // Use labelFn if provided for dynamic labelling (e.g. variables)
     if (!isUndefined(labelFn)) label = labelFn(params);
@@ -25,9 +28,19 @@ export default function ({id, spriteName, opcode, params, value}) {
     }
 
     // If value is a number, round it to six decimal places
-    if (typeof value === 'number' || (typeof value === 'string' && String(parseFloat(value)) === value)) {
-        value = Number(Number(value).toFixed(6));
+    if (typeof value === 'number') {
+        value = Number(value.toFixed(6));
     }
-    
+
+    // Turn the value to a string, for handle boolean values
+    if (typeof value === 'boolean') {
+        value = value.toString();
+    }
+
+    // Lists can contain booleans, which should also be turned to strings
+    if (Array.isArray(value)) {
+        value = value.map(item => item.toString());
+    }
+
     return {id, label, category, value};
 }

@@ -145,5 +145,6 @@ const handler_laboratory_get_sensors_data = function (initial_sensors_state,payl
 
 export {
     reducer as default,
+    initialState as lab_special_sensors_InitialState
 
 };

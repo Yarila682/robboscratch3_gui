@@ -4,24 +4,31 @@ const OPEN_MODAL = 'scratch-gui/modals/OPEN_MODAL';
 const CLOSE_MODAL = 'scratch-gui/modals/CLOSE_MODAL';
 
 const MODAL_BACKDROP_LIBRARY = 'backdropLibrary';
+const MODAL_CAMERA_CAPTURE = 'cameraCapture';
 const MODAL_COSTUME_LIBRARY = 'costumeLibrary';
 const MODAL_EXTENSION_LIBRARY = 'extensionLibrary';
-const MODAL_FEEDBACK_FORM = 'feedbackForm';
+const MODAL_IMPORT_INFO = 'importInfo';
+const MODAL_LOADING_PROJECT = 'loadingProject';
 const MODAL_PREVIEW_INFO = 'previewInfo';
 const MODAL_SOUND_LIBRARY = 'soundLibrary';
 const MODAL_SPRITE_LIBRARY = 'spriteLibrary';
 const MODAL_SOUND_RECORDER = 'soundRecorder';
 
+const MODAL_TIPS_LIBRARY = 'tipsLibrary';
+
 
 const initialState = {
     [MODAL_BACKDROP_LIBRARY]: false,
+    [MODAL_CAMERA_CAPTURE]: false,
     [MODAL_COSTUME_LIBRARY]: false,
     [MODAL_EXTENSION_LIBRARY]: false,
-    [MODAL_FEEDBACK_FORM]: false,
-    [MODAL_PREVIEW_INFO]: false, //true //modified_by_Yaroslav
+    [MODAL_IMPORT_INFO]: false,
+    [MODAL_LOADING_PROJECT]: false,
+    [MODAL_PREVIEW_INFO]: false,
     [MODAL_SOUND_LIBRARY]: false,
     [MODAL_SPRITE_LIBRARY]: false,
-    [MODAL_SOUND_RECORDER]: false
+    [MODAL_SOUND_RECORDER]: false,
+    [MODAL_TIPS_LIBRARY]: false
 };
 
 const reducer = function (state, action) {
@@ -55,6 +62,10 @@ const openBackdropLibrary = function () {
     analytics.pageview('/libraries/backdrops');
     return openModal(MODAL_BACKDROP_LIBRARY);
 };
+const openCameraCapture = function () {
+    analytics.pageview('/modals/camera');
+    return openModal(MODAL_CAMERA_CAPTURE);
+};
 const openCostumeLibrary = function () {
     analytics.pageview('/libraries/costumes');
     return openModal(MODAL_COSTUME_LIBRARY);
@@ -63,9 +74,17 @@ const openExtensionLibrary = function () {
     analytics.pageview('/libraries/extensions');
     return openModal(MODAL_EXTENSION_LIBRARY);
 };
-const openFeedbackForm = function () {
-    analytics.pageview('/modals/feedback');
-    return openModal(MODAL_FEEDBACK_FORM);
+const openImportInfo = function () {
+    analytics.pageview('modals/import');
+    return openModal(MODAL_IMPORT_INFO);
+};
+const openLoadingProject = function () {
+    analytics.pageview('modals/loading');
+    return openModal(MODAL_LOADING_PROJECT);
+};
+const openPreviewInfo = function () {
+    analytics.pageview('/modals/preview');
+    return openModal(MODAL_PREVIEW_INFO);
 };
 const openSoundLibrary = function () {
     analytics.pageview('/libraries/sounds');
@@ -79,12 +98,15 @@ const openSoundRecorder = function () {
     analytics.pageview('/modals/microphone');
     return openModal(MODAL_SOUND_RECORDER);
 };
-const openPreviewInfo = function () {
-    analytics.pageview('/modals/preview');
-    return openModal(MODAL_PREVIEW_INFO);
+const openTipsLibrary = function () {
+    analytics.pageview('/modals/tips');
+    return openModal(MODAL_TIPS_LIBRARY);
 };
 const closeBackdropLibrary = function () {
     return closeModal(MODAL_BACKDROP_LIBRARY);
+};
+const closeCameraCapture = function () {
+    return closeModal(MODAL_CAMERA_CAPTURE);
 };
 const closeCostumeLibrary = function () {
     return closeModal(MODAL_COSTUME_LIBRARY);
@@ -92,8 +114,11 @@ const closeCostumeLibrary = function () {
 const closeExtensionLibrary = function () {
     return closeModal(MODAL_EXTENSION_LIBRARY);
 };
-const closeFeedbackForm = function () {
-    return closeModal(MODAL_FEEDBACK_FORM);
+const closeImportInfo = function () {
+    return closeModal(MODAL_IMPORT_INFO);
+};
+const closeLoadingProject = function () {
+    return closeModal(MODAL_LOADING_PROJECT);
 };
 const closePreviewInfo = function () {
     return closeModal(MODAL_PREVIEW_INFO);
@@ -107,22 +132,32 @@ const closeSoundLibrary = function () {
 const closeSoundRecorder = function () {
     return closeModal(MODAL_SOUND_RECORDER);
 };
+const closeTipsLibrary = function () {
+    return closeModal(MODAL_TIPS_LIBRARY);
+};
 export {
     reducer as default,
+    initialState as modalsInitialState,
     openBackdropLibrary,
+    openCameraCapture,
     openCostumeLibrary,
     openExtensionLibrary,
-    openFeedbackForm,
+    openImportInfo,
+    openLoadingProject,
     openPreviewInfo,
     openSoundLibrary,
     openSpriteLibrary,
     openSoundRecorder,
+    openTipsLibrary,
     closeBackdropLibrary,
+    closeCameraCapture,
     closeCostumeLibrary,
     closeExtensionLibrary,
-    closeFeedbackForm,
+    closeImportInfo,
+    closeLoadingProject,
     closePreviewInfo,
     closeSpriteLibrary,
     closeSoundLibrary,
-    closeSoundRecorder
+    closeSoundRecorder,
+    closeTipsLibrary
 };

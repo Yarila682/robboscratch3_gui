@@ -52,8 +52,8 @@ class OldVersionSensorComponent extends Component {
 const mapStateToProps =  state => ({
 
 
-  sensorsChooseWindow: state.sensors_choose_window,
-  sensorsPalette: state.sensors_palette
+  sensorsChooseWindow:state.scratchGui.sensors_choose_window,
+  sensorsPalette:state.scratchGui.sensors_palette
 
 
   });

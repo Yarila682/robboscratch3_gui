@@ -7,17 +7,36 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    background: $ui-background-blue;
+    background: $ui-tertiary;
 }
 
 .new-buttons {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
-    margin: 0.75rem 0;
+    padding: 0.75rem 0;
     color: $motion-primary;
     text-align: center;
+    background: none;
+}
+
+$fade-out-distance: 100px;
+
+.new-buttons:before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right:0;
+    background: linear-gradient(rgba(232,237,241, 0),rgba(232,237,241, 1));
+    height: $fade-out-distance;
+    width: 100%;
+    pointer-events: none;
 }
 
 .new-buttons > button + button {
@@ -29,12 +48,16 @@
     height: 0;
     flex-grow: 1;
     overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    /* Make sure there is room to scroll beyond the last tile */
+    padding-bottom: 70px;
 }
 
 .list-item {
     width: 5rem;
     min-height: 5rem;
-    margin: 1rem auto;
+    margin: 0.5rem auto;
 }
 
 @media only screen and (max-width: $full-size-paint) {
@@ -44,6 +67,11 @@
 
     .list-item {
         width: 4rem;
-        min-height: 4rem;
     }
+}
+
+
+.list-item.placeholder {
+    background: black;
+    filter: opacity(15%) brightness(0%);
 }

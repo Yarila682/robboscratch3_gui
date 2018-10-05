@@ -14,7 +14,7 @@ function init_state(){
             sensor_id:i,
             sensor_name: SensorsAPI.getSensorInitName(),
             sensor_type:  SensorsAPI.getSensorInitType(),
-            is_sensor_version_new: true,
+            is_sensor_version_new: false,
             sensor_active: false,
             sensor_data:[],
             sensor_device_name:"robot",
@@ -267,5 +267,5 @@ const handler_trigger_extension_pack = function (initial_sensors_state,payload){
 
 export {
     reducer as default,
-
+    initialState as robot_sensors_InitialState
 };

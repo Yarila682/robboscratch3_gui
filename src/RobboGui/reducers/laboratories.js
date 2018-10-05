@@ -78,5 +78,6 @@ switch (action.type) {
 
 export {
     reducer as default,
+    initialState as laboratories_InitialState
 
 };

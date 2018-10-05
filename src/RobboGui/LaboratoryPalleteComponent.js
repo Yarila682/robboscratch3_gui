@@ -50,6 +50,16 @@ const messages = defineMessages({
         id: 'gui.RobboGui.LaboratoryPalette.laboratory',
         description: ' ',
         defaultMessage: 'Laboratory'
+    },
+    true: {
+        id: 'gui.RobboGui.true',
+        description: ' ',
+        defaultMessage: 'true'
+    },
+    false: {
+        id: 'gui.RobboGui.false',
+        description: ' ',
+        defaultMessage: 'false'
     }
 
   });
@@ -66,6 +76,15 @@ class LaboratoryPalleteComponent extends Component {
 
 
 
+  }
+
+
+  shouldComponentUpdate (nextProps, nextState) {
+      return (
+
+        this.props.draggable_window[2].isShowing !== false
+
+      );
   }
 
   componentDidMount(){
@@ -117,6 +136,22 @@ class LaboratoryPalleteComponent extends Component {
 
                                                     {
 
+                                                      let sensor_data =- "";
+
+                                                      if (sensor.sensor_data == "false"){
+
+                                                        sensor_data = this.props.intl.formatMessage(messages.false)
+
+                                                      }else if (sensor.sensor_data == "true"){
+
+                                                          sensor_data = this.props.intl.formatMessage(messages.true)
+
+                                                      }else{
+
+                                                          sensor_data = sensor.sensor_data;
+
+                                                      }
+
                                                         let field_text = "";
 
                                                       if (index < 5){
@@ -155,7 +190,7 @@ class LaboratoryPalleteComponent extends Component {
                                                   components.push(<SensorDataBlockComponent key={sensor.sensor_id} sensorId={sensor.sensor_id}
                                                                       deviceName={sensor.sensor_device_name} sensorType={sensor.sensor_type}
                                                                       sensorFieldText={field_text}  sensorName={sensor.sensor_name}
-                                                                      sensorData={sensor.sensor_data}  />
+                                                                      sensorData={sensor_data}  />
 
 
                                                                   );
@@ -242,10 +277,11 @@ class LaboratoryPalleteComponent extends Component {
 const mapStateToProps =  state => ({
 
 
-  lab_external_sensors:  state.lab_external_sensors,
-  lab_special_sensors:  state.lab_special_sensors,
-  laboratories: state.laboratories,
-  settings:state.settings
+  lab_external_sensors:state.scratchGui.lab_external_sensors,
+  lab_special_sensors:state.scratchGui.lab_special_sensors,
+  laboratories:state.scratchGui.laboratories,
+  settings:state.scratchGui.settings,
+  draggable_window:state.scratchGui.draggable_window
 
   });
 

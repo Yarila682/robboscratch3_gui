@@ -1,12 +1,26 @@
- import AudioEngine from 'scratch-audio';
+import AudioEngine from 'scratch-audio';
 import PropTypes from 'prop-types';
 import React from 'react';
 import VM from 'scratch-vm';
-import bindAll from 'lodash.bindall';
 import {connect} from 'react-redux';
+import ReactModal from 'react-modal';
 
-import {openExtensionLibrary} from '../reducers/modals.js';
+import ErrorBoundaryHOC from '../lib/error-boundary-hoc.jsx';
+import {openExtensionLibrary} from '../reducers/modals';
+import {setProjectTitle} from '../reducers/project-title';
+import {
+    activateTab,
+    BLOCKS_TAB_INDEX,
+    COSTUMES_TAB_INDEX,
+    SOUNDS_TAB_INDEX
+} from '../reducers/editor-tab';
 
+import {
+    closeCostumeLibrary,
+    closeBackdropLibrary
+} from '../reducers/modals';
+
+import ProjectLoaderHOC from '../lib/project-loader-hoc.jsx';
 import vmListenerHOC from '../lib/vm-listener-hoc.jsx';
 
 import GUIComponent from '../components/gui/gui.jsx';
@@ -17,190 +31,191 @@ import HTML5Backend from 'react-dnd-html5-backend';
 class GUI extends React.Component {
     constructor (props) {
         super(props);
-        bindAll(this, [
-            'handleTabSelect'
-        ]);
-        this.state = {tabIndex: 0};
+        this.state = {
+            loading: !props.vm.initialized,
+            loadingError: false,
+            errorMessage: ''
+        };
     }
+
 
     autoSaveProjectToInternallChromeFolder(data, name, extension, callback){
 
 
-      console.log("autoSaveProjectToInternallChromeFolder=" + name + " extension=" + extension + " data length=" + data.length);
+    console.log("autoSaveProjectToInternallChromeFolder=" + name + " extension=" + extension + " data length=" + data.length);
 
 
-      function errorHandler(e){
-         console.log("file error during autosaving project" + e);
-      };
+    function errorHandler(e){
+       console.log("file error during autosaving project" + e);
+    };
 
 
-      function onInitFs(fs) {
-         console.log('Opened file system: ' + fs.name);
+    function onInitFs(fs) {
+       console.log('Opened file system: ' + fs.name);
 
 
-         fs.root.getFile(name + "." + extension, {create: true}, function(fileEntry) {
+       fs.root.getFile(name + "." + extension, {create: true}, function(fileEntry) {
 
-           fileEntry.remove(function() {
+         fileEntry.remove(function() {
 
-             fs.root.getFile(name + "." + extension, {create: true}, function(fileEntry) {
+           fs.root.getFile(name + "." + extension, {create: true}, function(fileEntry) {
 
-                fileEntry.createWriter(function(fileWriter) {
+              fileEntry.createWriter(function(fileWriter) {
 
-                   fileWriter.onwriteend = function(e) {
+                 fileWriter.onwriteend = function(e) {
 
-                      console.log('Write completed.');
+                    console.log('Write completed.');
 
-                      if((callback) && ((data instanceof Blob))){
-                        console.log('Data is  a blob. ');
-                        // callback();
-                      }
-                   }
-
-                   fileWriter.onerror = function(e) {
-                      console.log('Write failed: ' + e.toString());
-                   };
-
-                    if (!(data instanceof Blob)){
-
-                   var bb = new Blob([data], {type: 'text'}); // Note: window.WebKitBlobBuilder in Chrome 12.
-                   fileWriter.write(bb);
-
-                 }else{
-
-                    fileWriter.write(data);
-
-
+                    if((callback) && ((data instanceof Blob))){
+                      console.log('Data is  a blob. ');
+                      // callback();
+                    }
                  }
 
-                });
-             }, errorHandler);
+                 fileWriter.onerror = function(e) {
+                    console.log('Write failed: ' + e.toString());
+                 };
+
+                  if (!(data instanceof Blob)){
+
+                 var bb = new Blob([data], {type: 'text'}); // Note: window.WebKitBlobBuilder in Chrome 12.
+                 fileWriter.write(bb);
+
+               }else{
+
+                  fileWriter.write(data);
+
+
+               }
 
               });
+           }, errorHandler);
 
-              }, errorHandler);
+            });
 
-
-
-      };
-
-
-      // function onInitFs(fs) {
-      //    console.log('Opened file system: ' + fs.name);
-      //
-      //
-      //    fs.root.getFile(name + "." + extension, {create: true}, function(fileEntry) {
-      //
-      //       fileEntry.createWriter(function(fileWriter) {
-      //
-      //          fileWriter.onwriteend = function(e) {
-      //
-      //             console.log('Write completed.');
-      //
-      //             if((callback) && ((data instanceof Blob))){
-      //               console.log('Data is  a blob. ');
-      //               // callback();
-      //             }
-      //          }
-      //
-      //          fileWriter.onerror = function(e) {
-      //             console.log('Write failed: ' + e.toString());
-      //          };
-      //
-      //           if (!(data instanceof Blob)){
-      //
-      //          var bb = new Blob([data], {type: 'text'}); // Note: window.WebKitBlobBuilder in Chrome 12.
-      //          fileWriter.write(bb);
-      //
-      //        }else{
-      //
-      //           fileWriter.write(data);
-      //
-      //
-      //        }
-      //
-      //       });
-      //    }, errorHandler);
-      // };
-
-
-      //window.requestFileSystem  = window.requestFileSystem || window.webkitRequestFileSystem;
-    //  window.requestFileSystem(window.TEMPORARY, 5*1024*1024 /*5MB*/, onInitFs, errorHandler);
-      navigator.webkitPersistentStorage.requestQuota(50*1024*1024,
-         function(grantedBytes){
-            console.log("byte granted=" + grantedBytes);
-            window.webkitRequestFileSystem(PERSISTENT, grantedBytes, onInitFs, errorHandler);
-         }, errorHandler
-      );
-
-    //   window.webkitRequestFileSystem(window.PERSISTENT, 50*1024*1024, onInitFs, errorHandler);
-
-
-      if((callback) && (!(data instanceof Blob))){
-
-          console.log('Data is not a blob. Standart callback case.');
-        // callback(name + "." + extension);
-      }
+            }, errorHandler);
 
 
 
+    };
+
+
+
+    navigator.webkitPersistentStorage.requestQuota(50*1024*1024,
+       function(grantedBytes){
+          console.log("byte granted=" + grantedBytes);
+          window.webkitRequestFileSystem(PERSISTENT, grantedBytes, onInitFs, errorHandler);
+       }, errorHandler
+    );
+
+  //   window.webkitRequestFileSystem(window.PERSISTENT, 50*1024*1024, onInitFs, errorHandler);
+
+
+    if((callback) && (!(data instanceof Blob))){
+
+        console.log('Data is not a blob. Standart callback case.');
+      // callback(name + "." + extension);
     }
 
-    autoSaveProject(){
-
-        const json = this.props.vm.saveProjectSb3();
-
-        console.log("project data to save: " + json);
-
-        this.autoSaveProjectToInternallChromeFolder(json,"auto-saved","json");
 
 
-    }
+  }
 
-    startProjectAutosaving(){
+  autoSaveProject(){
 
-        setInterval(() => {
+      this.props.vm.saveProjectSb3()
+       .then( project_data => {
 
-            this.autoSaveProject();
+         console.log("project data to save: " + project_data);
 
-        }, 10 * 1000)
+         this.autoSaveProjectToInternallChromeFolder(project_data,"auto-saved","sb3");
 
-    }
+       })
+
+      .catch(err => {})
+
+
+
+
+  }
+
+  startProjectAutosaving(){
+
+      setInterval(() => {
+
+          this.autoSaveProject();
+
+      }, 10 * 1000)
+
+  }
 
     componentDidMount () {
+        if (this.props.projectTitle) {
+            this.props.onUpdateReduxProjectTitle(this.props.projectTitle);
+        }
+
+        if (this.props.vm.initialized) return;
         this.audioEngine = new AudioEngine();
         this.props.vm.attachAudioEngine(this.audioEngine);
-        this.props.vm.loadProject(this.props.projectData);
-        this.props.vm.setCompatibilityMode(true);
-        this.props.vm.start();
+        this.props.vm.loadProject(this.props.projectData)
+            .then(() => {
+                this.setState({loading: false}, () => {
+                    this.props.vm.setCompatibilityMode(true);
+                    this.props.vm.start();
 
-        this.startProjectAutosaving();
+                    this.startProjectAutosaving(); //added_by_Yaroslav not original
 
-
+                });
+            })
+            .catch(e => {
+                // Need to catch this error and update component state so that
+                // error page gets rendered if project failed to load
+                this.setState({loadingError: true, errorMessage: e});
+            });
+        this.props.vm.initialized = true;
     }
     componentWillReceiveProps (nextProps) {
         if (this.props.projectData !== nextProps.projectData) {
-            this.props.vm.loadProject(nextProps.projectData);
+            this.setState({loading: true}, () => {
+                this.props.vm.loadProject(nextProps.projectData)
+                    .then(() => {
+                        this.setState({loading: false});
+                    })
+                    .catch(e => {
+                        // Need to catch this error and update component state so that
+                        // error page gets rendered if project failed to load
+                        this.setState({loadingError: true, errorMessage: e});
+                    });
+            });
+        }
+        if (this.props.projectTitle !== nextProps.projectTitle) {
+            this.props.onUpdateReduxProjectTitle(nextProps.projectTitle);
         }
     }
-    componentWillUnmount () {
-        this.props.vm.stopAll();
-    }
-    handleTabSelect (tabIndex) {
-        this.setState({tabIndex});
-    }
     render () {
+        if (this.state.loadingError) {
+            throw new Error(
+                `Failed to load project from server [id=${window.location.hash}]: ${this.state.errorMessage}`);
+        }
         const {
+            /* eslint-disable no-unused-vars */
+            assetHost,
+            hideIntro,
+            onUpdateReduxProjectTitle,
+            projectData,
+            projectHost,
+            projectTitle,
+            /* eslint-enable no-unused-vars */
             children,
-            projectData, // eslint-disable-line no-unused-vars
+            fetchingProject,
+            loadingStateVisible,
             vm,
             ...componentProps
         } = this.props;
         return (
             <GUIComponent
-                enableExtensions={window.location.search.includes('extensions')}
-                tabIndex={this.state.tabIndex}
+                loading={fetchingProject || this.state.loading || loadingStateVisible}
                 vm={vm}
-                onTabSelect={this.handleTabSelect}
                 {...componentProps}
             >
                 {children}
@@ -210,24 +225,50 @@ class GUI extends React.Component {
 }
 
 GUI.propTypes = {
-    ...GUIComponent.propTypes,
-    feedbackFormVisible: PropTypes.bool,
+    assetHost: PropTypes.string,
+    children: PropTypes.node,
+    fetchingProject: PropTypes.bool,
+    hideIntro: PropTypes.bool,
+    importInfoVisible: PropTypes.bool,
+    loadingStateVisible: PropTypes.bool,
+    onSeeCommunity: PropTypes.func,
+    onUpdateProjectTitle: PropTypes.func,
+    onUpdateReduxProjectTitle: PropTypes.func,
     previewInfoVisible: PropTypes.bool,
-    projectData: PropTypes.string,
+    projectData: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
+    projectHost: PropTypes.string,
+    projectTitle: PropTypes.string,
     vm: PropTypes.instanceOf(VM)
 };
 
-GUI.defaultProps = GUIComponent.defaultProps;
-
-const mapStateToProps = state => ({
-    feedbackFormVisible: state.modals.feedbackForm,
-    previewInfoVisible: state.modals.previewInfo
-  //  saveProjectSb3: state.vm.saveProjectSb3.bind(state.vm)
+const mapStateToProps = (state, ownProps) => ({
+    activeTabIndex: state.scratchGui.editorTab.activeTabIndex,
+    backdropLibraryVisible: state.scratchGui.modals.backdropLibrary,
+    blocksTabVisible: state.scratchGui.editorTab.activeTabIndex === BLOCKS_TAB_INDEX,
+    cardsVisible: state.scratchGui.cards.visible,
+    costumeLibraryVisible: state.scratchGui.modals.costumeLibrary,
+    costumesTabVisible: state.scratchGui.editorTab.activeTabIndex === COSTUMES_TAB_INDEX,
+    importInfoVisible: state.scratchGui.modals.importInfo,
+    isPlayerOnly: state.scratchGui.mode.isPlayerOnly,
+    isRtl: state.locales.isRtl,
+    loadingStateVisible: state.scratchGui.modals.loadingProject,
+    previewInfoVisible: state.scratchGui.modals.previewInfo && !ownProps.hideIntro,
+    targetIsStage: (
+        state.scratchGui.targets.stage &&
+        state.scratchGui.targets.stage.id === state.scratchGui.targets.editingTarget
+    ),
+    soundsTabVisible: state.scratchGui.editorTab.activeTabIndex === SOUNDS_TAB_INDEX,
+    tipsLibraryVisible: state.scratchGui.modals.tipsLibrary
 });
 
 const mapDispatchToProps = dispatch => ({
-    onExtensionButtonClick: () => dispatch(openExtensionLibrary())
-
+    onExtensionButtonClick: () => dispatch(openExtensionLibrary()),
+    onActivateTab: tab => dispatch(activateTab(tab)),
+    onActivateCostumesTab: () => dispatch(activateTab(COSTUMES_TAB_INDEX)),
+    onActivateSoundsTab: () => dispatch(activateTab(SOUNDS_TAB_INDEX)),
+    onRequestCloseBackdropLibrary: () => dispatch(closeBackdropLibrary()),
+    onRequestCloseCostumeLibrary: () => dispatch(closeCostumeLibrary()),
+    onUpdateReduxProjectTitle: title => dispatch(setProjectTitle(title))
 });
 
 const ConnectedGUI = connect(
@@ -235,4 +276,9 @@ const ConnectedGUI = connect(
     mapDispatchToProps,
 )( DragDropContext(HTML5Backend)(GUI));
 
-export default vmListenerHOC(ConnectedGUI);
+const WrappedGui = ErrorBoundaryHOC('Top Level App')(
+    ProjectLoaderHOC(vmListenerHOC(ConnectedGUI))
+);
+
+WrappedGui.setAppElement = ReactModal.setAppElement;
+export default WrappedGui;

@@ -40,6 +40,16 @@ const messages = defineMessages({
         id: 'gui.RobboGui.RobotPalette.robot',
         description: ' ',
         defaultMessage: 'Robot'
+    },
+    true: {
+        id: 'gui.RobboGui.true',
+        description: ' ',
+        defaultMessage: 'true'
+    },
+    false: {
+        id: 'gui.RobboGui.false',
+        description: ' ',
+        defaultMessage: 'false'
     }
 
   });
@@ -55,6 +65,15 @@ class RobotPalleteComponent extends Component {
 
 
 
+  }
+
+  shouldComponentUpdate (nextProps, nextState) {
+      return (
+
+        this.props.draggable_window[1].isShowing !== false
+
+
+      );
   }
 
   componentDidMount(){
@@ -75,6 +94,23 @@ class RobotPalleteComponent extends Component {
 
   render() {
 
+  let sensor_data = "";
+
+  if (this.props.robot_special_sensors[2].sensor_data == "false"){
+
+    sensor_data = this.props.intl.formatMessage(messages.false);
+
+  }else if (this.props.robot_special_sensors[2].sensor_data == "true"){
+
+      sensor_data = this.props.intl.formatMessage(messages.true);
+
+  }else{
+
+    //  sensor_data =this.props.robot_special_sensors[2].sensor_data;
+
+    sensor_data = this.props.intl.formatMessage(messages.false);
+
+  }
 
 
     return (
@@ -140,7 +176,7 @@ class RobotPalleteComponent extends Component {
                            deviceName={this.props.robot_special_sensors[2].sensor_device_name} sensorType={this.props.robot_special_sensors[2].sensor_type}
                            sensorFieldText={this.props.intl.formatMessage(messages.start_button_pushed)}
                            sensorName={this.props.robot_special_sensors[2].sensor_name}
-                           sensorData={this.props.robot_special_sensors[2].sensor_data} />
+                           sensorData={sensor_data} />
 
       </div>
 
@@ -157,8 +193,9 @@ class RobotPalleteComponent extends Component {
 const mapStateToProps =  state => ({
 
 
-  robot_sensors: state.robot_sensors,
-  robot_special_sensors: state.robot_special_sensors
+  robot_sensors:state.scratchGui.robot_sensors,
+  robot_special_sensors:state.scratchGui.robot_special_sensors,
+  draggable_window:state.scratchGui.draggable_window
 
   });
 

@@ -7,35 +7,7 @@ import ScratchBlocks from 'scratch-blocks';
  */
 export default function (vm) {
 
-  const Messages = {
-
-      ru:{
-
-        MOUSE_POINTER: "указатель мыши",
-        RANDOM_POS :    "случайная позиция",
-        EDGE: "край",
-        STAGE: "сцена",
-        MYSELF: "себя",
-        PREVIOUS_BACKDROP: "предыдущий фон",
-        NEXT_BACKDROP: "следующий фон"
-
-      },
-
-    en:{
-
-      MOUSE_POINTER :  "mouse-pointer",
-      RANDOM_POS :    "random position",
-      EDGE: "edge",
-      STAGE: "stage",
-      MYSELF: "myself",
-      PREVIOUS_BACKDROP: "previous backdrop",
-      NEXT_BACKDROP: "next backdrop"
-
-      }
-
-  };
-
-    const jsonForMenuBlock = function (name, menuOptionsFn, colors, start,locale) {
+    const jsonForMenuBlock = function (name, menuOptionsFn, colors, start) {
         return {
             message0: '%1',
             args0: [
@@ -43,7 +15,7 @@ export default function (vm) {
                     type: 'field_dropdown',
                     name: name,
                     options: function () {
-                        return start.concat(menuOptionsFn(locale));
+                        return start.concat(menuOptionsFn());
                     }
                 }
             ],
@@ -56,6 +28,25 @@ export default function (vm) {
         };
     };
 
+    const jsonForHatBlockMenu = function (hatName, name, menuOptionsFn, colors, start) {
+        return {
+            message0: hatName,
+            args0: [
+                {
+                    type: 'field_dropdown',
+                    name: name,
+                    options: function () {
+                        return start.concat(menuOptionsFn());
+                    }
+                }
+            ],
+            colour: colors.primary,
+            colourSecondary: colors.secondary,
+            colourTertiary: colors.tertiary,
+            extensions: ['shape_hat']
+        };
+    };
+
     const soundsMenu = function () {
         if (vm.editingTarget && vm.editingTarget.sprite.sounds.length > 0) {
             return vm.editingTarget.sprite.sounds.map(sound => [sound.name, sound.name]);
@@ -64,16 +55,29 @@ export default function (vm) {
     };
 
     const costumesMenu = function () {
-        if (vm.editingTarget && vm.editingTarget.sprite.costumes.length > 0) {
-            return vm.editingTarget.sprite.costumes.map(costume => [costume.name, costume.name]);
+        if (vm.editingTarget && vm.editingTarget.getCostumes().length > 0) {
+            return vm.editingTarget.getCostumes().map(costume => [costume.name, costume.name]);
         }
         return [['', '']];
     };
 
-    const backdropsMenu = function (locale) {
-        if (vm.runtime.targets[0] && vm.runtime.targets[0].sprite.costumes.length > 0) {
-            return vm.runtime.targets[0].sprite.costumes.map(costume => [costume.name, costume.name])
-                .concat([[Messages[locale]["NEXT_BACKDROP"], 'next backdrop'], [Messages[locale]["PREVIOUS_BACKDROP"], 'previous backdrop']]);
+    const backdropsMenu = function () {
+        const next = ScratchBlocks.ScratchMsgs.translate('LOOKS_NEXTBACKDROP', 'next backdrop');
+        const previous = ScratchBlocks.ScratchMsgs.translate('LOOKS_PREVIOUSBACKDROP', 'previous backdrop');
+        const random = ScratchBlocks.ScratchMsgs.translate('LOOKS_RANDOMBACKDROP', 'random backdrop');
+        if (vm.runtime.targets[0] && vm.runtime.targets[0].getCostumes().length > 0) {
+            return vm.runtime.targets[0].getCostumes().map(costume => [costume.name, costume.name])
+                .concat([[next, 'next backdrop'],
+                    [previous, 'previous backdrop'],
+                    [random, 'random backdrop']]);
+        }
+        return [['', '']];
+    };
+
+    const backdropNamesMenu = function () {
+        const stage = vm.runtime.getTargetForStage();
+        if (stage && stage.getCostumes().length > 0) {
+            return stage.getCostumes().map(costume => [costume.name, costume.name]);
         }
         return [['', '']];
     };
@@ -94,7 +98,7 @@ export default function (vm) {
         return sprites;
     };
 
-    const cloneMenu = function (locale) {
+    const cloneMenu = function () {
         if (vm.editingTarget && vm.editingTarget.isStage) {
             const menu = spriteMenu();
             if (menu.length === 0) {
@@ -102,7 +106,8 @@ export default function (vm) {
             }
             return menu;
         }
-        return [[  Messages[locale]["MYSELF"], '_myself_']].concat(spriteMenu());
+        const myself = ScratchBlocks.ScratchMsgs.translate('CONTROL_CREATECLONEOF_MYSELF', 'myself');
+        return [[myself, '_myself_']].concat(spriteMenu());
     };
 
     const soundColors = ScratchBlocks.Colours.sounds;
@@ -115,6 +120,8 @@ export default function (vm) {
 
     const controlColors = ScratchBlocks.Colours.control;
 
+    const eventColors = ScratchBlocks.Colours.event;
+
     ScratchBlocks.Blocks.sound_sounds_menu.init = function () {
         const json = jsonForMenuBlock('SOUND_MENU', soundsMenu, soundColors, []);
         this.jsonInit(json);
@@ -125,71 +132,87 @@ export default function (vm) {
         this.jsonInit(json);
     };
 
-    ScratchBlocks.Blocks.looks_backdrops.init = function (locale) {
-        const json = jsonForMenuBlock('BACKDROP', backdropsMenu, looksColors, [],locale);
+    ScratchBlocks.Blocks.looks_backdrops.init = function () {
+        const json = jsonForMenuBlock('BACKDROP', backdropsMenu, looksColors, []);
         this.jsonInit(json);
     };
 
-    ScratchBlocks.Blocks.motion_pointtowards_menu.init = function (locale) {
+    ScratchBlocks.Blocks.event_whenbackdropswitchesto.init = function () {
+        const json = jsonForHatBlockMenu(
+            ScratchBlocks.Msg.EVENT_WHENBACKDROPSWITCHESTO,
+            'BACKDROP', backdropNamesMenu, eventColors, []);
+        this.jsonInit(json);
+    };
+
+    ScratchBlocks.Blocks.motion_pointtowards_menu.init = function () {
+        const mouse = ScratchBlocks.ScratchMsgs.translate('MOTION_POINTTOWARDS_POINTER', 'mouse-pointer');
         const json = jsonForMenuBlock('TOWARDS', spriteMenu, motionColors, [
-          [Messages[locale]["MOUSE_POINTER"], '_mouse_']
+            [mouse, '_mouse_']
         ]);
         this.jsonInit(json);
     };
 
-    ScratchBlocks.Blocks.motion_goto_menu.init = function (locale) {
+    ScratchBlocks.Blocks.motion_goto_menu.init = function () {
+        const random = ScratchBlocks.ScratchMsgs.translate('MOTION_GOTO_RANDOM', 'random position');
+        const mouse = ScratchBlocks.ScratchMsgs.translate('MOTION_GOTO_POINTER', 'mouse-pointer');
         const json = jsonForMenuBlock('TO', spriteMenu, motionColors, [
-            [Messages[locale]["MOUSE_POINTER"], '_mouse_'],
-            [Messages[locale]["RANDOM_POS"] , '_random_']
+            [random, '_random_'],
+            [mouse, '_mouse_']
         ]);
         this.jsonInit(json);
     };
 
-    ScratchBlocks.Blocks.motion_glideto_menu.init = function (locale) {
+    ScratchBlocks.Blocks.motion_glideto_menu.init = function () {
+        const random = ScratchBlocks.ScratchMsgs.translate('MOTION_GLIDETO_RANDOM', 'random position');
+        const mouse = ScratchBlocks.ScratchMsgs.translate('MOTION_GLIDETO_POINTER', 'mouse-pointer');
         const json = jsonForMenuBlock('TO', spriteMenu, motionColors, [
-            [Messages[locale]["MOUSE_POINTER"], '_mouse_'],
-            [Messages[locale]["RANDOM_POS"] , '_random_']
+            [random, '_random_'],
+            [mouse, '_mouse_']
         ]);
         this.jsonInit(json);
     };
 
-    ScratchBlocks.Blocks.sensing_of_object_menu.init = function (locale) {
+    ScratchBlocks.Blocks.sensing_of_object_menu.init = function () {
+        const stage = ScratchBlocks.ScratchMsgs.translate('SENSING_OF_STAGE', 'Stage');
         const json = jsonForMenuBlock('OBJECT', spriteMenu, sensingColors, [
-            [Messages[locale]["STAGE"], '_stage_']
+            [stage, '_stage_']
         ]);
         this.jsonInit(json);
     };
 
-    ScratchBlocks.Blocks.sensing_videoonmenutwo.init = function (locale) {
-        const json = jsonForMenuBlock('VIDEOONMENU2', spriteMenu, sensingColors, [
-            [Messages[locale]["STAGE"], 'STAGE']
-        ]);
-        this.jsonInit(json);
-    };
-
-    ScratchBlocks.Blocks.sensing_distancetomenu.init = function (locale) {
+    ScratchBlocks.Blocks.sensing_distancetomenu.init = function () {
+        const mouse = ScratchBlocks.ScratchMsgs.translate('SENSING_DISTANCETO_POINTER', 'mouse-pointer');
         const json = jsonForMenuBlock('DISTANCETOMENU', spriteMenu, sensingColors, [
-              [Messages[locale]["MOUSE_POINTER"], '_mouse_']
+            [mouse, '_mouse_']
         ]);
         this.jsonInit(json);
     };
 
-    ScratchBlocks.Blocks.sensing_touchingobjectmenu.init = function (locale) {
+    ScratchBlocks.Blocks.sensing_touchingobjectmenu.init = function () {
+        const mouse = ScratchBlocks.ScratchMsgs.translate('SENSING_TOUCHINGOBJECT_POINTER', 'mouse-pointer');
+        const edge = ScratchBlocks.ScratchMsgs.translate('SENSING_TOUCHINGOBJECT_EDGE', 'edge');
         const json = jsonForMenuBlock('TOUCHINGOBJECTMENU', spriteMenu, sensingColors, [
-            [Messages[locale]["MOUSE_POINTER"], '_mouse_'],
-            [Messages[locale]["EDGE"], '_edge_']
+            [mouse, '_mouse_'],
+            [edge, '_edge_']
         ]);
         this.jsonInit(json);
     };
 
-    ScratchBlocks.Blocks.control_create_clone_of_menu.init = function (locale) {
-        const json = jsonForMenuBlock('CLONE_OPTION', cloneMenu, controlColors, [],locale);
+    ScratchBlocks.Blocks.control_create_clone_of_menu.init = function () {
+        const json = jsonForMenuBlock('CLONE_OPTION', cloneMenu, controlColors, []);
         this.jsonInit(json);
     };
 
     ScratchBlocks.VerticalFlyout.getCheckboxState = function (blockId) {
         const monitoredBlock = vm.runtime.monitorBlocks._blocks[blockId];
         return monitoredBlock ? monitoredBlock.isMonitored : false;
+    };
+
+    ScratchBlocks.FlyoutExtensionCategoryHeader.getExtensionState = function (extensionId) {
+        if (vm.getPeripheralIsConnected(extensionId)) {
+            return ScratchBlocks.StatusButtonState.READY;
+        }
+        return ScratchBlocks.StatusButtonState.NOT_READY;
     };
 
     return ScratchBlocks;

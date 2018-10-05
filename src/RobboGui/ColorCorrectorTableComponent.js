@@ -917,7 +917,7 @@ class ColorCorrectorTableComponent extends Component {
 const mapStateToProps =  state => ({
 
 
-  color_corrector_table: state.color_corrector_table
+  color_corrector_table:state.scratchGui.color_corrector_table
 
 
   });

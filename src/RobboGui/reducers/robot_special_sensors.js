@@ -151,5 +151,6 @@ switch (action.type) {
 
 export {
     reducer as default,
+    initialState as robot_special_sensors_InitialState
 
 };

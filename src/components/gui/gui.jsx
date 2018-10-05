@@ -1,10 +1,11 @@
 import classNames from 'classnames';
+import omit from 'lodash.omit';
 import PropTypes from 'prop-types';
 import React from 'react';
-import ReactDOM from 'react-dom';
-import {defineMessages, injectIntl, intlShape} from 'react-intl';
-import {Tab, Tabs, TabList, TabPanel} from 'react-tabs';
+import {defineMessages, FormattedMessage, injectIntl, intlShape} from 'react-intl';
+import {connect} from 'react-redux';
 import MediaQuery from 'react-responsive';
+import {Tab, Tabs, TabList, TabPanel} from 'react-tabs';
 import tabStyles from 'react-tabs/style/react-tabs.css';
 import VM from 'scratch-vm';
 import Renderer from 'scratch-render';
@@ -13,18 +14,29 @@ import Blocks from '../../containers/blocks.jsx';
 import CostumeTab from '../../containers/costume-tab.jsx';
 import TargetPane from '../../containers/target-pane.jsx';
 import SoundTab from '../../containers/sound-tab.jsx';
-import StageHeader from '../../containers/stage-header.jsx';
-import Stage from '../../containers/stage.jsx';
-
+import StageWrapper from '../../containers/stage-wrapper.jsx';
+import Loader from '../loader/loader.jsx';
 import Box from '../box/box.jsx';
-import FeedbackForm from '../feedback-form/feedback-form.jsx';
 import MenuBar from '../menu-bar/menu-bar.jsx';
-import PreviewModal from '../../containers/preview-modal.jsx';
-import WebGlModal from '../../containers/webgl-modal.jsx';
+import CostumeLibrary from '../../containers/costume-library.jsx';
+import BackdropLibrary from '../../containers/backdrop-library.jsx';
 
-import layout from '../../lib/layout-constants.js';
+import Backpack from '../../containers/backpack.jsx';
+import PreviewModal from '../../containers/preview-modal.jsx';
+import ImportModal from '../../containers/import-modal.jsx';
+import WebGlModal from '../../containers/webgl-modal.jsx';
+import TipsLibrary from '../../containers/tips-library.jsx';
+import Cards from '../../containers/cards.jsx';
+import DragLayer from '../../containers/drag-layer.jsx';
+
+import layout, {STAGE_SIZE_MODES} from '../../lib/layout-constants';
+import {resolveStageSize} from '../../lib/screen-utils';
+
 import styles from './gui.css';
 import addExtensionIcon from './icon--extensions.svg';
+import codeIcon from './icon--code.svg';
+import costumesIcon from './icon--costumes.svg';
+import soundsIcon from './icon--sounds.svg';
 
 import RobboGui from '../../RobboGui/RobboGui';
 
@@ -33,32 +45,9 @@ import {ActionDropSensorChooseWindow} from '../../RobboGui/actions/sensor_action
 import {ActionDropColorCorrectorWindow} from '../../RobboGui/actions/sensor_actions'
 import {ActionDropDraggableWindow} from '../../RobboGui/actions/sensor_actions'
 
-import { connect } from 'react-redux';
+
 
 import { DropTarget } from 'react-dnd';
-
-const messages = defineMessages({
-    addExtension: {
-        id: 'gui.gui.addExtension',
-        description: 'Button to add an extension in the target pane',
-        defaultMessage: 'Add Extension'
-    },
-    blocks: {
-        id: 'gui.gui.blocks',
-        description: '',
-        defaultMessage: 'Blocks'
-    },
-    costumes: {
-        id: 'gui.gui.costumes',
-        description: '',
-        defaultMessage: 'Costumes'
-    },
-    sound: {
-        id: 'gui.gui.sound',
-        description: '',
-        defaultMessage: 'Sound'
-    }
-});
 
 const Target = {
   drop(props,monitor,component) {
@@ -111,28 +100,55 @@ const  collect = (connect, monitor) =>  ({
 
 });
 
+const messages = defineMessages({
+    addExtension: {
+        id: 'gui.gui.addExtension',
+        description: 'Button to add an extension in the target pane',
+        defaultMessage: 'Add Extension'
+    }
+});
+
+// Cache this value to only retrieve it once the first time.
+// Assume that it doesn't change for a session.
+let isRendererSupported = null;
+
 const GUIComponent = props => {
     const {
+        activeTabIndex,
         basePath,
+        backdropLibraryVisible,
+        backpackOptions,
+        blocksTabVisible,
+        cardsVisible,
         children,
-        enableExtensions,
+        costumeLibraryVisible,
+        costumesTabVisible,
+        enableCommunity,
+        importInfoVisible,
         intl,
-        feedbackFormVisible,
-        vm,
-        previewInfoVisible,
+        isPlayerOnly,
+        isRtl,
+        loading,
         onExtensionButtonClick,
-        onTabSelect,
-        tabIndex,
+        onActivateCostumesTab,
+        onActivateSoundsTab,
+        onActivateTab,
+        onRequestCloseBackdropLibrary,
+        onRequestCloseCostumeLibrary,
+        onSeeCommunity,
+        onUpdateProjectTitle,
+        previewInfoVisible,
+        targetIsStage,
+        soundsTabVisible,
+        stageSizeMode,
+        tipsLibraryVisible,
+        vm,
         connectDropTarget,
         isOver,
         ...componentProps
-    } = props;
+    } = omit(props, 'dispatch');
     if (children) {
-        return (
-            <Box {...componentProps}>
-                {children}
-            </Box>
-        );
+        return <Box {...componentProps}>{children}</Box>;
     }
 
     const tabClassNames = {
@@ -144,163 +160,251 @@ const GUIComponent = props => {
         tabSelected: classNames(tabStyles.reactTabsTabSelected, styles.isSelected)
     };
 
-    const isRendererSupported = Renderer.isSupported();
+    if (isRendererSupported === null) {
+        isRendererSupported = Renderer.isSupported();
+    }
 
     return (
+        <MediaQuery minWidth={layout.fullSizeMinWidth}>{isFullSize => {
+        const stageSize = resolveStageSize(stageSizeMode, isFullSize);
 
-     connectDropTarget(
-
-       <div className={styles.pageWrapper}>
-        <Box
-            className={styles.pageWrapper}
-            {...componentProps}
-        >
-            {previewInfoVisible ? (
-                <PreviewModal />
-            ) : null}
-            {feedbackFormVisible ? (
-                <FeedbackForm />
-            ) : null}
-            {isRendererSupported ? null : (
-                <WebGlModal />
-            )}
-            <MenuBar />
-            <Box className={styles.bodyWrapper}>
-                <Box className={styles.flexWrapper}>
-                    <Box className={styles.editorWrapper}>
-                        <Tabs
-                            className={tabClassNames.tabs}
-                            forceRenderTabPanel={true} // eslint-disable-line react/jsx-boolean-value
-                            selectedTabClassName={tabClassNames.tabSelected}
-                            selectedTabPanelClassName={tabClassNames.tabPanelSelected}
-                            onSelect={onTabSelect}
-                        >
-                            <TabList className={tabClassNames.tabList}>
-                                <Tab className={tabClassNames.tab}>{intl.formatMessage(messages.blocks)}</Tab>
-                                <Tab className={tabClassNames.tab}>{intl.formatMessage(messages.costumes)}</Tab>
-                                <Tab className={tabClassNames.tab}>{intl.formatMessage(messages.sound)}</Tab>
-
-                            </TabList>
-                            <TabPanel className={tabClassNames.tabPanel}>
-                                <Box className={styles.blocksWrapper}>
-                                    <Blocks
-                                        grow={1}
-                                        isVisible={tabIndex === 0} // Blocks tab
-                                        options={{
-                                            media: `${basePath}static/blocks-media/`
-                                        }}
-                                        vm={vm}
-                                    />
-                                </Box>
-                                <Box className={styles.extensionButtonContainer}>
-                                    <button
-                                        className={classNames(styles.extensionButton, {
-                                            [styles.hidden]: !enableExtensions
-                                        })}
-                                        title={intl.formatMessage(messages.addExtension)}
-                                        onClick={onExtensionButtonClick}
+        return isPlayerOnly ? (
+            <StageWrapper
+                isRendererSupported={isRendererSupported}
+                stageSize={stageSize}
+                vm={vm}
+            />
+        ) : connectDropTarget((
+            <div className={styles.pageWrapper}>
+            <Box
+                className={styles.pageWrapper}
+                dir={isRtl ? 'rtl' : 'ltr'}
+                {...componentProps}
+            >
+                {previewInfoVisible ? (
+                    <PreviewModal />
+                ) : null}
+                {loading ? (
+                    <Loader />
+                ) : null}
+                {importInfoVisible ? (
+                    <ImportModal />
+                ) : null}
+                {isRendererSupported ? null : (
+                    <WebGlModal isRtl={isRtl} />
+                )}
+                {tipsLibraryVisible ? (
+                    <TipsLibrary />
+                ) : null}
+                {cardsVisible ? (
+                    <Cards />
+                ) : null}
+                {costumeLibraryVisible ? (
+                    <CostumeLibrary
+                        vm={vm}
+                        onRequestClose={onRequestCloseCostumeLibrary}
+                    />
+                ) : null}
+                {backdropLibraryVisible ? (
+                    <BackdropLibrary
+                        vm={vm}
+                        onRequestClose={onRequestCloseBackdropLibrary}
+                    />
+                ) : null}
+                <MenuBar
+                    enableCommunity={enableCommunity}
+                    onSeeCommunity={onSeeCommunity}
+                    onUpdateProjectTitle={onUpdateProjectTitle}
+                />
+                <Box className={styles.bodyWrapper}>
+                    <Box className={styles.flexWrapper}>
+                        <Box className={styles.editorWrapper}>
+                            <Tabs
+                                forceRenderTabPanel
+                                className={tabClassNames.tabs}
+                                selectedIndex={activeTabIndex}
+                                selectedTabClassName={tabClassNames.tabSelected}
+                                selectedTabPanelClassName={tabClassNames.tabPanelSelected}
+                                onSelect={onActivateTab}
+                            >
+                                <TabList className={tabClassNames.tabList}>
+                                    <Tab className={tabClassNames.tab}>
+                                        <img
+                                            draggable={false}
+                                            src={codeIcon}
+                                        />
+                                        <FormattedMessage
+                                            defaultMessage="Code"
+                                            description="Button to get to the code panel"
+                                            id="gui.gui.codeTab"
+                                        />
+                                    </Tab>
+                                    <Tab
+                                        className={tabClassNames.tab}
+                                        onClick={onActivateCostumesTab}
                                     >
                                         <img
-                                            className={styles.extensionButtonIcon}
                                             draggable={false}
-                                            src={addExtensionIcon}
+                                            src={costumesIcon}
                                         />
-                                    </button>
-                                </Box>
-                            </TabPanel>
-                            <TabPanel className={tabClassNames.tabPanel}>
-                                {tabIndex === 1 ? <CostumeTab vm={vm} /> : null}
-                            </TabPanel>
-                            <TabPanel className={tabClassNames.tabPanel}>
-                                {tabIndex === 2 ? <SoundTab vm={vm} /> : null}
-                            </TabPanel>
-
-                        </Tabs>
-                    </Box>
-
-                    <Box className={styles.stageAndTargetWrapper}>
-                        <Box className={styles.stageMenuWrapper}>
-                            <StageHeader vm={vm} />
+                                        {targetIsStage ? (
+                                            <FormattedMessage
+                                                defaultMessage="Backdrops"
+                                                description="Button to get to the backdrops panel"
+                                                id="gui.gui.backdropsTab"
+                                            />
+                                        ) : (
+                                            <FormattedMessage
+                                                defaultMessage="Costumes"
+                                                description="Button to get to the costumes panel"
+                                                id="gui.gui.costumesTab"
+                                            />
+                                        )}
+                                    </Tab>
+                                    <Tab
+                                        className={tabClassNames.tab}
+                                        onClick={onActivateSoundsTab}
+                                    >
+                                        <img
+                                            draggable={false}
+                                            src={soundsIcon}
+                                        />
+                                        <FormattedMessage
+                                            defaultMessage="Sounds"
+                                            description="Button to get to the sounds panel"
+                                            id="gui.gui.soundsTab"
+                                        />
+                                    </Tab>
+                                </TabList>
+                                <TabPanel className={tabClassNames.tabPanel}>
+                                    <Box className={styles.blocksWrapper}>
+                                        <Blocks
+                                            grow={1}
+                                            isVisible={blocksTabVisible}
+                                            options={{
+                                                media: `${basePath}static/blocks-media/`
+                                            }}
+                                            stageSize={stageSize}
+                                            vm={vm}
+                                        />
+                                    </Box>
+                                    <Box className={styles.extensionButtonContainer}>
+                                        <button
+                                            className={styles.extensionButton}
+                                            title={intl.formatMessage(messages.addExtension)}
+                                            onClick={onExtensionButtonClick}
+                                        >
+                                            <img
+                                                className={styles.extensionButtonIcon}
+                                                draggable={false}
+                                                src={addExtensionIcon}
+                                            />
+                                        </button>
+                                    </Box>
+                                </TabPanel>
+                                <TabPanel className={tabClassNames.tabPanel}>
+                                    {costumesTabVisible ? <CostumeTab vm={vm} /> : null}
+                                </TabPanel>
+                                <TabPanel className={tabClassNames.tabPanel}>
+                                    {soundsTabVisible ? <SoundTab vm={vm} /> : null}
+                                </TabPanel>
+                            </Tabs>
+                          
                         </Box>
-                        <Box className={styles.stageWrapper}>
-                            {/* eslint-disable arrow-body-style */}
-                            <MediaQuery minWidth={layout.fullSizeMinWidth}>{isFullSize => {
-                                return isRendererSupported ? (
-                                    <Stage
-                                        height={isFullSize ? layout.fullStageHeight : layout.smallerStageHeight}
-                                        shrink={0}
-                                        vm={vm}
-                                        width={isFullSize ? layout.fullStageWidth : layout.smallerStageWidth}
-                                    />
-                                ) : null;
-                            }}</MediaQuery>
-                            {/* eslint-enable arrow-body-style */}
-                        </Box>
-                         <RobboGui vm={vm}/>
-                        <Box className={styles.targetWrapper}>
-                            <TargetPane
+
+                        <Box className={classNames(styles.stageAndTargetWrapper, styles[stageSize])}>
+                            <StageWrapper
+                                isRendererSupported={isRendererSupported}
+                                stageSize={stageSize}
                                 vm={vm}
                             />
+                             <RobboGui vm={vm}/>
+
+                            <Box className={styles.targetWrapper}>
+                                <TargetPane
+                                    stageSize={stageSize}
+                                    vm={vm}
+                                />
+                            </Box>
                         </Box>
                     </Box>
                 </Box>
+                <DragLayer />
             </Box>
-        </Box>
-      </div>
-      )
-    );
+          </div>
+        ));
+    }}</MediaQuery>);
 };
+
 GUIComponent.propTypes = {
+    activeTabIndex: PropTypes.number,
+    backdropLibraryVisible: PropTypes.bool,
+    backpackOptions: PropTypes.shape({
+        host: PropTypes.string,
+        visible: PropTypes.bool
+    }),
     basePath: PropTypes.string,
+    blocksTabVisible: PropTypes.bool,
+    cardsVisible: PropTypes.bool,
     children: PropTypes.node,
-    enableExtensions: PropTypes.bool,
-    feedbackFormVisible: PropTypes.bool,
+    costumeLibraryVisible: PropTypes.bool,
+    costumesTabVisible: PropTypes.bool,
+    enableCommunity: PropTypes.bool,
+    importInfoVisible: PropTypes.bool,
     intl: intlShape.isRequired,
+    isPlayerOnly: PropTypes.bool,
+    isRtl: PropTypes.bool,
+    loading: PropTypes.bool,
+    onActivateCostumesTab: PropTypes.func,
+    onActivateSoundsTab: PropTypes.func,
+    onActivateTab: PropTypes.func,
     onExtensionButtonClick: PropTypes.func,
+    onRequestCloseBackdropLibrary: PropTypes.func,
+    onRequestCloseCostumeLibrary: PropTypes.func,
+    onSeeCommunity: PropTypes.func,
     onTabSelect: PropTypes.func,
+    onUpdateProjectTitle: PropTypes.func,
     previewInfoVisible: PropTypes.bool,
-    tabIndex: PropTypes.number,
-    vm: PropTypes.instanceOf(VM).isRequired,
-    connectDropTarget: PropTypes.func,
-    isOver: PropTypes.bool,
-    onSensorChooseWindowDrop :  PropTypes.func
+    soundsTabVisible: PropTypes.bool,
+    stageSizeMode: PropTypes.oneOf(Object.keys(STAGE_SIZE_MODES)),
+    targetIsStage: PropTypes.bool,
+    tipsLibraryVisible: PropTypes.bool,
+    vm: PropTypes.instanceOf(VM).isRequired
 };
 GUIComponent.defaultProps = {
-    basePath: './'
+    backpackOptions: {
+        host: null,
+        visible: false
+    },
+    basePath: './',
+    stageSizeMode: STAGE_SIZE_MODES.large
 };
-
-const mapStateToProps =  state => ({
-
-
-
-
-  });
 
 const mapDispatchToProps = dispatch => ({
 
   onSensorChooseWindowDrop: (top,left) => {
 
-      dispatch(ActionDropSensorChooseWindow(top,left));
+    dispatch(ActionDropSensorChooseWindow(top,left));
+  },
+
+  onColorCorrectorWindowDrop: (top,left) => {
+
+      dispatch(ActionDropColorCorrectorWindow(top,left));
     },
 
-    onColorCorrectorWindowDrop: (top,left) => {
+  onDraggableWindowDrop: (top,left, draggable_window_id) => {
 
-        dispatch(ActionDropColorCorrectorWindow(top,left));
-      },
-
-    onDraggableWindowDrop: (top,left, draggable_window_id) => {
-
-          dispatch(ActionDropDraggableWindow(top,left, draggable_window_id));
-        }
-
-
+        dispatch(ActionDropDraggableWindow(top,left, draggable_window_id));
+      }
 });
 
+const mapStateToProps = state => ({
+    // This is the button's mode, as opposed to the actual current state
+    stageSizeMode: state.scratchGui.stageSize.stageSize
+});
 
 export default connect(
         mapStateToProps,
         mapDispatchToProps
 
     ) (DropTarget([ItemTypes.SENSOR_CHOOSE_WINDOW,ItemTypes.COLOR_CORRECTOR_WINDOW,ItemTypes.DRAGGABLE_WINDOW], Target, collect)(injectIntl(GUIComponent)));
-
-//export default injectIntl(GUIComponent);

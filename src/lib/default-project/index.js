@@ -2,14 +2,13 @@ import {TextEncoder} from 'text-encoding';
 import projectJson from './project.json';
 
 /* eslint-disable import/no-unresolved */
-import popWav from '!buffer-loader!./83a9787d4cb6f3b7632b4ddfebf74367.wav';
-import meowWav from '!buffer-loader!./83c36d806dc92327b9e7049a565c6bff.wav';
-import backdrop from '!buffer-loader!./739b5e2a2435f6e1ec2993791b423146.png';
-import penLayer from '!buffer-loader!./5c81a336fab8be57adc039a8a2b33ca9.png';
-import costume1 from '!raw-loader!./ROB1_end.svg';
-import costume2 from '!raw-loader!./ROB2_end.svg';
-import costume3 from '!raw-loader!./ROB3_end.svg';
-import costume4 from '!raw-loader!./ROB4_end.svg';
+import popWav from '!arraybuffer-loader!./83a9787d4cb6f3b7632b4ddfebf74367.wav';
+import computerBeep from '!arraybuffer-loader!./28c76b6bebd04be1383fe9ba4933d263.wav';
+import backdrop from '!raw-loader!./cd21514d0531fdffb22204e0ec5ed84a.svg';
+import costume1 from '!raw-loader!./f8e72b8244738d0b448e46b38c5db6c2.svg';
+import costume2 from '!raw-loader!./bb3a866c4db08353f6faf43c54990f10.svg';
+import costume3 from '!raw-loader!./bb6b82c9fa7c432c552ca2f251ae2078.svg';
+import costume4 from '!raw-loader!./be2345a4417ff516f9c1a5ece86a8c64.svg';
 /* eslint-enable import/no-unresolved */
 
 const encoder = new TextEncoder();
@@ -22,39 +21,34 @@ export default [{
     id: '83a9787d4cb6f3b7632b4ddfebf74367',
     assetType: 'Sound',
     dataFormat: 'WAV',
-    data: popWav
+    data: new Uint8Array(popWav)
 }, {
-    id: '83c36d806dc92327b9e7049a565c6bff',
+    id: '28c76b6bebd04be1383fe9ba4933d263',
     assetType: 'Sound',
     dataFormat: 'WAV',
-    data: meowWav
+    data: new Uint8Array(computerBeep)
 }, {
-    id: '739b5e2a2435f6e1ec2993791b423146',
-    assetType: 'ImageBitmap',
-    dataFormat: 'PNG',
-    data: backdrop
+    id: 'cd21514d0531fdffb22204e0ec5ed84a',
+    assetType: 'ImageVector',
+    dataFormat: 'SVG',
+    data: encoder.encode(backdrop)
 }, {
-    id: '5c81a336fab8be57adc039a8a2b33ca9',
-    assetType: 'ImageBitmap',
-    dataFormat: 'PNG',
-    data: penLayer
-}, {
-    id: 'ROB1_end',
+    id: 'f8e72b8244738d0b448e46b38c5db6c2',
     assetType: 'ImageVector',
     dataFormat: 'SVG',
     data: encoder.encode(costume1)
 },{
-    id: 'ROB2_end',
+    id: 'bb3a866c4db08353f6faf43c54990f10',
     assetType: 'ImageVector',
     dataFormat: 'SVG',
     data: encoder.encode(costume2)
 },{
-    id: 'ROB3_end',
+    id: 'bb6b82c9fa7c432c552ca2f251ae2078',
     assetType: 'ImageVector',
     dataFormat: 'SVG',
     data: encoder.encode(costume3)
 }, {
-    id: 'ROB4_end',
+    id: 'be2345a4417ff516f9c1a5ece86a8c64',
     assetType: 'ImageVector',
     dataFormat: 'SVG',
     data: encoder.encode(costume4)

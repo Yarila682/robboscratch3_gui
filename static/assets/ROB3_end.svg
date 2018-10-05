@@ -9,13 +9,13 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="210mm"
-   height="297mm"
-   viewBox="0 0 744.09448819 1052.3622047"
+   width="81"
+   height="130"
+   viewBox="0 0 81.000002 130"
    id="svg6616"
    version="1.1"
    inkscape:version="0.91 r13725"
-   sodipodi:docname="ROB3.svg">
+   sodipodi:docname="ROB3_end.svg">
   <defs
      id="defs6618" />
   <sodipodi:namedview
@@ -26,16 +26,21 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.979899"
-     inkscape:cx="375.03527"
-     inkscape:cy="330.87067"
+     inkscape:cx="-50.961193"
+     inkscape:cy="-30.305347"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:window-width="1920"
-     inkscape:window-height="1007"
+     inkscape:window-height="1027"
      inkscape:window-x="0"
      inkscape:window-y="0"
-     inkscape:window-maximized="1" />
+     inkscape:window-maximized="1"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     units="px" />
   <metadata
      id="metadata6621">
     <rdf:RDF>
@@ -51,10 +56,11 @@
   <g
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
-     id="layer1">
+     id="layer1"
+     transform="translate(-331.5472,-461.18109)">
     <g
        id="g3367"
-       transform="matrix(4.994083,0,0,5.008413,-1802.2554,-3358.2459)">
+       transform="matrix(0.9988166,0,0,1.0016826,-62.813319,-250.70431)">
       <g
          transform="matrix(1.25,0,0,-1.25,449.76334,744.08334)"
          id="g5052">

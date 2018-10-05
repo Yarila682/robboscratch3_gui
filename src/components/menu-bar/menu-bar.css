@@ -1,5 +1,6 @@
 @import "../../css/colors.css";
 @import "../../css/units.css";
+@import "../../css/z-index.css";
 
 .menu-bar {
     display: flex;
@@ -24,9 +25,10 @@
         width: 100%;
     */
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    background-color: #00b040;
-
-    color: white;
+    font-size: .75rem;
+    font-weight: bold;
+    background-color: #00af41;
+    color: #383838;
 }
 
 .main-menu {
@@ -34,72 +36,164 @@
     flex-direction: row;
     justify-content: flex-start;
     flex-wrap: nowrap;
-}
-
-/*
-    Using a wrapper so when logo is hovered, it transforms via its center point
-    @todo: not sure if this is needed
-*/
-.logo-wrapper {
+    align-items: center;
+    flex-grow: 1;
 }
 
 .scratch-logo {
-    height:  $menu-bar-height;
-    padding: 0.8rem 0;
-}
-
-.scratch-logo:hover {
-    transform: scale(1.1, 1.1);
-    background-size: 100%;
-    transition: all .075s ease-in;
-}
-
-.title {
-    display: inline-block;
-    margin: 0 2rem;
-}
-
-.menu-item {
-    display: block;
-    padding: 0 1.5rem;
-    line-height: $menu-bar-height;
-    cursor: pointer;
-    text-decoration: none;
-    color:white;
-    user-select: none;
-}
-
-.feedback-button-wrapper {
-    align-self: center;
-    padding: 0 .5rem;
-    line-height: $menu-bar-height;
-}
-
-.feedback-button {
-    border-radius: 5px;
-    padding: .75rem;
-    background-color: #FFF;
-    cursor: pointer;
-    font-size: .75rem;
-    font-weight: bold;
-    color: $motion-primary;
-}
-
-.feedback-button-icon {
+    height:  1.6rem;
     vertical-align: middle;
 }
 
-.feedback-button-icon {
+.language-icon {
+    height:  1.5rem;
+}
+
+.language-caret {
+    margin-bottom: .625rem;
+}
+
+.language-menu {
+    display: inline-flex;
+    width: $language-selector-width;
+}
+
+.menu {
+    z-index: $z-index-menu-bar;
+    top: $menu-bar-height;
+}
+
+.menu-bar-item {
+    display: flex;
+    padding: 0 0.25rem;
+    text-decoration: none;
+    color: #383838;
+    user-select: none;
+    align-self: center;
+    position: relative;
+    align-items: center;
+    white-space: nowrap;
+    height: $menu-bar-height;
+}
+
+.menu-bar-item.hoverable {
+    cursor: pointer;
+}
+
+.menu-bar-item.active,
+.menu-bar-item.hoverable:hover {
+    background-color: $ui-black-transparent;
+}
+
+.menu-bar-item.growable {
+    max-width: 12rem;
+    flex: 1;
+}
+
+.title-field-growable {
+    flex-grow: 1;
+    width: 2rem;
+}
+
+.file-group {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.file-group .menu-bar-item {
+    padding: 0 0.75rem;
+}
+
+.feedback-link {
+    color: $motion-primary;
+    text-decoration: none;
+}
+
+.feedback-button {
+    background-color: $ui-white;
+    height: 34px;
+}
+
+.divider {
+    margin: 0 .5rem;
+    height: 34px;
+}
+
+.share-button {
+    background: $data-primary;
+    height: 32px;
+    box-shadow: 0 0 0 1px $ui-black-transparent;
+}
+
+.community-button {
+    height: 32px;
+    box-shadow: 0 0 0 1px $ui-black-transparent;
+}
+
+.community-button-icon {
+    height: 1.25rem;
+}
+
+.coming-soon >:not(.coming-soon-tooltip) {
+    opacity: 0.5;
+}
+
+.account-info-wrapper {
+    display: flex;
+    flex-direction: row;
+    padding: 0 .5rem;
+    align-items: center;
+}
+
+.mystuff-icon {
+    margin: 0 .25rem;
+    height: 1rem;
+}
+
+.help-icon {
+    margin-right: 0.35rem;
+}
+
+.account-nav-menu, .mystuff-button {
+    padding: 0 .25rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.profile-icon {
+    margin: 0 .25rem;
+    width: 2rem;
+    border-radius: 0.25rem;
+}
+
+.dropdown-caret-icon {
+    width: 0.5rem;
+    height: 0.5rem;
+}
+
+[dir="ltr"] .dropdown-caret-icon {
+    margin-left: .5rem;
+}
+
+[dir="rtl"] .dropdown-caret-icon {
     margin-right: .5rem;
-    width: 1.5rem;
-    height: 1.5rem;
+}
+
+.disabled {
+    opacity: 0.5;
+}
+
+.save-in-progress {
+  animation: hue-rotate 3s linear infinite;
 }
 
 .trigger_robbo_menu{
 
       position: absolute;
       top:2%;
-      left:470px;
+      left:490px;
 
       font-weight: bold;
       font-size: 14px;
@@ -108,6 +202,15 @@
 
 .trigger_robbo_menu:hover{
 
-    background-color: #005700;
+    background-color: $ui-black-transparent;
 
+}
+
+@keyframes hue-rotate {
+  from {
+    filter: hue-rotate();
+  }
+  to {
+    filter: hue-rotate(360deg);
+  }
 }

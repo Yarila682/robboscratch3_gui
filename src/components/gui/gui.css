@@ -1,5 +1,6 @@
 @import "../../css/units.css";
 @import "../../css/colors.css";
+@import "../../css/z-index.css";
 
 .page-wrapper {
     height: 100%;
@@ -7,7 +8,11 @@
 
 .body-wrapper {
     height: calc(100% - $menu-bar-height);
-    background-color: $ui-background-blue;
+    background-color: $ui-primary;
+}
+
+.body-wrapper * {
+    box-sizing: border-box;
 }
 
 .flex-wrapper {
@@ -57,32 +62,108 @@
 .tab {
     flex-grow: 1;
     height: 80%;
-    margin-left: 1px;
+    margin-bottom: 0;
 
-    border-radius: $space $space 0 0;
-    border: none;
+    border-radius: 1rem 1rem 0 0;
+    border: 1px solid $ui-black-transparent;
 
-    background-color: #F6F8FA;
-    color: #9AA1B5;
+    padding: 0.125rem 1.25rem 0;
+    font-size: 0.75rem;
+
+    background-color: $ui-tertiary;
+    color: $text-primary-transparent;
 
     display: flex;
     justify-content: center;
     align-items: center;
 
     user-select: none;
+    white-space: nowrap;
+}
+
+[dir="ltr"] .tab {
+    margin-left: -0.5rem;
+}
+
+[dir="rtl"] .tab {
+    margin-right: -0.5rem;
+}
+
+[dir="ltr"] .tab:nth-of-type(1) {
+    margin-left: 0;
+}
+
+[dir="rtl"] .tab:nth-of-type(1) {
+    margin-right: 0;
+}
+
+/* Use z-indices to force left-on-top for tabs */
+.tab:nth-of-type(1) {
+    z-index: 3;
+}
+.tab:nth-of-type(2) {
+    z-index: 2;
+}
+.tab:nth-of-type(3) {
+    z-index: 1;
+}
+
+.tab:hover {
+  background-color: $ui-primary;
 }
 
 .tab.is-selected {
-    z-index: 1;
-    color: #40B9F5;
-    background-color: #FFFFFF;
-    border-bottom: $ui-background-blue 1px solid;
+    height: 90%;
+    color: $motion-primary;
+    background-color: $ui-white;
+    z-index: 4; /* Make sure selected is always above */
 }
 
+.tab img {
+    width: 1.375rem;
+    filter: grayscale(100%);
+}
+
+[dir="ltr"] .tab img {
+    margin-right: 0.125rem;
+}
+
+[dir="rtl"] .tab img {
+    margin-left: 0.125rem;
+}
+
+/* mirror blocks and sound tab icons */
+[dir="rtl"] .tab:nth-of-type(1) img {
+    transform: scaleX(-1);
+}
+
+[dir="rtl"] .tab:nth-of-type(3) img {
+    transform: scaleX(-1);
+}
+
+.tab.is-selected img {
+    filter: none;
+}
+
+/* Tab style overrides from react-tabs */
+.tab.is-selected:after {
+    display: none;
+}
+
+.tab.is-selected:focus {
+    outline: none;
+    box-shadow: none;
+    border-color: $ui-black-transparent;
+}
+
+.tab.is-selected:focus:after {
+    display: none;
+}
+
+/* Body of the tabs */
 .tabs {
     position: relative;
     flex-grow: 1;
-    flex-shrink: 0;
     display: flex;
     flex-direction: column;
 }
@@ -90,7 +171,6 @@
 .tab-panel {
     position: relative;
     flex-grow: 1;
-    flex-shrink: 0;
     display: none;
 }
 
@@ -114,17 +194,24 @@
     */
     display: flex;
     flex-direction: column;
+    /* pad entire wrapper to the left and right; allow children to fill width */
+    padding-left: $space;
+    padding-right: $space;
+}
 
-    /* Fix the max width to max stage size (defined in layout_constants.js) + gutter size */
+.stage-and-target-wrapper.large {
+    /* Fix the max width to max large stage size (defined in layout_constants.js) + gutter size */
     max-width: calc(480px + calc($space * 2));
 }
 
-.stage-wrapper {
-    padding-left: $space;
-    padding-right: $space;
+.stage-and-target-wrapper.large-constrained {
+    /* Fix the max width to max largeConstrained stage size (defined in layout_constants.js) + gutter size */
+    max-width: calc(408px + calc($space * 2));
+}
 
-    /* Hides negative space between edge of rounded corners + container, when selected */
-    user-select: none;
+.stage-and-target-wrapper.small {
+    /* Fix the max width to max small stage size (defined in layout_constants.js) + gutter size */
+    max-width: calc(240px + calc($space * 2));
 }
 
 .target-wrapper {
@@ -133,28 +220,42 @@
     flex-basis: 0;
 
     padding-top: $space;
-    padding-left: $space;
-    padding-right: $space;
+    min-height: 0; /* this makes it work in Firefox */
 
     /*
         For making the sprite-selector a scrollable pane
         @todo: Not working in Safari
     */
-    overflow: hidden;
+    /* TODO this also breaks the thermometer menu */
+    /* overflow: hidden; */
 }
 
 .extension-button-container {
-    width: 3.25rem;
+    width: 3.75rem;
     height: 3.25rem;
     position: absolute;
     bottom: 0;
     left: 0;
-    z-index: 50; /** Force extension button above the ScratchBlocks flyout. */
+    right: 0;
+    z-index: $z-index-extension-button;
     background: $motion-primary;
 
     border: 1px solid $motion-primary;
     box-sizing: content-box; /* To match scratch-block vertical toolbox borders */
 }
+
+$fade-out-distance: 15px;
+
+.extension-button-container:before {
+    content: "";
+    position: absolute;
+    top: calc(calc(-1 * $fade-out-distance) - 1px);
+    left: -1px;
+    background: linear-gradient(rgba(0, 0, 0, 0),rgba(0, 0, 0, 0.15));
+    height: $fade-out-distance;
+    width: calc(100% + 0.5px);
+}
+
 
 .extension-button {
     background: none;
@@ -168,6 +269,10 @@
 .extension-button-icon {
     width: 1.75rem;
     height: 1.75rem;
+}
+
+[dir="rtl"] .extension-button-icon {
+    transform: scaleX(-1);
 }
 
 .extension-button > div {

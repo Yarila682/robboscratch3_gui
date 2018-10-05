@@ -100,7 +100,7 @@ class DraggableWindowComponent extends Component {
     const mapStateToProps =  state => ({
 
 
-    draggable_window: state.draggable_window
+    draggable_window:state.scratchGui.draggable_window
 
 
       });

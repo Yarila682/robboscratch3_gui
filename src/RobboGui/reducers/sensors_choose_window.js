@@ -93,5 +93,6 @@ switch (action.type) {
 
 export {
     reducer as default,
+    initialState as sensors_choose_window_InitialState
 
 };

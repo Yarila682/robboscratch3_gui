@@ -52,8 +52,8 @@ class SensorChooseWindowComponentElement extends Component {
 
   const mapStateToProps =  state => ({
 
-        // sensors: state.sensors,
-        // sensors_choose_window: state.sensors_choose_window
+        // sensors:state.scratchGui.sensors,
+        // sensors_choose_window:state.scratchGui.sensors_choose_window
     });
 
   const mapDispatchToProps = dispatch => ({

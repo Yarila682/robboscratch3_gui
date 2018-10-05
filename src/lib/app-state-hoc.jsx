@@ -1,74 +1,117 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {Provider} from 'react-redux';
-import {createStore, applyMiddleware, compose} from 'redux';
-import throttle from 'redux-throttle';
+import {createStore, combineReducers, compose} from 'redux';
+import ConnectedIntlProvider from './connected-intl-provider.jsx';
+
+import localesReducer, {initLocale, localesInitialState} from '../reducers/locales';
+
+import {setPlayer, setFullScreen} from '../reducers/mode.js';
+
+import locales from 'scratch-l10n';
+import {detectLocale} from './detect-locale';
+
 import thunk from 'redux-thunk';
 
-import {intlInitialState, IntlProvider} from '../reducers/intl.js';
-import reducer from '../reducers/gui';
-
-import {connect} from 'react-redux';
-
-import IntlStateWrapper from './intl-state-hoc.jsx';
-
-import IntlWrapper from './intl-wrapper.jsx';
-
-
-
-// import defaultsDeep from 'lodash.defaultsdeep';
-// import guiMessages from 'scratch-l10n/locales/gui-msgs';
-// import paintMessages from 'scratch-l10n/locales/paint-msgs';
-// import penMessages from 'scratch-l10n/locales/pen-msgs';
-
-//const combinedMessages = defaultsDeep({}, guiMessages.messages, paintMessages.messages, penMessages.messages);
-
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const enhancer = composeEnhancers(
-    applyMiddleware(
-        throttle(300, {leading: true, trailing: true}),
-        thunk
-    )
-);
-const store = createStore(reducer, intlInitialState, enhancer);
 
-import ErrorBoundary from '../containers/error-boundary.jsx';
+
 
 /*
- * Higher Order Component to provide redux state
+ * Higher Order Component to provide redux state. If an `intl` prop is provided
+ * it will override the internal `intl` redux state
  * @param {React.Component} WrappedComponent - component to provide state for
+ * @param {boolean} localesOnly - only provide the locale state, not everything
+ *                      required by the GUI. Used to exclude excess state when
+                        only rendering modals, not the GUI.
  * @returns {React.Component} component with redux and intl state provided
  */
-const AppStateHOC = function (WrappedComponent) {
-    const AppStateWrapper = ({...props}) => (
-        <Provider store={store}>
-          <IntlWrapper>
-            <IntlStateWrapper>
-              <ErrorBoundary>
-                  <WrappedComponent {...props} />
-              </ErrorBoundary>
-            </IntlStateWrapper>
+const AppStateHOC = function (WrappedComponent, localesOnly) {
+    class AppStateWrapper extends React.Component {
+        constructor (props) {
+            super(props);
+            let initialState = {};
+            let reducers = {};
+            let enhancer;
 
-          </IntlWrapper>
+            let initializedLocales = localesInitialState;
+            const locale = detectLocale(Object.keys(locales));
+            if (locale !== 'en') {
+                initializedLocales = initLocale(initializedLocales, locale);
+            }
+            if (localesOnly) {
+                // Used for instantiating minimal state for the unsupported
+                // browser modal
+                reducers = {locales: localesReducer};
+                initialState = {locales: initializedLocales};
+                enhancer = composeEnhancers();
+            } else {
+                // You are right, this is gross. But it's necessary to avoid
+                // importing unneeded code that will crash unsupported browsers.
+                const guiRedux = require('../reducers/gui');
+                const guiReducer = guiRedux.default;
+                const {
+                    guiInitialState,
+                    guiMiddleware,
+                    initFullScreen,
+                    initPlayer
+                } = guiRedux;
+                const {ScratchPaintReducer} = require('scratch-paint');
 
-
-        </Provider>
-    );
-
-  //   function mapStateToProps(state) {
-  //
-  //      new_intl: state.intl
-  // }
-  //
-  // function mapDispatchToProps(dispatch) {
-  //   return {
-  //
-  //   };
-  // }
-  // return connect(mapStateToProps, mapDispatchToProps)(AppStateWrapper);
-
+                let initializedGui = guiInitialState;
+                if (props.isFullScreen) {
+                    initializedGui = initFullScreen(initializedGui);
+                }
+                if (props.isPlayerOnly) {
+                    initializedGui = initPlayer(initializedGui);
+                }
+                reducers = {
+                    locales: localesReducer,
+                    scratchGui: guiReducer,
+                    scratchPaint: ScratchPaintReducer
+                };
+                initialState = {
+                    locales: initializedLocales,
+                    scratchGui: initializedGui
+                };
+                enhancer = composeEnhancers(guiMiddleware);
+            }
+            const reducer = combineReducers(reducers);
+            this.store = createStore(
+                reducer,
+                initialState,
+                enhancer
+            );
+        }
+        componentDidUpdate (prevProps) {
+            if (localesOnly) return;
+            if (prevProps.isPlayerOnly !== this.props.isPlayerOnly) {
+                this.store.dispatch(setPlayer(this.props.isPlayerOnly));
+            }
+            if (prevProps.isFullScreen !== this.props.isFullScreen) {
+                this.store.dispatch(setFullScreen(this.props.isFullScreen));
+            }
+        }
+        render () {
+            const {
+                isFullScreen, // eslint-disable-line no-unused-vars
+                isPlayerOnly, // eslint-disable-line no-unused-vars
+                ...componentProps
+            } = this.props;
+            return (
+                <Provider store={this.store}>
+                    <ConnectedIntlProvider>
+                        <WrappedComponent {...componentProps} />
+                    </ConnectedIntlProvider>
+                </Provider>
+            );
+        }
+    }
+    AppStateWrapper.propTypes = {
+        isFullScreen: PropTypes.bool,
+        isPlayerOnly: PropTypes.bool
+    };
     return AppStateWrapper;
 };
-
-
 
 export default AppStateHOC;

@@ -76,7 +76,68 @@ class LaboratoryPreviewComponent extends Component {
 
 
 
-       },30,this);
+       },300,this);
+
+
+
+  }
+
+  onLabStatusChange(lab_state,is_lab_searching){
+
+    var lab_searching_icon;
+    var lab_connection_status;
+
+
+
+    lab_searching_icon = document.getElementById(`lab-${this.props.labIndex}-searching-icon`);
+
+     if (typeof( lab_searching_icon) != 'undefined'){
+
+
+       if (is_lab_searching){
+
+
+
+
+          lab_searching_icon.classList.remove(styles.lab_loading_icon_hidden);
+          lab_searching_icon.classList.remove(styles.lab_loading_icon_showing);
+          lab_searching_icon.classList.add(styles.lab_loading_icon_showing);
+
+
+       }else{
+
+
+         lab_searching_icon.classList.remove(styles.lab_loading_icon_hidden);
+         lab_searching_icon.classList.remove(styles.lab_loading_icon_showing);
+         lab_searching_icon.classList.add(styles.lab_loading_icon_hidden);
+
+
+       }
+
+       lab_connection_status = document.getElementById(`lab-${this.props.labIndex}-connection-status`);
+
+       if (lab_state == 7){
+
+
+
+
+          lab_connection_status.classList.remove(styles.lab_status_connected);
+          lab_connection_status.classList.remove(styles.lab_status_disconnected);
+          lab_connection_status.classList.add(styles.lab_status_connected);
+
+       }else{
+
+
+         lab_connection_status.classList.remove(styles.lab_status_disconnected);
+         lab_connection_status.classList.remove(styles.lab_status_connected);
+         lab_connection_status.classList.add(styles.lab_status_disconnected);
+
+
+       }
+
+
+
+     }
 
 
 
@@ -87,7 +148,9 @@ class LaboratoryPreviewComponent extends Component {
       this.islabConnected = false;
       this.lab_is_searching = false;
 
-      this.startlabConnectionStatusCheck();
+  //    this.startlabConnectionStatusCheck();
+
+    this.props.LCA.registerLabStatusChangeCallback(this.onLabStatusChange.bind(this));
 
   }
 

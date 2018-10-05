@@ -97,5 +97,6 @@ switch (action.type) {
 
 export {
     reducer as default,
+    initialState as devices_firmware_flasher_InitialState
 
 };

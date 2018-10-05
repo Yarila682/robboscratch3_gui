@@ -135,5 +135,6 @@ switch (action.type) {
 
 export {
     reducer as default,
+    initialState as draggable_window_InitialState
 
 };

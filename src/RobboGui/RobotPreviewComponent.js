@@ -64,7 +64,7 @@ class RobotPreviewComponent extends Component {
                robot_connection_status.classList.add(styles.robot_status_disconnected);
 
 
-             }  
+             }
 
 
            }
@@ -75,8 +75,64 @@ class RobotPreviewComponent extends Component {
 
 
 
-       },30,this);
+       },300,this);
 
+
+
+  }
+
+  onRobotStatusChange(robot_state,is_robot_searching){
+
+    var robot_searching_icon;
+    var robot_connection_status;
+
+    robot_searching_icon = document.getElementById(`robot-${this.props.robotIndex}-searching-icon`);
+
+    if (typeof(robot_searching_icon) != 'undefined'){
+
+      if (is_robot_searching){
+
+
+
+
+         robot_searching_icon.classList.remove(styles.robot_loading_icon_hidden);
+         robot_searching_icon.classList.remove(styles.robot_loading_icon_showing);
+         robot_searching_icon.classList.add(styles.robot_loading_icon_showing);
+
+
+      }else{
+
+
+        robot_searching_icon.classList.remove(styles.robot_loading_icon_hidden);
+        robot_searching_icon.classList.remove(styles.robot_loading_icon_showing);
+        robot_searching_icon.classList.add(styles.robot_loading_icon_hidden);
+
+
+      }
+
+      robot_connection_status = document.getElementById(`robot-${this.props.robotIndex}-connection-status`);
+
+      if (robot_state == 7){
+
+
+
+
+         robot_connection_status.classList.remove(styles.robot_status_connected);
+         robot_connection_status.classList.remove(styles.robot_status_disconnected);
+         robot_connection_status.classList.add(styles.robot_status_connected);
+
+      }else{
+
+
+        robot_connection_status.classList.remove(styles.robot_status_disconnected);
+        robot_connection_status.classList.remove(styles.robot_status_connected);
+        robot_connection_status.classList.add(styles.robot_status_disconnected);
+
+
+      }
+
+
+    }
 
 
   }
@@ -86,7 +142,11 @@ class RobotPreviewComponent extends Component {
       this.isRobotConnected = false;
       this.robot_is_searching = false;
 
-      this.startRobotConnectionStatusCheck();
+    //  this.startRobotConnectionStatusCheck();
+
+    this.props.RCA.registerRobotStatusChangeCallback(this.onRobotStatusChange.bind(this));
+
+
 
   }
 

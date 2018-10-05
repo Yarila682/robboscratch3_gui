@@ -9,7 +9,7 @@
     color: $text-primary;
     border-top-left-radius: $space;
     border-top-right-radius: $space;
-    border-bottom: 1px solid #eaeaea;
+    border-bottom: 1px solid $ui-black-transparent;
 }
 
 .row {
@@ -31,9 +31,8 @@
 
 .icon-wrapper {
     display: inline-block;
-    box-sizing: content-box;
-    width: 1rem;
-    height: 1rem;
+    width: calc(2rem + 2px);
+    height: calc(2rem + 2px);
     padding: 0.5rem;
     outline: none;
     user-select: none;
@@ -45,6 +44,10 @@
 }
 
 /* @todo: refactor radio divs to input */
+.radio-wrapper {
+    white-space: nowrap; /* make sure visibilty buttons don't wrap */
+}
+
 .radio {
     filter: saturate(0);
     cursor: pointer;
@@ -56,29 +59,47 @@
     cursor: default;
 }
 
-.radio-left {
-    border: 1px solid $form-border;
+.radio-first {
+    border: 1px solid $ui-black-transparent;
+}
+
+[dir="ltr"] .radio-first {
     border-top-left-radius: $form-radius;
     border-bottom-left-radius: $form-radius;
 }
 
-.radio-left:focus {
-    border-color: #4c97ff;
-    box-shadow: inset 0 0 0 -2px rgba(0, 0, 0, 0.1);
-}
-
-.radio-right {
-    border-bottom: 1px solid $form-border;
-    border-top: 1px solid $form-border;
-    border-right: 1px solid $form-border;
-    border-left: 1px solid $form-border;
+[dir="rtl"] .radio-first {
     border-top-right-radius: $form-radius;
     border-bottom-right-radius: $form-radius;
 }
 
-.radio-right:focus {
-    border-color: #4c97ff;
-    box-shadow: inset 0 0 0 -2px rgba(0, 0, 0, 0.1);
+.radio-first:focus {
+    border-color: $motion-primary;
+    box-shadow: inset 0 0 0 -2px $ui-black-transparent;
+}
+
+.radio-last {
+    border-bottom: 1px solid $ui-black-transparent;
+    border-top: 1px solid $ui-black-transparent;
+}
+
+[dir="ltr"] .radio-last {
+    border-right: 1px solid $ui-black-transparent;
+    border-left: 1px solid $ui-black-transparent;
+    border-top-right-radius: $form-radius;
+    border-bottom-right-radius: $form-radius;
+}
+
+[dir="rtl"] .radio-last {
+    border-left: 1px solid $ui-black-transparent;
+    border-right: 1px solid $ui-black-transparent;
+    border-top-left-radius: $form-radius;
+    border-bottom-left-radius: $form-radius;
+}
+
+.radio-last:focus {
+    border-color: $motion-primary;
+    box-shadow: inset 0 0 0 -2px $ui-black-transparent;
 }
 
 .icon {
@@ -90,14 +111,14 @@
 .rotation-select {
     width: 100%;
     height: 1.85rem;
-    border: 1px solid $form-border;
+    border: 1px solid $ui-black-transparent;
     user-select: none;
     outline: none;
 }
 
 .rotation-select:focus {
-    border-color: #4c97ff;
-    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
+    border-color: $motion-primary;
+    box-shadow: inset 0 0 0 1px $ui-black-transparent);
 }
 
 .larger-input input {

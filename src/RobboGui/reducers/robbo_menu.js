@@ -57,5 +57,6 @@ switch (action.type) {
 
 export {
     reducer as default,
+    initialState as robbo_menu_InitialState
 
 };

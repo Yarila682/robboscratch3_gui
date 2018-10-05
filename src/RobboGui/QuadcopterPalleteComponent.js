@@ -109,7 +109,7 @@ class QuadcopterPalleteComponent extends Component {
   componentDidMount(){
 
 
-      this.startGetDataLoop();
+//      this.startGetDataLoop();
 
   }
 
@@ -129,7 +129,7 @@ class QuadcopterPalleteComponent extends Component {
 
                       <div className={styles.close_icon} onClick={this.onThisWindowClose.bind(this)}>
 
-                      </div>  
+                      </div>
 
                 </div>
 

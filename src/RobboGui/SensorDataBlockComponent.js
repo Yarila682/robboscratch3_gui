@@ -53,7 +53,7 @@ class SensorDataBlockComponent extends Component {
 
   // const mapStateToProps =  state => ({
   //
-  //       sensors: state.sensors,
+  //       sensors:state.scratchGui.sensors,
   //
   //   });
   //

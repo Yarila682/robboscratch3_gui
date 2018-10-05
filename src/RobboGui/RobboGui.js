@@ -139,7 +139,7 @@ class RobboGui extends Component {
                   )}>
 
 
-          <div className={styles.version}> Robbo Scratch ver. 3.2.1     </div>
+          <div className={styles.version}> Robbo Scratch ver. 3.4.1   </div>
 
          {
               (!this.props.sensorsPalette.sensors_pallete_collapsed)?  <SensorPallete RCA={this.RCA} LCA={this.LCA} QCA={this.QCA} />: <SensorPaletteCollapsed />
@@ -181,8 +181,8 @@ class RobboGui extends Component {
 const mapStateToProps =  state => ({
 
 
-  sensorsChooseWindow: state.sensors_choose_window,
-  sensorsPalette: state.sensors_palette
+  sensorsChooseWindow:state.scratchGui.sensors_choose_window,
+  sensorsPalette:state.scratchGui.sensors_palette
 
 
   });

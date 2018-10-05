@@ -203,7 +203,7 @@ class RobboMenu extends Component {
 
 
 
-                    <hr/>
+                  <hr className={styles.hrDevider}/>
 
           <div id="trigger-color-corrector-table-0" onClick={this.triggerColorCorrectorTable.bind(this,0)} className={classNames(
 
@@ -251,7 +251,7 @@ class RobboMenu extends Component {
 const mapStateToProps =  state => ({
 
 
-    robbo_menu: state.robbo_menu
+    robbo_menu:state.scratchGui.robbo_menu
 
 
   });

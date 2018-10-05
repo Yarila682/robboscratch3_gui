@@ -1,6 +1,6 @@
 const initialState = {
 
-  is_extension_pack_activated:true,
+  is_extension_pack_activated:false,
 
 
 };
@@ -50,5 +50,6 @@ switch (action.type) {
 
 export {
     reducer as default,
+    initialState as extension_pack_InitialState
 
 };

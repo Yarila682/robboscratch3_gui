@@ -76,5 +76,6 @@ switch (action.type) {
 
 export {
     reducer as default,
+    initialState as color_corrector_table_InitialState
 
 };

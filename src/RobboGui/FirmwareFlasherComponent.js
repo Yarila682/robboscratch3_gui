@@ -200,7 +200,7 @@ class FirmwareFlasherComponent extends Component {
 
 const mapStateToProps =  state => ({
 
-      devices:state.devices_firmware_flasher
+      devices:state.scratchGui.devices_firmware_flasher
 
   });
 

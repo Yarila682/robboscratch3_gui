@@ -86,7 +86,7 @@ class QuadcopterPreviewComponent extends Component {
       this.isQuadcopterConnected = false;
       this.quadcopter_is_searching = false;
 
-      this.startQuadcopterConnectionStatusCheck();
+    //  this.startQuadcopterConnectionStatusCheck();
 
   }
 
