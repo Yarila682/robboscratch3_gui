@@ -1,6 +1,8 @@
 var RCA_local;
 var LCA_local;
 
+var robot_get_data_order = true;
+
 
 const ActionTriggerExtensionPack = function(){
 
@@ -248,8 +250,20 @@ const ActionRobotGetDataStart = function(robot_number,RCA){
   return (dispatch) => {
     RobotGetDataInterval =   setInterval(() => {
 
-          dispatch(ActionRobotGetData(robot_number,RCA));
-      }, 300); //25
+        if (robot_get_data_order){
+
+
+                dispatch(ActionRobotGetData(robot_number,RCA));
+
+        }
+        // else{
+        //
+        //       robot_get_data_order = !robot_get_data_order;
+        //
+        // }
+
+
+      }, 150); //25
   };
 
 
@@ -281,8 +295,20 @@ const ActionLaboratoryGetDataStart = function(laboratory_number,LCA){
   return (dispatch) => {
     LaboratoryGetDataInterval =   setInterval(() => {
 
+      if (!robot_get_data_order){
+
+
+          robot_get_data_order = !robot_get_data_order;
           dispatch(ActionLaboratoryGetData(laboratory_number,LCA_local));
-      }, 300);
+
+      }
+      else{
+
+            robot_get_data_order = !robot_get_data_order;
+
+      }
+
+    }, 170);
   };
 
 

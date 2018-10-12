@@ -160,7 +160,7 @@ class GUI extends React.Component {
         this.props.vm.loadProject(this.props.projectData)
             .then(() => {
                 this.setState({loading: false}, () => {
-                    this.props.vm.setCompatibilityMode(true);
+                    this.props.vm.setCompatibilityMode(false);//modified_by_Yaroslav
                     this.props.vm.start();
 
                     this.startProjectAutosaving(); //added_by_Yaroslav not original
