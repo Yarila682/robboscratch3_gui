@@ -80,7 +80,11 @@ class RobotPalleteComponent extends Component {
 
 
     console.log("startRobotGetData");
-    this.props.startRobotGetData(0,this.props.RCA);
+  //  this.props.startRobotGetData(0,this.props.RCA);
+
+  this.robotGetDataStart();
+
+//  this.props.setRCALocal(this.props.RCA);
 
   }
 
@@ -89,6 +93,50 @@ class RobotPalleteComponent extends Component {
 
     console.log("RobotPalette close");
     this.props.onRobotPaletteWindowClose(1);
+
+  }
+
+  robotGetData(sensors_values_field_list){
+
+    if (this.props.draggable_window[1].isShowing == true){
+
+          sensors_values_field_list[0].innerHTML = this.props.RCA.getLeftPath();
+          sensors_values_field_list[1].innerHTML = this.props.RCA.getRightPath();
+          sensors_values_field_list[2].innerHTML = this.props.RCA.getButtonStartPushed();
+
+
+
+    }
+
+
+
+
+  }
+
+  robotGetDataStart(){
+
+    var sensors_values_field_list = [];
+    var sensor;
+
+    sensor = document.getElementById(`${this.props.robot_special_sensors[0].sensor_device_name}_sensor-data-block-${this.props.robot_special_sensors[0].sensor_id}_type-${this.props.robot_special_sensors[0].sensor_type}`);
+
+    sensors_values_field_list[0] = sensor.children[0].children[1].children[0];
+
+
+  sensor = document.getElementById(`${this.props.robot_special_sensors[1].sensor_device_name}_sensor-data-block-${this.props.robot_special_sensors[1].sensor_id}_type-${this.props.robot_special_sensors[1].sensor_type}`);
+
+    sensors_values_field_list[1] = sensor.children[0].children[1].children[0];
+
+
+    sensor = document.getElementById(`${this.props.robot_special_sensors[2].sensor_device_name}_sensor-data-block-${this.props.robot_special_sensors[2].sensor_id}_type-${this.props.robot_special_sensors[2].sensor_type}`);
+
+    sensors_values_field_list[2] = sensor.children[0].children[1].children[0];
+
+      setInterval(() => {
+
+          this.robotGetData.call(this,sensors_values_field_list);
+
+      },300);
 
   }
 

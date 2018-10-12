@@ -14,7 +14,7 @@ class CommonFieldsSensorComponent extends Component {
 
       return  (
 
-        <div className={styles.sensor_block_field} >
+        <div className={styles.sensor_block_field}  >
             <div className={styles.sensor_block_field}>
 
                   {`${this.props.NameFieldText} `}

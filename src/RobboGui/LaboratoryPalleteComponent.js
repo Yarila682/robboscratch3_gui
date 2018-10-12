@@ -91,7 +91,7 @@ class LaboratoryPalleteComponent extends Component {
 
 
     console.log("startLaboratoryGetData");
-    this.props.startLaboratoryGetData(0,this.props.LCA);
+  //  this.props.startLaboratoryGetData(0,this.props.LCA);
 
   }
 
