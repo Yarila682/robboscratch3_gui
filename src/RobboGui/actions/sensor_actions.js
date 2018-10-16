@@ -508,6 +508,40 @@ const ActionTriggerRobboMenu = function(){
 
 }
 
+const  ActionSetRCALocal = function(RCA){
+
+RCA_local = RCA;
+
+  return {
+
+  type: 'SET_RCA_LOCAL',
+  payload:{
+
+
+
+  }
+
+  };
+
+}
+
+const  ActionSetLCALocal = function(LCA){
+
+LCA_local = LCA;
+
+  return {
+
+  type: 'SET_LCA_LOCAL',
+  payload:{
+
+
+
+  }
+
+  };
+
+}
+
 // const ActionTriggerNeedLanguageReload = function(){
 //
 //   return {
@@ -633,6 +667,8 @@ export {
     ActionTriggerRobboMenu,
     ActionTriggerLabExtSensors,
     ActionFirmwareFlasherGetDevicesInfo,
+    ActionSetRCALocal,
+    ActionSetLCALocal
   //  ActionTriggerNeedLanguageReload
 
 };

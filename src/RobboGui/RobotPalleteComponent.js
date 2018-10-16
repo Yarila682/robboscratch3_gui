@@ -6,6 +6,7 @@ import SensorComponent from './SensorComponent';
 
 import {ActionRobotGetDataStart} from  './actions/sensor_actions';
 import {ActionTriggerDraggableWindow} from './actions/sensor_actions';
+import {ActionSetRCALocal}  from './actions/sensor_actions';
 
 import {defineMessages, intlShape, injectIntl, FormattedMessage} from 'react-intl';
 
@@ -82,12 +83,44 @@ class RobotPalleteComponent extends Component {
     console.log("startRobotGetData");
   //  this.props.startRobotGetData(0,this.props.RCA);
 
+  this.props.setRCALocal(this.props.RCA);
+
   this.robotGetDataStart();
 
-//  this.props.setRCALocal(this.props.RCA);
+
 
   }
 
+
+componentDidUpdate(){
+
+  this.sensors_values_field_list = [];
+  var sensor;
+
+  sensor = document.getElementById(`${this.props.robot_special_sensors[0].sensor_device_name}_sensor-data-block-${this.props.robot_special_sensors[0].sensor_id}_type-${this.props.robot_special_sensors[0].sensor_type}`);
+
+  this.sensors_values_field_list[0] = sensor.children[0].children[1].children[0];
+
+
+ sensor = document.getElementById(`${this.props.robot_special_sensors[1].sensor_device_name}_sensor-data-block-${this.props.robot_special_sensors[1].sensor_id}_type-${this.props.robot_special_sensors[1].sensor_type}`);
+
+  this.sensors_values_field_list[1] = sensor.children[0].children[1].children[0];
+
+
+  sensor = document.getElementById(`${this.props.robot_special_sensors[2].sensor_device_name}_sensor-data-block-${this.props.robot_special_sensors[2].sensor_id}_type-${this.props.robot_special_sensors[2].sensor_type}`);
+
+  this.sensors_values_field_list[2] = sensor.children[0].children[1].children[0];
+
+
+  for (let index = 0; index < this.props.robot_sensors.length; index++ ){
+
+    sensor = document.getElementById(`${this.props.robot_sensors[index].sensor_device_name}_sensor-${this.props.robot_sensors[index].sensor_id}_type-${this.props.robot_sensors[index].sensor_type}`);
+
+    this.sensors_values_field_list[3+ index] = sensor.children[0].children[0].children[1].children[0];
+
+  }
+
+}
 
   onThisWindowClose(){
 
@@ -96,14 +129,57 @@ class RobotPalleteComponent extends Component {
 
   }
 
-  robotGetData(sensors_values_field_list){
+  robotGetData(){
+
+    var sensors_values_field_list =   this.sensors_values_field_list;
 
     if (this.props.draggable_window[1].isShowing == true){
 
           sensors_values_field_list[0].innerHTML = this.props.RCA.getLeftPath();
           sensors_values_field_list[1].innerHTML = this.props.RCA.getRightPath();
-          sensors_values_field_list[2].innerHTML = this.props.RCA.getButtonStartPushed();
+          sensors_values_field_list[2].innerHTML = (this.props.RCA.getButtonStartPushed() == "true")?this.props.intl.formatMessage(messages.true):this.props.intl.formatMessage(messages.false);
 
+
+          for (let index = 0; index < this.props.robot_sensors.length; index++ ){
+
+
+              if (this.props.robot_sensors[index].sensor_active){
+
+                let sensor_data;
+
+
+                if (this.props.robot_sensors[index].sensor_name == "color"){
+
+
+                      sensor_data = this.props.RCA.colorFilter(index);
+
+                      if (sensor_data[0] == -1){
+
+                        sensors_values_field_list[3+index].innerHTML = "---";
+                        sensors_values_field_list[3+index].style.backgroundColor =  `rgb(255,255,255)`;
+                        sensors_values_field_list[3+index].style.minWidth = `0px`;
+                        sensors_values_field_list[3+index].style.minHeight = `0px`;
+
+                      }else{
+
+                        sensors_values_field_list[3+index].style.backgroundColor =  `rgb(${sensor_data[0]},${sensor_data[1]},${sensor_data[2]})`;
+                        sensors_values_field_list[3+index].style.minWidth = `10px`;
+                        sensors_values_field_list[3+index].style.minHeight = `10px`;
+
+                      }
+
+                }else{
+
+                      sensor_data = this.props.RCA.getSensorData(index);
+
+                      sensors_values_field_list[3+index].innerHTML = sensor_data;
+
+                }
+
+              }
+
+
+          }
 
 
     }
@@ -115,26 +191,35 @@ class RobotPalleteComponent extends Component {
 
   robotGetDataStart(){
 
-    var sensors_values_field_list = [];
+    this.sensors_values_field_list = [];
     var sensor;
 
     sensor = document.getElementById(`${this.props.robot_special_sensors[0].sensor_device_name}_sensor-data-block-${this.props.robot_special_sensors[0].sensor_id}_type-${this.props.robot_special_sensors[0].sensor_type}`);
 
-    sensors_values_field_list[0] = sensor.children[0].children[1].children[0];
+    this.sensors_values_field_list[0] = sensor.children[0].children[1].children[0];
 
 
   sensor = document.getElementById(`${this.props.robot_special_sensors[1].sensor_device_name}_sensor-data-block-${this.props.robot_special_sensors[1].sensor_id}_type-${this.props.robot_special_sensors[1].sensor_type}`);
 
-    sensors_values_field_list[1] = sensor.children[0].children[1].children[0];
+    this.sensors_values_field_list[1] = sensor.children[0].children[1].children[0];
 
 
     sensor = document.getElementById(`${this.props.robot_special_sensors[2].sensor_device_name}_sensor-data-block-${this.props.robot_special_sensors[2].sensor_id}_type-${this.props.robot_special_sensors[2].sensor_type}`);
 
-    sensors_values_field_list[2] = sensor.children[0].children[1].children[0];
+    this.sensors_values_field_list[2] = sensor.children[0].children[1].children[0];
+
+
+    for (let index = 0; index < this.props.robot_sensors.length; index++ ){
+
+      sensor = document.getElementById(`${this.props.robot_sensors[index].sensor_device_name}_sensor-${this.props.robot_sensors[index].sensor_id}_type-${this.props.robot_sensors[index].sensor_type}`);
+
+      this.sensors_values_field_list[3+ index] = sensor.children[0].children[0].children[1].children[0];
+
+    }
 
       setInterval(() => {
 
-          this.robotGetData.call(this,sensors_values_field_list);
+          this.robotGetData.call(this);
 
       },300);
 
@@ -258,6 +343,12 @@ const mapDispatchToProps = dispatch => ({
   onRobotPaletteWindowClose: () => {
 
       dispatch(ActionTriggerDraggableWindow(1));
+    },
+
+    setRCALocal: (RCA) => {
+
+          dispatch(ActionSetRCALocal(RCA));
+
     }
 
 });

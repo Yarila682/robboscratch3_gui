@@ -5,7 +5,8 @@ import SensorDataBlockComponent  from './SensorDataBlockComponent';
 import SensorComponent from './SensorComponent';
 
 import {ActionLaboratoryGetDataStart} from  './actions/sensor_actions';
-import {ActionTriggerDraggableWindow} from './actions/sensor_actions'
+import {ActionTriggerDraggableWindow} from './actions/sensor_actions';
+import {ActionSetLCALocal}  from './actions/sensor_actions';
 
 import {defineMessages, intlShape, injectIntl, FormattedMessage} from 'react-intl';
 
@@ -87,11 +88,143 @@ class LaboratoryPalleteComponent extends Component {
       );
   }
 
+  labGetData(){
+
+    var sensors_values_field_list =   this.sensors_values_field_list;
+
+    if (this.props.draggable_window[2].isShowing == true){
+
+        let sensor_data;
+
+            for (let index = 0; index < 5; index++ ){
+
+
+
+          if (this.props.lab_special_sensors[index].sensor_active){
+
+
+            sensor_data = (this.props.LCA.islaboratoryButtonPressed(0,index + 1) == true)?this.props.intl.formatMessage(messages.true):this.props.intl.formatMessage(messages.false);
+
+            sensors_values_field_list[index].innerHTML = sensor_data;
+
+          }
+
+        }
+
+        //light
+        sensor_data = this.props.LCA.getSensorData("light");
+        sensors_values_field_list[5].innerHTML = sensor_data;
+
+
+        //sound
+        sensor_data = this.props.LCA.getSensorData("sound");
+        sensors_values_field_list[6].innerHTML = sensor_data;
+
+
+        //slider
+        sensor_data = this.props.LCA.getSensorData("slider");
+        sensors_values_field_list[7].innerHTML = sensor_data;
+
+
+          if (this.props.settings.is_lab_ext_enabled){
+
+
+            for (let index = 0; index < 2; index++){
+
+              if (this.props.lab_external_sensors[index].sensor_active){
+
+                  sensor_data = this.props.LCA.getSensorData("A"+index,this.props.lab_external_sensors[index].sensor_name);
+
+                  this.sensors_values_field_list[index + this.props.lab_special_sensors.length].innerHTML = sensor_data;
+
+              }
+
+            }
+
+
+            if (this.props.lab_external_sensors[2].sensor_active){
+
+                sensor_data = (this.props.LCA.labDigitalPinState(0,"D13") == true)?this.props.intl.formatMessage(messages.true):this.props.intl.formatMessage(messages.false);
+
+                this.sensors_values_field_list[this.props.lab_special_sensors.length + 2].innerHTML = sensor_data;
+            }
+
+          }
+
+
+    }
+
+
+
+
+  }
+
+  labGetDataStart(){
+
+    this.sensors_values_field_list = [];
+    var sensor;
+
+
+
+
+    for (let index = 0; index < this.props.lab_special_sensors.length; index++ ){
+
+      sensor = document.getElementById(`${this.props.lab_special_sensors[index].sensor_device_name}_sensor-data-block-${this.props.lab_special_sensors[index].sensor_id}_type-${this.props.lab_special_sensors[index].sensor_type}`);
+
+      this.sensors_values_field_list[index] =  sensor.children[0].children[1].children[0];
+
+    }
+
+
+
+      setInterval(() => {
+
+          this.labGetData.call(this);
+
+      },310);
+
+  }
+
+  componentDidUpdate(){
+
+    this.sensors_values_field_list = [];
+    var sensor;
+
+
+
+
+    for (let index = 0; index < this.props.lab_special_sensors.length; index++ ){
+
+      sensor = document.getElementById(`${this.props.lab_special_sensors[index].sensor_device_name}_sensor-data-block-${this.props.lab_special_sensors[index].sensor_id}_type-${this.props.lab_special_sensors[index].sensor_type}`);
+
+      this.sensors_values_field_list[index] =  sensor.children[0].children[1].children[0];
+
+    }
+
+      if (this.props.settings.is_lab_ext_enabled){
+
+        for (let index = 0; index < this.props.lab_external_sensors.length; index++ ){
+
+          sensor = document.getElementById(`${this.props.lab_external_sensors[index].sensor_device_name}_sensor-${this.props.lab_external_sensors[index].sensor_id}_type-${this.props.lab_external_sensors[index].sensor_type}`);
+
+          this.sensors_values_field_list[index + this.props.lab_special_sensors.length] = sensor.children[0].children[0].children[1].children[0];
+
+        }
+
+      }
+
+
+  }
+
   componentDidMount(){
 
 
     console.log("startLaboratoryGetData");
   //  this.props.startLaboratoryGetData(0,this.props.LCA);
+
+  this.props.setLCALocal(this.props.LCA);
+
+  this.labGetDataStart();
 
   }
 
@@ -297,6 +430,12 @@ const mapDispatchToProps = dispatch => ({
   onLaboratoryPaletteWindowClose: () => {
 
       dispatch(ActionTriggerDraggableWindow(2));
+    },
+
+    setLCALocal: (LCA) => {
+
+          dispatch(ActionSetLCALocal(LCA));
+
     }
 
 });
