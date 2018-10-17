@@ -1,6 +1,7 @@
 const initialState = {
 
   is_lab_ext_enabled:false,
+  robot_is_scratchduino:false
 
 
 
@@ -13,7 +14,7 @@ const  reducer = function (state, action) {
   if (typeof state === 'undefined') state = initialState;
 
 
-  let sensors_pallete_state = {};
+  let   settings_state = {};
 
 
 switch (action.type) {
@@ -21,16 +22,41 @@ switch (action.type) {
   case 'TRIGGER_LAB_EXT_SENSORS':
 
 
-  sensors_pallete_state = Object.assign({}, state);
+  settings_state = Object.assign({}, state);
 
-  sensors_pallete_state.is_lab_ext_enabled = !sensors_pallete_state.is_lab_ext_enabled;
+  settings_state.is_lab_ext_enabled = !settings_state.is_lab_ext_enabled;
 
 
 
-  return sensors_pallete_state;
+  return   settings_state;
 
 
     break;
+
+    case 'HIDE_NONE_SCRATCHDUINO_BLOCKS':
+
+
+    settings_state = Object.assign({}, state);
+
+
+    settings_state.robot_is_scratchduino = true;
+
+
+    return   settings_state;
+
+    case 'SHOW_ROBBO_BLOCKS':
+
+
+    settings_state = Object.assign({}, state);
+
+
+    settings_state.robot_is_scratchduino = false;
+
+
+    return   settings_state;
+
+
+      break;
 
 
     // case 'TRIGGER_NEED_LABGUAGE_RELOAD':

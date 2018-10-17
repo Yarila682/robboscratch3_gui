@@ -52,7 +52,9 @@ import { DropTarget } from 'react-dnd';
 const Target = {
   drop(props,monitor,component) {
 
-    let coords = monitor.getClientOffset();
+  //  let coords = monitor.getClientOffset();
+
+   let coords =  monitor.getSourceClientOffset();
 
     let item = monitor.getItem();
 
@@ -64,6 +66,10 @@ const Target = {
 
 
     }else if (item.element_type == ItemTypes.COLOR_CORRECTOR_WINDOW){
+
+    //  let _coords  = monitor.getDifferenceFromInitialOffset();
+
+      // let _coords  = monitor.getSourceClientOffset()
 
         props.onColorCorrectorWindowDrop(coords.y, coords.x);
 
@@ -309,7 +315,7 @@ const GUIComponent = props => {
                                     {soundsTabVisible ? <SoundTab vm={vm} /> : null}
                                 </TabPanel>
                             </Tabs>
-                          
+
                         </Box>
 
                         <Box className={classNames(styles.stageAndTargetWrapper, styles[stageSize])}>

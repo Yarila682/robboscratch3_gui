@@ -644,7 +644,7 @@ class ColorCorrectorTableComponent extends Component {
 
                   style={{
 
-                        position: 'absolute',
+                        position: 'fixed',
                         top: `${top}px`,
                         left: `${left}px`,
                         }}>

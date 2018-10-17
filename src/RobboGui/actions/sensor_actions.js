@@ -542,6 +542,40 @@ LCA_local = LCA;
 
 }
 
+const ActionHideNoneScratchduinoBlocks = function(){
+
+
+  return {
+
+  type: 'HIDE_NONE_SCRATCHDUINO_BLOCKS',
+
+  payload:{
+
+
+
+  }
+
+  };
+
+}
+
+const ActionShowRobboBlocks = function(){
+
+
+  return {
+
+  type: 'SHOW_ROBBO_BLOCKS',
+
+  payload:{
+
+
+
+  }
+
+  };
+
+}
+
 // const ActionTriggerNeedLanguageReload = function(){
 //
 //   return {
@@ -668,7 +702,9 @@ export {
     ActionTriggerLabExtSensors,
     ActionFirmwareFlasherGetDevicesInfo,
     ActionSetRCALocal,
-    ActionSetLCALocal
+    ActionSetLCALocal,
+    ActionHideNoneScratchduinoBlocks,
+    ActionShowRobboBlocks
   //  ActionTriggerNeedLanguageReload
 
 };

@@ -118,7 +118,8 @@ class Blocks extends React.Component {
             this.props.anyModalVisible !== nextProps.anyModalVisible ||
             this.props.stageSize !== nextProps.stageSize ||
             this.props.extension_pack.is_extension_pack_activated !== nextProps.extension_pack.is_extension_pack_activated || //not original
-            this.props.robbo_settings.is_lab_ext_enabled !==  nextProps.robbo_settings.is_lab_ext_enabled //not original
+            this.props.robbo_settings.is_lab_ext_enabled !==  nextProps.robbo_settings.is_lab_ext_enabled ||  //not original
+            this.props.robbo_settings.robot_is_scratchduino !==  nextProps.robbo_settings.robot_is_scratchduino //not original
         );
     }
     componentDidUpdate (prevProps) {
@@ -135,7 +136,8 @@ class Blocks extends React.Component {
             }, 0);
         }
 
-        if ((this.props.extension_pack.is_extension_pack_activated !== prevProps.extension_pack.is_extension_pack_activated) || (this.props.robbo_settings.is_lab_ext_enabled !== prevProps.robbo_settings.is_lab_ext_enabled)){
+        if ((this.props.extension_pack.is_extension_pack_activated !== prevProps.extension_pack.is_extension_pack_activated) || (this.props.robbo_settings.is_lab_ext_enabled !== prevProps.robbo_settings.is_lab_ext_enabled)
+            || (this.props.robbo_settings.robot_is_scratchduino !== prevProps.robbo_settings.robot_is_scratchduino)   ){
 
             const dynamicBlocksXML = this.props.vm.runtime.getBlocksXML();
             const target = this.props.vm.editingTarget;
@@ -143,6 +145,7 @@ class Blocks extends React.Component {
             var config = {};
             config.isExternalSensorsActivated = this.props.robbo_settings.is_lab_ext_enabled;
             config.isExtensionPackActivated   = this.props.extension_pack.is_extension_pack_activated;
+            config.robot_is_scratchduino      = this.props.robbo_settings.robot_is_scratchduino;
             config.locale = this.props.locale;
             config.messages = this.props.messages;
             const toolboxXML = makeToolboxXML(target.isStage, target.id, config, dynamicBlocksXML);
@@ -319,6 +322,7 @@ class Blocks extends React.Component {
             var config = {};
             config.isExternalSensorsActivated = this.props.robbo_settings.is_lab_ext_enabled;
             config.isExtensionPackActivated   = this.props.extension_pack.is_extension_pack_activated;
+            config.robot_is_scratchduino      = this.props.robbo_settings.robot_is_scratchduino;
             config.locale = this.props.locale;
             config.messages = this.props.messages;
             const toolboxXML = makeToolboxXML(target.isStage, target.id, config, dynamicBlocksXML);
@@ -364,6 +368,7 @@ class Blocks extends React.Component {
             var config = {};
             config.isExternalSensorsActivated = this.props.robbo_settings.is_lab_ext_enabled;
             config.isExtensionPackActivated   = this.props.extension_pack.is_extension_pack_activated;
+            config.robot_is_scratchduino      = this.props.robbo_settings.robot_is_scratchduino;
             config.locale = this.props.locale;
             config.messages = this.props.messages;
             const toolboxXML = makeToolboxXML(target.isStage, target.id, config, dynamicBlocksXML);

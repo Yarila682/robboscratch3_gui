@@ -295,7 +295,7 @@ const laboratory  = function (isStage, targetId,isExternalSensorsActivated) {  /
 
 }
 
-const robot  = function (isStage, targetId,isExtensionPackActivated) {  //modified_by_Yaroslav  //robot category
+const robot  = function (isStage, targetId,isExtensionPackActivated,robot_is_scratchduino) {  //modified_by_Yaroslav  //robot category
 
   const stageSelected = ScratchBlocks.ScratchMsgs.translate(
       'MOTION_STAGE_SELECTED',
@@ -332,36 +332,52 @@ const robot  = function (isStage, targetId,isExtensionPackActivated) {  //modifi
 
       ${blockSeparator}
 
-      <block type="robot_motors_on_for_steps">
-          <value name="STEPS">
-              <shadow type="math_number">
-                  <field name="NUM">1</field>
-              </shadow>
-          </value>
-      </block>
+      ${robot_is_scratchduino ? `` : `
 
 
-      <block type="robot_reset_trip_meters">
+         <block type="robot_motors_on_for_steps">
+            <value name="STEPS">
+                <shadow type="math_number">
+                    <field name="NUM">1</field>
+                </shadow>
+            </value>
+        </block>
 
-      </block>
+        <block type="robot_reset_trip_meters">
+
+        </block>
+        
+        `}
+
+
+
+
+
 
 
       ${blockSeparator}
 
-      <block type="robot_turnright">
-          <value name="DEGREES">
-              <shadow type="math_number">
-                  <field name="NUM">15</field>
-              </shadow>
-          </value>
-      </block>
-      <block type="robot_turnleft">
-          <value name="DEGREES">
-              <shadow type="math_number">
-                  <field name="NUM">15</field>
-              </shadow>
-          </value>
-      </block>
+
+      ${robot_is_scratchduino ? `` : `
+
+
+        <block type="robot_turnright">
+            <value name="DEGREES">
+                <shadow type="math_number">
+                    <field name="NUM">15</field>
+                </shadow>
+            </value>
+        </block>
+        <block type="robot_turnleft">
+            <value name="DEGREES">
+                <shadow type="math_number">
+                    <field name="NUM">15</field>
+                </shadow>
+            </value>
+        </block>
+        `}
+
+
 
         ${blockSeparator}
 
@@ -1185,6 +1201,7 @@ const makeToolboxXML = function (isStage, targetId, config,categoriesXML) {
 
   var  isExternalSensorsActivated = false;
   var  isExtensionPackActivated   = false;
+  var  robot_is_scratchduino      = false;
 
 
 
@@ -1193,7 +1210,7 @@ const makeToolboxXML = function (isStage, targetId, config,categoriesXML) {
 
       isExternalSensorsActivated = config.isExternalSensorsActivated;
       isExtensionPackActivated   = config.isExtensionPackActivated;
-
+      robot_is_scratchduino      = config.robot_is_scratchduino;
 
 
     }
@@ -1202,7 +1219,7 @@ const makeToolboxXML = function (isStage, targetId, config,categoriesXML) {
         xmlOpen,
         quadcopter(isStage, targetId), gap, //modified_by_Yaroslav
         laboratory(isStage, targetId,isExternalSensorsActivated),gap, //modified_by_Yaroslav
-        robot(isStage, targetId,isExtensionPackActivated),gap, //modified_by_Yaroslav //toolbox generator main
+        robot(isStage, targetId,isExtensionPackActivated,robot_is_scratchduino),gap, //modified_by_Yaroslav //toolbox generator main
         motion(isStage, targetId), gap,
         looks(isStage, targetId), gap,
         sound(isStage, targetId), gap,

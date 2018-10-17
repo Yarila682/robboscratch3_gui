@@ -7,6 +7,8 @@ import SensorComponent from './SensorComponent';
 import {ActionRobotGetDataStart} from  './actions/sensor_actions';
 import {ActionTriggerDraggableWindow} from './actions/sensor_actions';
 import {ActionSetRCALocal}  from './actions/sensor_actions';
+import {ActionHideNoneScratchduinoBlocks} from './actions/sensor_actions';
+import {ActionShowRobboBlocks} from './actions/sensor_actions';
 
 import {defineMessages, intlShape, injectIntl, FormattedMessage} from 'react-intl';
 
@@ -87,7 +89,8 @@ class RobotPalleteComponent extends Component {
 
   this.robotGetDataStart();
 
-
+ this.props.RCA.registerRobotIsScratchduinoCallback(this.props.onRobotIsScratchduino);
+ this.props.RCA.registerRobotIsRobboCallback(this.props.onRobotIsRobbo);
 
   }
 
@@ -348,6 +351,18 @@ const mapDispatchToProps = dispatch => ({
     setRCALocal: (RCA) => {
 
           dispatch(ActionSetRCALocal(RCA));
+
+    },
+
+    onRobotIsScratchduino: () => {
+
+      dispatch(ActionHideNoneScratchduinoBlocks());
+
+    },
+
+    onRobotIsRobbo: () => {
+
+      dispatch(ActionShowRobboBlocks());
 
     }
 
