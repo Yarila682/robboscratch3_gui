@@ -348,7 +348,7 @@ class LaboratoryPalleteComponent extends Component {
 
                                                if (index < 2){
 
-                                                   field_text  = this.props.intl.formatMessage(messages.analog) + " "  + (index + 1).toString() + ": ";
+                                                   field_text  = this.props.intl.formatMessage(messages.analog) + " "  + (index).toString() + ": ";
 
                                                }
 

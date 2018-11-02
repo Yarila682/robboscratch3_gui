@@ -112,7 +112,7 @@ class RobotPreviewComponent extends Component {
 
       robot_connection_status = document.getElementById(`robot-${this.props.robotIndex}-connection-status`);
 
-      if (robot_state == 7){
+      if (robot_state == 6){
 
 
 

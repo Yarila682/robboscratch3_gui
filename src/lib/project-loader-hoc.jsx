@@ -104,14 +104,34 @@ const ProjectLoaderHOC = function (WrappedComponent) {
                           var reader = new FileReader();
 
                           reader.onloadend = function(e) {
-                             console.log("Read completed for " + "auto-saved" + "." + "sb3" + ". length=" + this.result.length);
 
-                             let res = {};
-                             res.file_exists = true;
-                             res.file = this.result;
-                             res.err = null;
+                            if ((typeof (this) !== 'undefined') && (typeof(this.result) !== 'undefined')  && (this.result !== null)){
 
-                             resolve(res);
+
+                              console.log("Read completed for " + "auto-saved" + "." + "sb3" + ". length=" + this.result.length);
+
+                              let res = {};
+                              res.file_exists = true;
+                              res.file = this.result;
+                              res.err = null;
+
+                              resolve(res);
+
+
+                            }else{
+
+                              let res = {};
+
+                              res.file_exists = false;
+                              res.file = null;
+                              res.err = e;
+
+                              resolve(res);
+
+
+                            }
+
+
                           };
 
                           reader.readAsArrayBuffer(file);
@@ -259,7 +279,7 @@ const ProjectLoaderHOC = function (WrappedComponent) {
             //     })
             //   //  .catch(err => log.error(err));
               //.catch(err => console.error("Project load error: " + err));
-              
+
             });
         }
 

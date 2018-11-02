@@ -162,12 +162,15 @@ componentDidUpdate(){
                         sensors_values_field_list[3+index].style.backgroundColor =  `rgb(255,255,255)`;
                         sensors_values_field_list[3+index].style.minWidth = `0px`;
                         sensors_values_field_list[3+index].style.minHeight = `0px`;
+                        sensors_values_field_list[3+index].style.border = '0px';
 
                       }else{
 
                         sensors_values_field_list[3+index].style.backgroundColor =  `rgb(${sensor_data[0]},${sensor_data[1]},${sensor_data[2]})`;
-                        sensors_values_field_list[3+index].style.minWidth = `10px`;
-                        sensors_values_field_list[3+index].style.minHeight = `10px`;
+                        sensors_values_field_list[3+index].style.minWidth = `15px`;
+                        sensors_values_field_list[3+index].style.minHeight = `15px`;
+                        sensors_values_field_list[3+index].style.border = '2px solid';
+                        sensors_values_field_list[3+index].innerHTML = "";
 
                       }
 

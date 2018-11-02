@@ -75,15 +75,20 @@ class FirmwareFlasherDeviceComponent extends Component {
     if ([0,3].indexOf(this.props.deviceId) != -1){
 
         this.RCA.stopDataRecievingProcess();
+        this.RCA.discon();
 
     }else if ([1,2,4].indexOf(this.props.deviceId) != -1){
 
           this.LCA.stopDataRecievingProcess();
+          this.LCA.discon();
 
     }else{
 
               this.RCA.stopDataRecievingProcess();
+              this.RCA.discon();
+              
               this.LCA.stopDataRecievingProcess();
+              this.LCA.discon();
     }
 
     var styles = {

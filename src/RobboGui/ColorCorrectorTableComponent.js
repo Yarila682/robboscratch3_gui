@@ -165,6 +165,9 @@ class ColorCorrectorTableComponent extends Component {
 
         setInterval(() => {
 
+          if (this.props.color_corrector_table.isShowing){
+
+
             var color_box = document.getElementById(`color-box-${this.props.color_corrector_table.sensor_caller_id}`);
 
             var sensors_data = this.props.RCA.colorFilter(this.props.color_corrector_table.sensor_caller_id);
@@ -174,9 +177,24 @@ class ColorCorrectorTableComponent extends Component {
               color_box.style.backgroundColor = `rgb(${sensors_data[0]},${sensors_data[1]},${sensors_data[2]})`;
               color_box.style.minWidth = '40px';
               color_box.style.minHeight = '40px';
+              color_box.style.border = '2px solid';
+              color_box.style.backgroundImage = "none";
 
+
+            }else{
+
+              color_box.style.minWidth = '40px';
+              color_box.style.minHeight = '40px';
+              color_box.style.border = '2px solid';
+              color_box.style.backgroundImage = "url('/build/static/robbo_assets/icon_close_window.svg')";
+              color_box.style.backgroundColor = `rgb(255,255,255)`;
 
             }
+
+
+
+          }
+
 
 
 

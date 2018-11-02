@@ -42,16 +42,16 @@ class GUI extends React.Component {
     autoSaveProjectToInternallChromeFolder(data, name, extension, callback){
 
 
-    console.log("autoSaveProjectToInternallChromeFolder=" + name + " extension=" + extension + " data length=" + data.length);
+  //  console.log("autoSaveProjectToInternallChromeFolder=" + name + " extension=" + extension + " data length=" + data.length);
 
 
     function errorHandler(e){
-       console.log("file error during autosaving project" + e);
+       console.error("file error during autosaving project" + e);
     };
 
 
     function onInitFs(fs) {
-       console.log('Opened file system: ' + fs.name);
+    //   console.log('Opened file system: ' + fs.name);
 
 
        fs.root.getFile(name + "." + extension, {create: true}, function(fileEntry) {
@@ -64,16 +64,16 @@ class GUI extends React.Component {
 
                  fileWriter.onwriteend = function(e) {
 
-                    console.log('Write completed.');
+                  //  console.log('Write completed.');
 
                     if((callback) && ((data instanceof Blob))){
-                      console.log('Data is  a blob. ');
+                  //    console.log('Data is  a blob. ');
                       // callback();
                     }
                  }
 
                  fileWriter.onerror = function(e) {
-                    console.log('Write failed: ' + e.toString());
+                    console.error('Write failed: ' + e.toString());
                  };
 
                   if (!(data instanceof Blob)){
@@ -103,7 +103,7 @@ class GUI extends React.Component {
 
     navigator.webkitPersistentStorage.requestQuota(50*1024*1024,
        function(grantedBytes){
-          console.log("byte granted=" + grantedBytes);
+    //      console.log("byte granted=" + grantedBytes);
           window.webkitRequestFileSystem(PERSISTENT, grantedBytes, onInitFs, errorHandler);
        }, errorHandler
     );
@@ -113,7 +113,7 @@ class GUI extends React.Component {
 
     if((callback) && (!(data instanceof Blob))){
 
-        console.log('Data is not a blob. Standart callback case.');
+    //    console.log('Data is not a blob. Standart callback case.');
       // callback(name + "." + extension);
     }
 
@@ -126,7 +126,7 @@ class GUI extends React.Component {
       this.props.vm.saveProjectSb3()
        .then( project_data => {
 
-         console.log("project data to save: " + project_data);
+      //   console.log("project data to save: " + project_data);
 
          this.autoSaveProjectToInternallChromeFolder(project_data,"auto-saved","sb3");
 

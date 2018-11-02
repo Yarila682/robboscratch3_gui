@@ -617,7 +617,7 @@ const ActionFirmwareFlasherGetDevicesInfo = function(DCA,RCA,LCA,QCA){
 
           DCA.searchPorts((port) => {
 
-                var port_path =  port.path;
+                var port_path =  port.comName;
 
                 device.port = port_path;
 

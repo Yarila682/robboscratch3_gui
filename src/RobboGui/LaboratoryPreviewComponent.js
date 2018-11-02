@@ -116,7 +116,7 @@ class LaboratoryPreviewComponent extends Component {
 
        lab_connection_status = document.getElementById(`lab-${this.props.labIndex}-connection-status`);
 
-       if (lab_state == 7){
+       if (lab_state == 6){
 
 
 
