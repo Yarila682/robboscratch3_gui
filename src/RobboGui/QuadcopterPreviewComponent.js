@@ -81,12 +81,71 @@ class QuadcopterPreviewComponent extends Component {
 
   }
 
+  onQuadcopterStatusChange(quadcopter_state,quadcopter_is_searching){
+
+
+    var copter_searching_icon;
+    var copter_connection_status;
+
+    copter_searching_icon = document.getElementById(`quadcopter-${this.props.quadcopterIndex}-searching-icon`);
+
+    if (typeof( copter_searching_icon) != 'undefined'){
+
+
+      if (quadcopter_is_searching){
+
+
+
+
+         copter_searching_icon.classList.remove(styles.quadcopter_loading_icon_hidden);
+         copter_searching_icon.classList.remove(styles.quadcopter_loading_icon_showing);
+         copter_searching_icon.classList.add(styles.quadcopter_loading_icon_showing);
+
+
+      }else{
+
+
+        copter_searching_icon.classList.remove(styles.quadcopter_loading_icon_hidden);
+        copter_searching_icon.classList.remove(styles.quadcopter_loading_icon_showing);
+        copter_searching_icon.classList.add(styles.quadcopter_loading_icon_hidden);
+
+
+      }
+
+      copter_connection_status = document.getElementById(`quadcopter-${this.props.quadcopterIndex}-connection-status`);
+
+      if (quadcopter_state == "connected"){
+
+
+
+
+         copter_connection_status.classList.remove(styles.quadcopter_status_connected);
+         copter_connection_status.classList.remove(styles.quadcopter_status_disconnected);
+         copter_connection_status.classList.add(styles.quadcopter_status_connected);
+
+      }else{
+
+
+        copter_connection_status.classList.remove(styles.quadcopter_status_disconnected);
+        copter_connection_status.classList.remove(styles.quadcopter_status_connected);
+        copter_connection_status.classList.add(styles.quadcopter_status_disconnected);
+
+
+      }
+
+    }
+
+
+  }
+
   componentDidMount () {
 
       this.isQuadcopterConnected = false;
       this.quadcopter_is_searching = false;
 
     //  this.startQuadcopterConnectionStatusCheck();
+
+      this.props.QCA.registerQuadcopterStatusChangeCallback(this.onQuadcopterStatusChange.bind(this));
 
   }
 

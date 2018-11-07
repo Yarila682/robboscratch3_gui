@@ -109,7 +109,7 @@ class QuadcopterPalleteComponent extends Component {
   componentDidMount(){
 
 
-//      this.startGetDataLoop();
+      this.startGetDataLoop();
 
   }
 
