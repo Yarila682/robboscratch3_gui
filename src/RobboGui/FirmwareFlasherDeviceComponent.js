@@ -56,15 +56,30 @@ class FirmwareFlasherDeviceComponent extends Component {
 
   flashDevice(){
 
+    var search_device_button =  document.getElementById(`robbo_search_devices`);
+
+    search_device_button.setAttribute("disabled", "disabled");
+
+    if (this.props.draggable_window[this.props.draggableWindowId].isShowing !== true){
+
     this.props.onShowFlashingStatusWindow(this.props.draggableWindowId);
+
+  }
 
     var cId =  this.props.flashingStatusComponentId;
 
-    var flashingStatusComponent = document.getElementById(`firmware-flasher-flashing-status-component-${cId}`).children[2];
+    var firmwareFlasherFlashingStatusComponent =  document.getElementById(`firmware-flasher-flashing-status-component-${cId}`);
+
+  //  var flashingStatusComponent = document.getElementById(`firmware-flasher-flashing-status-component-${cId}`).children[2];
+
+   var flashingStatusComponent = firmwareFlasherFlashingStatusComponent.children[1];
+
+   var flashingLogComponent = firmwareFlasherFlashingStatusComponent.children[2];
 
     var block_ids_component = null;
 
     flashingStatusComponent.innerHTML = "";
+    flashingLogComponent.innerHTML = "";
 
     var config = {};
     config.device   = {};
@@ -86,7 +101,7 @@ class FirmwareFlasherDeviceComponent extends Component {
 
               this.RCA.stopDataRecievingProcess();
               this.RCA.discon();
-              
+
               this.LCA.stopDataRecievingProcess();
               this.LCA.discon();
     }
@@ -99,7 +114,9 @@ class FirmwareFlasherDeviceComponent extends Component {
 
     }
 
-      block_ids_component = createDiv(flashingStatusComponent,null,null,null,null,styles,"",{id:"uploading-component"});
+    //  block_ids_component = createDiv(flashingLogComponent,null,null,null,null,styles,"",{id:"uploading-component"});
+
+    var dots_counter = 1;
 
     this.DCA.flashFirmware(this.props.devicePort,config,(status) => {
 
@@ -109,25 +126,66 @@ class FirmwareFlasherDeviceComponent extends Component {
 
           }
 
-          if ( (status.indexOf("Block") == -1) && (status.indexOf("Programming") == -1)  && (status.indexOf("Uploading") == -1) ){
+          if ( (status.indexOf("Block") == -1) &&  (status.indexOf("error") == -1)  && (status.indexOf("Uploading") == -1) && (status.indexOf("Port closed") == -1) ){
 
-              createDiv(flashingStatusComponent,null,null,null,null,styles,status,null);
-                block_ids_component.innerHTML = "";
+              createDiv(flashingLogComponent,null,null,null,null,styles,status,null);
+            //    block_ids_component.innerHTML = "";
+
+                var dots = "";
+
+                for (var i = 0; i < dots_counter; i++) {
+
+                    dots += ".";
+                }
+
+                flashingStatusComponent.innerHTML = "Waiting.." + dots;
+
+                if (dots_counter == 1 ){
+
+                    dots_counter = 2;
+
+                }else{
+
+                    dots_counter = 1;
+
+                }
 
           }else{
 
-              if (block_ids_component == null){
+              // if (block_ids_component == null){
+              //
+              // //      block_ids_component = createDiv(flashingStatusComponent,null,null,null,null,styles,"",{id:"block-ids-component"});
+              //
+              //
+              // }else{
 
-              //      block_ids_component = createDiv(flashingStatusComponent,null,null,null,null,styles,"",{id:"block-ids-component"});
+                    //  block_ids_component.innerHTML = status;
+
+                      flashingStatusComponent.innerHTML = status;
+
+            //  }
 
 
-              }else{
+          }
 
-                      block_ids_component.innerHTML = status;
+          flashingLogComponent.scrollTop = flashingLogComponent.scrollHeight;
 
+        //  console.log(`flashingStatusComponent.scrollTop: ${flashingLogComponent.scrollTop} `);
 
-              }
+          if ( (status.indexOf("Port closed") !== -1)){
 
+                flashingStatusComponent.style.backgroundColor = "green";
+
+                search_device_button.removeAttribute("disabled");
+
+          }else if ((status.indexOf("error") !== -1)){
+
+                flashingStatusComponent.style.backgroundColor = "red";
+                search_device_button.removeAttribute("disabled");
+
+          }else{
+
+              flashingStatusComponent.style.backgroundColor = "yellow";
 
           }
 
@@ -234,6 +292,7 @@ class FirmwareFlasherDeviceComponent extends Component {
 
 const mapStateToProps =  state => ({
 
+      draggable_window:state.scratchGui.draggable_window
 
   });
 

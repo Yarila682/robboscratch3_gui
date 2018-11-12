@@ -167,7 +167,7 @@ class RobboGui extends Component {
 
          <RobboMenu VM={this.props.vm} />
 
-        <button className={styles.robbo_search_devices} onClick={this.searchDevices.bind(this)}>{this.props.intl.formatMessage(messages.search_devices)} </button>
+        <button id={`robbo_search_devices`} className={styles.robbo_search_devices} onClick={this.searchDevices.bind(this)}>{this.props.intl.formatMessage(messages.search_devices)} </button>
 
     </div>
   );

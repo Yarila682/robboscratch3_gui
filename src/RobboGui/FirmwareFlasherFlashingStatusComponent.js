@@ -64,15 +64,23 @@ class FirmwareFlasherFlashingStatusComponent extends Component {
 
               Flashing status {this.props.componentId}
 
+              <div className={styles.close_icon} onClick={this.closeWindow.bind(this)}>
+
+
+              </div>
+
           </div>
 
-          <div>
 
-              <button className={styles.close_window} onClick={this.closeWindow.bind(this)}>{this.props.intl.formatMessage(messages.close_window)} </button>
+
+          <div id={`firmware-flasher-flashing-status-component-${this.props.componentId}-log-status`} className={styles.firmware_flasher_flashing_status_component_log_status}>
+
+
 
           </div>
 
-          <div>
+
+          <div id={`firmware-flasher-flashing-status-component-${this.props.componentId}-log-content`} className={styles.firmware_flasher_flashing_status_component_log_content}>
 
 
 
@@ -90,6 +98,7 @@ class FirmwareFlasherFlashingStatusComponent extends Component {
 
 const mapStateToProps =  state => ({
 
+    
 
   });
 
