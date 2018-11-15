@@ -51,6 +51,10 @@ class FirmwareFlasherComponent extends Component {
 
       console.log(`getDevicesInfo`);
 
+      // var devicesFirmwareFlasherDevicesList = document.getElementById("devices-firmware-flasher-devices-list");
+      //
+      // devicesFirmwareFlasherDevicesList.innerHTML = "";
+
       this.props.onGetDevicesInfo(this.DCA,this.RCA,this.LCA,this.QCA);
 
   }
@@ -70,6 +74,12 @@ class FirmwareFlasherComponent extends Component {
     this.LCA =  this.props.LCA;
     this.QCA =  this.props.QCA;
 
+
+  }
+
+  shouldComponentUpdate(){
+
+      return true;
 
   }
 
@@ -133,7 +143,7 @@ class FirmwareFlasherComponent extends Component {
           </div>
 
 
-          <div>
+          <div id={`devices-firmware-flasher-devices-list`}>
 
 
           {
@@ -147,7 +157,7 @@ class FirmwareFlasherComponent extends Component {
 
 
 
-                 return  <FirmwareFlasherDeviceComponent flashingStatusComponentId={index} draggableWindowId={4+index}  key={index} deviceSerial={device.serial_number} devicePort={device.port} deviceId={device.id} deviceFirmwareVersion={device.firmware_version} DCA={this.DCA} RCA={this.RCA} LCA={this.LCA}/>
+                 return  <FirmwareFlasherDeviceComponent flashingStatusComponentId={index} draggableWindowId={4+index}  key={index + "devices-list"} deviceSerial={device.serial_number} devicePort={device.port} deviceId={device.id} deviceFirmwareVersion={device.firmware_version} DCA={this.DCA} RCA={this.RCA} LCA={this.LCA}/>
 
 
 
@@ -168,9 +178,9 @@ class FirmwareFlasherComponent extends Component {
 
 
 
-                return     <DraggableWindowComponent draggableWindowId={4+index}>
+                return     <DraggableWindowComponent key={index + "devices-list-draggable"} draggableWindowId={4+index}>
 
-                              <FirmwareFlasherFlashingStatusComponent key={index} componentId={index}  draggableWindowId={4+index}  DCA={this.DCA} RCA={this.RCA} LCA={this.LCA} QCA={this.QCA} />
+                              <FirmwareFlasherFlashingStatusComponent key={index + "devices-list-status"} componentId={index}  draggableWindowId={4+index}  DCA={this.DCA} RCA={this.RCA} LCA={this.LCA} QCA={this.QCA} />
 
                           </DraggableWindowComponent>
 

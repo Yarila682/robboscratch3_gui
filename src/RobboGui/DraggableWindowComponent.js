@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 import { ItemTypes } from './drag_constants';
 import { DragSource } from 'react-dnd';
 
-//import {ActionCreateDraggableWindow }  from './actions/sensor_actions';
+import {ActionDropDraggableWindow }  from './actions/sensor_actions';
 
 const DraggableWindowSource = {
   beginDrag(props) {
@@ -34,6 +34,16 @@ class DraggableWindowComponent extends Component {
 
       //  this.props.onCreateDraggableWindow(this.props.draggableWindowId);
 
+      if (typeof(this.props.initialCoords) != 'undefined'){
+
+        let  top   =  this.props.initialCoords[1];
+        let  left  =  this.props.initialCoords[0];
+
+         this.props.onCreateDraggableWindow(top,left,this.props.draggableWindowId);
+
+
+      }
+
 
   }
 
@@ -49,6 +59,8 @@ class DraggableWindowComponent extends Component {
       var top   = 200;
       var left  =  200;
       var isShowing =  false;
+
+
 
       if (typeof(this.props.draggable_window[draggable_window_id]) != 'undefined'){
 
@@ -112,6 +124,11 @@ class DraggableWindowComponent extends Component {
       //
       //     dispatch(ActionCreateDraggableWindow(draggable_window_id));
       //   }
+
+      onCreateDraggableWindow: (top,left, draggable_window_id) => {
+
+            dispatch(ActionDropDraggableWindow(top,left, draggable_window_id));
+          }
 
 
     });

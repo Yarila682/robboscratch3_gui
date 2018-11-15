@@ -103,7 +103,7 @@ class FirmwareFlasherDeviceComponent extends Component {
               this.RCA.discon();
 
               this.LCA.stopDataRecievingProcess();
-              this.LCA.discon();
+            //  this.LCA.discon();
     }
 
     var styles = {
@@ -126,7 +126,7 @@ class FirmwareFlasherDeviceComponent extends Component {
 
           }
 
-          if ( (status.indexOf("Block") == -1) &&  (status.indexOf("error") == -1)  && (status.indexOf("Uploading") == -1) && (status.indexOf("Port closed") == -1) ){
+          if ( (status.indexOf("Block") == -1) &&  (status.indexOf("Error") == -1)  && (status.indexOf("Uploading") == -1) && (status.indexOf("Port closed") == -1) ){
 
               createDiv(flashingLogComponent,null,null,null,null,styles,status,null);
             //    block_ids_component.innerHTML = "";
@@ -178,14 +178,14 @@ class FirmwareFlasherDeviceComponent extends Component {
 
                 search_device_button.removeAttribute("disabled");
 
-          }else if ((status.indexOf("error") !== -1)){
+          }else if ((status.indexOf("Error") !== -1)){
 
                 flashingStatusComponent.style.backgroundColor = "red";
                 search_device_button.removeAttribute("disabled");
 
           }else{
 
-              flashingStatusComponent.style.backgroundColor = "yellow";
+              flashingStatusComponent.style.backgroundColor = "#FFFF99"; //Light yellow2
 
           }
 

@@ -590,7 +590,18 @@ const ActionShowRobboBlocks = function(){
 //
 // }
 
+const ActionFirmwareFlasherDevicesListNull = function(){
 
+  return {
+
+      type: 'FIRMWARE_FLASHER_DEVICES_LIST_NULL',
+      payload:{
+
+
+      }
+  }
+
+}
 
 
 const  ActionFirmwareFlasherPushDevice = function(device){
@@ -615,13 +626,15 @@ const ActionFirmwareFlasherGetDevicesInfo = function(DCA,RCA,LCA,QCA){
   //  LaboratoryGetDataInterval =   setInterval(() => {
 
 
+          dispatch(ActionFirmwareFlasherDevicesListNull());
+
           DCA.searchPorts((port) => {
 
                 var port_path =  port.comName;
 
                 device.port = port_path;
 
-                RCA.checkRobotByPort(port.path,(result) => {
+                RCA.checkRobotByPort(device.port,(result) => {
 
                       if (result.code === 0){
 
@@ -636,7 +649,7 @@ const ActionFirmwareFlasherGetDevicesInfo = function(DCA,RCA,LCA,QCA){
 
                       }else{
 
-                            LCA.checkLabByPort(port.path, (result)=>{
+                            LCA.checkLabByPort(device.port, (result)=>{
 
                               if (result.code === 0){
 

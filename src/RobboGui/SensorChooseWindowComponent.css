@@ -1,6 +1,6 @@
 .sensor_choose_window{
 
-z-index: 10;
+  z-index: 1000000 !important;
 /*background-color: #AAAAAA;*/
 /*position: absolute;
 top:40%;

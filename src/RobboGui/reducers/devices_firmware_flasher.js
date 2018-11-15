@@ -44,6 +44,9 @@ switch (action.type) {
       devices =  immutable_copy(state);
 
 
+    //  devices = [];
+
+
       var device_changed = false;
 
       for (var i = 0; i< devices.length; i++){
@@ -60,7 +63,7 @@ switch (action.type) {
       }
 
 
-      if (!device_changed){
+      if ( (!device_changed) && (typeof(action.payload.device) != 'undefined') ) {
 
           devices.push(action.payload.device);
 
@@ -73,6 +76,25 @@ switch (action.type) {
 
 
     break;
+
+    case 'FIRMWARE_FLASHER_DEVICES_LIST_NULL':
+
+
+        devices =  immutable_copy(state);
+
+
+        devices = [];
+
+
+
+
+
+
+
+              return devices;
+
+
+      break;
 
 
 

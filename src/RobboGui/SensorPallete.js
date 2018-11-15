@@ -74,6 +74,11 @@ class SensorPallete extends Component {
 
   render() {
 //  console.log(this.props.tracks);
+
+ var initial_coords_robot = [200,200];
+ var initial_coords_lab = [400,200];
+ var initial_coords_quadcopter = [600,200];
+
   return (
 
       <div id={styles.sensor_pallete}>
@@ -86,20 +91,20 @@ class SensorPallete extends Component {
         <QuadcopterPreviewComponent QCA={this.props.QCA} quadcopterIndex={0} />
 
 
-        <DraggableWindowComponent draggableWindowId={0}>
+        <DraggableWindowComponent draggableWindowId={0} initialCoords={initial_coords_quadcopter}>
 
               <QuadcopterPalleteComponent QCA={this.props.QCA} quadcopterIndex={0}/>
 
         </DraggableWindowComponent>
 
 
-        <DraggableWindowComponent draggableWindowId={1}>
+        <DraggableWindowComponent draggableWindowId={1} initialCoords={initial_coords_robot}>
 
               <RobotPalleteComponent RCA={this.props.RCA} robotIndex={0}/>
 
         </DraggableWindowComponent>
 
-        <DraggableWindowComponent draggableWindowId={2}>
+        <DraggableWindowComponent draggableWindowId={2} initialCoords={initial_coords_lab}>
 
               <LaboratoryPalleteComponent LCA={this.props.LCA} labIndex={0}/>
 
