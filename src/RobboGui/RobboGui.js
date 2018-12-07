@@ -20,6 +20,8 @@ import FirmwareFlasherComponent from './FirmwareFlasherComponent';
 import DraggableWindowComponent from './DraggableWindowComponent';
 import styles from './RobboGui.css';
 
+import { withAlert } from 'react-alert';
+
 import {defineMessages, intlShape, injectIntl, FormattedMessage} from 'react-intl';
 
 const messages = defineMessages({
@@ -57,6 +59,32 @@ class RobboGui extends Component {
 
 
 
+
+  }
+
+  componentDidMount(){
+
+      this.DCA.registerFirmwareVersionDiffersCallback((result) => {
+
+        this.props.alert.info(<div  className={styles.alert}>{`Please update  firmware.`} <br/>  {`Current firmware:  ${result.current_device_firmware}`} <br/> {` Need firmware: ${result.need_firmware}`}</div>);
+
+      //   this.props.alert.info(`Please update  firmware.` + <br/>  `Current firmware:  ${result.current_device_firmware}` + <br/> +  `Need firmware: ${result.need_firmware}`);
+
+      });
+
+      this.DCA.registerErrorCallback((error) => {
+
+      //    this.props.alert.error(<div style={{ backgroundColor: 'green' }}>{`Error:  ${error.msg} Error code: ${error.code}`}</div>);
+
+          this.props.alert.error(<div className={styles.alert}>{`Error!`}<br/><br/>{`${error.msg}`}</div>);
+
+      //  this.props.alert.error(<div  className={styles.alert}>{`Error!`}<br/><br/>{`Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!`}</div>);
+
+
+      });
+
+      //  this.props.alert.error(<div  className={styles.alert}>{`Error!`}<br/><br/>{`Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!`}</div>);
+    //    this.props.alert.error(<div>{`Error!`}<br/><br/>{`[Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!]`}</div>);
 
   }
 
@@ -240,10 +268,10 @@ const mapDispatchToProps = dispatch => ({
 // };
 
 
-export default injectIntl(connect(
+export default withAlert(injectIntl(connect(
   mapStateToProps,
   mapDispatchToProps
-)(RobboGui));
+)(RobboGui)));
 
 // export default connect(
 //         mapStateToProps,

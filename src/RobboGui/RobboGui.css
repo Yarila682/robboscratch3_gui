@@ -5,6 +5,29 @@
 
 }
 
+.alert{
+
+  overflow:scroll;
+  width: 183px;
+
+}
+
+.alert::-webkit-scrollbar {
+    width: 12px;
+    height: 10px;
+    background-color: rgb(21, 21, 21);
+}
+
+.alert::-webkit-scrollbar-corner {
+    background-color: rgb(21, 21, 21);
+}
+
+.alert::-webkit-scrollbar-thumb {
+    border-width: 1px 1px 1px 2px;
+    border-color: #777;
+    background-color: #aaa;
+}
+
 .content_collapsed{
 
     height:auto;

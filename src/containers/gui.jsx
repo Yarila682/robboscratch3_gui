@@ -28,6 +28,8 @@ import GUIComponent from '../components/gui/gui.jsx';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
+import { withAlert } from 'react-alert';
+
 class GUI extends React.Component {
     constructor (props) {
         super(props);
@@ -123,16 +125,18 @@ class GUI extends React.Component {
 
   autoSaveProject(){
 
-      this.props.vm.saveProjectSb3()
-       .then( project_data => {
+      // this.props.vm.saveProjectSb3()
+      //  .then( project_data => {
+      //
+      // //   console.log("project data to save: " + project_data);
+      //
+      //    this.autoSaveProjectToInternallChromeFolder(project_data,"auto-saved","sb3");
+      //
+      //  })
+      //
+      // .catch(err => {})
 
-      //   console.log("project data to save: " + project_data);
-
-         this.autoSaveProjectToInternallChromeFolder(project_data,"auto-saved","sb3");
-
-       })
-
-      .catch(err => {})
+        this.props.vm.saveProjectSb3_auto();
 
 
 
@@ -194,8 +198,15 @@ class GUI extends React.Component {
     }
     render () {
         if (this.state.loadingError) {
+
+        //  const alert = this.props.alert.error(`Failed to load project. Error:  ${this.state.errorMessage}`,{timeout:0});
+
+              this.props.alert.error(<div style={{ backgroundColor: 'green' }}>{`Failed to load project. Error:  ${this.state.errorMessage}`}</div>,{timeout:0});
+
             throw new Error(
-                `Failed to load project from server [id=${window.location.hash}]: ${this.state.errorMessage}`);
+                `Failed to load project. Error: ${this.state.errorMessage}`);
+
+
         }
         const {
             /* eslint-disable no-unused-vars */
@@ -274,7 +285,7 @@ const mapDispatchToProps = dispatch => ({
 const ConnectedGUI = connect(
     mapStateToProps,
     mapDispatchToProps,
-)( DragDropContext(HTML5Backend)(GUI));
+)( DragDropContext(HTML5Backend)(withAlert(GUI)));
 
 const WrappedGui = ErrorBoundaryHOC('Top Level App')(
     ProjectLoaderHOC(vmListenerHOC(ConnectedGUI))

@@ -4,6 +4,9 @@ import {Provider} from 'react-redux';
 import {createStore, combineReducers, compose} from 'redux';
 import ConnectedIntlProvider from './connected-intl-provider.jsx';
 
+import { Provider as AlertProvider } from 'react-alert';
+import AlertTemplate from 'react-alert-template-basic';
+
 import localesReducer, {initLocale, localesInitialState} from '../reducers/locales';
 
 import {setPlayer, setFullScreen} from '../reducers/mode.js';
@@ -15,6 +18,14 @@ import thunk from 'redux-thunk';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
+
+// optional cofiguration
+const alert_options = {
+  position: 'bottom center',
+  timeout: 0,
+  offset: '30px',
+  transition: 'scale'
+}
 
 
 /*
@@ -101,7 +112,11 @@ const AppStateHOC = function (WrappedComponent, localesOnly) {
             return (
                 <Provider store={this.store}>
                     <ConnectedIntlProvider>
-                        <WrappedComponent {...componentProps} />
+
+                      <AlertProvider template={AlertTemplate} {...alert_options}>
+                         <WrappedComponent {...componentProps} />
+                     </AlertProvider>
+
                     </ConnectedIntlProvider>
                 </Provider>
             );

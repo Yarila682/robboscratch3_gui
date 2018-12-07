@@ -10,6 +10,8 @@ import storage from './storage';
 
 const validate = require('scratch-parser');
 
+
+
 /* Higher Order Component to provide behavior for loading projects by id. If
  * there's no id, the default project is loaded.
  * @param {React.Component} WrappedComponent component to receive projectData prop
