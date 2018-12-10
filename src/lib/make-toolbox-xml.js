@@ -93,6 +93,215 @@ const otto = function (isStage, targetId){ //modified_by_Yaroslav  //otto catego
 
   </block>
 
+  <block type="otto_moonwalker">
+      <value name="OTTO_DIRECTION">
+          <shadow type="otto_lr_directions"/>
+      </value>
+      <value name="STEPS">
+          <shadow type="math_number">
+              <field name="NUM">10</field>
+          </shadow>
+      </value>
+      <value name="STEP_DURATION">
+          <shadow type="math_number">
+              <field name="NUM">1</field>
+          </shadow>
+      </value>
+
+      <value name="STEP_DURATION">
+          <shadow type="math_number">
+              <field name="NUM">1</field>
+          </shadow>
+      </value>
+
+      <value name="STEP_HEIGHT">
+          <shadow type="math_number">
+              <field name="NUM">1</field>
+          </shadow>
+      </value>
+
+  </block>
+
+  <block type="otto_shake_leg">
+      <value name="OTTO_DIRECTION">
+          <shadow type="otto_lr_directions"/>
+      </value>
+      <value name="STEPS">
+          <shadow type="math_number">
+              <field name="NUM">10</field>
+          </shadow>
+      </value>
+      <value name="STEP_DURATION">
+          <shadow type="math_number">
+              <field name="NUM">1</field>
+          </shadow>
+      </value>
+
+      <value name="STEP_HEIGHT">
+          <shadow type="math_number">
+              <field name="NUM">1</field>
+          </shadow>
+      </value>
+
+    </block>
+
+    <block type="otto_turn">
+        <value name="OTTO_DIRECTION">
+            <shadow type="otto_lr_directions"/>
+        </value>
+        <value name="STEPS">
+            <shadow type="math_number">
+                <field name="NUM">10</field>
+            </shadow>
+        </value>
+        <value name="STEP_DURATION">
+            <shadow type="math_number">
+                <field name="NUM">1</field>
+            </shadow>
+        </value>
+
+        <value name="STEP_HEIGHT">
+            <shadow type="math_number">
+                <field name="NUM">1</field>
+            </shadow>
+        </value>
+
+      </block>
+
+      <block type="otto_bend">
+          <value name="OTTO_DIRECTION">
+              <shadow type="otto_lr_directions"/>
+          </value>
+          <value name="STEPS">
+              <shadow type="math_number">
+                  <field name="NUM">10</field>
+              </shadow>
+          </value>
+          <value name="STEP_DURATION">
+              <shadow type="math_number">
+                  <field name="NUM">1</field>
+              </shadow>
+          </value>
+
+          <value name="STEP_HEIGHT">
+              <shadow type="math_number">
+                  <field name="NUM">1</field>
+              </shadow>
+          </value>
+
+        </block>
+
+          ${blockSeparator}
+
+        <block type="otto_jump">
+
+            <value name="STEPS">
+                <shadow type="math_number">
+                    <field name="NUM">10</field>
+                </shadow>
+            </value>
+            <value name="STEP_DURATION">
+                <shadow type="math_number">
+                    <field name="NUM">1</field>
+                </shadow>
+            </value>
+        </block>
+
+        <block type="otto_ascending_turn">
+            <value name="STEPS">
+                <shadow type="math_number">
+                    <field name="NUM">10</field>
+                </shadow>
+            </value>
+            <value name="STEP_DURATION">
+                <shadow type="math_number">
+                    <field name="NUM">1</field>
+                </shadow>
+            </value>
+
+            <value name="STEP_HEIGHT">
+                <shadow type="math_number">
+                    <field name="NUM">1</field>
+                </shadow>
+            </value>
+          </block>
+
+          <block type="otto_jitter">
+              <value name="STEPS">
+                  <shadow type="math_number">
+                      <field name="NUM">10</field>
+                  </shadow>
+              </value>
+              <value name="STEP_DURATION">
+                  <shadow type="math_number">
+                      <field name="NUM">1</field>
+                  </shadow>
+              </value>
+
+              <value name="STEP_HEIGHT">
+                  <shadow type="math_number">
+                      <field name="NUM">1</field>
+                  </shadow>
+              </value>
+            </block>
+
+            <block type="otto_tiptoe_swing">
+                <value name="STEPS">
+                    <shadow type="math_number">
+                        <field name="NUM">10</field>
+                    </shadow>
+                </value>
+                <value name="STEP_DURATION">
+                    <shadow type="math_number">
+                        <field name="NUM">1</field>
+                    </shadow>
+                </value>
+
+                <value name="STEP_HEIGHT">
+                    <shadow type="math_number">
+                        <field name="NUM">1</field>
+                    </shadow>
+                </value>
+              </block>
+
+              <block type="otto_swing">
+                  <value name="STEPS">
+                      <shadow type="math_number">
+                          <field name="NUM">10</field>
+                      </shadow>
+                  </value>
+                  <value name="STEP_DURATION">
+                      <shadow type="math_number">
+                          <field name="NUM">1</field>
+                      </shadow>
+                  </value>
+
+                  <value name="STEP_HEIGHT">
+                      <shadow type="math_number">
+                          <field name="NUM">1</field>
+                      </shadow>
+                  </value>
+                </block>
+
+                <block type="otto_updown">
+                    <value name="STEPS">
+                        <shadow type="math_number">
+                            <field name="NUM">10</field>
+                        </shadow>
+                    </value>
+                    <value name="STEP_DURATION">
+                        <shadow type="math_number">
+                            <field name="NUM">1</field>
+                        </shadow>
+                    </value>
+
+                    <value name="STEP_HEIGHT">
+                        <shadow type="math_number">
+                            <field name="NUM">1</field>
+                        </shadow>
+                    </value>
+                  </block>
+
 
   `}
   ${categorySeparator}
