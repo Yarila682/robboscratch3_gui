@@ -30,6 +30,12 @@ const messages = defineMessages({
         id: 'gui.RobboGui.search_devices',
         description: ' ',
         defaultMessage: 'Search devices'
+    },
+    update_firm_msg: {
+
+        id: 'gui.RobboGui.update_firm_msg',
+        description: ' ',
+        defaultMessage: 'Your firmware is outdated (current: {current_firmware} required: {required_firmware}). Please update  firmware.'
     }
 });
 
@@ -66,7 +72,10 @@ class RobboGui extends Component {
 
       this.DCA.registerFirmwareVersionDiffersCallback((result) => {
 
-        this.props.alert.info(<div  className={styles.alert}>{`Please update  firmware.`} <br/>  {`Current firmware:  ${result.current_device_firmware}`} <br/> {` Need firmware: ${result.need_firmware}`}</div>);
+        //this.props.alert.info(<div  className={styles.alert}>{this.props.intl.formatMessage(messages.update_firm_msg,{current_firmware:result.current_device_firmware,required_firmware:result.need_firmware})} <br/>  {`Current firmware:  ${result.current_device_firmware}`} <br/> {` Need firmware: ${result.need_firmware}`}</div>);
+
+        this.props.alert.info(<div  className={styles.alert}>{this.props.intl.formatMessage(messages.update_firm_msg,{current_firmware:result.current_device_firmware,required_firmware:result.need_firmware})} </div>);
+
 
       //   this.props.alert.info(`Please update  firmware.` + <br/>  `Current firmware:  ${result.current_device_firmware}` + <br/> +  `Need firmware: ${result.need_firmware}`);
 
