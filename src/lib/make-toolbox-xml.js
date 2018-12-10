@@ -4,6 +4,104 @@ const categorySeparator = '<sep gap="36"/>';
 
 const blockSeparator = '<sep gap="36"/>'; // At default scale, about 28px
 
+
+const otto = function (isStage, targetId){ //modified_by_Yaroslav  //otto category
+
+  return `
+  <category name="%{BKY_CATEGORY_OTTO}" id="otto" colour="#383838" secondaryColour="#383838">
+
+  ${isStage ? `
+      <label text="Stage selected: no otto blocks"></label>
+      ` : `
+
+  <block type="otto_move_walk">
+      <value name="OTTO_DIRECTION">
+          <shadow type="otto_directions"/>
+      </value>
+      <value name="STEPS">
+          <shadow type="math_number">
+              <field name="NUM">10</field>
+          </shadow>
+      </value>
+      <value name="STEP_DURATION">
+          <shadow type="math_number">
+              <field name="NUM">1</field>
+          </shadow>
+      </value>
+
+  </block>
+
+  <block type="otto_move_flapping">
+      <value name="OTTO_DIRECTION">
+          <shadow type="otto_directions"/>
+      </value>
+      <value name="STEPS">
+          <shadow type="math_number">
+              <field name="NUM">10</field>
+          </shadow>
+      </value>
+      <value name="STEP_DURATION">
+          <shadow type="math_number">
+              <field name="NUM">1</field>
+          </shadow>
+      </value>
+
+      <value name="STEP_DURATION">
+          <shadow type="math_number">
+              <field name="NUM">1</field>
+          </shadow>
+      </value>
+
+      <value name="STEP_HEIGHT">
+          <shadow type="math_number">
+              <field name="NUM">1</field>
+          </shadow>
+      </value>
+
+  </block>
+
+  <block type="otto_move_crusaito">
+      <value name="OTTO_DIRECTION">
+          <shadow type="otto_directions"/>
+      </value>
+      <value name="STEPS">
+          <shadow type="math_number">
+              <field name="NUM">10</field>
+          </shadow>
+      </value>
+      <value name="STEP_DURATION">
+          <shadow type="math_number">
+              <field name="NUM">1</field>
+          </shadow>
+      </value>
+
+      <value name="STEP_DURATION">
+          <shadow type="math_number">
+              <field name="NUM">1</field>
+          </shadow>
+      </value>
+
+      <value name="STEP_HEIGHT">
+          <shadow type="math_number">
+              <field name="NUM">1</field>
+          </shadow>
+      </value>
+
+  </block>
+
+  <block type="otto_distance">
+
+  </block>
+
+
+  `}
+  ${categorySeparator}
+</category>
+    `;
+
+
+};
+
 const quadcopter = function (isStage, targetId){ //modified_by_Yaroslav  //quadcopter category
 
   const stageSelected = ScratchBlocks.ScratchMsgs.translate(
@@ -346,7 +444,7 @@ const robot  = function (isStage, targetId,isExtensionPackActivated,robot_is_scr
         <block type="robot_reset_trip_meters">
 
         </block>
-        
+
         `}
 
 
@@ -1217,9 +1315,11 @@ const makeToolboxXML = function (isStage, targetId, config,categoriesXML) {
 
     const everything = [
         xmlOpen,
+        //otto(isStage, targetId), gap, //modified_by_Yaroslav
         quadcopter(isStage, targetId), gap, //modified_by_Yaroslav
         laboratory(isStage, targetId,isExternalSensorsActivated),gap, //modified_by_Yaroslav
         robot(isStage, targetId,isExtensionPackActivated,robot_is_scratchduino),gap, //modified_by_Yaroslav //toolbox generator main
+        otto(isStage, targetId), gap,
         motion(isStage, targetId), gap,
         looks(isStage, targetId), gap,
         sound(isStage, targetId), gap,
