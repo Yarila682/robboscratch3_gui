@@ -123,6 +123,36 @@ class GUI extends React.Component {
 
   }
 
+  deleteAutoSave(name){
+
+    var  errorHandler = function(e){
+       console.error("File error during removing bad autosave: " + e);
+    };
+
+    var _onInitFs = function(fs){
+
+         fs.root.getFile(name, {create: false}, function(fileEntry) {
+
+           fileEntry.remove(() => {
+
+                console.log('File auto-saved.sb3 was removed.');
+
+              }, errorHandler);
+
+      }, errorHandler);
+
+    }
+
+
+    navigator.webkitPersistentStorage.requestQuota(50*1024*1024,
+       function(grantedBytes){
+    //      console.log("byte granted=" + grantedBytes);
+          window.webkitRequestFileSystem(PERSISTENT, grantedBytes, _onInitFs, errorHandler);
+       }, errorHandler);
+
+
+  }
+
   autoSaveProject(){
 
       // this.props.vm.saveProjectSb3()
@@ -145,7 +175,7 @@ class GUI extends React.Component {
 
   startProjectAutosaving(){
 
-      setInterval(() => {
+      setInterval(() => { // TODO: not to save when error
 
           this.autoSaveProject();
 
@@ -202,6 +232,8 @@ class GUI extends React.Component {
         //  const alert = this.props.alert.error(`Failed to load project. Error:  ${this.state.errorMessage}`,{timeout:0});
 
               this.props.alert.error(<div style={{ backgroundColor: 'green' }}>{`Failed to load project. Error:  ${this.state.errorMessage}`}</div>,{timeout:0});
+
+              this.deleteAutoSave("auto-saved.sb3");
 
             throw new Error(
                 `Failed to load project. Error: ${this.state.errorMessage}`);
