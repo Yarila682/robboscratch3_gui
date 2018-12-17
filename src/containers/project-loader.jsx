@@ -13,6 +13,8 @@ import {
     closeLoadingProject
 } from '../reducers/modals';
 
+import storage from '../lib/storage';
+
 /**
  * Project loader component passes a file input, load handler and props to its child.
  * It expects this child to be a function with the signature
@@ -68,10 +70,53 @@ class ProjectLoader extends React.Component {
             .catch(error => {
                 log.warn(error);
                 alert(this.props.intl.formatMessage(messages.loadError)); // eslint-disable-line no-alert
-                this.props.closeLoadingState();
-                // Reset the file input after project is loaded
-                // This is necessary in case the user wants to reload a project
-                thisFileInput.value = null;
+
+                //modified_by_Yaroslav
+                storage
+                    .load(storage.AssetType.Project, 0, storage.DataFormat.JSON)
+                    .then(projectAsset => {
+
+                          this.props.vm.loadProject(projectAsset.data).then(() => {
+
+                            this.props.closeLoadingState();
+                            // Reset the file input after project is loaded
+                            // This is necessary in case the user wants to reload a project
+                            thisFileInput.value = null;
+
+                          })
+
+                              .catch(err => {
+
+                                console.error("Project load error: " + err);
+                                alert(this.props.intl.formatMessage(messages.loadError));
+
+                                this.props.closeLoadingState();
+                                // Reset the file input after project is loaded
+                                // This is necessary in case the user wants to reload a project
+                                thisFileInput.value = null;
+                          })
+                        })
+
+                  //  .catch(err => log.error(err));
+                  .catch(err => {
+
+
+                    console.error("Project load error: " + err);
+
+                    alert(this.props.intl.formatMessage(messages.loadError));
+
+                  this.props.closeLoadingState();
+                  // Reset the file input after project is loaded
+                  // This is necessary in case the user wants to reload a project
+                  thisFileInput.value = null;
+
+                  });
+
+
+                // this.props.closeLoadingState();
+                // // Reset the file input after project is loaded
+                // // This is necessary in case the user wants to reload a project
+                // thisFileInput.value = null;
             });
         if (thisFileInput.files) { // Don't attempt to load if no file was selected
             this.props.openLoadingState();
