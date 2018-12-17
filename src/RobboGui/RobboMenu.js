@@ -35,6 +35,13 @@ const messages = defineMessages({
       defaultMessage: 'Trigger firmware flasher'
 
     },
+    trigger_settings_window:{
+
+      id: 'gui.RobboMenu.trigger_settings_window',
+      description: ' ',
+      defaultMessage: 'Trigger settings window'
+
+    },
     color_sensor_correction1:{
 
       id: 'gui.RobboMenu.color_sensor_correction1',
@@ -150,6 +157,12 @@ class RobboMenu extends Component {
 
   }
 
+  triggerSettingsWindow(){
+
+    this.props.onTriggerSettingsWindow();
+
+  }
+
   render() {
 
 //  return this.props.connectDropTarget(
@@ -200,6 +213,11 @@ class RobboMenu extends Component {
 
                     )}> {this.props.intl.formatMessage(messages.trigger_firmware_flasher)} </div>
 
+                  <div id="trigger-settings-window" onClick={this.triggerSettingsWindow.bind(this)} className={classNames(
+
+                        {[styles.robbo_menu_item]: true}
+
+                      )}> {this.props.intl.formatMessage(messages.trigger_settings_window)} </div>
 
 
 
@@ -278,7 +296,12 @@ const mapDispatchToProps = dispatch => ({
         onTriggerFirmwareFlasher: () => {
 
             dispatch(ActionTriggerDraggableWindow(3));
-          }
+          },
+
+        onTriggerSettingsWindow: () => {
+
+              dispatch(ActionTriggerDraggableWindow(4));
+            }
 
 });
 

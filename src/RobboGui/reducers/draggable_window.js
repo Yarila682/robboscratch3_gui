@@ -1,7 +1,7 @@
 function init_state(){
 
   let draggable_windows = [];
-  let draggable_windows_count = 4;
+  let draggable_windows_count = 5;
   let i = 0;
 
   for (i=0;i<draggable_windows_count;i++){

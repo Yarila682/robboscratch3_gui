@@ -18,6 +18,7 @@ import {ActionTriggerColorCorrectorTable} from './actions/sensor_actions';
 import RobboMenu from './RobboMenu';
 import FirmwareFlasherComponent from './FirmwareFlasherComponent';
 import DraggableWindowComponent from './DraggableWindowComponent';
+import SettingsWindowComponent from './SettingsWindowComponent';
 import styles from './RobboGui.css';
 
 import { withAlert } from 'react-alert';
@@ -202,6 +203,11 @@ class RobboGui extends Component {
 
           </DraggableWindowComponent>
 
+        <DraggableWindowComponent draggableWindowId={4}>
+
+          <SettingsWindowComponent />
+
+        </DraggableWindowComponent>
 
 
           <SensorChooseWindowComponent key="SensorChooseWindowComponent" isShowing={this.props.sensorsChooseWindow.sensors_choose_window_showing}
