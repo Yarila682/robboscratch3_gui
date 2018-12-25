@@ -42,42 +42,42 @@ class SettingsWindowComponent extends Component {
 
   componentDidMount(){
 
-    try {
-
-        const data = node_fs.readFileSync('settings.json')
-        console.log(data.toString());
-
-        try {
-
-            let json = JSON.parse(data);
-
-            if (typeof(json) !== 'undefined'){
-
-                  this.NO_RESPONSE_TIME = Math.floor(Number(json.device_response_timeout))||3000;
-                  this.NO_START_TIMEOUT = Math.floor(Number(json.device_no_start_timeout))||1000;
-                  this.UNO_TIMEOUT      = Math.floor(Number(json.device_uno_timeout))||3000;
-
-                  console.warn(`NO_RESPONSE_TIME: ${this.NO_RESPONSE_TIME}  NO_START_TIMEOUT: ${this.NO_START_TIMEOUT} UNO_TIMEOUT: ${this.UNO_TIMEOUT}`);
-
-                  var uno_timeout_component =  document.getElementById("raw-1-settings-window-content-column-2").children[0];
-
-                  uno_timeout_component.value = this.UNO_TIMEOUT;
-            }
-
-
-
-        } catch (e) {
-
-            console.error(e)
-        }
-
-
-
-  } catch (err) {
-
-      console.error(err)
-
-  }
+  //   try {
+  //
+  //       const data = node_fs.readFileSync('settings.json')
+  //       console.log(data.toString());
+  //
+  //       try {
+  //
+  //           let json = JSON.parse(data);
+  //
+  //           if (typeof(json) !== 'undefined'){
+  //
+  //                 this.NO_RESPONSE_TIME = Math.floor(Number(json.device_response_timeout))||3000;
+  //                 this.NO_START_TIMEOUT = Math.floor(Number(json.device_no_start_timeout))||1000;
+  //                 this.UNO_TIMEOUT      = Math.floor(Number(json.device_uno_timeout))||3000;
+  //
+  //                 console.warn(`NO_RESPONSE_TIME: ${this.NO_RESPONSE_TIME}  NO_START_TIMEOUT: ${this.NO_START_TIMEOUT} UNO_TIMEOUT: ${this.UNO_TIMEOUT}`);
+  //
+  //                 var uno_timeout_component =  document.getElementById("raw-1-settings-window-content-column-2").children[0];
+  //
+  //                 uno_timeout_component.value = this.UNO_TIMEOUT;
+  //           }
+  //
+  //
+  //
+  //       } catch (e) {
+  //
+  //           console.error(e)
+  //       }
+  //
+  //
+  //
+  // } catch (err) {
+  //
+  //     console.error(err)
+  //
+  // }
 
   }
 

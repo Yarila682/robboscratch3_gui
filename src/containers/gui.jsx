@@ -231,7 +231,7 @@ class GUI extends React.Component {
 
         //  const alert = this.props.alert.error(`Failed to load project. Error:  ${this.state.errorMessage}`,{timeout:0});
 
-              this.props.alert.error(<div style={{ backgroundColor: 'green' }}>{`Failed to load project. Error:  ${this.state.errorMessage}`}</div>,{timeout:0});
+              this.props.alert.error(<div>{`Failed to load project. Error:  ${this.state.errorMessage}`}</div>,{timeout:0});
 
               this.deleteAutoSave("auto-saved.sb3");
 

@@ -49,6 +49,12 @@ const messages = defineMessages({
         id: 'gui.RobboGui.differ_firm_msg',
         description: ' ',
         defaultMessage: 'The current firmware version of the device differs from the required one.'
+    },
+    device_lost: {
+
+        id: 'gui.RobboGui.device_lost',
+        description: ' ',
+        defaultMessage: 'Lost connection to device'
     }
 });
 
@@ -98,7 +104,21 @@ class RobboGui extends Component {
 
       //    this.props.alert.error(<div style={{ backgroundColor: 'green' }}>{`Error:  ${error.msg} Error code: ${error.code}`}</div>);
 
-          this.props.alert.error(<div className={styles.alert}>{`Error!`}<br/><br/>{`${error.msg}`}</div>);
+          if (error.code == 1){
+
+            this.props.alert.error(<div className={styles.alert}>{`Error!`}<br/><br/>{error.msg}<br/><br/>{this.props.intl.formatMessage(messages.device_lost)}</div>);
+
+          }else if (error.code == 2){
+
+              this.props.alert.error(<div className={styles.alert}>{`Error!`}<br/><br/>{`${error.msg}`}</div>);
+
+          }else{
+
+                this.props.alert.error(<div className={styles.alert}>{`Error!`}<br/><br/>{`${error.msg}`}</div>);
+
+          }
+
+
 
       //  this.props.alert.error(<div  className={styles.alert}>{`Error!`}<br/><br/>{`Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!`}</div>);
 
@@ -189,7 +209,7 @@ class RobboGui extends Component {
                   )}>
 
 
-          <div className={styles.version}> Robbo Scratch ver. 3.6.1  </div>
+          <div className={styles.version}> Robbo Scratch ver. 3.7.0-BETA1  </div>
 
          {
               (!this.props.sensorsPalette.sensors_pallete_collapsed)?  <SensorPallete RCA={this.RCA} LCA={this.LCA} QCA={this.QCA} />: <SensorPaletteCollapsed />
