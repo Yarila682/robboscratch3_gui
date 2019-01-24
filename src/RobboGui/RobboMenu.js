@@ -213,11 +213,6 @@ class RobboMenu extends Component {
 
                     )}> {this.props.intl.formatMessage(messages.trigger_firmware_flasher)} </div>
 
-                  <div id="trigger-settings-window" onClick={this.triggerSettingsWindow.bind(this)} className={classNames(
-
-                        {[styles.robbo_menu_item]: true}
-
-                      )}> {this.props.intl.formatMessage(messages.trigger_settings_window)} </div>
 
 
 
