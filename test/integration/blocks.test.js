@@ -34,7 +34,7 @@ describe('Working with the blocks', () => {
         await clickText('Operators', scope.blocksTab);
         await new Promise(resolve => setTimeout(resolve, 1000)); // Wait for scroll animation
         await clickText('join', scope.blocksTab); // Click "join <hello> <world>" block
-        await findByText('applebanana', scope.reportedValue); // Tooltip with result
+        await findByText('apple banana', scope.reportedValue); // Tooltip with result
         const logs = await getLogs();
         await expect(logs).toEqual([]);
     });
@@ -156,5 +156,111 @@ describe('Working with the blocks', () => {
 
         const logs = await getLogs();
         await expect(logs).toEqual([]);
+    });
+
+    test('Record option from sound block menu opens sound recorder', async () => {
+        await loadUri(uri);
+        await clickXpath('//button[@title="Try It"]');
+        await clickText('Code');
+        await clickText('Sound', scope.blocksTab);
+        await new Promise(resolve => setTimeout(resolve, 1000)); // Wait for scroll animation
+        await clickText('Meow', scope.blocksTab); // Click "play sound <Meow> until done" block
+        await clickText('record'); // Click "record..." option in the block's sound menu
+        // Access has been force denied, so close the alert that comes up
+        await driver.sleep(1000); // getUserMedia requests are very slow to fail for some reason
+        await driver.switchTo().alert()
+            .accept();
+        await findByText('Record Sound'); // Sound recorder is open
+        const logs = await getLogs();
+        await expect(logs).toEqual([]);
+    });
+
+    test('Renaming costume changes the default costume name in the toolbox', async () => {
+        await loadUri(uri);
+        await clickXpath('//button[@title="Try It"]');
+
+        // Rename the costume
+        await clickText('Costumes');
+        const el = await findByXpath("//input[@value='costume1']");
+        await el.sendKeys('newname');
+
+        // Make sure it is updated in the block menu
+        await clickText('Code');
+        await clickText('Looks', scope.blocksTab);
+        await driver.sleep(500); // Wait for scroll to finish
+        await clickText('newname', scope.blocksTab);
+    });
+
+    test('Renaming costume with a special character should not break toolbox', async () => {
+        await loadUri(uri);
+        await clickXpath('//button[@title="Try It"]');
+
+        // Rename the costume
+        await clickText('Costumes');
+        const el = await findByXpath("//input[@value='costume1']");
+        await el.sendKeys('<NewCostume>');
+
+        // Make sure it is updated in the block menu
+        await clickText('Code');
+        await clickText('Looks', scope.blocksTab);
+        await driver.sleep(500); // Wait for scroll to finish
+        await clickText('<NewCostume>', scope.blocksTab);
+
+        await clickText('Sound', scope.blocksTab);
+    });
+
+    // NOTE: This test describes the current behavior so that changes are not
+    // introduced inadvertly, but I know this is not the desired behavior
+    test('Adding costumes DOES NOT update the default costume name in the toolbox', async () => {
+        await loadUri(uri);
+        await clickXpath('//button[@title="Try It"]');
+
+        // By default, costume1 is in the costume tab
+        await clickText('Looks', scope.blocksTab);
+        await driver.sleep(500); // Wait for scroll to finish
+        await clickText('costume1', scope.blocksTab);
+
+        // Also check that adding a new costume does not update the list
+        await clickText('Costumes');
+        const el = await findByXpath('//button[@aria-label="Choose a Costume"]');
+        await driver.actions().mouseMove(el)
+            .perform();
+        await driver.sleep(500); // Wait for thermometer menu to come up
+        await clickXpath('//button[@aria-label="Paint"]');
+        await clickText('costume3', scope.costumesTab);
+        // Check that the menu has not been updated
+        await clickText('Code');
+        await clickText('costume1', scope.blocksTab);
+    });
+
+    // NOTE: This test describes the current behavior so that changes are not
+    // introduced inadvertly, but I know this is not the desired behavior
+    test('Adding a sound DOES NOT update the default sound name in the toolbox', async () => {
+        await loadUri(uri);
+        await clickXpath('//button[@title="Try It"]');
+        await clickText('Sounds');
+        await clickXpath('//button[@aria-label="Choose a Sound"]');
+        await clickText('A Bass', scope.modal); // Should close the modal
+        await clickText('Code');
+        await clickText('Sound', scope.blocksTab);
+        await driver.sleep(500); // Wait for scroll to finish
+        await clickText('Meow', scope.blocksTab); // Meow, not A Bass
+    });
+
+    // Regression test for switching between editor/player causing toolbox to stop updating
+    test('"See inside" after being on project page re-initializing variables', async () => {
+        const playerUri = path.resolve(__dirname, '../../build/player.html');
+        await loadUri(playerUri);
+        await clickText('See inside');
+        await clickText('Variables');
+        await driver.sleep(500); // Wait for scroll to finish
+        await clickText('my\u00A0variable');
+
+        await clickText('See Project Page');
+        await clickText('See inside');
+
+        await clickText('Variables');
+        await driver.sleep(500); // Wait for scroll to finish
+        await clickText('my\u00A0variable');
     });
 });

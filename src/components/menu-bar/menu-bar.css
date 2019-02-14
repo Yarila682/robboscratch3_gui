@@ -25,7 +25,7 @@
         width: 100%;
     */
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: .75rem;
+    font-size: $menu-bar-standard-font-size;
     font-weight: bold;
     background-color: #00af41;
     color: #383838;
@@ -45,22 +45,23 @@
     vertical-align: middle;
 }
 
+.scratch-logo.clickable {
+    cursor: pointer;
+}
+
 .language-icon {
     height:  1.5rem;
+    vertical-align: middle;
 }
 
 .language-caret {
-    margin-bottom: .625rem;
+    margin: 0 .125rem;
 }
 
 .language-menu {
+    box-sizing: border-box;
     display: inline-flex;
     width: $language-selector-width;
-}
-
-.menu {
-    z-index: $z-index-menu-bar;
-    top: $menu-bar-height;
 }
 
 .menu-bar-item {
@@ -86,7 +87,7 @@
 }
 
 .menu-bar-item.growable {
-    max-width: 12rem;
+    max-width: $menu-bar-item-max-width;
     flex: 1;
 }
 
@@ -105,6 +106,15 @@
     padding: 0 0.75rem;
 }
 
+.menu-bar-item.language-menu {
+    padding: 0 0.5rem;
+}
+
+.menu-bar-menu {
+    margin-top: $menu-bar-height;
+    z-index: $z-index-menu-bar;
+}
+
 .feedback-link {
     color: $motion-primary;
     text-decoration: none;
@@ -120,18 +130,20 @@
     height: 34px;
 }
 
-.share-button {
-    background: $data-primary;
-    height: 32px;
-    box-shadow: 0 0 0 1px $ui-black-transparent;
+.author-info {
+    margin-left: .25rem;
+    margin-right: .6875rem;
 }
 
-.community-button {
-    height: 32px;
-    box-shadow: 0 0 0 1px $ui-black-transparent;
+.menu-bar-button {
+    height: $menu-bar-button-size;
 }
 
-.community-button-icon {
+.remix-button {
+    background-color: $pen-primary
+}
+
+.remix-button-icon {
     height: 1.25rem;
 }
 
@@ -139,11 +151,14 @@
     opacity: 0.5;
 }
 
-.account-info-wrapper {
+.account-info-group {
     display: flex;
     flex-direction: row;
-    padding: 0 .5rem;
     align-items: center;
+}
+
+.account-info-group .menu-bar-item {
+    padding: 0 0.75rem;
 }
 
 .mystuff-icon {
@@ -164,8 +179,8 @@
 
 .profile-icon {
     margin: 0 .25rem;
-    width: 2rem;
-    border-radius: 0.25rem;
+    width: $menu-bar-button-size;
+    border-radius: $form-radius;
 }
 
 .dropdown-caret-icon {
@@ -185,15 +200,30 @@
     opacity: 0.5;
 }
 
-.save-in-progress {
-  animation: hue-rotate 3s linear infinite;
+.mystuff > a {
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 45%;
+  padding-right: 10px;
+  padding-left: 10px;
+  width: 30px;
+  overflow: hidden;
+  text-indent: 50px;
+  white-space: nowrap;
+}
+.mystuff > a:hover {
+  background-size: 50%;
+}
+
+.mystuff > a {
+  background-image: url("/images/mystuff.png");
 }
 
 .trigger_robbo_menu{
 
       position: absolute;
-      top:2%;
-      left:490px;
+      top:35%;
+      left:540px;
 
       font-weight: bold;
       font-size: 14px;
@@ -204,13 +234,4 @@
 
     background-color: $ui-black-transparent;
 
-}
-
-@keyframes hue-rotate {
-  from {
-    filter: hue-rotate();
-  }
-  to {
-    filter: hue-rotate(360deg);
-  }
 }

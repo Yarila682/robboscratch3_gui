@@ -1,12 +1,16 @@
-import AudioEngine from 'scratch-audio';
 import PropTypes from 'prop-types';
 import React from 'react';
-import VM from 'scratch-vm';
+import {compose} from 'redux';
 import {connect} from 'react-redux';
 import ReactModal from 'react-modal';
+import VM from 'scratch-vm';
+import {defineMessages, injectIntl, intlShape} from 'react-intl';
 
 import ErrorBoundaryHOC from '../lib/error-boundary-hoc.jsx';
-import {openExtensionLibrary} from '../reducers/modals';
+import {
+    getIsError,
+    getIsShowingProject
+} from '../reducers/project-state';
 import {setProjectTitle} from '../reducers/project-title';
 import {
     activateTab,
@@ -17,111 +21,41 @@ import {
 
 import {
     closeCostumeLibrary,
-    closeBackdropLibrary
+    closeBackdropLibrary,
+    closeTelemetryModal,
+    openExtensionLibrary
 } from '../reducers/modals';
 
-import ProjectLoaderHOC from '../lib/project-loader-hoc.jsx';
+import FontLoaderHOC from '../lib/font-loader-hoc.jsx';
+import LocalizationHOC from '../lib/localization-hoc.jsx';
+import ProjectFetcherHOC from '../lib/project-fetcher-hoc.jsx';
+import ProjectSaverHOC from '../lib/project-saver-hoc.jsx';
+import QueryParserHOC from '../lib/query-parser-hoc.jsx';
+import storage from '../lib/storage';
 import vmListenerHOC from '../lib/vm-listener-hoc.jsx';
+import vmManagerHOC from '../lib/vm-manager-hoc.jsx';
+import cloudManagerHOC from '../lib/cloud-manager-hoc.jsx';
 
 import GUIComponent from '../components/gui/gui.jsx';
+import {setIsScratchDesktop} from '../lib/isScratchDesktop.js';
 
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
 import { withAlert } from 'react-alert';
 
+const messages = defineMessages({
+    defaultProjectTitle: {
+        id: 'gui.gui.defaultProjectTitle',
+        description: 'Default title for project',
+        defaultMessage: 'Scratch Project'
+    }
+});
+
+
+
 class GUI extends React.Component {
-    constructor (props) {
-        super(props);
-        this.state = {
-            loading: !props.vm.initialized,
-            loadingError: false,
-            errorMessage: ''
-        };
-    }
 
-
-    autoSaveProjectToInternallChromeFolder(data, name, extension, callback){
-
-
-  //  console.log("autoSaveProjectToInternallChromeFolder=" + name + " extension=" + extension + " data length=" + data.length);
-
-
-    function errorHandler(e){
-       console.error("file error during autosaving project" + e);
-    };
-
-
-    function onInitFs(fs) {
-    //   console.log('Opened file system: ' + fs.name);
-
-
-       fs.root.getFile(name + "." + extension, {create: true}, function(fileEntry) {
-
-         fileEntry.remove(function() {
-
-           fs.root.getFile(name + "." + extension, {create: true}, function(fileEntry) {
-
-              fileEntry.createWriter(function(fileWriter) {
-
-                 fileWriter.onwriteend = function(e) {
-
-                  //  console.log('Write completed.');
-
-                    if((callback) && ((data instanceof Blob))){
-                  //    console.log('Data is  a blob. ');
-                      // callback();
-                    }
-                 }
-
-                 fileWriter.onerror = function(e) {
-                    console.error('Write failed: ' + e.toString());
-                 };
-
-                  if (!(data instanceof Blob)){
-
-                 var bb = new Blob([data], {type: 'text'}); // Note: window.WebKitBlobBuilder in Chrome 12.
-                 fileWriter.write(bb);
-
-               }else{
-
-                  fileWriter.write(data);
-
-
-               }
-
-              });
-           }, errorHandler);
-
-            });
-
-            }, errorHandler);
-
-
-
-    };
-
-
-
-    navigator.webkitPersistentStorage.requestQuota(50*1024*1024,
-       function(grantedBytes){
-    //      console.log("byte granted=" + grantedBytes);
-          window.webkitRequestFileSystem(PERSISTENT, grantedBytes, onInitFs, errorHandler);
-       }, errorHandler
-    );
-
-  //   window.webkitRequestFileSystem(window.PERSISTENT, 50*1024*1024, onInitFs, errorHandler);
-
-
-    if((callback) && (!(data instanceof Blob))){
-
-    //    console.log('Data is not a blob. Standart callback case.');
-      // callback(name + "." + extension);
-    }
-
-
-
-  }
 
   deleteAutoSave(name){
 
@@ -155,22 +89,7 @@ class GUI extends React.Component {
 
   autoSaveProject(){
 
-      // this.props.vm.saveProjectSb3()
-      //  .then( project_data => {
-      //
-      // //   console.log("project data to save: " + project_data);
-      //
-      //    this.autoSaveProjectToInternallChromeFolder(project_data,"auto-saved","sb3");
-      //
-      //  })
-      //
-      // .catch(err => {})
-
-        this.props.vm.saveProjectSb3_auto();
-
-
-
-
+    this.props.vm.saveProjectSb3_auto();
   }
 
   startProjectAutosaving(){
@@ -184,81 +103,74 @@ class GUI extends React.Component {
   }
 
     componentDidMount () {
-        if (this.props.projectTitle) {
-            this.props.onUpdateReduxProjectTitle(this.props.projectTitle);
-        }
+        setIsScratchDesktop(this.props.isScratchDesktop);
+        this.setReduxTitle(this.props.projectTitle);
+        this.props.onStorageInit(storage);
 
-        if (this.props.vm.initialized) return;
-        this.audioEngine = new AudioEngine();
-        this.props.vm.attachAudioEngine(this.audioEngine);
-        this.props.vm.loadProject(this.props.projectData)
-            .then(() => {
-                this.setState({loading: false}, () => {
-                    this.props.vm.setCompatibilityMode(false);//modified_by_Yaroslav
-                    this.props.vm.start();
+        this.startProjectAutosaving(); //added_by_Yaroslav not original
 
-                    this.startProjectAutosaving(); //added_by_Yaroslav not original
 
-                });
-            })
-            .catch(e => {
-                // Need to catch this error and update component state so that
-                // error page gets rendered if project failed to load
-                this.setState({loadingError: true, errorMessage: e});
-            });
-        this.props.vm.initialized = true;
     }
-    componentWillReceiveProps (nextProps) {
-        if (this.props.projectData !== nextProps.projectData) {
-            this.setState({loading: true}, () => {
-                this.props.vm.loadProject(nextProps.projectData)
-                    .then(() => {
-                        this.setState({loading: false});
-                    })
-                    .catch(e => {
-                        // Need to catch this error and update component state so that
-                        // error page gets rendered if project failed to load
-                        this.setState({loadingError: true, errorMessage: e});
-                    });
-            });
+    componentDidUpdate (prevProps) {
+        if (this.props.projectId !== prevProps.projectId && this.props.projectId !== null) {
+            this.props.onUpdateProjectId(this.props.projectId);
         }
-        if (this.props.projectTitle !== nextProps.projectTitle) {
-            this.props.onUpdateReduxProjectTitle(nextProps.projectTitle);
+        if (this.props.projectTitle !== prevProps.projectTitle) {
+            this.setReduxTitle(this.props.projectTitle);
+        }
+        if (this.props.isShowingProject && !prevProps.isShowingProject) {
+            // this only notifies container when a project changes from not yet loaded to loaded
+            // At this time the project view in www doesn't need to know when a project is unloaded
+            this.props.onProjectLoaded();
+        }
+    }
+    setReduxTitle (newTitle) {
+        if (newTitle === null || typeof newTitle === 'undefined') {
+            this.props.onUpdateReduxProjectTitle(
+                this.props.intl.formatMessage(messages.defaultProjectTitle)
+            );
+        } else {
+            this.props.onUpdateReduxProjectTitle(newTitle);
         }
     }
     render () {
-        if (this.state.loadingError) {
 
-        //  const alert = this.props.alert.error(`Failed to load project. Error:  ${this.state.errorMessage}`,{timeout:0});
 
-              this.props.alert.error(<div>{`Failed to load project. Error:  ${this.state.errorMessage}`}</div>,{timeout:0});
 
-              this.deleteAutoSave("auto-saved.sb3");
+        if (this.props.isError) {
+
+            this.props.alert.error(<div>{`Error in Scratch GUI:  ${this.props.error}`}</div>,{timeout:0});
+
+            this.deleteAutoSave("auto-saved.sb3");
 
             throw new Error(
-                `Failed to load project. Error: ${this.state.errorMessage}`);
-
-
+                `Error in Scratch GUI [location=${window.location}]: ${this.props.error}`);
         }
         const {
             /* eslint-disable no-unused-vars */
             assetHost,
-            hideIntro,
+            cloudHost,
+            error,
+            isError,
+            isScratchDesktop,
+            isShowingProject,
+            onProjectLoaded,
+            onStorageInit,
+            onUpdateProjectId,
             onUpdateReduxProjectTitle,
-            projectData,
             projectHost,
+            projectId,
             projectTitle,
             /* eslint-enable no-unused-vars */
             children,
             fetchingProject,
+            isLoading,
             loadingStateVisible,
-            vm,
             ...componentProps
         } = this.props;
         return (
             <GUIComponent
-                loading={fetchingProject || this.state.loading || loadingStateVisible}
-                vm={vm}
+                loading={fetchingProject || isLoading || loadingStateVisible}
                 {...componentProps}
             >
                 {children}
@@ -270,39 +182,68 @@ class GUI extends React.Component {
 GUI.propTypes = {
     assetHost: PropTypes.string,
     children: PropTypes.node,
+    cloudHost: PropTypes.string,
+    error: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
     fetchingProject: PropTypes.bool,
-    hideIntro: PropTypes.bool,
     importInfoVisible: PropTypes.bool,
+    intl: intlShape,
+    isError: PropTypes.bool,
+    isLoading: PropTypes.bool,
+    isScratchDesktop: PropTypes.bool,
+    isShowingProject: PropTypes.bool,
     loadingStateVisible: PropTypes.bool,
+    onProjectLoaded: PropTypes.func,
     onSeeCommunity: PropTypes.func,
+    onStorageInit: PropTypes.func,
+    onUpdateProjectId: PropTypes.func,
     onUpdateProjectTitle: PropTypes.func,
     onUpdateReduxProjectTitle: PropTypes.func,
     previewInfoVisible: PropTypes.bool,
-    projectData: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
     projectHost: PropTypes.string,
+    projectId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     projectTitle: PropTypes.string,
-    vm: PropTypes.instanceOf(VM)
+    telemetryModalVisible: PropTypes.bool,
+    vm: PropTypes.instanceOf(VM).isRequired
 };
 
-const mapStateToProps = (state, ownProps) => ({
-    activeTabIndex: state.scratchGui.editorTab.activeTabIndex,
-    backdropLibraryVisible: state.scratchGui.modals.backdropLibrary,
-    blocksTabVisible: state.scratchGui.editorTab.activeTabIndex === BLOCKS_TAB_INDEX,
-    cardsVisible: state.scratchGui.cards.visible,
-    costumeLibraryVisible: state.scratchGui.modals.costumeLibrary,
-    costumesTabVisible: state.scratchGui.editorTab.activeTabIndex === COSTUMES_TAB_INDEX,
-    importInfoVisible: state.scratchGui.modals.importInfo,
-    isPlayerOnly: state.scratchGui.mode.isPlayerOnly,
-    isRtl: state.locales.isRtl,
-    loadingStateVisible: state.scratchGui.modals.loadingProject,
-    previewInfoVisible: state.scratchGui.modals.previewInfo && !ownProps.hideIntro,
-    targetIsStage: (
-        state.scratchGui.targets.stage &&
-        state.scratchGui.targets.stage.id === state.scratchGui.targets.editingTarget
-    ),
-    soundsTabVisible: state.scratchGui.editorTab.activeTabIndex === SOUNDS_TAB_INDEX,
-    tipsLibraryVisible: state.scratchGui.modals.tipsLibrary
-});
+GUI.defaultProps = {
+    isScratchDesktop: false,
+    onStorageInit: storageInstance => storageInstance.addOfficialScratchWebStores(),
+    onProjectLoaded: () => {},
+    onUpdateProjectId: () => {}
+};
+
+const mapStateToProps = state => {
+    const loadingState = state.scratchGui.projectState.loadingState;
+    return {
+        activeTabIndex: state.scratchGui.editorTab.activeTabIndex,
+        alertsVisible: state.scratchGui.alerts.visible,
+        backdropLibraryVisible: state.scratchGui.modals.backdropLibrary,
+        blocksTabVisible: state.scratchGui.editorTab.activeTabIndex === BLOCKS_TAB_INDEX,
+        cardsVisible: state.scratchGui.cards.visible,
+        connectionModalVisible: state.scratchGui.modals.connectionModal,
+        costumeLibraryVisible: state.scratchGui.modals.costumeLibrary,
+        costumesTabVisible: state.scratchGui.editorTab.activeTabIndex === COSTUMES_TAB_INDEX,
+        error: state.scratchGui.projectState.error,
+        importInfoVisible: state.scratchGui.modals.importInfo,
+        isError: getIsError(loadingState),
+        isFullScreen: state.scratchGui.mode.isFullScreen,
+        isPlayerOnly: state.scratchGui.mode.isPlayerOnly,
+        isRtl: state.locales.isRtl,
+        isShowingProject: getIsShowingProject(loadingState),
+        loadingStateVisible: state.scratchGui.modals.loadingProject,
+        previewInfoVisible: state.scratchGui.modals.previewInfo,
+        projectId: state.scratchGui.projectState.projectId,
+        soundsTabVisible: state.scratchGui.editorTab.activeTabIndex === SOUNDS_TAB_INDEX,
+        targetIsStage: (
+            state.scratchGui.targets.stage &&
+            state.scratchGui.targets.stage.id === state.scratchGui.targets.editingTarget
+        ),
+        telemetryModalVisible: state.scratchGui.modals.telemetryModal,
+        tipsLibraryVisible: state.scratchGui.modals.tipsLibrary,
+        vm: state.scratchGui.vm
+    };
+};
 
 const mapDispatchToProps = dispatch => ({
     onExtensionButtonClick: () => dispatch(openExtensionLibrary()),
@@ -311,17 +252,34 @@ const mapDispatchToProps = dispatch => ({
     onActivateSoundsTab: () => dispatch(activateTab(SOUNDS_TAB_INDEX)),
     onRequestCloseBackdropLibrary: () => dispatch(closeBackdropLibrary()),
     onRequestCloseCostumeLibrary: () => dispatch(closeCostumeLibrary()),
+    onRequestCloseTelemetryModal: () => dispatch(closeTelemetryModal()),
     onUpdateReduxProjectTitle: title => dispatch(setProjectTitle(title))
 });
 
-const ConnectedGUI = connect(
-    mapStateToProps,
-    mapDispatchToProps,
-)( DragDropContext(HTML5Backend)(withAlert(GUI)));
+// const ConnectedGUI = injectIntl(connect(
+//     mapStateToProps,
+//     mapDispatchToProps,
+// )(GUI));
 
-const WrappedGui = ErrorBoundaryHOC('Top Level App')(
-    ProjectLoaderHOC(vmListenerHOC(ConnectedGUI))
-);
+const ConnectedGUI = injectIntl(connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(DragDropContext(HTML5Backend)(withAlert()(GUI)))); //modified_by_Yaroslav
+
+// note that redux's 'compose' function is just being used as a general utility to make
+// the hierarchy of HOC constructor calls clearer here; it has nothing to do with redux's
+// ability to compose reducers.
+const WrappedGui = compose(
+    LocalizationHOC,
+    ErrorBoundaryHOC('Top Level App'),
+    FontLoaderHOC,
+    QueryParserHOC,
+    ProjectFetcherHOC,
+    ProjectSaverHOC,
+    vmListenerHOC,
+    vmManagerHOC,
+    cloudManagerHOC
+)(ConnectedGUI);
 
 WrappedGui.setAppElement = ReactModal.setAppElement;
 export default WrappedGui;

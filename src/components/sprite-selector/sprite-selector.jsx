@@ -7,7 +7,7 @@ import SpriteInfo from '../../containers/sprite-info.jsx';
 import SpriteList from './sprite-list.jsx';
 import ActionMenu from '../action-menu/action-menu.jsx';
 import {STAGE_DISPLAY_SIZES} from '../../lib/layout-constants';
-import RtlLocales from '../../lib/rtl-locales';
+import {isRtl} from 'scratch-l10n';
 
 import styles from './sprite-selector.css';
 
@@ -100,20 +100,18 @@ const SpriteSelectorComponent = function (props) {
                 onChangeY={onChangeSpriteY}
             />
 
-            <Box className={styles.scrollWrapper}>
-                <SpriteList
-                    editingTarget={editingTarget}
-                    hoveredTarget={hoveredTarget}
-                    items={Object.keys(sprites).map(id => sprites[id])}
-                    raised={raised}
-                    selectedId={selectedId}
-                    onDeleteSprite={onDeleteSprite}
-                    onDrop={onDrop}
-                    onDuplicateSprite={onDuplicateSprite}
-                    onExportSprite={onExportSprite}
-                    onSelectSprite={onSelectSprite}
-                />
-            </Box>
+            <SpriteList
+                editingTarget={editingTarget}
+                hoveredTarget={hoveredTarget}
+                items={Object.keys(sprites).map(id => sprites[id])}
+                raised={raised}
+                selectedId={selectedId}
+                onDeleteSprite={onDeleteSprite}
+                onDrop={onDrop}
+                onDuplicateSprite={onDuplicateSprite}
+                onExportSprite={onExportSprite}
+                onSelectSprite={onSelectSprite}
+            />
             <ActionMenu
                 className={styles.addButton}
                 img={spriteIcon}
@@ -124,7 +122,8 @@ const SpriteSelectorComponent = function (props) {
                         onClick: onFileUploadClick,
                         fileAccept: '.svg, .png, .jpg, .jpeg, .sprite2, .sprite3',
                         fileChange: onSpriteUpload,
-                        fileInput: spriteFileInput
+                        fileInput: spriteFileInput,
+                        fileMultiple: true
                     }, {
                         title: intl.formatMessage(messages.addSpriteFromSurprise),
                         img: surpriseIcon,
@@ -140,7 +139,7 @@ const SpriteSelectorComponent = function (props) {
                     }
                 ]}
                 title={intl.formatMessage(messages.addSpriteFromLibrary)}
-                tooltipPlace={RtlLocales.indexOf(intl.locale) === -1 ? 'left' : 'right'}
+                tooltipPlace={isRtl(intl.locale) ? 'right' : 'left'}
                 onClick={onNewSpriteClick}
             />
         </Box>

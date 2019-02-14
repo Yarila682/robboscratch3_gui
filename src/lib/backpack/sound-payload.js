@@ -1,9 +1,8 @@
 // eslint-disable-next-line import/no-unresolved
 import soundThumbnail from '!base64-loader!./sound-thumbnail.jpg';
-import storage from '../storage';
 
 const soundPayload = sound => {
-    const assetDataUrl = storage.get(sound.assetId).encodeDataURI();
+    const assetDataUrl = sound.asset.encodeDataURI();
     const assetDataFormat = sound.dataFormat;
     const payload = {
         type: 'sound',
@@ -17,6 +16,13 @@ const soundPayload = sound => {
     switch (assetDataFormat) {
     case 'wav':
         payload.mime = 'audio/x-wav';
+        payload.body = assetDataUrl.replace('data:audio/x-wav;base64,', '');
+        break;
+    case 'mp3':
+        payload.mime = 'audio/mp3';
+        // TODO scratch-storage should be fixed so that encodeDataURI does not
+        // always prepend the wave format header; Once that is fixed, the following
+        // line will have to change.
         payload.body = assetDataUrl.replace('data:audio/x-wav;base64,', '');
         break;
     default:

@@ -4,6 +4,7 @@ import SeleniumHelper from '../helpers/selenium-helper';
 const {
     clickText,
     clickXpath,
+    findByText,
     findByXpath,
     getDriver,
     getLogs,
@@ -32,6 +33,7 @@ describe('Working with sounds', () => {
 
         // Delete the sound
         await rightClickText('Meow', scope.soundsTab);
+        await driver.sleep(500); // Wait a moment for context menu; only needed for local testing
         await clickText('delete', scope.soundsTab);
 
         // Add it back
@@ -109,6 +111,28 @@ describe('Working with sounds', () => {
         // Make sure the 'Oops' screen is not visible
         const content = await driver.getPageSource();
         expect(content.indexOf('Oops')).toEqual(-1);
+
+        const logs = await getLogs();
+        await expect(logs).toEqual([]);
+    });
+
+    test.only('Adding multiple sounds at the same time', async () => {
+        const files = [
+            path.resolve(__dirname, '../fixtures/movie.wav'),
+            path.resolve(__dirname, '../fixtures/sneaker.wav')
+        ];
+        await loadUri(uri);
+        await clickXpath('//button[@title="Try It"]');
+        await clickText('Sounds');
+        const el = await findByXpath('//button[@aria-label="Choose a Sound"]');
+        await driver.actions().mouseMove(el)
+            .perform();
+        await driver.sleep(500); // Wait for thermometer menu to come up
+        const input = await findByXpath('//input[@type="file"]');
+        await input.sendKeys(files.join('\n'));
+
+        await findByText('movie', scope.soundsTab);
+        await findByText('sneaker', scope.soundsTab);
 
         const logs = await getLogs();
         await expect(logs).toEqual([]);

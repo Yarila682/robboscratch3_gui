@@ -4,8 +4,6 @@ import bindAll from 'lodash.bindall';
 import VM from 'scratch-vm';
 import PaintEditor from 'scratch-paint';
 
-import analytics from '../lib/analytics';
-
 import {connect} from 'react-redux';
 
 class PaintEditorWrapper extends React.Component {
@@ -16,8 +14,10 @@ class PaintEditorWrapper extends React.Component {
             'handleUpdateName'
         ]);
     }
-    componentDidMount () {
-        analytics.pageview('/editors/paint');
+    shouldComponentUpdate (nextProps) {
+        return this.props.imageId !== nextProps.imageId ||
+            this.props.rtl !== nextProps.rtl ||
+            this.props.name !== nextProps.name;
     }
     handleUpdateName (name) {
         this.props.vm.renameCostume(this.props.selectedCostumeIndex, name);
@@ -40,9 +40,16 @@ class PaintEditorWrapper extends React.Component {
     }
     render () {
         if (!this.props.imageId) return null;
+        const {
+            selectedCostumeIndex,
+            vm,
+            ...componentProps
+        } = this.props;
+
         return (
             <PaintEditor
-                {...this.props}
+                {...componentProps}
+                image={vm.getCostume(selectedCostumeIndex)}
                 onUpdateImage={this.handleUpdateImage}
                 onUpdateName={this.handleUpdateName}
             />
@@ -74,8 +81,8 @@ const mapStateToProps = (state, {selectedCostumeIndex}) => {
         rotationCenterY: costume && costume.rotationCenterY,
         imageFormat: costume && costume.dataFormat,
         imageId: targetId && `${targetId}${costume.skinId}`,
-        image: state.scratchGui.vm.getCostume(index),
         rtl: state.locales.isRtl,
+        selectedCostumeIndex: index,
         vm: state.scratchGui.vm,
         zoomLevelId: targetId
     };

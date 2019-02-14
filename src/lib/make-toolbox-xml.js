@@ -346,7 +346,7 @@ const robot  = function (isStage, targetId,isExtensionPackActivated,robot_is_scr
         <block type="robot_reset_trip_meters">
 
         </block>
-        
+
         `}
 
 
@@ -639,7 +639,19 @@ const motion = function (isStage, targetId) {
     `;
 };
 
-const looks = function (isStage, targetId) {
+const xmlEscape = function (unsafe) {
+    return unsafe.replace(/[<>&'"]/g, c => {
+        switch (c) {
+        case '<': return '&lt;';
+        case '>': return '&gt;';
+        case '&': return '&amp;';
+        case '\'': return '&apos;';
+        case '"': return '&quot;';
+        }
+    });
+};
+
+const looks = function (isStage, targetId, costumeName, backdropName) {
     const hello = ScratchBlocks.ScratchMsgs.translate('LOOKS_HELLO', 'Hello!');
     const hmm = ScratchBlocks.ScratchMsgs.translate('LOOKS_HMM', 'Hmm...');
     return `
@@ -688,25 +700,33 @@ const looks = function (isStage, targetId) {
         ${isStage ? `
             <block type="looks_switchbackdropto">
                 <value name="BACKDROP">
-                    <shadow type="looks_backdrops"/>
+                    <shadow type="looks_backdrops">
+                        <field name="BACKDROP">${backdropName}</field>
+                    </shadow>
                 </value>
             </block>
             <block type="looks_switchbackdroptoandwait">
                 <value name="BACKDROP">
-                    <shadow type="looks_backdrops"/>
+                    <shadow type="looks_backdrops">
+                        <field name="BACKDROP">${backdropName}</field>
+                    </shadow>
                 </value>
             </block>
             <block type="looks_nextbackdrop"/>
         ` : `
             <block id="${targetId}_switchcostumeto" type="looks_switchcostumeto">
                 <value name="COSTUME">
-                    <shadow type="looks_costume"/>
+                    <shadow type="looks_costume">
+                        <field name="COSTUME">${costumeName}</field>
+                    </shadow>
                 </value>
             </block>
             <block type="looks_nextcostume"/>
             <block type="looks_switchbackdropto">
                 <value name="BACKDROP">
-                    <shadow type="looks_backdrops"/>
+                    <shadow type="looks_backdrops">
+                        <field name="BACKDROP">${backdropName}</field>
+                    </shadow>
                 </value>
             </block>
             <block type="looks_nextbackdrop"/>
@@ -768,17 +788,21 @@ const looks = function (isStage, targetId) {
     `;
 };
 
-const sound = function (isStage, targetId) {
+const sound = function (isStage, targetId, soundName) {
     return `
     <category name="%{BKY_CATEGORY_SOUND}" id="sound" colour="#D65CD6" secondaryColour="#BD42BD">
         <block id="${targetId}_sound_playuntildone" type="sound_playuntildone">
             <value name="SOUND_MENU">
-                <shadow type="sound_sounds_menu"/>
+                <shadow type="sound_sounds_menu">
+                    <field name="SOUND_MENU">${soundName}</field>
+                </shadow>
             </value>
         </block>
         <block id="${targetId}_sound_play" type="sound_play">
             <value name="SOUND_MENU">
-                <shadow type="sound_sounds_menu"/>
+                <shadow type="sound_sounds_menu">
+                    <field name="SOUND_MENU">${soundName}</field>
+                </shadow>
             </value>
         </block>
         <block type="sound_stopallsounds"/>
@@ -813,7 +837,7 @@ const sound = function (isStage, targetId) {
                 </shadow>
             </value>
         </block>
-        <block id="volume" type="sound_volume"/>
+        <block id="${targetId}_volume" type="sound_volume"/>
         ${categorySeparator}
     </category>
     `;
@@ -1090,7 +1114,7 @@ const operators = function () {
         <block type="operator_join">
             <value name="STRING1">
                 <shadow type="text">
-                    <field name="TEXT">${apple}</field>
+                    <field name="TEXT">${apple} </field>
                 </shadow>
             </value>
             <value name="STRING2">
@@ -1193,11 +1217,19 @@ const xmlClose = '</xml>';
 /**
  * @param {!boolean} isStage - Whether the toolbox is for a stage-type target.
  * @param {?string} targetId - The current editing target
- * @param {string?} categoriesXML - null for default toolbox, or an XML string with <category> elements.
+ * @param {?string} categoriesXML - null for default toolbox, or an XML string with <category> elements.
+ * @param {?string} costumeName - The name of the default selected costume dropdown.
+ * @param {?string} backdropName - The name of the default selected backdrop dropdown.
+ * @param {?string} soundName -  The name of the default selected sound dropdown.
  * @returns {string} - a ScratchBlocks-style XML document for the contents of the toolbox.
  */
-const makeToolboxXML = function (isStage, targetId, config,categoriesXML) {
+const makeToolboxXML = function (isStage, targetId,config, categoriesXML,
+    costumeName = '', backdropName = '', soundName = '') {
     const gap = [categorySeparator];
+
+    costumeName = xmlEscape(costumeName);
+    backdropName = xmlEscape(backdropName);
+    soundName = xmlEscape(soundName);
 
   var  isExternalSensorsActivated = false;
   var  isExtensionPackActivated   = false;
@@ -1217,12 +1249,13 @@ const makeToolboxXML = function (isStage, targetId, config,categoriesXML) {
 
     const everything = [
         xmlOpen,
+
+        robot(isStage, targetId,isExtensionPackActivated,robot_is_scratchduino),gap, //modified_by_Yaroslav //toolbox generator main
         quadcopter(isStage, targetId), gap, //modified_by_Yaroslav
         laboratory(isStage, targetId,isExternalSensorsActivated),gap, //modified_by_Yaroslav
-        robot(isStage, targetId,isExtensionPackActivated,robot_is_scratchduino),gap, //modified_by_Yaroslav //toolbox generator main
         motion(isStage, targetId), gap,
-        looks(isStage, targetId), gap,
-        sound(isStage, targetId), gap,
+        looks(isStage, targetId, costumeName, backdropName), gap,
+        sound(isStage, targetId, soundName), gap,
         events(isStage, targetId), gap,
         control(isStage, targetId), gap,
         sensing(isStage, targetId), gap,

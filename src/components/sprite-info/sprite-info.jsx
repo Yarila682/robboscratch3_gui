@@ -11,6 +11,8 @@ import DirectionPicker from '../../containers/direction-picker.jsx';
 import {injectIntl, intlShape, defineMessages, FormattedMessage} from 'react-intl';
 
 import {STAGE_DISPLAY_SIZES} from '../../lib/layout-constants.js';
+import {isWideLocale} from '../../lib/locale-utils.js';
+
 import styles from './sprite-info.css';
 
 import xIcon from './icon--x.svg';
@@ -32,14 +34,15 @@ class SpriteInfo extends React.Component {
     shouldComponentUpdate (nextProps) {
         return (
             this.props.rotationStyle !== nextProps.rotationStyle ||
-            this.props.direction !== nextProps.direction ||
             this.props.disabled !== nextProps.disabled ||
             this.props.name !== nextProps.name ||
-            this.props.size !== nextProps.size ||
             this.props.stageSize !== nextProps.stageSize ||
             this.props.visible !== nextProps.visible ||
-            this.props.x !== nextProps.x ||
-            this.props.y !== nextProps.y
+            // Only update these if rounded value has changed
+            Math.round(this.props.direction) !== Math.round(nextProps.direction) ||
+            Math.round(this.props.size) !== Math.round(nextProps.size) ||
+            Math.round(this.props.x) !== Math.round(nextProps.x) ||
+            Math.round(this.props.y) !== Math.round(nextProps.y)
         );
     }
     render () {
@@ -69,9 +72,16 @@ class SpriteInfo extends React.Component {
             />
         );
 
+        const labelAbove = isWideLocale(this.props.intl.locale);
+
         const spriteNameInput = (
             <BufferedInput
-                className={styles.spriteInput}
+                className={classNames(
+                    styles.spriteInput,
+                    {
+                        [styles.columnInput]: labelAbove
+                    }
+                )}
                 disabled={this.props.disabled}
                 placeholder={this.props.intl.formatMessage(messages.spritePlaceholder)}
                 tabIndex="0"
@@ -101,7 +111,7 @@ class SpriteInfo extends React.Component {
                         placeholder="x"
                         tabIndex="0"
                         type="text"
-                        value={this.props.disabled ? '' : this.props.x}
+                        value={this.props.disabled ? '' : Math.round(this.props.x)}
                         onSubmit={this.props.onChangeX}
                     />
                 </Label>
@@ -128,7 +138,7 @@ class SpriteInfo extends React.Component {
                         placeholder="y"
                         tabIndex="0"
                         type="text"
-                        value={this.props.disabled ? '' : this.props.y}
+                        value={this.props.disabled ? '' : Math.round(this.props.y)}
                         onSubmit={this.props.onChangeY}
                     />
                 </Label>
@@ -155,7 +165,10 @@ class SpriteInfo extends React.Component {
             <Box className={styles.spriteInfo}>
                 <div className={classNames(styles.row, styles.rowPrimary)}>
                     <div className={styles.group}>
-                        <Label text={sprite}>
+                        <Label
+                            above={labelAbove}
+                            text={sprite}
+                        >
                             {spriteNameInput}
                         </Label>
                     </div>
@@ -163,7 +176,7 @@ class SpriteInfo extends React.Component {
                     {yPosition}
                 </div>
                 <div className={classNames(styles.row, styles.rowSecondary)}>
-                    <div className={styles.group}>
+                    <div className={labelAbove ? styles.column : styles.group}>
                         {
                             stageSize === STAGE_DISPLAY_SIZES.large ?
                                 <Label
@@ -216,6 +229,7 @@ class SpriteInfo extends React.Component {
                     <div className={classNames(styles.group, styles.largerInput)}>
                         <Label
                             secondary
+                            above={labelAbove}
                             text={sizeLabel}
                         >
                             <BufferedInput
@@ -224,15 +238,16 @@ class SpriteInfo extends React.Component {
                                 label={sizeLabel}
                                 tabIndex="0"
                                 type="text"
-                                value={this.props.disabled ? '' : this.props.size}
+                                value={this.props.disabled ? '' : Math.round(this.props.size)}
                                 onSubmit={this.props.onChangeSize}
                             />
                         </Label>
                     </div>
                     <div className={classNames(styles.group, styles.largerInput)}>
                         <DirectionPicker
-                            direction={this.props.direction}
+                            direction={Math.round(this.props.direction)}
                             disabled={this.props.disabled}
+                            labelAbove={labelAbove}
                             rotationStyle={this.props.rotationStyle}
                             onChangeDirection={this.props.onChangeDirection}
                             onChangeRotationStyle={this.props.onChangeRotationStyle}

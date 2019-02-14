@@ -1,5 +1,4 @@
-import {TextEncoder} from 'text-encoding';
-import projectJson from './project.json';
+import projectData from './project-data';
 
 /* eslint-disable import/no-unresolved */
 import popWav from '!arraybuffer-loader!./83a9787d4cb6f3b7632b4ddfebf74367.wav';
@@ -11,8 +10,19 @@ import costume3 from '!raw-loader!./bb6b82c9fa7c432c552ca2f251ae2078.svg';
 import costume4 from '!raw-loader!./be2345a4417ff516f9c1a5ece86a8c64.svg';
 /* eslint-enable import/no-unresolved */
 
-const encoder = new TextEncoder();
-export default [{
+const defaultProject = translator => {
+    let _TextEncoder;
+    if (typeof TextEncoder === 'undefined') {
+        _TextEncoder = require('text-encoding').TextEncoder;
+    } else {
+        /* global TextEncoder */
+        _TextEncoder = TextEncoder;
+    }
+    const encoder = new _TextEncoder();
+
+    const projectJson = projectData(translator);
+
+ return [{
     id: 0,
     assetType: 'Project',
     dataFormat: 'JSON',
@@ -53,3 +63,7 @@ export default [{
     dataFormat: 'SVG',
     data: encoder.encode(costume4)
 }];
+
+};
+
+export default defaultProject;

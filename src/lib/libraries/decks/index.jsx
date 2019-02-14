@@ -6,6 +6,30 @@ import libraryIntro from './intro/lib-getting-started.jpg';
 import stepMove from './intro/intro1.gif';
 import stepMoveSayHello from './intro/intro2.gif';
 
+// Text to Speech
+import libraryTXTSpeech from './txt/lib_txt-to-speech.jpg';
+import stepAddTXTextension from './txt/01_hoc-add-extensions.gif';
+import stepTXTSpeech from './txt/02_hoc-say-something.gif';
+import stepTXTSetVoice from './txt/03_hoc-set-voice.gif';
+import stepTXTMove from './txt/04_hoc-move-around.gif';
+import stepTXTBackdrop from './txt/05_hoc-add-backdrop.gif';
+import stepTXTAddSprite from './txt/06_hoc-add-character.gif';
+import stepTXTSong from './txt/07_hoc-perform-song.gif';
+import stepTXTColor from './txt/08_hoc-color-click.gif';
+import stepTXTSpin from './txt/09_hoc-spin.gif';
+import stepTXTGrow from './txt/10_hoc-grow-shrink.gif';
+
+// Cartoon Network
+import libraryCartoonNetwork from './cartoonnetwork/lib_CartoonNetwork.jpg';
+import stepCNcharacter from './cartoonnetwork/1-cn-hideshow.gif';
+import stepCNsay from './cartoonnetwork/2-cn-say.gif';
+import stepCNglide from './cartoonnetwork/3-cn-glide.gif';
+import stepCNpicksprite from './cartoonnetwork/4-cn-pick-gem.gif';
+import stepCNcollect from './cartoonnetwork/5-cn-collect.gif';
+import stepCNvariable from './cartoonnetwork/6-cn-variable.gif';
+import stepCNscore from './cartoonnetwork/7-cn-score.gif';
+import stepCNbackdrop from './cartoonnetwork/8-cn-change-backdrop.gif';
+
 // Add sprite
 import libraryAddSprite from './sprite/cover-add-sprite.jpg';
 import stepAddSprite from './sprite/intro-choose-sprite.gif';
@@ -50,6 +74,37 @@ import stepRandom from './game/game-random-position.gif';
 import stepGameChangeColor from './game/game-change-color.gif';
 import stepResetScore from './game/game-reset-score.gif';
 
+// Animate A Character
+import libraryAnimateChar from './animate-char/lib_Animate_a_Character.jpg';
+import stepAnimateCharPickBackdrop from './animate-char/animate-char-pick-backdrop.gif';
+import stepAnimateCharPickSprite from './animate-char/animate-char-pick-sprite.gif';
+import stepAnimateCharSaySomething from './animate-char/animate-char-say-something.gif';
+import stepAnimateCharAddSound from './animate-char/animate-char-add-sound.gif';
+import stepAnimateCharTalk from './animate-char/animate-char-talk.gif';
+import stepAnimateCharMove from './animate-char/animate-char-move.gif';
+import stepAnimateCharJump from './animate-char/animate-char-jump.gif';
+import stepAnimateCharChangeColor from './animate-char/animate-char-change-color.gif';
+
+// Tell A Story
+import libraryStory from './story/lib-tell-a-story.jpg';
+import stepStoryPickBackdrop from './story/story-pick-backdrop.gif';
+import stepStoryPickSprite from './story/story-pick-sprite.gif';
+import stepStoryCharSaySomething from './story/story-say-something.gif';
+import stepStoryCharAddAnotherSprite from './story/story-pick-another-sprite.gif';
+import stepStoryFlip from './story/story-flip.gif';
+import stepStoryConversation from './story/story-conversation.gif';
+import stepStoryAddAnotherBackdrop from './story/story-add-background-2.gif';
+import stepStorySwitchBackdrop from './story/story-switch-backdrop.gif';
+import stepStoryHide from './story/story-hide-character.gif';
+import stepStoryShow from './story/story-show-character.gif';
+
+// Video Sensing
+import libraryVideoSens from './videosensing/lib_video_sensing.jpg';
+import stepVideoSensAddExtension from './videosensing/videosens-add-extension.gif';
+import stepVideoSensPet from './videosensing/videosens-pet-cat.gif';
+import stepVideoSensAnimate from './videosensing/videosens-animate.gif';
+import stepVideoSensPop from './videosensing/videosens-pop.gif';
+
 // Videos
 import recordASound from './videos/record-a-sound.jpg';
 import glideAroundThumb from './videos/glide-around.jpg';
@@ -71,10 +126,10 @@ export default {
                 id="gui.howtos.intro-move-sayhello-hat.name"
             />
         ),
-
+        tags: ['help', 'stuck', 'how', 'can', 'say'],
         img: libraryIntro,
         steps: [{
-            video: 'https://www.youtube.com/embed/h9x8IPGN3SI'
+            video: 'intro-move-sayhello'
         }, {
             title: (
                 <FormattedMessage
@@ -99,7 +154,223 @@ export default {
                 'add-sprite'
             ]
         }
-        ]
+        ],
+        urlId: 'getStarted'
+    },
+
+    'say-it-out-loud': {
+        name: (
+            <FormattedMessage
+                defaultMessage="Create Animations That Talk"
+                description="Name for the 'Create Animations That Talk' how-to"
+                id="gui.howtos.say-it-out-loud"
+            />
+        ),
+        img: libraryTXTSpeech,
+        steps: [{
+            video: 'k54n8uwcty',
+            trackingPixel: (
+                <img src="https://code.org/api/hour/begin_scratch_talk.png" />
+            )
+        }, {
+            title: (
+                <FormattedMessage
+                    defaultMessage="Add the Text to Speech blocks"
+                    description="Step name for 'Add the Text to Speech blocks' step"
+                    id="gui.howtos.say-it-out-loud.step_AddTXTextension"
+                />
+            ),
+            image: stepAddTXTextension
+        }, {
+            title: (
+                <FormattedMessage
+                    defaultMessage="Say Something"
+                    description="Step name for 'Say Something' step"
+                    id="gui.howtos. say-it-out-loud.step_TXTSpeech"
+                />
+            ),
+            image: stepTXTSpeech
+        }, {
+            title: (
+                <FormattedMessage
+                    defaultMessage="Set a Voice"
+                    description="Step name for 'Set a Voice"
+                    id="gui.howtos.say-it-out-loud_TXTSetVoice"
+                />
+            ),
+            image: stepTXTSetVoice
+        }, {
+            title: (
+                <FormattedMessage
+                    defaultMessage="Move Around"
+                    description="Step name for 'Move Around' step"
+                    id="gui.howtos.say-it-out-loud.step_TXTMove"
+                />
+            ),
+            image: stepTXTMove
+        }, {
+            title: (
+                <FormattedMessage
+                    defaultMessage="Add a Backdrop "
+                    description="Step name for 'Add a Backdrop' step"
+                    id="gui.howtos.say-it-out-loud.step_TXTBackdrop"
+                />
+            ),
+            image: stepTXTBackdrop
+        }, {
+            title: (
+                <FormattedMessage
+                    defaultMessage="Add Another Character"
+                    description="Step name for 'Add Another Character' step"
+                    id="gui.howtos.say-it-out-loud.step_TXTAddSprite"
+                />
+            ),
+            image: stepTXTAddSprite
+        }, {
+            title: (
+                <FormattedMessage
+                    defaultMessage="Perform a Song"
+                    description="Step name for 'Perform a Song' step"
+                    id="gui.howtos.say-it-out-loud.step_TXTSong"
+                />
+            ),
+            image: stepTXTSong
+        }, {
+            title: (
+                <FormattedMessage
+                    defaultMessage="Change Color"
+                    description="Step name for 'Change Color' step"
+                    id="gui.howtos.say-it-out-loud.step_TXTColor"
+                />
+            ),
+            image: stepTXTColor
+        }, {
+            title: (
+                <FormattedMessage
+                    defaultMessage="Spin Around"
+                    description="Step name for 'Spin Around"
+                    id="gui.howtos.say-it-out-loud.step_TXTSpin"
+                />
+            ),
+            image: stepTXTSpin
+        }, {
+            title: (
+                <FormattedMessage
+                    defaultMessage="Grow and Shrink"
+                    description="Step name for 'Grow and Shrink' step"
+                    id="gui.howtos.say-it-out-loud.step_TXTGrow"
+                />
+            ),
+            image: stepTXTGrow
+        }, {
+            deckIds: [
+                'animate-a-name',
+                'Make-Music'
+            ]
+        }
+        ],
+        urlId: 'animations-that-talk'
+    },
+
+    'cartoon-network': {
+        name: (
+            <FormattedMessage
+                defaultMessage="Animate an Adventure Game"
+                description="Animate an Adventure Game' how-to"
+                id="gui.howtos.cartoon-network"
+            />
+        ),
+        requiredProjectId: '249143200',
+        img: libraryCartoonNetwork,
+        steps: [{
+            video: 'uz5oz5h9yg',
+            trackingPixel: (
+                <img src="https://code.org/api/hour/begin_scratch_adventure.png" />
+            )
+        }, {
+            title: (
+                <FormattedMessage
+                    defaultMessage="Choose a Character to Show"
+                    description="Step name for 'Choose a Character to Show' step"
+                    id="gui.howtos.cartoon-network.step_CNcharacter"
+                />
+            ),
+            image: stepCNcharacter
+        }, {
+            title: (
+                <FormattedMessage
+                    defaultMessage="Say Something"
+                    description="Step name for 'Say Something' step"
+                    id="gui.howtos.cartoon-network.step_CNsay"
+                />
+            ),
+            image: stepCNsay
+        }, {
+            title: (
+                <FormattedMessage
+                    defaultMessage="Glide Around"
+                    description="Step name for 'Glide Around' step"
+                    id="gui.howtos.cartoon-network.step_CNglide"
+                />
+            ),
+            image: stepCNglide
+        }, {
+            title: (
+                <FormattedMessage
+                    defaultMessage=" Choose an Object to Chase "
+                    description="Step name for 'Choose an Object to Chase' step"
+                    id="gui.howtos.cartoon-network.step_CNpicksprite"
+                />
+            ),
+            image: stepCNpicksprite
+        }, {
+            title: (
+                <FormattedMessage
+                    defaultMessage="Collect Objects"
+                    description="Step name for 'Collect Objects' step"
+                    id="gui.howtos.cartoon-network.step_CNcollect"
+                />
+            ),
+            image: stepCNcollect
+        }, {
+            title: (
+                <FormattedMessage
+                    defaultMessage="Make a Score Variable"
+                    description="Step name for 'Make a Score Variable' step"
+                    id="gui.howtos.cartoon-network.step_CNvariable"
+                />
+            ),
+            image: stepCNvariable
+        }, {
+            title: (
+                <FormattedMessage
+                    defaultMessage="Keep Score"
+                    description="Step name for 'Keep Score' step"
+                    id="gui.howtos.cartoon-network.step_CNscore"
+                />
+            ),
+            image: stepCNscore
+        }, {
+            title: (
+                <FormattedMessage
+                    defaultMessage="Level Up: Change Backdrop"
+                    description="Step name for 'Level Up: Change Backdrop' step"
+                    id="gui.howtos.cartoon-network.step_CNbackdrop"
+                />
+            ),
+            image: stepCNbackdrop
+        },
+        {
+            video: '6o76f5ivo1'
+        },
+        {
+            deckIds: [
+                'switch-costume',
+                'add-effects'
+            ]
+        }
+        ],
+        urlId: 'animate-an-adventure-game'
     },
     'animate-a-name': {
         name: (
@@ -110,8 +381,9 @@ export default {
             />
         ),
         img: libraryAnimate,
+        tags: ['animation', 'art', 'spin', 'grow'],
         steps: [{
-            video: 'https://www.youtube.com/embed/RUih6RnEdPg'
+            video: 'animate-a-name'
         }, {
             title: (
                 <FormattedMessage
@@ -172,7 +444,8 @@ export default {
                 'glide-around'
             ]
         }
-        ]
+        ],
+        urlId: 'name'
     },
     'Make-Music': {
         name: (
@@ -183,8 +456,9 @@ export default {
             />
         ),
         img: libraryMakeMusic,
+        tags: ['music', 'sound', 'instrument', 'play', 'song', 'band'],
         steps: [{
-            video: 'https://www.youtube.com/embed/UQHHAQGuhl8'
+            video: 'Make-Music'
         },
         {
             title: (
@@ -239,7 +513,8 @@ export default {
                 'add-sprite'
             ]
         }
-        ]
+        ],
+        urlId: 'music'
     },
     'Make-A-Game': {
         name: (
@@ -250,8 +525,9 @@ export default {
             />
         ),
         img: libraryMakeAGame,
+        tags: ['games', 'click', 'clicked', 'score'],
         steps: [{
-            video: 'https://www.youtube.com/embed/3G2miGV4TbQ'
+            video: 'Make-A-Game'
         },
         {
             title: (
@@ -323,7 +599,8 @@ export default {
                 'move-around-with-arrow-keys'
             ]
         }
-        ]
+        ],
+        urlId: 'clicker-game'
     },
 
     'Chase-Game': {
@@ -335,8 +612,9 @@ export default {
             />
         ),
         img: libraryChaseGame,
+        tags: ['games', 'arrow', 'keyboard', 'score'],
         steps: [{
-            video: 'https://www.youtube.com/embed/IRf9-P8PiZo'
+            video: 'Chase-Game'
         },
         {
             title: (
@@ -425,7 +703,270 @@ export default {
                 'move-around-with-arrow-keys'
             ]
         }
-        ]
+        ],
+        urlId: 'chase-game'
+    },
+    'Animate-A-Character': {
+        name: (
+            <FormattedMessage
+                defaultMessage="Animate A Character"
+                description="Name for the 'Animate A Character' how-to"
+                id="gui.howtos.animate-char.name"
+            />
+        ),
+        img: libraryAnimateChar,
+        steps: [{
+            video: 's228u3g5u9'
+        },
+        {
+            title: (
+                <FormattedMessage
+                    defaultMessage="Add a Backdrop"
+                    description="Step name for 'Add a Backdrop' step"
+                    id="gui.howtos.animate-char.step_addbg"
+                />
+            ),
+            image: stepAnimateCharPickBackdrop
+        }, {
+            title: (
+                <FormattedMessage
+                    defaultMessage="Add a Sprite"
+                    description="Step name for 'Add a Sprite' step"
+                    id="gui.howtos.animate-char.step_addsprite"
+                />
+            ),
+            image: stepAnimateCharPickSprite
+        }, {
+            title: (
+                <FormattedMessage
+                    defaultMessage="Say Something"
+                    description="Step name for 'Say Something' step"
+                    id="gui.howtos.animate-char.step_saysomething"
+                />
+            ),
+            image: stepAnimateCharSaySomething
+        }, {
+            title: (
+                <FormattedMessage
+                    defaultMessage="Add Sound"
+                    description="Step name for 'Add Sound' step"
+                    id="gui.howtos.animate-char.step_addsound"
+                />
+            ),
+            image: stepAnimateCharAddSound
+        }, {
+            title: (
+                <FormattedMessage
+                    defaultMessage="Animate Talking"
+                    description="Step name for 'Animate Talking' step"
+                    id="gui.howtos.animate-char.step_animatetalking"
+                />
+            ),
+            image: stepAnimateCharTalk
+        }, {
+            title: (
+                <FormattedMessage
+                    defaultMessage="Move Using Arrow Keys"
+                    description="Step name for 'Move Using Arrow Keys' step"
+                    id="gui.howtos.animate-char.step_arrowkeys"
+                />
+            ),
+            image: stepAnimateCharMove
+        }, {
+            title: (
+                <FormattedMessage
+                    defaultMessage="Jump"
+                    description="Step name for 'Jump' step"
+                    id="gui.howtos.animate-char.step_jump"
+                />
+            ),
+            image: stepAnimateCharJump
+        }, {
+            title: (
+                <FormattedMessage
+                    defaultMessage="Change Color"
+                    description="Step name for 'Change Color' step"
+                    id="gui.howtos.animate-char.step_changecolor"
+                />
+            ),
+            image: stepAnimateCharChangeColor
+        }, {
+            deckIds: [
+                'Chase-Game',
+                'Tell-A-Story'
+            ]
+        }
+        ],
+        urlId: 'animate-a-character'
+    },
+    'Tell-A-Story': {
+        name: (
+            <FormattedMessage
+                defaultMessage="Create A Story"
+                description="Name for the 'Create A Story' how-to"
+                id="gui.howtos.story.name"
+            />
+        ),
+        img: libraryStory,
+        steps: [{
+            video: 'stah7jjorp'
+        },
+        {
+            title: (
+                <FormattedMessage
+                    defaultMessage="Add a Backdrop"
+                    description="Step name for 'Add a Backdrop' step"
+                    id="gui.howtos.story.step_addbg"
+                />
+            ),
+            image: stepStoryPickBackdrop
+        }, {
+            title: (
+                <FormattedMessage
+                    defaultMessage="Add a Character"
+                    description="Step name for 'Add a Character' step"
+                    id="gui.howtos.story.step_addsprite"
+                />
+            ),
+            image: stepStoryPickSprite
+        }, {
+            title: (
+                <FormattedMessage
+                    defaultMessage="Say Something"
+                    description="Step name for 'Say Something' step"
+                    id="gui.howtos.story.step_saysomething"
+                />
+            ),
+            image: stepStoryCharSaySomething
+        }, {
+            title: (
+                <FormattedMessage
+                    defaultMessage="Add Another Character"
+                    description="Step name for 'Add Another Character' step"
+                    id="gui.howtos.story.step_addanothersprite"
+                />
+            ),
+            image: stepStoryCharAddAnotherSprite
+        }, {
+            title: (
+                <FormattedMessage
+                    defaultMessage="Flip Direction"
+                    description="Flip Direction' step"
+                    id="gui.howtos.story.step_flip"
+                />
+            ),
+            image: stepStoryFlip
+        }, {
+            title: (
+                <FormattedMessage
+                    defaultMessage="Have A Conversation"
+                    description="Step name for 'Have A Conversation' step"
+                    id="gui.howtos.story.step_conversation"
+                />
+            ),
+            image: stepStoryConversation
+        }, {
+            title: (
+                <FormattedMessage
+                    defaultMessage="Add Another Backdrop"
+                    description="Step name for 'Add Another Backdrop' step"
+                    id="gui.howtos.story.addanotherbg"
+                />
+            ),
+            image: stepStoryAddAnotherBackdrop
+        }, {
+            title: (
+                <FormattedMessage
+                    defaultMessage="Switch Backdrops"
+                    description="Step name for 'Switch Backdrops' step"
+                    id="gui.howtos.story.step_swithbg"
+                />
+            ),
+            image: stepStorySwitchBackdrop
+        }, {
+            title: (
+                <FormattedMessage
+                    defaultMessage="Hide a Character"
+                    description="Step name for 'Hide the Wizard' step"
+                    id="gui.howtos.story.step_hidewizard"
+                />
+            ),
+            image: stepStoryHide
+        }, {
+            title: (
+                <FormattedMessage
+                    defaultMessage="Show a Character"
+                    description="Step name for 'Show the Wizard' step"
+                    id="gui.howtos.story.step_showwizard"
+                />
+            ),
+            image: stepStoryShow
+        },
+        {
+            deckIds: [
+                'say-it-out-loud',
+                'record-a-sound'
+            ]
+        }
+        ],
+        urlId: 'tell-a-story'
+    },
+    'Video-Sensing': {
+        name: (
+            <FormattedMessage
+                defaultMessage="Video Sensing"
+                description="Name for the 'Video Sensing' how-to"
+                id="gui.howtos.videosens.name"
+            />
+        ),
+        img: libraryVideoSens,
+        steps: [{
+            video: '3pd1z110d6'
+        },
+        {
+            title: (
+                <FormattedMessage
+                    defaultMessage="Add Extension"
+                    description="Step name for 'Add Extension' step"
+                    id="gui.howtos.videosens.step_addextension"
+                />
+            ),
+            image: stepVideoSensAddExtension
+        }, {
+            title: (
+                <FormattedMessage
+                    defaultMessage="Pet the Cat"
+                    description="Step name for 'Pet the Cat' step"
+                    id="gui.howtos.videosens.step_pet"
+                />
+            ),
+            image: stepVideoSensPet
+        }, {
+            title: (
+                <FormattedMessage
+                    defaultMessage="Animate"
+                    description="Step name for 'Animate' step"
+                    id="gui.howtos.videosens.step_animate"
+                />
+            ),
+            image: stepVideoSensAnimate
+        }, {
+            title: (
+                <FormattedMessage
+                    defaultMessage="Pop a Balloon"
+                    description="Step name for 'Pop a Balloon' step"
+                    id="gui.howtos.videosens.step_pop"
+                />
+            ),
+            image: stepVideoSensPop
+        }, {
+            deckIds: [
+                'Make-Music',
+                'add-effects'
+            ]
+        }
+        ],
+        urlId: 'video-sensing'
     },
     'add-sprite': {
         name: (
@@ -436,6 +977,7 @@ export default {
             />
         ),
         img: libraryAddSprite,
+        tags: ['art', 'games', 'stories', 'character'],
         steps: [
             {
                 title: (
@@ -453,7 +995,8 @@ export default {
                     'switch-costume'
                 ]
             }
-        ]
+        ],
+        urlId: 'add-a-sprite'
     },
     'add-a-backdrop': {
         name: (
@@ -464,14 +1007,16 @@ export default {
             />
         ),
         img: addBackdropThumb,
+        tags: ['art', 'games', 'stories', 'background'],
         steps: [{
-            video: 'https://www.youtube.com/embed/Xv3Z80yy2l0'
+            video: 'add-a-backdrop'
         }, {
             deckIds: [
                 'change-size',
                 'switch-costume'
             ]
-        }]
+        }],
+        urlId: 'add-a-backdrop'
     },
     'change-size': {
         name: (
@@ -482,14 +1027,16 @@ export default {
             />
         ),
         img: changeSizeThumb,
+        scale: ['art', 'animation', 'scale'],
         steps: [{
-            video: 'https://www.youtube.com/embed/PJijGbhcT3E'
+            video: 'change-size'
         }, {
             deckIds: [
                 'glide-around',
                 'spin-video'
             ]
-        }]
+        }],
+        urlId: 'change-size'
     },
     'glide-around': {
         name: (
@@ -500,14 +1047,16 @@ export default {
             />
         ),
         img: glideAroundThumb,
+        tags: ['animation', 'stories', 'music', 'instrument', 'play', 'song', 'band'],
         steps: [{
-            video: 'https://www.youtube.com/embed/KYmbgLX1xDs'
+            video: 'glide-around'
         }, {
             deckIds: [
                 'add-a-backdrop',
                 'switch-costume'
             ]
-        }]
+        }],
+        urlId: 'glide-around'
     },
 
     'record-a-sound': {
@@ -518,16 +1067,17 @@ export default {
                 id="gui.howtos.record-a-sound.name"
             />
         ),
+        tags: ['music', 'games', 'stories'],
         img: recordASound,
         steps: [{
-            video: 'https://www.youtube.com/embed/1WaU6e70Zig'
+            video: 'record-a-sound'
         }, {
             deckIds: [
                 'Make-Music',
                 'switch-costume'
             ]
-        }]
-
+        }],
+        urlId: 'record-a-sound'
     },
     'spin-video': {
         name: (
@@ -538,14 +1088,16 @@ export default {
             />
         ),
         img: spinThumb,
+        tags: ['animation', 'rotate', 'rotation'],
         steps: [{
-            video: 'https://www.youtube.com/embed/C76V5cuI9XM'
+            video: 'spin-video'
         }, {
             deckIds: [
                 'add-a-backdrop',
                 'switch-costume'
             ]
-        }]
+        }],
+        urlId: 'make-it-spin'
     },
     'hide-and-show': {
         name: (
@@ -556,14 +1108,16 @@ export default {
             />
         ),
         img: hideAndShowThumb,
+        tags: ['stories', 'appear', 'disappear'],
         steps: [{
-            video: 'https://www.youtube.com/embed/6yWUvRU19ms'
+            video: 'hide-and-show'
         }, {
             deckIds: [
                 'add-a-backdrop',
                 'switch-costume'
             ]
-        }]
+        }],
+        urlId: 'hide'
     },
 
     'switch-costume': {
@@ -575,14 +1129,16 @@ export default {
             />
         ),
         img: switchCostumeThumb,
+        tags: ['animation', 'art', 'games', 'stories', 'paint', 'edit', 'change', 'character', 'sprite'],
         steps: [{
-            video: 'https://www.youtube.com/embed/vppgw1Xiegw'
+            video: 'switch-costume'
         }, {
             deckIds: [
                 'add-a-backdrop',
                 'add-effects'
             ]
-        }]
+        }],
+        urlId: 'animate-a-sprite'
     },
 
     'move-around-with-arrow-keys': {
@@ -594,14 +1150,16 @@ export default {
             />
         ),
         img: moveArrowKeysThumb,
+        tags: ['games', 'keyboard'],
         steps: [{
-            video: 'https://www.youtube.com/embed/uf6agkKnXJw'
+            video: 'move-around-with-arrow-keys'
         }, {
             deckIds: [
                 'add-a-backdrop',
                 'switch-costume'
             ]
-        }]
+        }],
+        urlId: 'arrow-keys'
     },
     'add-effects': {
         name: (
@@ -611,14 +1169,38 @@ export default {
                 id="gui.howtos.add-effects.name"
             />
         ),
+        tags: ['animation', 'art', 'games', 'stories', '8-bit', 'brightness', 'ghost', 'transparency', 'opacity',
+            'fx', 'color', 'fisheye', 'whirl', 'twist', 'pixelate', 'mosaic', '8bit'],
         img: addEffectsThumb,
         steps: [{
-            video: 'https://www.youtube.com/embed/w3kGWEzRtxY'
+            video: 'add-effects'
         }, {
             deckIds: [
                 'add-a-backdrop',
                 'switch-costume'
             ]
-        }]
+        }],
+        urlId: 'add-effects'
+    },
+    'wedo2-getting-started': {
+        steps: [{
+            video: '4im7iizv47'
+        }],
+        urlId: 'wedo',
+        hidden: true
+    },
+    'ev3-getting-started': {
+        steps: [{
+            video: 'qgu78c5y7d'
+        }],
+        urlId: 'ev3',
+        hidden: true
+    },
+    'whats-new': {
+        steps: [{
+            video: 'mtqymxg0qq'
+        }],
+        urlId: 'whatsnew',
+        hidden: true
     }
 };

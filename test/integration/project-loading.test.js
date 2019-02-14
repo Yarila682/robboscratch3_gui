@@ -4,10 +4,13 @@ import SeleniumHelper from '../helpers/selenium-helper';
 const {
     clickText,
     clickXpath,
+    findByText,
     findByXpath,
     getDriver,
     getLogs,
-    loadUri
+    loadUri,
+    scope,
+    waitUntilGone
 } = new SeleniumHelper();
 
 const uri = path.resolve(__dirname, '../../build/index.html');
@@ -39,12 +42,17 @@ describe('Loading scratch gui', () => {
             const projectId = '96708228';
             await el.sendKeys(`scratch.mit.edu/projects/${projectId}`);
             await clickXpath('//button[@title="View Project"]');
-            await new Promise(resolve => setTimeout(resolve, 2000));
+            await waitUntilGone(findByText('Loading'));
             await clickXpath('//img[@title="Go"]');
             await new Promise(resolve => setTimeout(resolve, 2000));
             await clickXpath('//img[@title="Stop"]');
             const logs = await getLogs();
             await expect(logs).toEqual([]);
+        });
+
+        test('Nonexistent projects show error screen', async () => {
+            await loadUri(`${uri}#999999999999999999999`);
+            await clickText('Oops! Something went wrong.');
         });
 
         test('Invalid url when loading project through modal lets you try again', async () => {
@@ -57,7 +65,7 @@ describe('Loading scratch gui', () => {
             await el.clear();
             await el.sendKeys('scratch.mit.edu/projects/96708228');
             await clickXpath('//button[@title="View Project"]');
-            await new Promise(resolve => setTimeout(resolve, 2000));
+            await waitUntilGone(findByText('Loading'));
             await clickXpath('//img[@title="Go"]');
             await new Promise(resolve => setTimeout(resolve, 2000));
             await clickXpath('//img[@title="Stop"]');
@@ -71,8 +79,7 @@ describe('Loading scratch gui', () => {
 
             const projectId = '96708228';
             await loadUri(`${uri}#${projectId}`);
-            await clickXpath('//button[@title="Try It"]');
-            await new Promise(resolve => setTimeout(resolve, 2000));
+            await waitUntilGone(findByText('Loading'));
             await clickXpath('//img[@title="Go"]');
             await new Promise(resolve => setTimeout(resolve, 2000));
             await clickXpath('//img[@title="Stop"]');
@@ -93,8 +100,7 @@ describe('Loading scratch gui', () => {
                 .setSize(1920, 1080);
             const projectId = '96708228';
             await loadUri(`${uri}#${projectId}`);
-            await clickXpath('//button[@title="Try It"]');
-            await new Promise(resolve => setTimeout(resolve, 2000));
+            await waitUntilGone(findByText('Loading'));
             await clickXpath('//img[@title="Full Screen Control"]');
             await clickXpath('//img[@title="Go"]');
             await new Promise(resolve => setTimeout(resolve, 2000));
@@ -106,6 +112,65 @@ describe('Loading scratch gui', () => {
             });
             const logs = await getLogs();
             await expect(logs).toEqual([]);
+        });
+
+        test('Creating new project resets active tab to Code tab', async () => {
+            await loadUri(uri);
+            await clickText('View 2.0 Project');
+            const inputElement = await findByXpath("//input[@placeholder='scratch.mit.edu/projects/123456789']");
+            const projectId = '96708228';
+            await inputElement.sendKeys(`scratch.mit.edu/projects/${projectId}`);
+            await clickXpath('//button[@title="View Project"]');
+            await waitUntilGone(findByText('Loading'));
+            await findByXpath('//*[span[text()="Costumes"]]');
+            await clickText('Costumes');
+            await clickXpath(
+                '//div[contains(@class, "menu-bar_menu-bar-item") and ' +
+                'contains(@class, "menu-bar_hoverable")][span[text()="File"]]'
+            );
+            await clickXpath('//li[span[text()="New"]]');
+            await findByXpath('//*[div[@class="scratchCategoryMenu"]]');
+            await clickText('Operators', scope.blocksTab);
+        });
+
+        test('Not logged in->made no changes to project->create new project should not show alert', async () => {
+            await loadUri(uri);
+            await clickText('View 2.0 Project');
+            const inputElement = await findByXpath("//input[@placeholder='scratch.mit.edu/projects/123456789']");
+            const projectId = '96708228';
+            await inputElement.sendKeys(`scratch.mit.edu/projects/${projectId}`);
+            await clickXpath('//button[@title="View Project"]');
+            await waitUntilGone(findByText('Loading'));
+            await clickXpath(
+                '//div[contains(@class, "menu-bar_menu-bar-item") and ' +
+                'contains(@class, "menu-bar_hoverable")][span[text()="File"]]'
+            );
+            await clickXpath('//li[span[text()="New"]]');
+            await findByXpath('//*[div[@class="scratchCategoryMenu"]]');
+            await clickText('Operators', scope.blocksTab);
+        });
+
+        test('Not logged in->made a change to project->create new project should show alert', async () => {
+            await loadUri(uri);
+            await clickText('View 2.0 Project');
+            const inputElement = await findByXpath("//input[@placeholder='scratch.mit.edu/projects/123456789']");
+            const projectId = '96708228';
+            await inputElement.sendKeys(`scratch.mit.edu/projects/${projectId}`);
+            await clickXpath('//button[@title="View Project"]');
+            await waitUntilGone(findByText('Loading'));
+            await clickText('Sounds');
+            await clickXpath('//button[@aria-label="Choose a Sound"]');
+            await clickText('A Bass', scope.modal); // Should close the modal
+            await clickXpath(
+                '//div[contains(@class, "menu-bar_menu-bar-item") and ' +
+                'contains(@class, "menu-bar_hoverable")][span[text()="File"]]'
+            );
+            await clickXpath('//li[span[text()="New"]]');
+            driver.switchTo()
+                .alert()
+                .accept();
+            await findByXpath('//*[div[@class="scratchCategoryMenu"]]');
+            await clickText('Operators', scope.blocksTab);
         });
     });
 });

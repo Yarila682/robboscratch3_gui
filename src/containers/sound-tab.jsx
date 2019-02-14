@@ -21,6 +21,7 @@ import soundLibraryContent from '../lib/libraries/sounds.json';
 import {handleFileUpload, soundUpload} from '../lib/file-uploader.js';
 import errorBoundaryHOC from '../lib/error-boundary-hoc.jsx';
 import DragConstants from '../lib/drag-constants';
+import downloadBlob from '../lib/download-blob';
 
 import {connect} from 'react-redux';
 
@@ -44,6 +45,7 @@ class SoundTab extends React.Component {
             'handleSelectSound',
             'handleDeleteSound',
             'handleDuplicateSound',
+            'handleExportSound',
             'handleNewSound',
             'handleSurpriseSound',
             'handleFileUploadClick',
@@ -84,6 +86,12 @@ class SoundTab extends React.Component {
             this.setState({selectedSoundIndex: Math.max(0, soundIndex - 1)});
         }
         this.props.dispatchUpdateRestore({restoreFun, deletedItem: 'Sound'});
+    }
+
+    handleExportSound (soundIndex) {
+        const item = this.props.vm.editingTarget.sprite.sounds[soundIndex];
+        const blob = new Blob([item.asset.data], {type: item.asset.assetType.contentType});
+        downloadBlob(`${item.name}.${item.asset.dataFormat}`, blob);
     }
 
     handleDuplicateSound (soundIndex) {
@@ -215,7 +223,8 @@ class SoundTab extends React.Component {
                     onClick: this.handleFileUploadClick,
                     fileAccept: '.wav, .mp3',
                     fileChange: this.handleSoundUpload,
-                    fileInput: this.setFileInput
+                    fileInput: this.setFileInput,
+                    fileMultiple: true
                 }, {
                     title: intl.formatMessage(messages.surpriseSound),
                     img: surpriseIcon,
@@ -230,11 +239,13 @@ class SoundTab extends React.Component {
                     onClick: onNewSoundFromLibraryClick
                 }]}
                 dragType={DragConstants.SOUND}
+                isRtl={isRtl}
                 items={sounds}
                 selectedItemIndex={this.state.selectedSoundIndex}
                 onDeleteClick={this.handleDeleteSound}
                 onDrop={this.handleDrop}
                 onDuplicateClick={this.handleDuplicateSound}
+                onExportClick={this.handleExportSound}
                 onItemClick={this.handleSelectSound}
             >
                 {sprite.sounds && sprite.sounds[this.state.selectedSoundIndex] ? (

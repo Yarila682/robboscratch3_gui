@@ -3,11 +3,17 @@
 
 .modal-content {
     width: 700px;
+    margin: 50px auto; /* This modal is taller than most, reduce top margin */
 }
 
 .body {
     background: $ui-white;
     padding: 1.5rem 2.25rem;
+}
+
+.body input[type="checkbox"],
+.body input[type="radio"] {
+    margin: 3px;
 }
 
 /* Blocks workspace for custom procedure declaration editor */

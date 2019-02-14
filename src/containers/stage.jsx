@@ -52,17 +52,25 @@ class Stage extends React.Component {
             colorInfo: null,
             question: null
         };
-        if (this.props.vm.runtime.renderer) {
-            this.renderer = this.props.vm.runtime.renderer;
-            this.canvas = this.props.vm.runtime.renderer._gl.canvas;
+        if (this.props.vm.renderer) {
+            this.renderer = this.props.vm.renderer;
+            this.canvas = this.renderer.canvas;
         } else {
             this.canvas = document.createElement('canvas');
             this.renderer = new Renderer(this.canvas);
             this.props.vm.attachRenderer(this.renderer);
+
+            // Only attach a video provider once because it is stateful
+            this.props.vm.setVideoProvider(new VideoProvider());
+
+            // Calling draw a single time before any project is loaded just makes
+            // the canvas white instead of solid black–needed because it is not
+            // possible to use CSS to style the canvas to have a different
+            // default color
+            this.props.vm.renderer.draw();
         }
         this.props.vm.attachV2SVGAdapter(new V2SVGAdapter());
         this.props.vm.attachV2BitmapAdapter(new V2BitmapAdapter());
-        this.props.vm.setVideoProvider(new VideoProvider());
     }
     componentDidMount () {
         this.attachRectEvents();
@@ -75,7 +83,9 @@ class Stage extends React.Component {
             this.props.isColorPicking !== nextProps.isColorPicking ||
             this.state.colorInfo !== nextState.colorInfo ||
             this.props.isFullScreen !== nextProps.isFullScreen ||
-            this.state.question !== nextState.question;
+            this.state.question !== nextState.question ||
+            this.props.micIndicator !== nextProps.micIndicator ||
+            this.props.isStarted !== nextProps.isStarted;
     }
     componentDidUpdate (prevProps) {
         if (this.props.isColorPicking && !prevProps.isColorPicking) {
@@ -226,7 +236,7 @@ class Stage extends React.Component {
         this.updateRect();
         const {x, y} = getEventXY(e);
         const mousePosition = [x - this.rect.left, y - this.rect.top];
-        if (e.button === 0 || e instanceof TouchEvent) {
+        if (e.button === 0 || (window.TouchEvent && e instanceof TouchEvent)) {
             this.setState({
                 mouseDown: true,
                 mouseDownPosition: mousePosition,
@@ -245,7 +255,12 @@ class Stage extends React.Component {
         };
         this.props.vm.postIOData('mouse', data);
         if (e.preventDefault) {
+            // Prevent default to prevent touch from dragging page
             e.preventDefault();
+            // But we do want any active input to be blurred
+            if (document.activeElement && document.activeElement.blur) {
+                document.activeElement.blur();
+            }
         }
         if (this.props.isColorPicking) {
             const {r, g, b} = this.state.colorInfo.color;
@@ -388,6 +403,7 @@ class Stage extends React.Component {
 Stage.propTypes = {
     isColorPicking: PropTypes.bool,
     isFullScreen: PropTypes.bool.isRequired,
+    micIndicator: PropTypes.bool,
     onActivateColorPicker: PropTypes.func,
     onDeactivateColorPicker: PropTypes.func,
     stageSize: PropTypes.oneOf(Object.keys(STAGE_DISPLAY_SIZES)).isRequired,
@@ -402,6 +418,8 @@ Stage.defaultProps = {
 const mapStateToProps = state => ({
     isColorPicking: state.scratchGui.colorPicker.active,
     isFullScreen: state.scratchGui.mode.isFullScreen,
+    isStarted: state.scratchGui.vmStatus.started,
+    micIndicator: state.scratchGui.micIndicator,
     // Do not use editor drag style in fullscreen or player mode.
     useEditorDragStyle: !(state.scratchGui.mode.isFullScreen || state.scratchGui.mode.isPlayerOnly)
 });

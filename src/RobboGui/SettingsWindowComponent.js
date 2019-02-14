@@ -171,7 +171,7 @@ const mapDispatchToProps = dispatch => ({
 
 
 
-export default withAlert(injectIntl(connect(
+export default injectIntl(connect(
   mapStateToProps,
   mapDispatchToProps
-)(SettingsWindowComponent)));
+)(withAlert()(SettingsWindowComponent)));

@@ -2,24 +2,32 @@ import bindAll from 'lodash.bindall';
 import React from 'react';
 
 import {connect} from 'react-redux';
+import {intlShape, injectIntl} from 'react-intl';
 
 import {
     openSpriteLibrary,
     closeSpriteLibrary
 } from '../reducers/modals';
 
-import {activateTab, COSTUMES_TAB_INDEX} from '../reducers/editor-tab';
+import {activateTab, COSTUMES_TAB_INDEX, BLOCKS_TAB_INDEX} from '../reducers/editor-tab';
 import {setReceivedBlocks} from '../reducers/hovered-target';
 import {setRestore} from '../reducers/restore-deletion';
 import DragConstants from '../lib/drag-constants';
 import TargetPaneComponent from '../components/target-pane/target-pane.jsx';
 import spriteLibraryContent from '../lib/libraries/sprites.json';
 import {handleFileUpload, spriteUpload} from '../lib/file-uploader.js';
+import sharedMessages from '../lib/shared-messages';
+import {emptySprite} from '../lib/empty-assets';
+import {highlightTarget} from '../reducers/targets';
+import {fetchSprite, fetchCode} from '../lib/backpack-api';
+import randomizeSpritePosition from '../lib/randomize-sprite-position';
+import downloadBlob from '../lib/download-blob';
 
 class TargetPane extends React.Component {
     constructor (props) {
         super(props);
         bindAll(this, [
+            'handleActivateBlocksTab',
             'handleBlockDragEnd',
             'handleChangeSpriteRotationStyle',
             'handleChangeSpriteDirection',
@@ -42,7 +50,7 @@ class TargetPane extends React.Component {
         ]);
     }
 
-    shouldComponentUpdate (nextProps, nextState) {
+    shouldComponentUpdate (nextProps, nextState) { //modified_by_Yaroslav
 
 
 
@@ -57,197 +65,6 @@ class TargetPane extends React.Component {
           //  return true;]
 
           return  !is_equal;
-    }
-
-    componentDidUpdate (prevProps) {
-
-      function deepCompare () {
-  var i, l, leftChain, rightChain;
-
-  function compare2Objects (x, y) {
-    var p;
-
-    // remember that NaN === NaN returns false
-    // and isNaN(undefined) returns true
-    if (isNaN(x) && isNaN(y) && typeof x === 'number' && typeof y === 'number') {
-         return true;
-    }
-
-    // Compare primitives and functions.
-    // Check if both arguments link to the same object.
-    // Especially useful on the step where we compare prototypes
-    if (x === y) {
-        return true;
-    }
-
-    // Works in case when functions are created in constructor.
-    // Comparing dates is a common scenario. Another built-ins?
-    // We can even handle functions passed across iframes
-    if ((typeof x === 'function' && typeof y === 'function') ||
-       (x instanceof Date && y instanceof Date) ||
-       (x instanceof RegExp && y instanceof RegExp) ||
-       (x instanceof String && y instanceof String) ||
-       (x instanceof Number && y instanceof Number)) {
-        return x.toString() === y.toString();
-    }
-
-    // At last checking prototypes as good as we can
-    if (!(x instanceof Object && y instanceof Object)) {
-        return false;
-    }
-
-    if (x.isPrototypeOf(y) || y.isPrototypeOf(x)) {
-        return false;
-    }
-
-    if (x.constructor !== y.constructor) {
-        return false;
-    }
-
-    if (x.prototype !== y.prototype) {
-        return false;
-    }
-
-    // Check for infinitive linking loops
-    if (leftChain.indexOf(x) > -1 || rightChain.indexOf(y) > -1) {
-         return false;
-    }
-
-    // Quick checking of one object being a subset of another.
-    // todo: cache the structure of arguments[0] for performance
-    for (p in y) {
-        if (y.hasOwnProperty(p) !== x.hasOwnProperty(p)) {
-            return false;
-        }
-        else if (typeof y[p] !== typeof x[p]) {
-            return false;
-        }
-    }
-
-    for (p in x) {
-        if (y.hasOwnProperty(p) !== x.hasOwnProperty(p)) {
-            return false;
-        }
-        else if (typeof y[p] !== typeof x[p]) {
-            return false;
-        }
-
-        switch (typeof (x[p])) {
-            case 'object':
-            case 'function':
-
-                leftChain.push(x);
-                rightChain.push(y);
-
-                if (!compare2Objects (x[p], y[p])) {
-                    return false;
-                }
-
-                leftChain.pop();
-                rightChain.pop();
-                break;
-
-            default:
-                if (x[p] !== y[p]) {
-                    return false;
-                }
-                break;
-        }
-    }
-
-    return true;
-  }
-
-  if (arguments.length < 1) {
-    return true; //Die silently? Don't know how to handle such case, please help...
-    // throw "Need two or more arguments to compare";
-  }
-
-  for (i = 1, l = arguments.length; i < l; i++) {
-
-      leftChain = []; //Todo: this can be cached
-      rightChain = [];
-
-      if (!compare2Objects(arguments[0], arguments[i])) {
-          return false;
-      }
-  }
-
-  return true;
-}
-
-      var recursive_compare = function(prev, current,recursive_depth,_key){
-
-        let _recursive_depth = recursive_depth + 1;
-
-          if ( (prev !== null ) && (typeof(prev) !== 'undefined') ) {
-
-
-            if ( (Array.isArray(prev)) || (typeof(prev) === 'object') ){
-
-              for (var key in prev) {
-              if (prev.hasOwnProperty(key)) {
-
-                if (prev[key] != current[key]) {
-
-            //  if ( deepCompare(prev[key],current[key]) ){
-
-                  console.log(
-                             `property ${key} changed from ${prev[key]} to ${
-                                 current[key]
-                             }`
-                         );
-
-
-                    recursive_compare(prev[key],current[key],_recursive_depth,key);
-
-                }
-
-
-              }else if (recursive_depth >= 2){
-
-                if (prev[key] != current[key]) {
-
-                  console.log(
-                             `proto property ${key} changed from ${prev[key]} to ${
-                                 current[key]
-                             }`
-                         );
-
-
-                  //  recursive_compare(prev[key],current[key],_recursive_depth,key);
-
-                }
-
-
-              }
-          }
-
-            //   Object.keys(prev).forEach(key => {
-            //
-            // });
-
-
-            }else{
-
-              console.log(`property ${_key} changed from ${prev} to ${current}`);
-
-
-
-            }
-
-        }
-
-
-      }
-
-    //  recursive_compare(prevProps,this.props,1);
-
-
-
-
-
-
     }
 
     componentDidMount () {
@@ -278,7 +95,9 @@ class TargetPane extends React.Component {
         this.props.vm.postSpriteInfo({y});
     }
     handleDeleteSprite (id) {
-        const restoreFun = this.props.vm.deleteSprite(id);
+        const restoreSprite = this.props.vm.deleteSprite(id);
+        const restoreFun = () => restoreSprite().then(this.handleActivateBlocksTab);
+
         this.props.dispatchUpdateRestore({
             restoreFun: restoreFun,
             deletedItem: 'Sprite'
@@ -294,50 +113,49 @@ class TargetPane extends React.Component {
         document.body.appendChild(saveLink);
 
         this.props.vm.exportSprite(id).then(content => {
-            const filename = `${spriteName}.sprite3`;
-
-            // Use special ms version if available to get it working on Edge.
-            if (navigator.msSaveOrOpenBlob) {
-                navigator.msSaveOrOpenBlob(content, filename);
-                return;
-            }
-
-            const url = window.URL.createObjectURL(content);
-            saveLink.href = url;
-            saveLink.download = filename;
-            saveLink.click();
-            window.URL.revokeObjectURL(url);
-            document.body.removeChild(saveLink);
+            downloadBlob(`${spriteName}.sprite3`, content);
         });
     }
     handleSelectSprite (id) {
         this.props.vm.setEditingTarget(id);
+        if (this.props.stage && id !== this.props.stage.id) {
+            this.props.onHighlightTarget(id);
+        }
     }
     handleSurpriseSpriteClick () {
         const item = spriteLibraryContent[Math.floor(Math.random() * spriteLibraryContent.length)];
-        this.props.vm.addSprite(JSON.stringify(item.json));
+        randomizeSpritePosition(item);
+        this.props.vm.addSprite(JSON.stringify(item.json))
+            .then(this.handleActivateBlocksTab);
     }
     handlePaintSpriteClick () {
-        // @todo this is brittle, will need to be refactored for localized libraries
-        const emptyItem = spriteLibraryContent.find(item => item.name === 'Empty');
-        if (emptyItem) {
-            this.props.vm.addSprite(JSON.stringify(emptyItem.json)).then(() => {
-                setTimeout(() => { // Wait for targets update to propagate before tab switching
-                    this.props.onActivateTab(COSTUMES_TAB_INDEX);
-                });
+        const formatMessage = this.props.intl.formatMessage;
+        const emptyItem = emptySprite(
+            formatMessage(sharedMessages.sprite, {index: 1}),
+            formatMessage(sharedMessages.pop),
+            formatMessage(sharedMessages.costume, {index: 1})
+        );
+        this.props.vm.addSprite(JSON.stringify(emptyItem)).then(() => {
+            setTimeout(() => { // Wait for targets update to propagate before tab switching
+                this.props.onActivateTab(COSTUMES_TAB_INDEX);
             });
-        }
+        });
+    }
+    handleActivateBlocksTab () {
+        this.props.onActivateTab(BLOCKS_TAB_INDEX);
     }
     handleNewSprite (spriteJSONString) {
-        this.props.vm.addSprite(spriteJSONString);
+        this.props.vm.addSprite(spriteJSONString)
+            .then(this.handleActivateBlocksTab);
     }
     handleFileUploadClick () {
         this.fileInput.click();
     }
     handleSpriteUpload (e) {
         const storage = this.props.vm.runtime.storage;
+        const costumeSuffix = this.props.intl.formatMessage(sharedMessages.costume, {index: 1});
         handleFileUpload(e.target, (buffer, fileType, fileName) => {
-            spriteUpload(buffer, fileType, fileName, storage, this.handleNewSprite);
+            spriteUpload(buffer, fileType, fileName, storage, this.handleNewSprite, costumeSuffix);
         });
     }
     setFileInput (input) {
@@ -357,8 +175,7 @@ class TargetPane extends React.Component {
         } else if (dragInfo.dragType === DragConstants.BACKPACK_SPRITE) {
             // TODO storage does not have a way of loading zips right now, and may never need it.
             // So for now just grab the zip manually.
-            fetch(dragInfo.payload.bodyUrl)
-                .then(response => response.arrayBuffer())
+            fetchSprite(dragInfo.payload.bodyUrl)
                 .then(sprite3Zip => this.props.vm.addSprite(sprite3Zip));
         } else if (targetId) {
             // Something is being dragged over one of the sprite tiles or the backdrop.
@@ -383,6 +200,12 @@ class TargetPane extends React.Component {
                     md5: dragInfo.payload.body,
                     name: dragInfo.payload.name
                 }, targetId);
+            } else if (dragInfo.dragType === DragConstants.BACKPACK_CODE) {
+                fetchCode(dragInfo.payload.bodyUrl)
+                    .then(blocks => {
+                        this.props.vm.shareBlocksToTarget(blocks, targetId);
+                        this.props.vm.refreshWorkspace();
+                    });
             }
         }
     }
@@ -390,6 +213,7 @@ class TargetPane extends React.Component {
         const {
             onActivateTab, // eslint-disable-line no-unused-vars
             onReceivedBlocks, // eslint-disable-line no-unused-vars
+            onHighlightTarget, // eslint-disable-line no-unused-vars
             dispatchUpdateRestore, // eslint-disable-line no-unused-vars
             ...componentProps
         } = this.props;
@@ -397,6 +221,7 @@ class TargetPane extends React.Component {
             <TargetPaneComponent
                 {...componentProps}
                 fileInputRef={this.setFileInput}
+                onActivateBlocksTab={this.handleActivateBlocksTab}
                 onChangeSpriteDirection={this.handleChangeSpriteDirection}
                 onChangeSpriteName={this.handleChangeSpriteName}
                 onChangeSpriteRotationStyle={this.handleChangeSpriteRotationStyle}
@@ -420,29 +245,24 @@ class TargetPane extends React.Component {
 
 const {
     onSelectSprite, // eslint-disable-line no-unused-vars
+    onActivateBlocksTab, // eslint-disable-line no-unused-vars
     ...targetPaneProps
 } = TargetPaneComponent.propTypes;
 
 TargetPane.propTypes = {
+    intl: intlShape.isRequired,
     ...targetPaneProps
 };
 
 const mapStateToProps = state => ({
     editingTarget: state.scratchGui.targets.editingTarget,
     hoveredTarget: state.scratchGui.hoveredTarget,
-    sprites: Object.keys(state.scratchGui.targets.sprites).reduce((sprites, k) => {
-        let {direction, size, x, y, ...sprite} = state.scratchGui.targets.sprites[k];
-        if (typeof direction !== 'undefined') direction = Math.round(direction);
-        if (typeof x !== 'undefined') x = Math.round(x);
-        if (typeof y !== 'undefined') y = Math.round(y);
-        if (typeof size !== 'undefined') size = Math.round(size);
-        sprites[k] = {...sprite, direction, size, x, y};
-        return sprites;
-    }, {}),
+    sprites: state.scratchGui.targets.sprites,
     stage: state.scratchGui.targets.stage,
     raiseSprites: state.scratchGui.blockDrag,
     spriteLibraryVisible: state.scratchGui.modals.spriteLibrary
 });
+
 const mapDispatchToProps = dispatch => ({
     onNewSpriteClick: e => {
         e.preventDefault();
@@ -459,10 +279,13 @@ const mapDispatchToProps = dispatch => ({
     },
     dispatchUpdateRestore: restoreState => {
         dispatch(setRestore(restoreState));
+    },
+    onHighlightTarget: id => {
+        dispatch(highlightTarget(id));
     }
 });
 
-export default connect(
+export default injectIntl(connect(
     mapStateToProps,
     mapDispatchToProps
-)(TargetPane);
+)(TargetPane));

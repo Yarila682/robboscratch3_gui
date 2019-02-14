@@ -9,7 +9,9 @@ import rightArrow from './icon--next.svg';
 import leftArrow from './icon--prev.svg';
 
 import helpIcon from '../../lib/assets/icon--tutorials.svg';
-import closeIcon from '../close-button/icon--close.svg';
+import closeIcon from './icon--close.svg';
+
+import {translateVideo} from '../../lib/libraries/decks/translate-video.js';
 
 const CardHeader = ({onCloseCards, onShowAll, totalSteps, step}) => (
     <div className={styles.headerButtons}>
@@ -45,7 +47,7 @@ const CardHeader = ({onCloseCards, onShowAll, totalSteps, step}) => (
             <FormattedMessage
                 defaultMessage="Close"
                 description="Title for button to close how-to card"
-                id="gui.cards.remove"
+                id="gui.cards.close"
             />
             <img
                 className={styles.closeIcon}
@@ -64,11 +66,17 @@ const VideoStep = ({video, dragging}) => (
         ) : null}
         <iframe
             allowFullScreen
-            allow="autoplay; encrypted-media"
+            allowTransparency="true"
             frameBorder="0"
-            height="337"
-            src={`${video}?rel=0&amp;showinfo=0`}
+            height="338"
+            scrolling="no"
+            src={`https://fast.wistia.net/embed/iframe/${video}?seo=false&videoFoam=true`}
+            title="📹"
             width="600"
+        />
+        <script
+            async
+            src="https://fast.wistia.net/assets/external/E-v1.js"
         />
     </div>
 );
@@ -207,6 +215,7 @@ const Cards = props => {
         content,
         dragging,
         isRtl,
+        locale,
         onActivateDeckFactory,
         onCloseCards,
         onDrag,
@@ -225,7 +234,11 @@ const Cards = props => {
     if (x === 0 && y === 0) {
         // initialize positions
         x = isRtl ? -292 : 292;
-        y = 365;
+        // The tallest cards are about 385px high, and the default position is pinned
+        // to near the bottom of the blocks palette to allow room to work above.
+        const tallCardHeight = 385;
+        const bottomMargin = 60; // To avoid overlapping the backpack region
+        y = window.innerHeight - tallCardHeight - bottomMargin;
     }
 
     const steps = content[activeDeckId].steps;
@@ -258,7 +271,7 @@ const Cards = props => {
                             steps[step].video ? (
                                 <VideoStep
                                     dragging={dragging}
-                                    video={steps[step].video}
+                                    video={translateVideo(steps[step].video, locale)}
                                 />
                             ) : (
                                 <ImageStep
@@ -267,6 +280,7 @@ const Cards = props => {
                                 />
                             )
                         )}
+                        {steps[step].trackingPixel && steps[step].trackingPixel}
                     </div>
                     <NextPrevButtons
                         isRtl={isRtl}
@@ -294,7 +308,8 @@ Cards.propTypes = {
         })
     }),
     dragging: PropTypes.bool.isRequired,
-    isRtl: PropTypes.bool,
+    isRtl: PropTypes.bool.isRequired,
+    locale: PropTypes.string.isRequired,
     onActivateDeckFactory: PropTypes.func.isRequired,
     onCloseCards: PropTypes.func.isRequired,
     onDrag: PropTypes.func,

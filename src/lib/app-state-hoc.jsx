@@ -4,9 +4,6 @@ import {Provider} from 'react-redux';
 import {createStore, combineReducers, compose} from 'redux';
 import ConnectedIntlProvider from './connected-intl-provider.jsx';
 
-import { Provider as AlertProvider } from 'react-alert';
-import AlertTemplate from 'react-alert-template-basic';
-
 import localesReducer, {initLocale, localesInitialState} from '../reducers/locales';
 
 import {setPlayer, setFullScreen} from '../reducers/mode.js';
@@ -14,10 +11,10 @@ import {setPlayer, setFullScreen} from '../reducers/mode.js';
 import locales from 'scratch-l10n';
 import {detectLocale} from './detect-locale';
 
-import thunk from 'redux-thunk';
+import { Provider as AlertProvider } from 'react-alert';
+import AlertTemplate from 'react-alert-template-basic';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-
 
 // optional cofiguration
 const alert_options = {
@@ -26,7 +23,6 @@ const alert_options = {
   offset: '30px',
   transition: 'scale'
 }
-
 
 /*
  * Higher Order Component to provide redux state. If an `intl` prop is provided
@@ -65,16 +61,24 @@ const AppStateHOC = function (WrappedComponent, localesOnly) {
                     guiInitialState,
                     guiMiddleware,
                     initFullScreen,
-                    initPlayer
+                    initPlayer,
+                    initPreviewInfo,
+                    initTelemetryModal
                 } = guiRedux;
                 const {ScratchPaintReducer} = require('scratch-paint');
 
                 let initializedGui = guiInitialState;
-                if (props.isFullScreen) {
-                    initializedGui = initFullScreen(initializedGui);
-                }
-                if (props.isPlayerOnly) {
-                    initializedGui = initPlayer(initializedGui);
+                if (props.isFullScreen || props.isPlayerOnly) {
+                    if (props.isFullScreen) {
+                        initializedGui = initFullScreen(initializedGui);
+                    }
+                    if (props.isPlayerOnly) {
+                        initializedGui = initPlayer(initializedGui);
+                    }
+                } else if (props.showTelemetryModal) {
+                    initializedGui = initTelemetryModal(initializedGui);
+                } else if (props.showPreviewInfo) {
+                    initializedGui = initPreviewInfo(initializedGui);
                 }
                 reducers = {
                     locales: localesReducer,
@@ -107,16 +111,18 @@ const AppStateHOC = function (WrappedComponent, localesOnly) {
             const {
                 isFullScreen, // eslint-disable-line no-unused-vars
                 isPlayerOnly, // eslint-disable-line no-unused-vars
+                showPreviewInfo, // eslint-disable-line no-unused-vars
+                showTelemetryModal, // eslint-disable-line no-unused-vars
                 ...componentProps
             } = this.props;
             return (
                 <Provider store={this.store}>
                     <ConnectedIntlProvider>
-
                       <AlertProvider template={AlertTemplate} {...alert_options}>
-                         <WrappedComponent {...componentProps} />
+                        <WrappedComponent
+                            {...componentProps}
+                        />
                      </AlertProvider>
-
                     </ConnectedIntlProvider>
                 </Provider>
             );
@@ -124,7 +130,8 @@ const AppStateHOC = function (WrappedComponent, localesOnly) {
     }
     AppStateWrapper.propTypes = {
         isFullScreen: PropTypes.bool,
-        isPlayerOnly: PropTypes.bool
+        isPlayerOnly: PropTypes.bool,
+        showPreviewInfo: PropTypes.bool
     };
     return AppStateWrapper;
 };

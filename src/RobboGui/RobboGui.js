@@ -209,7 +209,7 @@ class RobboGui extends Component {
                   )}>
 
 
-          <div className={styles.version}> Robbo Scratch ver. 3.7.0  </div>
+          <div className={styles.version}> Robbo Scratch ver. 3.8.0-dev1  </div>
 
          {
               (!this.props.sensorsPalette.sensors_pallete_collapsed)?  <SensorPallete RCA={this.RCA} LCA={this.LCA} QCA={this.QCA} />: <SensorPaletteCollapsed />
@@ -315,10 +315,10 @@ const mapDispatchToProps = dispatch => ({
 // };
 
 
-export default withAlert(injectIntl(connect(
+export default injectIntl(connect(
   mapStateToProps,
   mapDispatchToProps
-)(RobboGui)));
+)(withAlert()(RobboGui)));
 
 // export default connect(
 //         mapStateToProps,

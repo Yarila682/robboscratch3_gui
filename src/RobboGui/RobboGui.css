@@ -74,6 +74,8 @@
     background-color: #383838;
     border-radius: 10px;
 
+    z-index: 500;
+
 }
 
 .version{
@@ -86,4 +88,6 @@
       position:absolute;
       top:1px;
       right:10px;
+
+      z-index: 500;
 }
