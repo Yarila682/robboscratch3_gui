@@ -91,7 +91,7 @@ class RobboGui extends Component {
 
       this.DCA.registerFirmwareVersionDiffersCallback((result) => {
 
-        this.props.alert.info(<div  className={styles.alert}>{this.props.intl.formatMessage(messages.differ_firm_msg)}<br/><br/>{this.props.intl.formatMessage(messages.cr_firm_msg,{current_firmware:result.current_device_firmware,required_firmware:result.need_firmware})} <br/><br/> {this.props.intl.formatMessage(messages.update_firm_msg)}  </div>);
+        this.props.alert.info(<div  className={styles.alert}>{this.props.intl.formatMessage(messages.differ_firm_msg)}<br/><br/>{this.props.intl.formatMessage(messages.cr_firm_msg,{current_firmware:result.current_device_firmware,required_firmware:result.need_firmware})} <br/><br/> {this.props.intl.formatMessage(messages.update_firm_msg)}  </div>,{timeout:10000});
 
       //  this.props.alert.info(<div  className={styles.alert}>{this.props.intl.formatMessage(messages.update_firm_msg,{current_firmware:result.current_device_firmware,required_firmware:result.need_firmware})} </div>);
 
@@ -144,6 +144,7 @@ class RobboGui extends Component {
 
    this.props.vm.getRCA().searchRobotDevices();
    this.props.vm.getLCA().searchLaboratoryDevices();
+   this.OCA.searchOttoDevices();
 
    this.QCA.searchQuadcopterDevices();
 
@@ -168,6 +169,7 @@ class RobboGui extends Component {
 
   this.props.vm.getRCA().stopDataRecievingProcess();
   this.props.vm.getLCA().stopDataRecievingProcess();
+  this.OCA.stopDataRecievingProcess();
 
   }
 
@@ -196,6 +198,7 @@ class RobboGui extends Component {
   this.RCA =  this.props.vm.getRCA();
   this.LCA =  this.props.vm.getLCA();
   this.QCA =  this.props.vm.getQCA();
+  this.OCA =  this.props.vm.getOCA();
 
   return (
 
@@ -212,7 +215,7 @@ class RobboGui extends Component {
           <div className={styles.version}> Robbo Scratch ver. 3.8.0-dev1  </div>
 
          {
-              (!this.props.sensorsPalette.sensors_pallete_collapsed)?  <SensorPallete RCA={this.RCA} LCA={this.LCA} QCA={this.QCA} />: <SensorPaletteCollapsed />
+              (!this.props.sensorsPalette.sensors_pallete_collapsed)?  <SensorPallete RCA={this.RCA} LCA={this.LCA} QCA={this.QCA} OCA={this.OCA} />: <SensorPaletteCollapsed />
 
 
          }

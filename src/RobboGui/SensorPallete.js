@@ -15,6 +15,9 @@ import RobotPalleteComponent from './RobotPalleteComponent';
 import LaboratoryPreviewComponent from './LaboratoryPreviewComponent';
 import LaboratoryPalleteComponent from './LaboratoryPalleteComponent';
 
+import OttoPreviewComponent from './OttoPreviewComponent';
+import OttoPalleteComponent from './OttoPalleteComponent';
+
 import DraggableWindowComponent from './DraggableWindowComponent';
 
 
@@ -78,6 +81,7 @@ class SensorPallete extends Component {
  var initial_coords_robot = [200,200];
  var initial_coords_lab = [400,200];
  var initial_coords_quadcopter = [600,200];
+ var initial_coords_otto = [800,200];
 
   return (
 
@@ -89,6 +93,8 @@ class SensorPallete extends Component {
          <LaboratoryPreviewComponent LCA={this.props.LCA} labIndex={0} />
 
         <QuadcopterPreviewComponent QCA={this.props.QCA} quadcopterIndex={0} />
+
+        <OttoPreviewComponent OCA={this.props.OCA} ottoIndex={0} />
 
 
         <DraggableWindowComponent draggableWindowId={0} initialCoords={initial_coords_quadcopter}>
@@ -107,6 +113,12 @@ class SensorPallete extends Component {
         <DraggableWindowComponent draggableWindowId={2} initialCoords={initial_coords_lab}>
 
               <LaboratoryPalleteComponent LCA={this.props.LCA} labIndex={0}/>
+
+        </DraggableWindowComponent>
+
+        <DraggableWindowComponent draggableWindowId={5} initialCoords={initial_coords_otto}>
+
+              <OttoPalleteComponent OCA={this.props.OCA} ottoIndex={0}/>
 
         </DraggableWindowComponent>
 

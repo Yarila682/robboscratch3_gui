@@ -4,6 +4,136 @@ const categorySeparator = '<sep gap="36"/>';
 
 const blockSeparator = '<sep gap="36"/>'; // At default scale, about 28px
 
+const otto = function (isStage, targetId){ //modified_by_Yaroslav  //otto category
+
+  return `
+  <category name="%{BKY_CATEGORY_OTTO}" id="otto" colour="#5D8C4D" secondaryColour="#5D8C4D">
+
+  ${isStage ? `
+      <label text="Stage selected: no otto blocks"></label>
+      ` : `
+
+      <block type="otto_move_servo">
+          <value name="OTTO_SERVO">
+              <shadow type="otto_servo_nums"/>
+          </value>
+          <value name="SERVO_DIST">
+              <shadow type="math_number">
+                  <field name="NUM">90</field>
+              </shadow>
+          </value>
+          <value name="SERVO_SPEED">
+              <shadow type="otto_servo_speed"/>
+          </value>
+      </block>
+
+      <block type="otto_move_servo_foot">
+          <value name="OTTO_LL">
+            <shadow type="math_number">
+                  <field name="NUM">90</field>
+            </shadow>
+          </value>
+          <value name="OTTO_RL">
+            <shadow type="math_number">
+                  <field name="NUM">90</field>
+            </shadow>
+          </value>
+          <value name="OTTO_LF">
+            <shadow type="math_number">
+                  <field name="NUM">90</field>
+            </shadow>
+          </value>
+          <value name="OTTO_RF">
+            <shadow type="math_number">
+                  <field name="NUM">90</field>
+            </shadow>
+          </value>
+          <value name="SERVO_SPEED">
+              <shadow type="otto_servo_speed"/>
+          </value>
+      </block>
+
+      <block type="otto_move_servo_hand">
+          <value name="OTTO_LH">
+            <shadow type="math_number">
+                  <field name="NUM">90</field>
+            </shadow>
+          </value>
+          <value name="OTTO_RH">
+            <shadow type="math_number">
+                  <field name="NUM">90</field>
+            </shadow>
+          </value>
+          <value name="SERVO_SPEED">
+              <shadow type="otto_servo_speed"/>
+          </value>
+      </block>
+
+      <block type="otto_play_sound">
+          <value name="NOTE_TYPE">
+              <shadow type="math_number">
+               <field name="NUM">1500</field>
+              </shadow>
+          </value>
+          <value name="NOTE_DURA">
+              <shadow type="otto_dura"/>
+          </value>
+      </block>
+
+      <block type="otto_matrix_pix">
+          <value name="MATRIX_STROK">
+              <shadow type="led_nums"/>
+          </value>
+
+          <value name="MATRIX_STOLB">
+              <shadow type="led_nums"/>
+          </value>
+
+          <value name="ON_OFF">
+              <shadow type="on_off"/>
+          </value>
+      </block>
+
+      <block type="otto_matrix_all_pix">
+        <value name="MATRIX">
+          <shadow type="matrix">
+            <field name="MATRIX">0000000000000000000000000000000000000000000000000000000000000000</field>
+          </shadow>
+        </value>
+      </block>
+
+      <block type="otto_led">
+          <value name="ON_OFF_R">
+              <shadow type="math_number">
+              <field name="NUM">255</field>
+             </shadow>
+          </value>
+          <value name="ON_OFF_G">
+              <shadow type="math_number">
+              <field name="NUM">255</field>
+             </shadow>
+          </value>
+          <value name="ON_OFF_B">
+              <shadow type="math_number">
+              <field name="NUM">255</field>
+             </shadow>
+          </value>
+      </block>
+
+
+  <block type="otto_hearing">
+  </block>
+
+  <block type="otto_distance">
+  </block>
+  `}
+  ${categorySeparator}
+</category>
+    `;
+
+
+};
+
 const quadcopter = function (isStage, targetId){ //modified_by_Yaroslav  //quadcopter category
 
   const stageSelected = ScratchBlocks.ScratchMsgs.translate(
@@ -74,7 +204,7 @@ const quadcopter = function (isStage, targetId){ //modified_by_Yaroslav  //quadc
       <block type="copter_change_x_by">
           <value name="DISTANCE_DELTA">
               <shadow type="math_number">
-                  <field name="NUM">10</field>
+                  <field name="NUM">0.1</field>
               </shadow>
           </value>
       </block>
@@ -82,7 +212,7 @@ const quadcopter = function (isStage, targetId){ //modified_by_Yaroslav  //quadc
       <block type="copter_change_y_by">
           <value name="DISTANCE_DELTA">
               <shadow type="math_number">
-                  <field name="NUM">10</field>
+                  <field name="NUM">0.1</field>
               </shadow>
           </value>
       </block>
@@ -90,7 +220,7 @@ const quadcopter = function (isStage, targetId){ //modified_by_Yaroslav  //quadc
       <block type="copter_change_z_by">
           <value name="DISTANCE_DELTA">
               <shadow type="math_number">
-                  <field name="NUM">10</field>
+                  <field name="NUM">0.1</field>
               </shadow>
           </value>
       </block>
@@ -1251,8 +1381,9 @@ const makeToolboxXML = function (isStage, targetId,config, categoriesXML,
         xmlOpen,
 
         robot(isStage, targetId,isExtensionPackActivated,robot_is_scratchduino),gap, //modified_by_Yaroslav //toolbox generator main
-        quadcopter(isStage, targetId), gap, //modified_by_Yaroslav
         laboratory(isStage, targetId,isExternalSensorsActivated),gap, //modified_by_Yaroslav
+        quadcopter(isStage, targetId), gap, //modified_by_Yaroslav
+        otto(isStage, targetId), gap,
         motion(isStage, targetId), gap,
         looks(isStage, targetId, costumeName, backdropName), gap,
         sound(isStage, targetId, soundName), gap,
