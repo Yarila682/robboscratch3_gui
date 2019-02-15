@@ -25,6 +25,11 @@ import {defineMessages, intlShape, injectIntl, FormattedMessage} from 'react-int
         description: ' ',
         defaultMessage: 'Laboratory'
     },
+    device_otto: {
+        id: 'gui.FirmwareFlasherDeviceComponent.device_otto',
+        description: ' ',
+        defaultMessage: 'Otto'
+    },
     device_unknown: {
         id: 'gui.FirmwareFlasherDeviceComponent.device_unknown',
         description: ' ',
@@ -48,6 +53,7 @@ class FirmwareFlasherDeviceComponent extends Component {
     this.RCA =  this.props.RCA;
     this.LCA =  this.props.LCA;
     // this.QCA =  this.props.QCA;
+    this.OCA = this.props.OCA;
 
     this.props.onCreateDraggableWindow(this.props.draggableWindowId);
 
@@ -97,12 +103,18 @@ class FirmwareFlasherDeviceComponent extends Component {
           this.LCA.stopDataRecievingProcess();
           this.LCA.discon();
 
+    }else if ([5].indexOf(this.props.deviceId) != -1){
+
+          this.OCA.stopDataRecievingProcess();
+          this.OCA.discon();
+
     }else{
 
               this.RCA.stopDataRecievingProcess();
               this.RCA.discon();
 
               this.LCA.stopDataRecievingProcess();
+              this.OCA.stopDataRecievingProcess();
             //  this.LCA.discon();
     }
 
@@ -237,6 +249,12 @@ class FirmwareFlasherDeviceComponent extends Component {
       case 4:
 
             device_name = this.props.intl.formatMessage(messages.device_lab);
+
+          break;
+
+      case 5:
+
+                device_name = this.props.intl.formatMessage(messages.device_otto);
 
           break;
 

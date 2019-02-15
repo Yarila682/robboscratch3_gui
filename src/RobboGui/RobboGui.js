@@ -222,7 +222,7 @@ class RobboGui extends Component {
 
          <DraggableWindowComponent draggableWindowId={3}>
 
-            <FirmwareFlasherComponent DCA={this.DCA} RCA={this.RCA} LCA={this.LCA} QCA={this.QCA} />
+            <FirmwareFlasherComponent DCA={this.DCA} RCA={this.RCA} LCA={this.LCA} QCA={this.QCA} OCA={this.OCA} />
 
           </DraggableWindowComponent>
 

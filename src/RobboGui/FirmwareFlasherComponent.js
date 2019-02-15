@@ -55,7 +55,7 @@ class FirmwareFlasherComponent extends Component {
       //
       // devicesFirmwareFlasherDevicesList.innerHTML = "";
 
-      this.props.onGetDevicesInfo(this.DCA,this.RCA,this.LCA,this.QCA);
+      this.props.onGetDevicesInfo(this.DCA,this.RCA,this.LCA,this.QCA,this.OCA);
 
   }
 
@@ -73,6 +73,7 @@ class FirmwareFlasherComponent extends Component {
     this.RCA =  this.props.RCA;
     this.LCA =  this.props.LCA;
     this.QCA =  this.props.QCA;
+    this.OCA =  this.props.OCA;
 
 
   }
@@ -157,7 +158,7 @@ class FirmwareFlasherComponent extends Component {
 
 
 
-                 return  <FirmwareFlasherDeviceComponent flashingStatusComponentId={index} draggableWindowId={6+index}  key={index + "devices-list"} deviceSerial={device.serial_number} devicePort={device.port} deviceId={device.id} deviceFirmwareVersion={device.firmware_version} DCA={this.DCA} RCA={this.RCA} LCA={this.LCA}/>
+                 return  <FirmwareFlasherDeviceComponent flashingStatusComponentId={index} draggableWindowId={6+index}  key={index + "devices-list"} deviceSerial={device.serial_number} devicePort={device.port} deviceId={device.id} deviceFirmwareVersion={device.firmware_version} DCA={this.DCA} RCA={this.RCA} LCA={this.LCA} OCA={this.OCA}/>
 
 
 
@@ -180,7 +181,7 @@ class FirmwareFlasherComponent extends Component {
 
                 return     <DraggableWindowComponent key={index + "devices-list-draggable"} draggableWindowId={6+index}>
 
-                              <FirmwareFlasherFlashingStatusComponent key={index + "devices-list-status"} componentId={index}  draggableWindowId={6+index}  DCA={this.DCA} RCA={this.RCA} LCA={this.LCA} QCA={this.QCA} />
+                              <FirmwareFlasherFlashingStatusComponent key={index + "devices-list-status"} componentId={index}  draggableWindowId={6+index}  DCA={this.DCA} RCA={this.RCA} LCA={this.LCA} QCA={this.QCA} OCA={this.OCA} />
 
                           </DraggableWindowComponent>
 
@@ -216,9 +217,9 @@ const mapStateToProps =  state => ({
 
 const mapDispatchToProps = dispatch => ({
 
-  onGetDevicesInfo: (DCA,RCA,LCA,QCA) => {
+  onGetDevicesInfo: (DCA,RCA,LCA,QCA,OCA) => {
 
-      dispatch(ActionFirmwareFlasherGetDevicesInfo(DCA,RCA,LCA,QCA));
+      dispatch(ActionFirmwareFlasherGetDevicesInfo(DCA,RCA,LCA,QCA,OCA));
 
   },
 

@@ -617,7 +617,7 @@ const  ActionFirmwareFlasherPushDevice = function(device){
 
 }
 
-const ActionFirmwareFlasherGetDevicesInfo = function(DCA,RCA,LCA,QCA){
+const ActionFirmwareFlasherGetDevicesInfo = function(DCA,RCA,LCA,QCA,OCA){
 
  var device = {};
 
@@ -663,13 +663,30 @@ const ActionFirmwareFlasherGetDevicesInfo = function(DCA,RCA,LCA,QCA){
 
                               }else{
 
-                                    device.id = -1;
-                                    device.firmware_version = -1;
-                                    device.serial_number = -1;
+                                OCA.checkOttoByPort(device.port, (result)=>{
 
-                                    dispatch(ActionFirmwareFlasherPushDevice(device));
+                                  if (result.code === 0){
 
-                                    device = {};
+                                    device.id = result.device.id;
+                                    device.firmware_version = result.device.firmware_version;
+                                    device.serial_number= result.device.serial_number;
+
+                                        dispatch(ActionFirmwareFlasherPushDevice(device));
+
+                                          device = {};
+
+                                  }else{
+
+                                        device.id = -1;
+                                        device.firmware_version = -1;
+                                        device.serial_number = -1;
+
+                                        dispatch(ActionFirmwareFlasherPushDevice(device));
+
+                                        device = {};
+                                    }
+
+                                  });
                                 }
 
                             });
