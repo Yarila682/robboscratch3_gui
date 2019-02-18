@@ -66,48 +66,48 @@ export default [
         ),
         featured: true
     },
-    {
-        name: (
-            <FormattedMessage
-                defaultMessage="Video Sensing"
-                description="Name for the 'Video Sensing' extension"
-                id="gui.extension.videosensing.name"
-            />
-        ),
-        extensionId: 'videoSensing',
-        iconURL: videoImage,
-        insetIconURL: videoInsetImage,
-        description: (
-            <FormattedMessage
-                defaultMessage="Sense motion with the camera."
-                description="Description for the 'Video Sensing' extension"
-                id="gui.extension.videosensing.description"
-            />
-        ),
-        featured: true
-    },
-    {
-        name: (
-            <FormattedMessage
-                defaultMessage="Text to Speech"
-                description="Name for the Text to Speech extension"
-                id="gui.extension.text2speech.name"
-            />
-        ),
-        extensionId: 'text2speech',
-        collaborator: 'Amazon Web Services',
-        iconURL: text2speechImage,
-        insetIconURL: text2speechInsetImage,
-        description: (
-            <FormattedMessage
-                defaultMessage="Make your projects talk."
-                description="Description for the Text to speech extension"
-                id="gui.extension.text2speech.description"
-            />
-        ),
-        featured: true,
-        internetConnectionRequired: true
-    },
+    // {
+    //     name: (
+    //         <FormattedMessage
+    //             defaultMessage="Video Sensing"
+    //             description="Name for the 'Video Sensing' extension"
+    //             id="gui.extension.videosensing.name"
+    //         />
+    //     ),
+    //     extensionId: 'videoSensing',
+    //     iconURL: videoImage,
+    //     insetIconURL: videoInsetImage,
+    //     description: (
+    //         <FormattedMessage
+    //             defaultMessage="Sense motion with the camera."
+    //             description="Description for the 'Video Sensing' extension"
+    //             id="gui.extension.videosensing.description"
+    //         />
+    //     ),
+    //     featured: true
+    // },
+    // {
+    //     name: (
+    //         <FormattedMessage
+    //             defaultMessage="Text to Speech"
+    //             description="Name for the Text to Speech extension"
+    //             id="gui.extension.text2speech.name"
+    //         />
+    //     ),
+    //     extensionId: 'text2speech',
+    //     collaborator: 'Amazon Web Services',
+    //     iconURL: text2speechImage,
+    //     insetIconURL: text2speechInsetImage,
+    //     description: (
+    //         <FormattedMessage
+    //             defaultMessage="Make your projects talk."
+    //             description="Description for the Text to speech extension"
+    //             id="gui.extension.text2speech.description"
+    //         />
+    //     ),
+    //     featured: true,
+    //     internetConnectionRequired: true
+    // },
     {
         name: (
             <FormattedMessage
@@ -144,94 +144,95 @@ export default [
             />
         ),
         featured: true
-    },
-    {
-        name: 'micro:bit',
-        extensionId: 'microbit',
-        collaborator: 'micro:bit',
-        iconURL: microbitImage,
-        insetIconURL: microbitMenuImage,
-        description: (
-            <FormattedMessage
-                defaultMessage="Connect your projects with the world."
-                description="Description for the 'micro:bit' extension"
-                id="gui.extension.microbit.description"
-            />
-        ),
-        featured: true,
-        disabled: false,
-        bluetoothRequired: true,
-        launchPeripheralConnectionFlow: true,
-        useAutoScan: false,
-        peripheralImage: microbitPeripheralImage,
-        smallPeripheralImage: microbitMenuImage,
-        connectingMessage: (
-            <FormattedMessage
-                defaultMessage="Connecting"
-                description="Message to help people connect to their micro:bit."
-                id="gui.extension.microbit.connectingMessage"
-            />
-        ),
-        helpLink: 'https://scratch.mit.edu/microbit'
-    },
-    {
-        name: 'LEGO MINDSTORMS EV3',
-        extensionId: 'ev3',
-        collaborator: 'LEGO',
-        iconURL: ev3Image,
-        insetIconURL: ev3MenuImage,
-        description: (
-            <FormattedMessage
-                defaultMessage="Build interactive robots and more."
-                description="Description for the 'LEGO MINDSTORMS EV3' extension"
-                id="gui.extension.ev3.description"
-            />
-        ),
-        featured: true,
-        disabled: false,
-        bluetoothRequired: true,
-        launchPeripheralConnectionFlow: true,
-        useAutoScan: false,
-        peripheralImage: ev3PeripheralImage,
-        smallPeripheralImage: ev3MenuImage,
-        connectingMessage: (
-            <FormattedMessage
-                defaultMessage="Connecting. Make sure the pin on your EV3 is set to 1234."
-                description="Message to help people connect to their EV3. Must note the PIN should be 1234."
-                id="gui.extension.ev3.connectingMessage"
-            />
-        ),
-        helpLink: 'https://scratch.mit.edu/ev3'
-    },
-    {
-        name: 'LEGO Education WeDo 2.0',
-        extensionId: 'wedo2',
-        collaborator: 'LEGO',
-        iconURL: wedoImage,
-        insetIconURL: wedoMenuImage,
-        description: (
-            <FormattedMessage
-                defaultMessage="Build with motors and sensors."
-                description="Description for the 'LEGO WeDo 2.0' extension"
-                id="gui.extension.wedo2.description"
-            />
-        ),
-        featured: true,
-        disabled: false,
-        bluetoothRequired: true,
-        launchPeripheralConnectionFlow: true,
-        useAutoScan: true,
-        peripheralImage: wedoPeripheralImage,
-        smallPeripheralImage: wedoMenuImage,
-        peripheralButtonImage: wedoButtonImage,
-        connectingMessage: (
-            <FormattedMessage
-                defaultMessage="Connecting"
-                description="Message to help people connect to their WeDo."
-                id="gui.extension.wedo2.connectingMessage"
-            />
-        ),
-        helpLink: 'https://scratch.mit.edu/wedo'
-
     }
+    //,
+    // {
+    //     name: 'micro:bit',
+    //     extensionId: 'microbit',
+    //     collaborator: 'micro:bit',
+    //     iconURL: microbitImage,
+    //     insetIconURL: microbitMenuImage,
+    //     description: (
+    //         <FormattedMessage
+    //             defaultMessage="Connect your projects with the world."
+    //             description="Description for the 'micro:bit' extension"
+    //             id="gui.extension.microbit.description"
+    //         />
+    //     ),
+    //     featured: true,
+    //     disabled: false,
+    //     bluetoothRequired: true,
+    //     launchPeripheralConnectionFlow: true,
+    //     useAutoScan: false,
+    //     peripheralImage: microbitPeripheralImage,
+    //     smallPeripheralImage: microbitMenuImage,
+    //     connectingMessage: (
+    //         <FormattedMessage
+    //             defaultMessage="Connecting"
+    //             description="Message to help people connect to their micro:bit."
+    //             id="gui.extension.microbit.connectingMessage"
+    //         />
+    //     ),
+    //     helpLink: 'https://scratch.mit.edu/microbit'
+    // },
+    // {
+    //     name: 'LEGO MINDSTORMS EV3',
+    //     extensionId: 'ev3',
+    //     collaborator: 'LEGO',
+    //     iconURL: ev3Image,
+    //     insetIconURL: ev3MenuImage,
+    //     description: (
+    //         <FormattedMessage
+    //             defaultMessage="Build interactive robots and more."
+    //             description="Description for the 'LEGO MINDSTORMS EV3' extension"
+    //             id="gui.extension.ev3.description"
+    //         />
+    //     ),
+    //     featured: true,
+    //     disabled: false,
+    //     bluetoothRequired: true,
+    //     launchPeripheralConnectionFlow: true,
+    //     useAutoScan: false,
+    //     peripheralImage: ev3PeripheralImage,
+    //     smallPeripheralImage: ev3MenuImage,
+    //     connectingMessage: (
+    //         <FormattedMessage
+    //             defaultMessage="Connecting. Make sure the pin on your EV3 is set to 1234."
+    //             description="Message to help people connect to their EV3. Must note the PIN should be 1234."
+    //             id="gui.extension.ev3.connectingMessage"
+    //         />
+    //     ),
+    //     helpLink: 'https://scratch.mit.edu/ev3'
+    // },
+    // {
+    //     name: 'LEGO Education WeDo 2.0',
+    //     extensionId: 'wedo2',
+    //     collaborator: 'LEGO',
+    //     iconURL: wedoImage,
+    //     insetIconURL: wedoMenuImage,
+    //     description: (
+    //         <FormattedMessage
+    //             defaultMessage="Build with motors and sensors."
+    //             description="Description for the 'LEGO WeDo 2.0' extension"
+    //             id="gui.extension.wedo2.description"
+    //         />
+    //     ),
+    //     featured: true,
+    //     disabled: false,
+    //     bluetoothRequired: true,
+    //     launchPeripheralConnectionFlow: true,
+    //     useAutoScan: true,
+    //     peripheralImage: wedoPeripheralImage,
+    //     smallPeripheralImage: wedoMenuImage,
+    //     peripheralButtonImage: wedoButtonImage,
+    //     connectingMessage: (
+    //         <FormattedMessage
+    //             defaultMessage="Connecting"
+    //             description="Message to help people connect to their WeDo."
+    //             id="gui.extension.wedo2.connectingMessage"
+    //         />
+    //     ),
+    //     helpLink: 'https://scratch.mit.edu/wedo'
+    //
+    // }
 ];

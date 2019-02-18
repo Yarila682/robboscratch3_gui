@@ -11,10 +11,11 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: $motion-primary;
+    background-color: #00af41;
+    color: #383838;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     text-align: center;
-    color: white;
+    
 }
 
 .fullscreen {
