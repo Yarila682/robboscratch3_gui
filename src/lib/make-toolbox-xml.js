@@ -6,7 +6,9 @@ const blockSeparator = '<sep gap="36"/>'; // At default scale, about 28px
 
 const otto = function (isStage, targetId){ //modified_by_Yaroslav  //otto category
 
-  return `
+const hello = ScratchBlocks.ScratchMsgs.translate('LOOKS_HELLO', 'Hello!');
+
+return `
   <category name="%{BKY_CATEGORY_OTTO}" id="otto" colour="#5D8C4D" secondaryColour="#5D8C4D">
 
   ${isStage ? `
@@ -71,8 +73,8 @@ const otto = function (isStage, targetId){ //modified_by_Yaroslav  //otto catego
 
       <block type="otto_play_sound">
           <value name="NOTE_TYPE">
-              <shadow type="math_number">
-               <field name="NUM">1500</field>
+              <shadow type="note2">
+               <field name="NUM">60</field>
               </shadow>
           </value>
           <value name="NOTE_DURA">
@@ -90,7 +92,7 @@ const otto = function (isStage, targetId){ //modified_by_Yaroslav  //otto catego
           </value>
 
           <value name="ON_OFF">
-              <shadow type="on_off"/>
+              <shadow type="otto_on_off"/>
           </value>
       </block>
 
@@ -101,6 +103,18 @@ const otto = function (isStage, targetId){ //modified_by_Yaroslav  //otto catego
           </shadow>
         </value>
       </block>
+
+     <block type="otto_text">
+          <value name="OTTO_TEXT">
+              <shadow type="text">
+                  <field name="TEXT">${hello}</field>
+              </shadow>
+          </value>
+          <value name="TEXT_SPEED">
+              <shadow type="otto_text_speed"/>
+          </value>
+      </block>
+
 
       <block type="otto_led">
           <value name="ON_OFF_R">
