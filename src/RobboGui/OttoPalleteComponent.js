@@ -14,10 +14,10 @@ const messages = defineMessages({
         defaultMessage: 'Sound: '
     },
 
-    distanse: {
-        id: 'gui.RobboGui.OttoPalette.distanse',
+    distance: {
+        id: 'gui.RobboGui.OttoPalette.distance',
         description: ' ',
-        defaultMessage: 'Distanse: '
+        defaultMessage: 'Distance: '
     },
 
     otto: {
@@ -64,7 +64,7 @@ class OttoPalleteComponent extends Component {
                                    sensorData={`-1`} />
                <SensorDataBlockComponent key={`otto-${this.props.ottoIndex}-distanse`} sensorId={`otto-${this.props.ottoIndex}-distanse`}
                                                       deviceName={`otto`} sensorType={`analog`}
-                                                      sensorFieldText={this.props.intl.formatMessage(messages.distanse)}
+                                                      sensorFieldText={this.props.intl.formatMessage(messages.distance)}
                                                       sensorName={`distanse`}
                                                       sensorData={`0`} />
           </div>

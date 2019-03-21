@@ -212,7 +212,7 @@ class RobboGui extends Component {
                   )}>
 
 
-          <div className={styles.version}> Robbo Scratch ver. 3.8.0-dev4  </div>
+          <div className={styles.version}> Robbo Scratch ver. 3.8.0  </div>
 
          {
               (!this.props.sensorsPalette.sensors_pallete_collapsed)?  <SensorPallete RCA={this.RCA} LCA={this.LCA} QCA={this.QCA} OCA={this.OCA} />: <SensorPaletteCollapsed />
