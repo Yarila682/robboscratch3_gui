@@ -50,22 +50,22 @@ class TargetPane extends React.Component {
         ]);
     }
 
-    shouldComponentUpdate (nextProps, nextState) { //modified_by_Yaroslav
+    // shouldComponentUpdate (nextProps, nextState) { //modified_by_Yaroslav
 
 
 
-            let state = this.state;
-            let props = this.props;
+    //         let state = this.state;
+    //         let props = this.props;
 
-            let next_state = nextState;
+    //         let next_state = nextState;
 
-            let next_props = nextProps;
+    //         let next_props = nextProps;
 
-            let is_equal = (JSON.stringify(nextProps) === JSON.stringify(this.props));
-          //  return true;]
+    //         let is_equal = (JSON.stringify(nextProps) === JSON.stringify(this.props));
+    //       //  return true;]
 
-          return  !is_equal;
-    }
+    //       return  !is_equal;
+    // }
 
     componentDidMount () {
         this.props.vm.addListener('BLOCK_DRAG_END', this.handleBlockDragEnd);
