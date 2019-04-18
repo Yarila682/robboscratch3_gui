@@ -89,11 +89,11 @@ class QuadcopterPalleteComponent extends Component {
 
     var getDataLoopInterval = setInterval(() => {
 
-          battery_sensor_value_field.innerHTML = this.props.QCA.get_battery_level();
+          battery_sensor_value_field.innerHTML = this.props.QCA.get_battery_level() + " % " + this.props.QCA.get_battery_level_raw() + "V";
 
-          x_coord_sensor_value_field.innerHTML = this.props.QCA.get_coord("X");
+          x_coord_sensor_value_field.innerHTML =  this.props.QCA.telemetry_palette_get_coord("X"); //this.props.QCA.get_coord("X");
 
-          y_coord_sensor_value_field.innerHTML = this.props.QCA.get_coord("Y");
+          y_coord_sensor_value_field.innerHTML =  this.props.QCA.telemetry_palette_get_coord("Y"); //this.props.QCA.get_coord("Y");
 
           z_coord_sensor_value_field.innerHTML = this.props.QCA.get_coord("Z");
 

@@ -155,6 +155,50 @@ const quadcopter = function (isStage, targetId){ //modified_by_Yaroslav  //quadc
       'Stage selected: no motion blocks'
   );
 
+  //эти блоки доделать и вернуть
+
+  let removed_block = `<block type="copter_fly_for_time_with_speed">
+          <value name="SECONDS">
+              <shadow type="math_number">
+                  <field name="NUM">1</field>
+              </shadow>
+          </value>
+          <value name="X_SPEED">
+              <shadow type="math_number">
+                  <field name="NUM">0</field>
+              </shadow>
+          </value>
+          <value name="Y_SPEED">
+              <shadow type="math_number">
+                  <field name="NUM">0</field>
+              </shadow>
+          </value>
+
+      </block>`;
+
+      let removed_block_2 = `<block type="copter_fly_for_seconds_to_coords">
+          <value name="SECONDS">
+              <shadow type="math_number">
+                  <field name="NUM">1</field>
+              </shadow>
+          </value>
+          <value name="X_COORD">
+              <shadow type="math_number">
+                  <field name="NUM">0</field>
+              </shadow>
+          </value>
+          <value name="Y_COORD">
+              <shadow type="math_number">
+                  <field name="NUM">0</field>
+              </shadow>
+          </value>
+          <value name="Z_COORD">
+              <shadow type="math_number">
+                  <field name="NUM">0</field>
+              </shadow>
+          </value>
+      </block>`;
+
   return `
   <category name="%{BKY_CATEGORY_QUADCOPTER}" id="quadcopter" colour="#383838" secondaryColour="#383838">
 
@@ -179,9 +223,9 @@ const quadcopter = function (isStage, targetId){ //modified_by_Yaroslav  //quadc
       </block>
 
       <block type="copter_fly_distance">
-          <value name="CENTIMETERS">
+          <value name="METERS">
               <shadow type="math_number">
-                  <field name="NUM">10</field>
+                  <field name="NUM">0.4</field>
               </shadow>
           </value>
       </block>
@@ -194,24 +238,7 @@ const quadcopter = function (isStage, targetId){ //modified_by_Yaroslav  //quadc
           </value>
       </block>
 
-      <block type="copter_fly_for_time_with_speed">
-          <value name="SECONDS">
-              <shadow type="math_number">
-                  <field name="NUM">1</field>
-              </shadow>
-          </value>
-          <value name="X_SPEED">
-              <shadow type="math_number">
-                  <field name="NUM">0</field>
-              </shadow>
-          </value>
-          <value name="Y_SPEED">
-              <shadow type="math_number">
-                  <field name="NUM">0</field>
-              </shadow>
-          </value>
-
-      </block>
+      
 
 
 
@@ -255,28 +282,7 @@ const quadcopter = function (isStage, targetId){ //modified_by_Yaroslav  //quadc
 
       </block>
 
-      <block type="copter_fly_for_seconds_to_coords">
-          <value name="SECONDS">
-              <shadow type="math_number">
-                  <field name="NUM">1</field>
-              </shadow>
-          </value>
-          <value name="X_COORD">
-              <shadow type="math_number">
-                  <field name="NUM">0</field>
-              </shadow>
-          </value>
-          <value name="Y_COORD">
-              <shadow type="math_number">
-                  <field name="NUM">0</field>
-              </shadow>
-          </value>
-          <value name="Z_COORD">
-              <shadow type="math_number">
-                  <field name="NUM">0</field>
-              </shadow>
-          </value>
-      </block>
+      
 
       <block type="copter_fly_to_coords">
         <value name="X_COORD">
@@ -299,7 +305,7 @@ const quadcopter = function (isStage, targetId){ //modified_by_Yaroslav  //quadc
       <block type="copter_rotate">
         <value name="DEGREES">
               <shadow type="math_number">
-                  <field name="NUM">180</field>
+                  <field name="NUM">45</field>
               </shadow>
           </value>
 
