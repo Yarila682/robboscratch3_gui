@@ -47,3 +47,13 @@ text-align: center;
     cursor: pointer;
 
 }
+
+.battery_low_yelolow_warning{
+
+    background-color: yellow;
+}
+
+.battery_low_red_warning{
+
+    background-color: red;
+}

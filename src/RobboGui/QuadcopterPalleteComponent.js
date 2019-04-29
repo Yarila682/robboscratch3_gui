@@ -43,6 +43,16 @@ const messages = defineMessages({
         id: 'gui.RobboGui.QuadcopterPalette.quadcopter',
         description: ' ',
         defaultMessage: 'Quadcopter'
+    },
+    meters:  {
+        id: 'gui.RobboGui.QuadcopterPalette.meters',
+        description: ' ',
+        defaultMessage: 'meters'
+    },
+    degrees:{
+        id: 'gui.RobboGui.QuadcopterPalette.degrees',
+        description: ' ',
+        defaultMessage: 'degrees'
     }
 
   });
@@ -55,6 +65,43 @@ class QuadcopterPalleteComponent extends Component {
 
     console.log("QuadcopterPalette close");
     this.props.onQuadcopterPaletteWindowClose(0);
+
+  }
+
+  startBatteryWarningLoop(){
+
+    let bat_level = 0;
+
+    var battery_sensor_component = document.getElementById(`quadcopter_sensor-data-block-copter-${this.props.quadcopterIndex}-battery-level_type-analog`);
+
+    var battery_sensor_value_field = battery_sensor_component.children[0].children[1].children[0];
+
+        this.batteryWarningLoop = setInterval(() => {
+
+                bat_level =  this.props.QCA.get_battery_level();
+
+                if (this.props.QCA.isQuadcopterConnected()){
+
+                    if (bat_level < 5){
+
+                            battery_sensor_value_field.classList.toggle(styles.battery_low_red_warning);
+
+                    }else if (bat_level < 15){
+
+                            battery_sensor_value_field.classList.toggle(styles.battery_low_yelolow_warning); 
+
+                    }else{
+
+                            battery_sensor_value_field.classList.remove(styles.battery_low_yelolow_warning);
+                            battery_sensor_value_field.classList.remove(styles.battery_low_red_warning);
+
+                    }
+
+                }
+
+                
+
+        },1000);
 
   }
 
@@ -89,15 +136,15 @@ class QuadcopterPalleteComponent extends Component {
 
     var getDataLoopInterval = setInterval(() => {
 
-          battery_sensor_value_field.innerHTML = this.props.QCA.get_battery_level() + " % " + this.props.QCA.get_battery_level_raw() + "V";
+          battery_sensor_value_field.innerHTML = this.props.QCA.get_battery_level() + " % "; // + this.props.QCA.get_battery_level_raw() + "V";
 
-          x_coord_sensor_value_field.innerHTML =  this.props.QCA.telemetry_palette_get_coord("X"); //this.props.QCA.get_coord("X");
+          x_coord_sensor_value_field.innerHTML =  this.props.QCA.telemetry_palette_get_coord("X") + " " + this.props.intl.formatMessage(messages.meters); //this.props.QCA.get_coord("X");
 
-          y_coord_sensor_value_field.innerHTML =  this.props.QCA.telemetry_palette_get_coord("Y"); //this.props.QCA.get_coord("Y");
+          y_coord_sensor_value_field.innerHTML =  this.props.QCA.telemetry_palette_get_coord("Y") + " " + this.props.intl.formatMessage(messages.meters); //this.props.QCA.get_coord("Y");
 
-          z_coord_sensor_value_field.innerHTML = this.props.QCA.get_coord("Z");
+          z_coord_sensor_value_field.innerHTML = this.props.QCA.telemetry_palette_get_coord("Z") + " " + this.props.intl.formatMessage(messages.meters);
 
-          yaw_sensor_value_field.innerHTML     = this.props.QCA.get_coord("W");
+          yaw_sensor_value_field.innerHTML     = this.props.QCA.telemetry_palette_get_coord("W") + " " + this.props.intl.formatMessage(messages.degrees);
 
 
     },50);
@@ -110,6 +157,7 @@ class QuadcopterPalleteComponent extends Component {
 
 
       this.startGetDataLoop();
+      this.startBatteryWarningLoop();
 
   }
 
