@@ -1,0 +1,80 @@
+.arduinoPreview{
+
+  /*display: inline-block;*/
+    display:none;
+
+  border: 2px outset rgba(0,0,0,0.5);
+
+  box-shadow: 4px 4px 10px rgba(0,0,0,0.5);
+
+  height:30px;
+  width:75px;
+
+  vertical-align: top;
+
+  margin-top: 10px;
+  margin-left: 18px;
+
+
+}
+
+
+.arduino_connection_status{
+
+    border-width: 2px;
+    border-radius: 5px;
+    border-style: solid;
+    display: inline-block;
+    margin: 5px 5px;
+    min-height: 15px;
+    min-width: 15px;
+}
+
+.arduino_status_connected{
+
+    background-color: green;
+
+}
+
+.arduino_status_disconnected{
+
+    background-color: red;
+
+}
+
+
+.arduino_loading_icon{
+
+     background-image: url(/build/static/robbo_assets/searching.gif);
+    /* background-size: 30px; */
+    min-width: 20px;
+    min-height: 20px;
+    /* max-width: 30px; */
+  /*  display: inline-block; */
+    margin-left: 5px;
+    margin-right: 5px;
+
+
+
+}
+
+.arduinoPreviewPic{
+
+  display: inline-block;
+  margin-left: 5px;
+  margin-bottom: 5px;
+  padding-bottom: 5px;
+  vertical-align: middle;
+
+}
+
+.arduino_loading_icon_hidden{
+
+      display:none;
+
+}
+
+.arduino_loading_icon_showing{
+
+     display: inline-block;
+}

@@ -74,6 +74,7 @@ class FirmwareFlasherComponent extends Component {
     this.LCA =  this.props.LCA;
     this.QCA =  this.props.QCA;
     this.OCA =  this.props.OCA;
+    this.ACA =  this.props.ACA;
 
 
   }
@@ -158,7 +159,7 @@ class FirmwareFlasherComponent extends Component {
 
 
 
-                 return  <FirmwareFlasherDeviceComponent flashingStatusComponentId={index} draggableWindowId={6+index}  key={index + "devices-list"} deviceSerial={device.serial_number} devicePort={device.port} deviceId={device.id} deviceFirmwareVersion={device.firmware_version} DCA={this.DCA} RCA={this.RCA} LCA={this.LCA} OCA={this.OCA}/>
+                 return  <FirmwareFlasherDeviceComponent flashingStatusComponentId={index} draggableWindowId={7+index}  key={index + "devices-list"} deviceSerial={device.serial_number} devicePort={device.port} deviceId={device.id} deviceFirmwareVersion={device.firmware_version} DCA={this.DCA} RCA={this.RCA} LCA={this.LCA} OCA={this.OCA} ACA={this.ACA}/>
 
 
 
@@ -179,9 +180,9 @@ class FirmwareFlasherComponent extends Component {
 
 
 
-                return     <DraggableWindowComponent key={index + "devices-list-draggable"} draggableWindowId={6+index}>
+                return     <DraggableWindowComponent key={index + "devices-list-draggable"} draggableWindowId={7+index}>
 
-                              <FirmwareFlasherFlashingStatusComponent key={index + "devices-list-status"} componentId={index}  draggableWindowId={6+index}  DCA={this.DCA} RCA={this.RCA} LCA={this.LCA} QCA={this.QCA} OCA={this.OCA} />
+                              <FirmwareFlasherFlashingStatusComponent key={index + "devices-list-status"} componentId={index}  draggableWindowId={7+index}  DCA={this.DCA} RCA={this.RCA} LCA={this.LCA} QCA={this.QCA} OCA={this.OCA} ACA={this.ACA}/>
 
                           </DraggableWindowComponent>
 

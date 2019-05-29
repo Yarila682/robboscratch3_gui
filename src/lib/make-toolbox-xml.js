@@ -4,6 +4,156 @@ const categorySeparator = '<sep gap="36"/>';
 
 const blockSeparator = '<sep gap="36"/>'; // At default scale, about 28px
 
+const newcat = function (isStage) {
+      const hello = ScratchBlocks.ScratchMsgs.translate('LOOKS_HELLO', 'Hello!');
+    return `
+    <category name="%{BKY_CATEGORY_ARDUINO}" id="newcat" colour="#5F9EA0" secondaryColour="#CC9900">
+
+        <block type="newcat_set_dig">
+            <value name="PIN">
+              <shadow type="math_number">
+                  <field name="NUM">6</field>
+              </shadow>
+            </value>
+
+            <value name="HIGH_LOW">
+              <shadow type="high_low"/>
+            </value>
+        </block>
+
+        <block type="newcat_set_ana">
+
+          <value name="PWM_PINS">
+              <shadow type="pwm_pins"/>
+          </value>
+
+            <value name="NUM">
+              <shadow type="math_number">
+                  <field name="NUM">0</field>
+              </shadow>
+            </value>
+        </block>
+
+        <block type="newcat_set_pult">
+            <value name="NUM">
+              <shadow type="math_number">
+                  <field name="NUM">0</field>
+              </shadow>
+            </value>
+        </block>
+
+        <block type="newcat_set_hum">
+            <value name="NUM">
+              <shadow type="math_number">
+                  <field name="NUM">0</field>
+              </shadow>
+            </value>
+            <value name="NUM2">
+              <shadow type="math_number">
+                  <field name="NUM">0</field>
+              </shadow>
+            </value>
+        </block>
+
+
+        <block type="newcat_play_sound">
+          <value name="PIN">
+            <shadow type="math_number">
+                <field name="NUM">0</field>
+            </shadow>
+          </value>
+          <value name="NOTE_TYPE">
+            <shadow type="note2"/>
+          </value>
+        <value name="NOTE_DURA">
+            <shadow type="otto_dura"/>
+        </value>
+        </block>
+
+        <block type="newcat_servo">
+            <value name="PIN">
+              <shadow type="math_number">
+                  <field name="NUM">0</field>
+              </shadow>
+            </value>
+            <value name="ANGLE">
+              <shadow type="math_angle">
+                  <field name="NUM">0</field>
+              </shadow>
+            </value>
+        </block>
+
+        <block type="newcat_go_dig">
+            <value name="PIN">
+              <shadow type="math_number">
+                  <field name="NUM">0</field>
+              </shadow>
+            </value>
+        </block>
+
+        <block type="newcat_go_anal">
+            <value name="PIN_ANAL">
+                <shadow type="pin_anal"/>
+            </value>
+        </block>
+
+        <block type="newcat_go_sonic">
+            <value name="SOSONIC">
+                <shadow type="sosonic"> </shadow>
+            </value>
+            <value name="PIN2">
+                <shadow type="math_number">
+                    <field name="NUM">0</field>
+                </shadow>
+            </value>
+        </block>
+
+        <block type="newcat_read_dig">
+            <value name="PIN">
+              <shadow type="math_number">
+                  <field name="NUM">0</field>
+              </shadow>
+            </value>
+        </block>
+
+        <block type="newcat_read_ana">
+            <value name="PIN">
+              <shadow type="pin_anal">
+              </shadow>
+            </value>
+        </block>
+
+
+        <block type="newcat_set_kursor">
+            <value name="NUM">
+                <shadow type="math_number">
+                    <field name="NUM">0</field>
+                </shadow>
+            </value>
+
+            <value name="STOLB">
+              <shadow type="stolb">
+              </shadow>
+            </value>
+
+        </block>
+
+        <block type="newcat_set_text">
+
+            <value name="MESSAGE">
+                <shadow type="text">
+                    <field name="TEXT">${hello}</field>
+                </shadow>
+            </value>
+        </block>
+        <block type="newcat_init_lcd">
+        </block>
+
+        ${categorySeparator}
+    </category>
+    `;
+};
+
 const otto = function (isStage, targetId){ //modified_by_Yaroslav  //otto category
 
 const hello = ScratchBlocks.ScratchMsgs.translate('LOOKS_HELLO', 'Hello!');
@@ -238,7 +388,7 @@ const quadcopter = function (isStage, targetId){ //modified_by_Yaroslav  //quadc
           </value>
       </block>
 
-      
+
 
 
 
@@ -282,7 +432,7 @@ const quadcopter = function (isStage, targetId){ //modified_by_Yaroslav  //quadc
 
       </block>
 
-      
+
 
       <block type="copter_fly_to_coords">
         <value name="X_COORD">
@@ -1404,6 +1554,7 @@ const makeToolboxXML = function (isStage, targetId,config, categoriesXML,
         laboratory(isStage, targetId,isExternalSensorsActivated),gap, //modified_by_Yaroslav
         quadcopter(isStage, targetId), gap, //modified_by_Yaroslav
         otto(isStage, targetId), gap,
+      //  newcat(isStage),gap,
         motion(isStage, targetId), gap,
         looks(isStage, targetId, costumeName, backdropName), gap,
         sound(isStage, targetId, soundName), gap,

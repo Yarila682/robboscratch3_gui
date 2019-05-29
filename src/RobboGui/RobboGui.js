@@ -145,6 +145,7 @@ class RobboGui extends Component {
    this.props.vm.getRCA().searchRobotDevices();
    this.props.vm.getLCA().searchLaboratoryDevices();
    this.OCA.searchOttoDevices();
+   this.ACA.searchArduinoDevices();
 
    this.QCA.searchQuadcopterDevices();
 
@@ -158,6 +159,9 @@ class RobboGui extends Component {
   this.props.vm.getRCA().stopSearchProcess();
   this.props.vm.getLCA().stopSearchProcess();
 
+  this.OCA.stopSearchProcess();
+  this.ACA.stopSearchProcess();
+
 
   }
 
@@ -170,6 +174,7 @@ class RobboGui extends Component {
   this.props.vm.getRCA().stopDataRecievingProcess();
   this.props.vm.getLCA().stopDataRecievingProcess();
   this.OCA.stopDataRecievingProcess();
+  this.ACA.stopDataRecievingProcess();
 
   }
 
@@ -199,6 +204,7 @@ class RobboGui extends Component {
   this.LCA =  this.props.vm.getLCA();
   this.QCA =  this.props.vm.getQCA();
   this.OCA =  this.props.vm.getOCA();
+  this.ACA =  this.props.vm.getACA();
 
   return (
 
@@ -212,17 +218,17 @@ class RobboGui extends Component {
                   )}>
 
 
-          <div className={styles.version}> Robbo Scratch ver. 3.10.0 </div>
+          <div className={styles.version}> Robbo Scratch ver. 3.11.0 </div>
 
          {
-              (!this.props.sensorsPalette.sensors_pallete_collapsed)?  <SensorPallete RCA={this.RCA} LCA={this.LCA} QCA={this.QCA} OCA={this.OCA} />: <SensorPaletteCollapsed />
+              (!this.props.sensorsPalette.sensors_pallete_collapsed)?  <SensorPallete RCA={this.RCA} LCA={this.LCA} QCA={this.QCA} OCA={this.OCA} ACA={this.ACA} />: <SensorPaletteCollapsed />
 
 
          }
 
          <DraggableWindowComponent draggableWindowId={3}>
 
-            <FirmwareFlasherComponent DCA={this.DCA} RCA={this.RCA} LCA={this.LCA} QCA={this.QCA} OCA={this.OCA} />
+            <FirmwareFlasherComponent DCA={this.DCA} RCA={this.RCA} LCA={this.LCA} QCA={this.QCA} OCA={this.OCA} ACA={this.ACA} />
 
           </DraggableWindowComponent>
 
