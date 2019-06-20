@@ -9,6 +9,8 @@ import {ActionTriggerDraggableWindow} from './actions/sensor_actions'
 
 import {defineMessages, intlShape, injectIntl, FormattedMessage} from 'react-intl';
 
+//import Blockly_Arduino from 'blocks-compiler';
+
 
 const messages = defineMessages({
     extension_pack: {
@@ -147,6 +149,8 @@ class RobboMenu extends Component {
 
         console.log("triggerLogging");
         this.DCA.triggerLogging();
+
+       
 
   }
 
