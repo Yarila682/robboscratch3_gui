@@ -1,7 +1,7 @@
 .arduino_palette{
 
-    /*display: inline-block;*/
-    display:none;
+    display: inline-block;
+    /*display:none;*/
     margin-left: 5%;
 
     border: 2px outset rgba(0,0,0,0.5);

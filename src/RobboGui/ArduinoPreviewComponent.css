@@ -1,7 +1,7 @@
 .arduinoPreview{
 
-  /*display: inline-block;*/
-    display:none;
+    display: inline-block;
+   /* display:none;*/
 
   border: 2px outset rgba(0,0,0,0.5);
 

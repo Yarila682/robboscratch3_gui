@@ -167,6 +167,20 @@ class RobboMenu extends Component {
 
   }
 
+  enableProfiling(){
+
+      this.props.VM.runtime.enableProfiling((frame) => {
+
+            console.warn("frame: ");
+            console.warn(frame);
+        });
+  }
+
+  disableProfiling(){
+
+       this.props.VM.runtime.disableProfiling();
+  }
+
   render() {
 
 //  return this.props.connectDropTarget(
@@ -205,17 +219,17 @@ class RobboMenu extends Component {
 
                       )}> {this.props.intl.formatMessage(messages.lab_ext_sensors)} </div>
 
-                    <div id="trigger-logging" onClick={this.triggerLogging.bind(this)} className={classNames(
+                 {/*   <div id="trigger-logging" onClick={this.triggerLogging.bind(this)} className={classNames(
 
                       {[styles.robbo_menu_item]: true}
 
-                    )}> {this.props.intl.formatMessage(messages.trigger_logging)} </div>
+                    )}> {this.props.intl.formatMessage(messages.trigger_logging)} </div> */}
 
-                  <div id="trigger-firmware-flasher" onClick={this.triggerFirmwareFlasher.bind(this)} className={classNames(
+                {  <div id="trigger-firmware-flasher" onClick={this.triggerFirmwareFlasher.bind(this)} className={classNames(
 
                       {[styles.robbo_menu_item]: true}
 
-                    )}> {this.props.intl.formatMessage(messages.trigger_firmware_flasher)} </div>
+                    )}> {this.props.intl.formatMessage(messages.trigger_firmware_flasher)} </div> }
 
 
 
@@ -251,6 +265,20 @@ class RobboMenu extends Component {
                         {[styles.robbo_menu_item]: true}
 
                       )}>{this.props.intl.formatMessage(messages.color_sensor_correction5)} </div>
+
+          <hr className={styles.hrDevider}/>    
+
+              {/*   <div id="enable-profiling" onClick={this.enableProfiling.bind(this)} className={classNames(
+
+                        {[styles.robbo_menu_item]: true}
+
+                      )}>{"Enable profiling"} </div>
+
+                 <div id="disable-profiling" onClick={this.disableProfiling.bind(this)} className={classNames(
+
+                        {[styles.robbo_menu_item]: true}
+
+                      )}>{"Disable profiling"} </div>   */}    
 
 
       </div>

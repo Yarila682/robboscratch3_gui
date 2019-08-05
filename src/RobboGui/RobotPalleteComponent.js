@@ -227,7 +227,7 @@ componentDidUpdate(){
 
           this.robotGetData.call(this);
 
-      },300);
+      },50);
 
   }
 

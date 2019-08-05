@@ -55,7 +55,13 @@ const messages = defineMessages({
         id: 'gui.RobboGui.device_lost',
         description: ' ',
         defaultMessage: 'Lost connection to device'
-    }
+    },
+    devices_not_found: {
+
+        id: 'gui.RobboGui.devices_not_found',
+        description: ' ',
+        defaultMessage: 'No devices available for connection.'
+    } 
 });
 
 
@@ -110,7 +116,7 @@ class RobboGui extends Component {
 
           }else if (error.code == 2){
 
-              this.props.alert.error(<div className={styles.alert}>{`Error!`}<br/><br/>{`${error.msg}`}</div>);
+              this.props.alert.error(<div className={styles.alert}>{`Error!`}<br/><br/>{`${error.msg}`}</div>,{timeout:5000});
 
           }else{
 
@@ -128,6 +134,14 @@ class RobboGui extends Component {
       //  this.props.alert.error(<div  className={styles.alert}>{`Error!`}<br/><br/>{`Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!`}</div>);
     //    this.props.alert.error(<div>{`Error!`}<br/><br/>{`[Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!]`}</div>);
 
+
+     this.DCA.registerDevicesNotFoundCallback(() => {
+
+         this.props.alert.info(<div className={styles.alert}>{this.props.intl.formatMessage(messages.devices_not_found)}</div>)
+
+     });
+
+        // this.props.alert.info(<div className={styles.alert}><button> {"test"} </button> </div>)
   }
 
 
@@ -218,7 +232,7 @@ class RobboGui extends Component {
                   )}>
 
 
-          <div className={styles.version}> Robbo Scratch ver. 3.11.0 </div>
+          <div className={styles.version}> Robbo Scratch ver. 3.15.0-interface-modifications </div>
 
          {
               (!this.props.sensorsPalette.sensors_pallete_collapsed)?  <SensorPallete RCA={this.RCA} LCA={this.LCA} QCA={this.QCA} OCA={this.OCA} ACA={this.ACA} />: <SensorPaletteCollapsed />

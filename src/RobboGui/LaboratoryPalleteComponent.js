@@ -181,7 +181,7 @@ class LaboratoryPalleteComponent extends Component {
 
           this.labGetData.call(this);
 
-      },310);
+      },100);
 
   }
 

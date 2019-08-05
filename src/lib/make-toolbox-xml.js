@@ -7,7 +7,7 @@ const blockSeparator = '<sep gap="36"/>'; // At default scale, about 28px
 const newcat = function (isStage) {
       const hello = ScratchBlocks.ScratchMsgs.translate('LOOKS_HELLO', 'Hello!');
     return `
-    <category name="%{BKY_CATEGORY_ARDUINO}" id="newcat" colour="#5F9EA0" secondaryColour="#CC9900">
+    <category name="%{BKY_CATEGORY_ARDUINO}" id="newcat" colour="#5F9EA0" secondaryColour="#5F9EA0">
 
         <block type="newcat_set_dig">
             <value name="PIN">
@@ -1554,7 +1554,7 @@ const makeToolboxXML = function (isStage, targetId,config, categoriesXML,
         laboratory(isStage, targetId,isExternalSensorsActivated),gap, //modified_by_Yaroslav
         quadcopter(isStage, targetId), gap, //modified_by_Yaroslav
         otto(isStage, targetId), gap,
-      //  newcat(isStage),gap,
+        newcat(isStage),gap,
         motion(isStage, targetId), gap,
         looks(isStage, targetId, costumeName, backdropName), gap,
         sound(isStage, targetId, soundName), gap,

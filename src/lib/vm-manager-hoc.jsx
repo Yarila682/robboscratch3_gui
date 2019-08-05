@@ -32,6 +32,7 @@ const vmManagerHOC = function (WrappedComponent) {
                 this.audioEngine = new AudioEngine();
                 this.props.vm.attachAudioEngine(this.audioEngine);
                 this.props.vm.setCompatibilityMode(true);
+                //this.props.vm.setCompatibilityMode(false);
                 this.props.vm.initialized = true;
             }
             if (!this.props.isPlayerOnly && !this.props.isStarted) {
