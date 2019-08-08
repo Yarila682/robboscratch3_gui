@@ -19,7 +19,11 @@ import RobboMenu from './RobboMenu';
 import FirmwareFlasherComponent from './FirmwareFlasherComponent';
 import DraggableWindowComponent from './DraggableWindowComponent';
 import SettingsWindowComponent from './SettingsWindowComponent';
+
 import styles from './RobboGui.css';
+
+import SearchPanelComponent from './SearchPanelComponent';
+
 
 import { withAlert } from 'react-alert';
 
@@ -95,16 +99,12 @@ class RobboGui extends Component {
 
   componentDidMount(){
 
-      this.DCA.registerFirmwareVersionDiffersCallback((result) => {
+      // this.DCA.registerFirmwareVersionDiffersCallback((result) => {
 
-        this.props.alert.info(<div  className={styles.alert}>{this.props.intl.formatMessage(messages.differ_firm_msg)}<br/><br/>{this.props.intl.formatMessage(messages.cr_firm_msg,{current_firmware:result.current_device_firmware,required_firmware:result.need_firmware})} <br/><br/> {this.props.intl.formatMessage(messages.update_firm_msg)}  </div>,{timeout:10000});
-
-      //  this.props.alert.info(<div  className={styles.alert}>{this.props.intl.formatMessage(messages.update_firm_msg,{current_firmware:result.current_device_firmware,required_firmware:result.need_firmware})} </div>);
+      //   this.props.alert.info(<div  className={styles.alert}>{this.props.intl.formatMessage(messages.differ_firm_msg)}<br/><br/>{this.props.intl.formatMessage(messages.cr_firm_msg,{current_firmware:result.current_device_firmware,required_firmware:result.need_firmware})} <br/><br/> {this.props.intl.formatMessage(messages.update_firm_msg)}  </div>,{timeout:10000});
 
 
-      //   this.props.alert.info(`Please update  firmware.` + <br/>  `Current firmware:  ${result.current_device_firmware}` + <br/> +  `Need firmware: ${result.need_firmware}`);
-
-      });
+      // });
 
       this.DCA.registerErrorCallback((error) => {
 
@@ -149,6 +149,10 @@ class RobboGui extends Component {
   searchDevices(){
 
     console.log("searchDevices");
+
+    let search_panel = document.getElementById(`SearchPanelComponent`);
+
+    search_panel.style.display = "block";
 
 
    this.props.vm.getDCA().searchAllDevices();
@@ -264,6 +268,8 @@ class RobboGui extends Component {
          <ColorCorrectorTableComponent RCA={this.RCA}/>
 
          <RobboMenu VM={this.props.vm} />
+
+         <SearchPanelComponent  DCA={this.DCA} RCA={this.RCA} LCA={this.LCA} QCA={this.QCA} OCA={this.OCA} ACA={this.ACA} />
 
         <button id={`robbo_search_devices`} className={styles.robbo_search_devices} onClick={this.searchDevices.bind(this)}>{this.props.intl.formatMessage(messages.search_devices)} </button>
 

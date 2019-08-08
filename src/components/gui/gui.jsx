@@ -48,6 +48,7 @@ import { ItemTypes } from '../../RobboGui/drag_constants';
 import {ActionDropSensorChooseWindow} from '../../RobboGui/actions/sensor_actions';
 import {ActionDropColorCorrectorWindow} from '../../RobboGui/actions/sensor_actions'
 import {ActionDropDraggableWindow} from '../../RobboGui/actions/sensor_actions'
+import {ActionDropNewDraggableWindow} from '../../RobboGui/actions/sensor_actions'
 
 
 
@@ -93,6 +94,14 @@ const Target = {
         props.onDraggableWindowDrop(coords.y, coords.x,draggable_window_id);
 
         console.log(`Drop: DRAGGABLE_WINDOW id: ${draggable_window_id} y:${coords.y}  x:${coords.x}`);
+
+    } else if (item.element_type == ItemTypes.NEW_DRAGGABLE_WINDOW){
+      
+         let draggable_window_id = item.draggableWindowId;
+
+        props.onNewDraggableWindowDrop(coords.y, coords.x,draggable_window_id);
+
+        console.log(`Drop: NEW DRAGGABLE_WINDOW id: ${draggable_window_id} y:${coords.y}  x:${coords.x}`);
 
     }
 
@@ -525,6 +534,11 @@ const mapDispatchToProps = dispatch => ({
   onDraggableWindowDrop: (top,left, draggable_window_id) => {
 
         dispatch(ActionDropDraggableWindow(top,left, draggable_window_id));
+      },
+
+  onNewDraggableWindowDrop: (top,left, draggable_window_id) => {
+
+        dispatch(ActionDropNewDraggableWindow(top,left, draggable_window_id));
       }
 });
 

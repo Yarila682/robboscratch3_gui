@@ -445,6 +445,23 @@ const ActionDropColorCorrectorWindow = function(top,left){
 
 }
 
+const ActionDropNewDraggableWindow = function(top,left, draggable_window_id){
+
+
+  return {
+    type: 'NEW_DRAGGABLE_WINDOW_DROP',
+    payload:{
+
+        position_top:top,
+        position_left:left,
+        draggable_window_id: draggable_window_id
+
+    }
+  };
+
+
+}
+
 const ActionDropDraggableWindow = function(top,left, draggable_window_id){
 
 
@@ -725,6 +742,7 @@ export {
     ActionTriggerColorCorrectorTable,
     ActionDropColorCorrectorWindow,
     ActionDropDraggableWindow,
+    ActionDropNewDraggableWindow, //new drag window
     ActionTriggerDraggableWindow,
     ActionCreateDraggableWindow ,
     ActionSearchLaboratoryDevices,

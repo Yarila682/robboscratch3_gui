@@ -23,7 +23,7 @@ class RobotPreviewComponent extends Component {
 
            robot_searching_icon = document.getElementById(`robot-${self.props.robotIndex}-searching-icon`);
 
-           if (typeof(robot_searching_icon) != 'undefined'){
+           if ( (typeof(robot_searching_icon) != 'undefined') && (robot_searching_icon != null) ){
 
              if (self.robot_is_searching){
 
