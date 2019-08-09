@@ -135,7 +135,6 @@ class SearchPanelComponent extends Component {
 
           <div id="SearchPanelComponent-tittle" className={styles.search_panel_tittle}>
 
-             Search panel
 
               <div className={styles.close_icon} onClick={this.onThisWindowClose.bind(this)}>
 

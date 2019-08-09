@@ -43,6 +43,7 @@ import color_corrector_table,{color_corrector_table_InitialState} from '../Robbo
 import robbo_menu,{robbo_menu_InitialState} from '../RobboGui/reducers/robbo_menu';
 import settings,{settings_InitialState} from '../RobboGui/reducers/settings';
 import draggable_window,{draggable_window_InitialState} from '../RobboGui/reducers/draggable_window';
+import new_draggable_window,{new_draggable_window_InitialState} from '../RobboGui/reducers/new_draggable_window';
 import devices_firmware_flasher,{devices_firmware_flasher_InitialState} from '../RobboGui/reducers/devices_firmware_flasher';
 
 import thunk from 'redux-thunk';
@@ -90,6 +91,7 @@ const guiInitialState = {
   robbo_menu:robbo_menu_InitialState,
   settings:settings_InitialState,
   draggable_window: draggable_window_InitialState,
+  new_draggable_window: new_draggable_window_InitialState,
   devices_firmware_flasher:devices_firmware_flasher_InitialState
 };
 
@@ -214,6 +216,7 @@ const guiReducer = combineReducers({
   robbo_menu:robbo_menu,
   settings:settings,
   draggable_window: draggable_window,
+  new_draggable_window: new_draggable_window,
   devices_firmware_flasher:devices_firmware_flasher
 });
 

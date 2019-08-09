@@ -1,4 +1,5 @@
 
+const draggable_window_ids = {};
 
 const immutable_copy = function(data_structure_element){
 
@@ -76,6 +77,22 @@ function setProps (object, props) {
     }
 }
 
+const createDivShort = function (parent,styles,inner_content,attributes) {
+    var el = document.createElement('div');
+   
+    setProps(el.style, styles);
+
+ if (inner_content)
+    el.innerHTML = inner_content;
+
+     for (let attr in attributes){
+
+      el.setAttribute(attr, attributes[attr])
+    }
+
+    parent.appendChild(el);
+    return el;
+}
 
 const createDiv = function (parent, x, y, w, h, styles,inner_content,attributes) {
     var el = document.createElement('div');
@@ -102,10 +119,21 @@ const createDiv = function (parent, x, y, w, h, styles,inner_content,attributes)
     return el;
 }
 
+const generateDraggableWindowId = function(){
+
+
+}
+
+const getDraggableWindowIdByName = function(){
+
+
+}
+
 export {
 
     immutable_copy,
     color_filter,
     color_corrector,
-    createDiv
+    createDiv,
+    createDivShort
 };

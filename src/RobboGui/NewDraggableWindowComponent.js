@@ -8,7 +8,8 @@ import PropTypes from 'prop-types';
 import { ItemTypes } from './drag_constants';
 import { DragSource } from 'react-dnd';
 
-import {ActionDropDraggableWindow }  from './actions/sensor_actions';
+import {ActionDropNewDraggableWindow }  from './actions/sensor_actions';
+import {ActionCreateNewDraggableWindow }  from './actions/sensor_actions';
 
 const DraggableWindowSource = {
   beginDrag(props) {
@@ -42,6 +43,9 @@ class NewDraggableWindowComponent extends Component {
          this.props.onCreateDraggableWindow(top,left,this.props.draggableWindowId);
 
 
+      }else{
+
+           this.props.onCreateDraggableWindow(300,300,this.props.draggableWindowId);
       }
 
 
@@ -112,7 +116,7 @@ class NewDraggableWindowComponent extends Component {
     const mapStateToProps =  state => ({
 
 
-    draggable_window:state.scratchGui.draggable_window
+    draggable_window:state.scratchGui.new_draggable_window
 
 
       });
@@ -127,7 +131,7 @@ class NewDraggableWindowComponent extends Component {
 
       onCreateDraggableWindow: (top,left, draggable_window_id) => {
 
-            dispatch(ActionDropNewDraggableWindow(top,left, draggable_window_id));
+            dispatch(ActionCreateNewDraggableWindow(top,left, draggable_window_id));
           }
 
 

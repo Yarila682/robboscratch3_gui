@@ -5,9 +5,13 @@ import classNames from 'classnames';
 import {ActionTriggerExtensionPack} from './actions/sensor_actions';
 import {ActionTriggerLabExtSensors} from  './actions/sensor_actions';
 import {ActionTriggerColorCorrectorTable} from './actions/sensor_actions';
-import {ActionTriggerDraggableWindow} from './actions/sensor_actions'
+import {ActionTriggerDraggableWindow} from './actions/sensor_actions';
+
+import {ActionTriggerNewDraggableWindow} from './actions/sensor_actions'
 
 import {defineMessages, intlShape, injectIntl, FormattedMessage} from 'react-intl';
+
+import {createDiv,createDivShort} from './lib/lib.js';
 
 //import Blockly_Arduino from 'blocks-compiler';
 
@@ -169,16 +173,124 @@ class RobboMenu extends Component {
 
   enableProfiling(){
 
+     let profiler_window_content_body = document.getElementById(`profiler-window-content-body`);
+    profiler_window_content_body.innerHTML = "";
+
+    let time_counter = 0;
+
+    let steps_ids_list = [];
+
+    let average_self_time = 0;
+    let average_total_time = 0;
+
+    let self_time_summ = 0;
+    let total_time_summ = 0;
+
+    let profiler_window_average_time_field =  document.getElementById("profiler-window-average-time");
+
       this.props.VM.runtime.enableProfiling((frame) => {
 
-            console.warn("frame: ");
-            console.warn(frame);
+            // console.warn("frame: ");
+            // console.warn(frame);
+
+            //let frame_id = frame.id;
+
+             let frame_id = this.props.VM.runtime.profiler.nameById(frame.id);
+
+              if (frame_id == "Runtime._step"){
+
+                time_counter++;
+
+                self_time_summ+= frame.selfTime;
+                total_time_summ+= frame.totalTime;
+
+                if (time_counter == 30){
+
+                    average_self_time = (self_time_summ / time_counter).toFixed(7);
+                    average_total_time = (total_time_summ / time_counter).toFixed(7);
+
+                    time_counter = 0;
+
+                    profiler_window_average_time_field.innerHTML = `Runtime._step total_time:${average_total_time} self_time: ${average_self_time}`;
+
+                    self_time_summ = 0;
+                    total_time_summ = 0;
+                }
+
+              }
+
+               //if (frame_id != "Runtime._step") return;
+
+               return;
+
+             let total_time = frame.totalTime.toFixed(7);
+
+             let self_time = frame.selfTime.toFixed(7);
+
+
+            if (steps_ids_list.indexOf(frame_id) == -1){
+
+              steps_ids_list.push(frame_id);
+
+              var styles = {
+
+                margin: '10px'
+
+              };
+
+                let  profiler_window_content_body_row = createDivShort(profiler_window_content_body,styles,"",{id:`profiler_window_content_body_row-${frame_id}`});
+
+                
+                
+                let column_style = {
+
+                    marginLeft:'7px',
+
+                    marginRight:'7px',
+
+                    display:'inline-block',
+
+                    minWidth: '100px'
+                }
+
+                 createDivShort(profiler_window_content_body_row,column_style,"",{id:`profiler_window_content_body_row-${frame_id}-column_id`});      
+
+                 createDivShort(profiler_window_content_body_row,column_style,self_time,{id:`profiler_window_content_body_row-${frame_id}-column_self_time`});      
+
+                 createDivShort(profiler_window_content_body_row,column_style,total_time,{id:`profiler_window_content_body_row-${frame_id}-column_total_time`});      
+              
+
+            }else{
+
+                let profiler_window_content_body_row_column_id =  document.getElementById(`profiler_window_content_body_row-${frame_id}-column_id`); 
+                profiler_window_content_body_row_column_id.innerHTML = frame_id;
+
+
+                let profiler_window_content_body_row_column_self_time = document.getElementById(`profiler_window_content_body_row-${frame_id}-column_self_time`); 
+                profiler_window_content_body_row_column_self_time.innerHTML = self_time;
+
+
+                let profiler_window_content_body_row_column_total_time = document.getElementById(`profiler_window_content_body_row-${frame_id}-column_total_time`); 
+                profiler_window_content_body_row_column_total_time.innerHTML = total_time;
+
+
+            }
+
+            
+  
+
         });
   }
 
   disableProfiling(){
 
        this.props.VM.runtime.disableProfiling();
+  }
+
+  triggerProfilerWindow(){
+
+    this.props.onTriggerProfilerWindow("profiler-window");
+
   }
 
   render() {
@@ -268,7 +380,7 @@ class RobboMenu extends Component {
 
           <hr className={styles.hrDevider}/>    
 
-              {/*   <div id="enable-profiling" onClick={this.enableProfiling.bind(this)} className={classNames(
+                 <div id="enable-profiling" onClick={this.enableProfiling.bind(this)} className={classNames(
 
                         {[styles.robbo_menu_item]: true}
 
@@ -278,7 +390,13 @@ class RobboMenu extends Component {
 
                         {[styles.robbo_menu_item]: true}
 
-                      )}>{"Disable profiling"} </div>   */}    
+                      )}>{"Disable profiling"} </div>     
+
+             <div id="trigger-profiler-window" onClick={this.triggerProfilerWindow.bind(this)} className={classNames(
+
+                        {[styles.robbo_menu_item]: true}
+
+                      )}>{"Trigger profiler window"} </div>            
 
 
       </div>
@@ -328,7 +446,12 @@ const mapDispatchToProps = dispatch => ({
         onTriggerSettingsWindow: () => {
 
               dispatch(ActionTriggerDraggableWindow(4));
-            }
+            },
+
+         onTriggerProfilerWindow: (window_id) => {
+
+              dispatch(ActionTriggerNewDraggableWindow(window_id));
+            }    
 
 });
 

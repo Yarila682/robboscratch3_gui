@@ -76,6 +76,8 @@ class SearchPanelDeviceComponent extends Component {
         };  
 
         this.deviceId = -1;
+
+        this.firmware_version_differs = false;
         
    }
 
@@ -106,9 +108,29 @@ class SearchPanelDeviceComponent extends Component {
 
               //{this.props.intl.formatMessage(messages.cr_firm_msg,{current_firmware:result.current_device_firmware,required_firmware:result.need_firmware})}  {this.props.intl.formatMessage(messages.update_firm_msg)} 
 
+         this.firmware_version_differs = true;       
+
+
         let info_field = document.getElementById(`search-panel-device-info-${this.props.Id}`);
 
+         info_field.style.display = "inline-block";
+
+
         info_field.innerHTML = this.props.intl.formatMessage(messages.differ_firm_msg) + "<br/><br/>" + this.props.intl.formatMessage(messages.cr_firm_msg,{current_firmware:result.current_device_firmware,required_firmware:result.need_firmware}) +  "<br/><br/>" + this.props.intl.formatMessage(messages.update_firm_msg);
+
+
+        var flashing_button =  document.getElementById(`search-panel-device-flash-button-${this.props.Id}`);
+        flashing_button.style.backgroundColor = "";  
+
+
+        // let firm_differs_msg = this.props.intl.formatMessage(messages.differ_firm_msg) + "<br/><br/>" + this.props.intl.formatMessage(messages.cr_firm_msg,{current_firmware:result.current_device_firmware,required_firmware:result.need_firmware}) +  "<br/><br/>" + "Прошить устройство?" ;
+        
+        // let flash_or_not = confirm(firm_differs_msg);
+
+        // if (flash_or_not){
+
+        //     this.flashDevice();
+        // }
 
              });
     }
@@ -123,6 +145,11 @@ class SearchPanelDeviceComponent extends Component {
             let status_field = document.getElementById(`search-panel-device-status-${this.props.Id}`);
 
             let info_field = document.getElementById(`search-panel-device-info-${this.props.Id}`);
+
+           let flashing_button =  document.getElementById(`search-panel-device-flash-button-${this.props.Id}`);
+
+           let flashing_show_details_icon = document.getElementById(`search-panel-flashing-show-details-${this.props.Id}`);
+       
 
 
 
@@ -176,15 +203,37 @@ class SearchPanelDeviceComponent extends Component {
       default:
 
     }
+                if (state == 0){
+
+                    //init here
+
+                   this.firmware_version_differs = false; 
+
+                   info_field.innerHTML = "";
+
+                   info_field.style.display = "none";
+
+                   flashing_button.style.backgroundColor = "";  
+                   flashing_button.innerText = "Прошить устройство";  
 
 
+                }else if (state == 2){
 
-                if (state == 2){
+                  
 
+                   this.firmware_version_differs = false; 
 
                    status_field.innerHTML = "Connected";
 
                    info_field.innerHTML = "";
+
+                   info_field.style.display = "none";
+
+                   flashing_button.style.backgroundColor = "";  
+                   flashing_button.innerText = "Прошить устройство";  
+
+                   //flashing_show_details_icon.style.display = "none";
+                    //flashing_button.style.display = "none";
 
 
                 }else if (state == 3){
@@ -196,23 +245,60 @@ class SearchPanelDeviceComponent extends Component {
 
                     status_field.innerHTML = `${device_name} is ready`;
 
-                    let all_devices = this.props.DCA.getDevices();
+                     //let firm_differs_msg = this.props.intl.formatMessage(messages.differ_firm_msg) + this.props.intl.formatMessage(messages.cr_firm_msg,{current_firmware:result.current_device_firmware,required_firmware:result.need_firmware})  + "Прошить устройство?";
+                    
+                    let firm_differs_msg = "Flash?";
 
-                    let all_devices_found = false;
+                    let need_flash_device = false; 
 
-                    for (let device_index = 0; device_index < all_devices.length;device_index++){
+                    if (this.firmware_version_differs){
 
-                        all_devices_found = (all_devices[device_index].getState() == 6);
+                         need_flash_device = confirm(firm_differs_msg);
 
-                        if (!all_devices_found) break;
                     }
 
-                    if (all_devices_found){
+                   
 
-                         let search_panel = document.getElementById(`SearchPanelComponent`);
+                    if (need_flash_device){
 
-                      //  search_panel.style.display = "none";
+                        this.flashDevice();
+
+                    }else{
+
+                            let all_devices = this.props.DCA.getDevices();
+
+                            let all_devices_found = false;
+
+                            for (let device_index = 0; device_index < all_devices.length;device_index++){
+
+                                all_devices_found = (all_devices[device_index].getState() == 6);
+
+                                if (!all_devices_found) break;
+                            }
+
+                            if (all_devices_found){
+
+                                let search_panel = document.getElementById(`SearchPanelComponent`);
+
+                            //  search_panel.style.display = "none";
+                            }
+
                     }
+
+
+                } else if (state == 8){ //Port doesn't respond (state - TIMEOUT)
+
+                     let info_field = document.getElementById(`search-panel-device-info-${this.props.Id}`);
+
+                    info_field.style.display = "inline-block";
+
+
+                    let DEVICE_HANDLE_TIMEOUT =  this.DCA.getTimeoutVars().DEVICE_HANDLE_TIMEOUT;   
+
+                    info_field.innerHTML = `Port doesn't respond in time (${DEVICE_HANDLE_TIMEOUT})`;
+
+                     status_field.innerHTML = `Error!`;
+
 
 
                 }//else
@@ -241,17 +327,53 @@ searchDevices(){
 }
 
 
+flashingShowDetails(){
+
+if (this.props.draggable_window[this.props.draggableWindowId].isShowing !== true){
+
+    this.props.onShowFlashingStatusWindow(this.props.draggableWindowId);
+
+  }
+
+}
+
+
 flashDevice(){
 
     var search_device_button =  document.getElementById(`robbo_search_devices`);
 
     search_device_button.setAttribute("disabled", "disabled");
 
-    if (this.props.draggable_window[this.props.draggableWindowId].isShowing !== true){
 
-    this.props.onShowFlashingStatusWindow(this.props.draggableWindowId);
+    // var flashing_short_status_field =  document.getElementById(`search-panel-flashing-status-${this.props.Id}`);
 
-  }
+
+    // flashing_short_status_field.style.display = "inline-block";
+    // flashing_short_status_field.style.backgroundImage = " url(/build/static/robbo_assets/searching.gif)";
+
+
+
+    var flashing_button =  document.getElementById(`search-panel-device-flash-button-${this.props.Id}`);
+
+    flashing_button.setAttribute("disabled", "disabled");
+
+
+    //flashing_button.style.display = "inline-block";
+    flashing_button.style.backgroundImage = " url(/build/static/robbo_assets/searching.gif)";
+    flashing_button.style.backgroundColor = "";
+    flashing_button.style.backgroundRepeat = "no-repeat";
+    flashing_button.style.backgroundPosition = "center";
+    flashing_button.style.textAlign = "left";
+    flashing_button.innerText = "Flashing...";
+
+
+
+
+//     if (this.props.draggable_window[this.props.draggableWindowId].isShowing !== true){
+
+//     this.props.onShowFlashingStatusWindow(this.props.draggableWindowId);
+
+//   }
 
     var cId =  this.props.flashingStatusComponentId;
 
@@ -361,12 +483,32 @@ flashDevice(){
 
                 search_device_button.removeAttribute("disabled");
 
+                //flashing_short_status_field.style.backgroundImage = " url(/build/static/robbo_assets/status_ok.svg)";
+               
+                flashing_button.style.backgroundImage = "";
+        
+
+                flashing_button.removeAttribute("disabled");
+                flashing_button.style.display = "inline-block";
+
                 this.searchDevices(); //search devices
 
           }else if ((status.indexOf("Error") !== -1)){
 
                 flashingStatusComponent.style.backgroundColor = "red";
                 search_device_button.removeAttribute("disabled");
+
+              //  flashing_short_status_field.style.backgroundImage = " url(/build/static/robbo_assets/status_error.svg)";
+
+
+                flashing_button.style.backgroundImage = "";
+                flashing_button.style.backgroundColor = "#ff0000";
+                flashing_button.style.textAlign = "center";
+                flashing_button.innerText = "Error!";
+
+                flashing_button.removeAttribute("disabled");
+
+                // flashing_short_status_field.style.display = "none";
 
           }else{
 
@@ -411,9 +553,21 @@ flashDevice(){
 
           </div>
 
-          <div id="search-panel-device-flash-button" className={styles.search_panel_device_element}>
+          <div id={`search-panel-device-flash-button-element-${this.props.Id}`} className={styles.search_panel_device_element}>
 
-              <button className={styles.device_flash_button} onClick={this.flashDevice.bind(this)}>{this.props.intl.formatMessage(messages.flash_device)} </button>
+              <button id={`search-panel-device-flash-button-${this.props.Id}`} className={styles.device_flash_button} onClick={this.flashDevice.bind(this)}>{this.props.intl.formatMessage(messages.flash_device)} </button>
+
+          </div>
+
+           <div id={`search-panel-flashing-status-${this.props.Id}`} className={styles.search_panel_flashing_status}>
+
+               
+
+          </div>
+
+          <div id={`search-panel-flashing-show-details-${this.props.Id}`} className={styles.search_panel_flashing_show_details} onClick={this.flashingShowDetails.bind(this)}>
+
+               
 
           </div>
 

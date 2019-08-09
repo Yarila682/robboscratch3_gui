@@ -24,6 +24,9 @@ import styles from './RobboGui.css';
 
 import SearchPanelComponent from './SearchPanelComponent';
 
+import NewDraggableWindowComponent from './NewDraggableWindowComponent';
+import ProfilerWindowComponent from './ProfilerWindowComponent';
+
 
 import { withAlert } from 'react-alert';
 
@@ -224,6 +227,8 @@ class RobboGui extends Component {
   this.OCA =  this.props.vm.getOCA();
   this.ACA =  this.props.vm.getACA();
 
+  var initial_coords_profiler = [300,300];
+
   return (
 
     <div className={classNames(
@@ -270,6 +275,14 @@ class RobboGui extends Component {
          <RobboMenu VM={this.props.vm} />
 
          <SearchPanelComponent  DCA={this.DCA} RCA={this.RCA} LCA={this.LCA} QCA={this.QCA} OCA={this.OCA} ACA={this.ACA} />
+
+          <NewDraggableWindowComponent draggableWindowId={"profiler-window"} initialCoords={initial_coords_profiler}>
+
+            <ProfilerWindowComponent />
+
+          </NewDraggableWindowComponent>
+
+        
 
         <button id={`robbo_search_devices`} className={styles.robbo_search_devices} onClick={this.searchDevices.bind(this)}>{this.props.intl.formatMessage(messages.search_devices)} </button>
 

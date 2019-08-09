@@ -555,7 +555,7 @@ export default connect(
         mapStateToProps,
         mapDispatchToProps
 
-    ) (DropTarget([ItemTypes.SENSOR_CHOOSE_WINDOW,ItemTypes.COLOR_CORRECTOR_WINDOW,ItemTypes.DRAGGABLE_WINDOW], Target, collect)(injectIntl(GUIComponent)));
+    ) (DropTarget([ItemTypes.SENSOR_CHOOSE_WINDOW,ItemTypes.COLOR_CORRECTOR_WINDOW,ItemTypes.DRAGGABLE_WINDOW,ItemTypes.NEW_DRAGGABLE_WINDOW], Target, collect)(injectIntl(GUIComponent)));
 
 // export default injectIntl(connect(
 //         mapStateToProps,
