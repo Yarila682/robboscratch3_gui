@@ -10,7 +10,8 @@
     min-width: 186px;
     max-width: 260px;
     overflow: visible;
-    color: #383838;
+    /*color: #383838;*/
+    color:white;
     box-shadow: 0 8px 8px 0 $ui-black-transparent;
 }
 

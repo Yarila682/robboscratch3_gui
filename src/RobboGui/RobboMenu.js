@@ -204,7 +204,7 @@ class RobboMenu extends Component {
                 self_time_summ+= frame.selfTime;
                 total_time_summ+= frame.totalTime;
 
-                if (time_counter == 30){
+                if (time_counter == 100){
 
                     average_self_time = (self_time_summ / time_counter).toFixed(7);
                     average_total_time = (total_time_summ / time_counter).toFixed(7);

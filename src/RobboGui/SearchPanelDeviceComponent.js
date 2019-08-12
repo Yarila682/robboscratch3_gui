@@ -42,6 +42,11 @@ const messages = defineMessages({
         description: ' ',
         defaultMessage: 'Flash device'
     },
+    flashing_device: {
+        id: 'gui.FirmwareFlasherDeviceComponent.flashing_device',
+        description: ' ',
+        defaultMessage: 'Прошиваем...'
+    },
 
     update_firm_msg: {
 
@@ -60,6 +65,66 @@ const messages = defineMessages({
         id: 'gui.RobboGui.differ_firm_msg',
         description: ' ',
         defaultMessage: 'The current firmware version of the device differs from the required one.'
+    },
+    error:{
+
+        id: 'gui.SearchPanel.error',
+        description: ' ',
+        defaultMessage: 'Ошибка!'
+    },
+    device_connected:{
+
+        id: 'gui.SearchPanel.device_connected',
+        description: ' ',
+        defaultMessage: 'подключён'
+    },
+    device_checking_serial:{
+
+        id: 'gui.SearchPanel.device_checking_serial',
+        description: ' ',
+        defaultMessage: 'Проверяем серийный номер...'
+    },
+    device_no_response:{
+
+        id: 'gui.SearchPanel.device_no_response',
+        description: ' ',
+        defaultMessage: 'Порт не отвечает'
+    },
+    device_no_response_details:{
+
+        id: 'gui.SearchPanel.device_no_response_details',
+        description: ' ',
+        defaultMessage: 'Нет ответа от устройства в течение '
+    },
+    device_no_response_alert_details:{
+
+        id: 'gui.SearchPanel.device_no_response_alert_details',
+        description: ' ',
+        defaultMessage: 'Устройство на порту {device_port} не отвечает.  Прошить?'
+    },
+    device_connection_lost:{
+
+        id: 'gui.SearchPanel.device_connection_lost',
+        description: ' ',
+        defaultMessage: 'Потеряна связь с устройством.'
+    },
+    device_port_error:{
+
+        id: 'gui.SearchPanel.device_port_error',
+        description: ' ',
+        defaultMessage: 'Ошибка порта!'
+    },
+    milliseconds:{
+
+        id: 'gui.SearchPanel.milliseconds',
+        description: ' ',
+        defaultMessage: ' мс'
+    },
+    bluetooth_linux_hint:{
+
+        id: 'gui.SearchPanel.bluetooth_linux_hint',
+        description: ' ',
+        defaultMessage: 'В силу особенностей устройства Линукс Robbo Scratch нужно запустить от sudo (суперпользователь).'
     }
 
   });
@@ -78,6 +143,8 @@ class SearchPanelDeviceComponent extends Component {
         this.deviceId = -1;
 
         this.firmware_version_differs = false;
+
+        this.firmware_version_differs_cb_result = {};
         
    }
 
@@ -108,7 +175,8 @@ class SearchPanelDeviceComponent extends Component {
 
               //{this.props.intl.formatMessage(messages.cr_firm_msg,{current_firmware:result.current_device_firmware,required_firmware:result.need_firmware})}  {this.props.intl.formatMessage(messages.update_firm_msg)} 
 
-         this.firmware_version_differs = true;       
+         this.firmware_version_differs = true;     
+         this.firmware_version_differs_cb_result = result;  
 
 
         let info_field = document.getElementById(`search-panel-device-info-${this.props.Id}`);
@@ -149,6 +217,8 @@ class SearchPanelDeviceComponent extends Component {
            let flashing_button =  document.getElementById(`search-panel-device-flash-button-${this.props.Id}`);
 
            let flashing_show_details_icon = document.getElementById(`search-panel-flashing-show-details-${this.props.Id}`);
+
+           let device_status_icon = document.getElementById(`search-panel-device-status-icon-${this.props.Id}`);
        
 
 
@@ -214,7 +284,7 @@ class SearchPanelDeviceComponent extends Component {
                    info_field.style.display = "none";
 
                    flashing_button.style.backgroundColor = "";  
-                   flashing_button.innerText = "Прошить устройство";  
+                   flashing_button.innerText = this.props.intl.formatMessage(messages.flash_device);
 
 
                 }else if (state == 2){
@@ -230,28 +300,41 @@ class SearchPanelDeviceComponent extends Component {
                    info_field.style.display = "none";
 
                    flashing_button.style.backgroundColor = "";  
-                   flashing_button.innerText = "Прошить устройство";  
+                   flashing_button.style.backgroundImage = "-webkit-linear-gradient(top,#00af41,#008a00)";
+                   flashing_button.innerText = this.props.intl.formatMessage(messages.flash_device);  
 
-                   //flashing_show_details_icon.style.display = "none";
-                    //flashing_button.style.display = "none";
+                   flashing_show_details_icon.style.display = "none";
+                   flashing_button.style.display = "none";
 
 
                 }else if (state == 3){
 
-                    status_field.innerHTML = "Checking serial...";
+                    status_field.innerHTML = this.props.intl.formatMessage(messages.device_checking_serial);
+
+                    device_status_icon.innerHTML = `<img src = "/build/static/robbo_assets/yellow.png" />`;
 
 
                 }else if (state == 6){
 
-                    status_field.innerHTML = `${device_name} is ready`;
+                    let result =  this.firmware_version_differs_cb_result;
 
-                     //let firm_differs_msg = this.props.intl.formatMessage(messages.differ_firm_msg) + this.props.intl.formatMessage(messages.cr_firm_msg,{current_firmware:result.current_device_firmware,required_firmware:result.need_firmware})  + "Прошить устройство?";
+                    status_field.innerHTML = device_name + " " + this.props.intl.formatMessage(messages.device_connected);
+
+                    device_status_icon.innerHTML = `<img src = "/build/static/robbo_assets/green.png" />`;
+
+                     let firm_differs_msg = this.props.intl.formatMessage(messages.differ_firm_msg) + this.props.intl.formatMessage(messages.cr_firm_msg,{current_firmware:result.current_device_firmware,required_firmware:result.need_firmware})  
+                     +  this.props.intl.formatMessage(messages.flash_device) + "?";
                     
-                    let firm_differs_msg = "Flash?";
+                    //let firm_differs_msg = "Flash?";
 
                     let need_flash_device = false; 
 
-                    if (this.firmware_version_differs){
+                    if ((this.firmware_version_differs) && (this.props.devicePort.indexOf("rfcomm") == -1) ){
+
+                   // if (true){
+
+                        flashing_show_details_icon.style.display = "inline-block";
+                        flashing_button.style.display = "inline-block";
 
                          need_flash_device = confirm(firm_differs_msg);
 
@@ -260,10 +343,11 @@ class SearchPanelDeviceComponent extends Component {
                    
 
                     if (need_flash_device){
+                        
 
                         this.flashDevice();
 
-                    }else{
+                    }else if (!this.firmware_version_differs){ //We don't need to close panel if firmware versions differ.
 
                             let all_devices = this.props.DCA.getDevices();
 
@@ -271,7 +355,7 @@ class SearchPanelDeviceComponent extends Component {
 
                             for (let device_index = 0; device_index < all_devices.length;device_index++){
 
-                                all_devices_found = (all_devices[device_index].getState() == 6);
+                                all_devices_found = ((all_devices[device_index].getState() == 6) && (!all_devices[device_index].isFirmwareVersionDiffers()));
 
                                 if (!all_devices_found) break;
                             }
@@ -280,7 +364,7 @@ class SearchPanelDeviceComponent extends Component {
 
                                 let search_panel = document.getElementById(`SearchPanelComponent`);
 
-                            //  search_panel.style.display = "none";
+                                 search_panel.style.display = "none";
                             }
 
                     }
@@ -292,16 +376,102 @@ class SearchPanelDeviceComponent extends Component {
 
                     info_field.style.display = "inline-block";
 
-
-                    let DEVICE_HANDLE_TIMEOUT =  this.DCA.getTimeoutVars().DEVICE_HANDLE_TIMEOUT;   
-
-                    info_field.innerHTML = `Port doesn't respond in time (${DEVICE_HANDLE_TIMEOUT})`;
-
-                     status_field.innerHTML = `Error!`;
+                    if (result_obj.error.code == 1){ //Device was good but connection lost.
 
 
+                        let NO_RESPONSE_TIMEOUT =  this.DCA.getTimeoutVars().NO_RESPONSE_TIMEOUT;   
 
-                }//else
+                        info_field.innerHTML = this.props.intl.formatMessage(messages.device_no_response_details) + " " + NO_RESPONSE_TIMEOUT 
+                                + " " + this.props.intl.formatMessage(messages.milliseconds);
+
+                        status_field.innerHTML = this.props.intl.formatMessage(messages.device_connection_lost);
+
+
+                        let search_panel = document.getElementById(`SearchPanelComponent`);
+                        search_panel.style.display = "block";
+
+                        device_status_icon.innerHTML = `<img src = "/build/static/robbo_assets/red.png" />`;
+
+                        //flashing_show_details_icon.style.display = "none";
+                        //flashing_button.style.display = "none";
+
+
+                    }else if (result_obj.error.code == -1){ //We cann't get any usefull info from the device
+
+
+                       
+                       
+                        let DEVICE_HANDLE_TIMEOUT =  this.DCA.getTimeoutVars().DEVICE_HANDLE_TIMEOUT;   
+
+                         info_field.innerHTML = this.props.intl.formatMessage(messages.device_no_response_details) + " " + DEVICE_HANDLE_TIMEOUT
+                                + " " + this.props.intl.formatMessage(messages.milliseconds);
+
+                        status_field.innerHTML =  this.props.intl.formatMessage(messages.device_no_response); 
+
+                        device_status_icon.innerHTML = `<img src = "/build/static/robbo_assets/red.png" />`;
+                        
+                       let need_to_flash_msg = this.props.intl.formatMessage(messages.device_no_response_alert_details,{device_port:this.props.devicePort});
+
+                       let  need_flash_device = false;
+
+                       // if (true){
+
+                         if (this.props.devicePort.indexOf("rfcomm") == -1){
+
+                             flashing_show_details_icon.style.display = "inline-block";
+                             flashing_button.style.display = "inline-block";
+
+                             need_flash_device = confirm(need_to_flash_msg);
+
+                         }
+
+                   
+                        if (need_flash_device){
+
+                                this.flashDevice();
+
+                         }
+
+                    }      
+
+
+
+                } else if (state == 7){
+
+
+                    let info_field = document.getElementById(`search-panel-device-info-${this.props.Id}`);
+
+                    info_field.style.display = "inline-block";
+
+                     if (this.props.devicePort.indexOf("rfcom") != -1){
+
+                            flashing_show_details_icon.style.display = "none";
+                            flashing_button.style.display = "none";
+
+                            
+
+                        }
+
+                    if ( (this.props.devicePort.indexOf("rfcom") != -1) && (result_obj.error.msg.indexOf("cannot open /dev/rfcom") != -1 ) ){
+
+                         info_field.innerHTML = result_obj.error.msg + "<br/>" + this.props.intl.formatMessage(messages.bluetooth_linux_hint) ;
+
+                    }else{
+
+                        info_field.innerHTML = result_obj.error.msg;
+
+                    }
+
+                    
+
+                     status_field.innerHTML = this.props.intl.formatMessage(messages.device_port_error); 
+
+                     device_status_icon.innerHTML = `<img src = "/build/static/robbo_assets/red.png" />`;
+
+                      let search_panel = document.getElementById(`SearchPanelComponent`);
+                      search_panel.style.display = "block";
+
+                }
 
   }  
 
@@ -360,11 +530,12 @@ flashDevice(){
 
     //flashing_button.style.display = "inline-block";
     flashing_button.style.backgroundImage = " url(/build/static/robbo_assets/searching.gif)";
-    flashing_button.style.backgroundColor = "";
+    flashing_button.style.backgroundColor = "#FFFF99"; //Light yellow2
     flashing_button.style.backgroundRepeat = "no-repeat";
     flashing_button.style.backgroundPosition = "center";
     flashing_button.style.textAlign = "left";
-    flashing_button.innerText = "Flashing...";
+    flashing_button.style.color = "black";
+    flashing_button.innerText = this.props.intl.formatMessage(messages.flashing_device);
 
 
 
@@ -477,7 +648,7 @@ flashDevice(){
 
           flashingLogComponent.scrollTop = flashingLogComponent.scrollHeight;
 
-          if ( (status.indexOf("Port closed") !== -1)){
+          if ((status.indexOf("Port closed") !== -1)){
 
                 flashingStatusComponent.style.backgroundColor = "green";
 
@@ -501,12 +672,16 @@ flashDevice(){
               //  flashing_short_status_field.style.backgroundImage = " url(/build/static/robbo_assets/status_error.svg)";
 
 
-                flashing_button.style.backgroundImage = "";
+              //  flashing_button.style.backgroundImage = "";
+                flashing_button.style.backgroundImage = "-webkit-linear-gradient(top,#ff0000,#ff0000)";
                 flashing_button.style.backgroundColor = "#ff0000";
                 flashing_button.style.textAlign = "center";
-                flashing_button.innerText = "Error!";
+                flashing_button.innerText = this.props.intl.formatMessage(messages.error);
 
                 flashing_button.removeAttribute("disabled");
+
+                let search_panel = document.getElementById(`SearchPanelComponent`);
+                search_panel.style.display = "block";
 
                 // flashing_short_status_field.style.display = "none";
 
@@ -541,15 +716,20 @@ flashDevice(){
 
           </div>
 
+           <div id={`search-panel-device-status-icon-${this.props.Id}`} className={styles.search_panel_device_status_icon}>
+
+
+          </div>
+
            <div id={`search-panel-device-status-${this.props.Id}`} className={styles.search_panel_device_element}>
 
-                {"status"}
+               
 
           </div>
 
           <div id={`search-panel-device-info-${this.props.Id}`} className={styles.search_panel_device_element}>
 
-                {"info"}
+               
 
           </div>
 

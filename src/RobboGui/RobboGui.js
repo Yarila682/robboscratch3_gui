@@ -109,40 +109,40 @@ class RobboGui extends Component {
 
       // });
 
-      this.DCA.registerErrorCallback((error) => {
+      // this.DCA.registerErrorCallback((error) => {
 
-      //    this.props.alert.error(<div style={{ backgroundColor: 'green' }}>{`Error:  ${error.msg} Error code: ${error.code}`}</div>);
+      // //    this.props.alert.error(<div style={{ backgroundColor: 'green' }}>{`Error:  ${error.msg} Error code: ${error.code}`}</div>);
 
-          if (error.code == 1){
+      //     if (error.code == 1){
 
-      //      this.props.alert.error(<div className={styles.alert}>{`Error!`}<br/><br/>{error.msg}<br/><br/>{this.props.intl.formatMessage(messages.device_lost)}</div>);
+      // //      this.props.alert.error(<div className={styles.alert}>{`Error!`}<br/><br/>{error.msg}<br/><br/>{this.props.intl.formatMessage(messages.device_lost)}</div>);
 
-          }else if (error.code == 2){
+      //     }else if (error.code == 2){
 
-              this.props.alert.error(<div className={styles.alert}>{`Error!`}<br/><br/>{`${error.msg}`}</div>,{timeout:5000});
+      //         this.props.alert.error(<div className={styles.alert}>{`Error!`}<br/><br/>{`${error.msg}`}</div>,{timeout:5000});
 
-          }else{
+      //     }else{
 
-                this.props.alert.error(<div className={styles.alert}>{`Error!`}<br/><br/>{`${error.msg}`}</div>);
+      //           this.props.alert.error(<div className={styles.alert}>{`Error!`}<br/><br/>{`${error.msg}`}</div>);
 
-          }
-
-
-
-      //  this.props.alert.error(<div  className={styles.alert}>{`Error!`}<br/><br/>{`Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!`}</div>);
+      //     }
 
 
-      });
+
+      // //  this.props.alert.error(<div  className={styles.alert}>{`Error!`}<br/><br/>{`Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!`}</div>);
+
+
+      // });
 
       //  this.props.alert.error(<div  className={styles.alert}>{`Error!`}<br/><br/>{`Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!`}</div>);
     //    this.props.alert.error(<div>{`Error!`}<br/><br/>{`[Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!]`}</div>);
 
 
-     this.DCA.registerDevicesNotFoundCallback(() => {
+    //  this.DCA.registerDevicesNotFoundCallback(() => {
 
-         this.props.alert.info(<div className={styles.alert}>{this.props.intl.formatMessage(messages.devices_not_found)}</div>)
+    //      this.props.alert.info(<div className={styles.alert}>{this.props.intl.formatMessage(messages.devices_not_found)}</div>)
 
-     });
+    //  });
 
         // this.props.alert.info(<div className={styles.alert}><button> {"test"} </button> </div>)
   }
@@ -157,6 +157,7 @@ class RobboGui extends Component {
 
     search_panel.style.display = "block";
 
+    
 
    this.props.vm.getDCA().searchAllDevices();
 
@@ -241,7 +242,7 @@ class RobboGui extends Component {
                   )}>
 
 
-          <div className={styles.version}> Robbo Scratch ver. 3.15.0-interface-modifications </div>
+          <div className={styles.version}> Robbo Scratch ver. 3.16.1-interface-modifications </div>
 
          {
               (!this.props.sensorsPalette.sensors_pallete_collapsed)?  <SensorPallete RCA={this.RCA} LCA={this.LCA} QCA={this.QCA} OCA={this.OCA} ACA={this.ACA} />: <SensorPaletteCollapsed />
@@ -284,7 +285,9 @@ class RobboGui extends Component {
 
         
 
-        <button id={`robbo_search_devices`} className={styles.robbo_search_devices} onClick={this.searchDevices.bind(this)}>{this.props.intl.formatMessage(messages.search_devices)} </button>
+       {/* <button id={`robbo_search_devices`} className={styles.robbo_search_devices} onClick={this.searchDevices.bind(this)}>{this.props.intl.formatMessage(messages.search_devices)} </button>*/}
+
+          <div id={`robbo_search_devices`} className={styles.robbo_search_devices} onClick={this.searchDevices.bind(this)}>{this.props.intl.formatMessage(messages.search_devices)} </div>
 
     </div>
   );

@@ -12,6 +12,23 @@
  min-width: 130px;
  /*text-align: left;*/
 
+    background-color: #00af41;
+    background-image: -webkit-linear-gradient(top,#00af41,#008a00);
+
+    border-radius: 7px;
+
+    color:white;
+
+}
+
+.search_panel_device_status_icon{
+
+    display: inline-block;
+    min-width: 30px;
+    padding-left: 3px;
+    padding-right: 3px;
+    margin-bottom: 7px;
+    margin-top: 7px;
 }
 
 .search_panel_flashing_show_details{
@@ -39,7 +56,7 @@
       padding-right: 3px;
       margin-bottom: 7px;
       margin-top: 7px;
-      min-width: 160px;
+      min-width: 90px;
 
   }
 
@@ -66,7 +83,7 @@
       padding-right: 5px;
       margin-bottom: 7px;
       margin-top: 7px;
-      min-width: 160px;
+      min-width: 90px;
 
   }
 

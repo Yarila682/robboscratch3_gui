@@ -1,6 +1,7 @@
 
 import classNames from 'classnames';
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 
 
@@ -13,6 +14,16 @@ import SearchPanelDeviceComponent from './SearchPanelDeviceComponent';
 import DraggableWindowComponent from './DraggableWindowComponent';
 
 import {defineMessages, intlShape, injectIntl, FormattedMessage} from 'react-intl';
+
+const messages = defineMessages({
+
+    devices_not_found: {
+
+        id: 'gui.RobboGui.devices_not_found',
+        description: ' ',
+        defaultMessage: 'No devices available for connection.'
+    } 
+});
 
 
 
@@ -51,9 +62,22 @@ class SearchPanelComponent extends Component {
 
     this.draggableWindowId = this.props.draggableWindowId;
 
+    this.DCA.registerDevicesNotFoundCallback(() => {
+
+
+        this.setState((previousState, currentProps) => {
+
+            return {
+                devices:[]
+              };
+            });
+
+     });
+
    
 
      this.DCA.registerDeviceFoundCallback(() => {
+
 
        let devices = this.DCA.getDevices();
 
@@ -121,7 +145,9 @@ class SearchPanelComponent extends Component {
   onThisWindowClose(){
 
     console.log("Search Panel close");
-    this.props.onSearchPanelWindowClose(this.draggableWindowId);
+    //this.props.onSearchPanelWindowClose(this.draggableWindowId);
+
+    ReactDOM.findDOMNode(this).style.display = "none";
 
   }
 
@@ -193,6 +219,12 @@ class SearchPanelComponent extends Component {
           )
 
 
+
+          }
+
+          {
+
+             ( this.state.devices.length == 0)?<div className={styles.devices_not_found}>{this.props.intl.formatMessage(messages.devices_not_found)}</div>:""
 
           }
 
