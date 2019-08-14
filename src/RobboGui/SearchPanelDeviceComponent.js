@@ -66,6 +66,12 @@ const messages = defineMessages({
         description: ' ',
         defaultMessage: 'The current firmware version of the device differs from the required one.'
     },
+    differ_firm_msg_device_maybe_incorrect: {
+
+        id: 'gui.RobboGui.differ_firm_msg_device_maybe_incorrect',
+        description: ' ',
+        defaultMessage: 'Возможна неккоректная работа устройства.'
+    },
     error:{
 
         id: 'gui.SearchPanel.error',
@@ -76,7 +82,7 @@ const messages = defineMessages({
 
         id: 'gui.SearchPanel.device_connected',
         description: ' ',
-        defaultMessage: 'подключён'
+        defaultMessage: 'Устройство подключёно'
     },
     device_checking_serial:{
 
@@ -88,19 +94,20 @@ const messages = defineMessages({
 
         id: 'gui.SearchPanel.device_no_response',
         description: ' ',
-        defaultMessage: 'Порт не отвечает'
+        defaultMessage: 'Обнаружено неизвестное устройство'
     },
     device_no_response_details:{
 
         id: 'gui.SearchPanel.device_no_response_details',
         description: ' ',
-        defaultMessage: 'Нет ответа от устройства в течение '
+        defaultMessage: 'Необходимо обновить прошивку.'
     },
     device_no_response_alert_details:{
 
         id: 'gui.SearchPanel.device_no_response_alert_details',
         description: ' ',
-        defaultMessage: 'Устройство на порту {device_port} не отвечает.  Прошить?'
+        defaultMessage: `К порту {device_port} подключено устройство, которое не распознаётся в Robbo Scratch. Вероятно в устрйстве отсутствует прошивка,  
+                         либо загружена нестандартная прошивка. Загрузить стандартную прошивку Robbo Scratch 3?`
     },
     device_connection_lost:{
 
@@ -124,8 +131,29 @@ const messages = defineMessages({
 
         id: 'gui.SearchPanel.bluetooth_linux_hint',
         description: ' ',
-        defaultMessage: 'В силу особенностей устройства Линукс Robbo Scratch нужно запустить от sudo (суперпользователь).'
+        defaultMessage: 'В силу особенностей устройства Линукс Robbo Scratch нужно запустить с правами пользоваетля root.'
+    }, 
+    flashing_in_progress:{
+
+        id: 'gui.SearchPanel.flashing_in_progress',
+        description: ' ',
+        defaultMessage: 'Внимание!'
+    }, 
+    flashing_in_progress_details:{
+
+        id: 'gui.SearchPanel.flashing_in_progress_details',
+        description: ' ',
+        defaultMessage: 'Идёт прошивка.'
+    },
+    device_try_to_reconnect:{
+
+
+        id: 'gui.SearchPanel.device_try_to_reconnect',
+        description: ' ',
+        defaultMessage: 'Поробуйте преподключить устройство.'
+
     }
+    
 
   });
 
@@ -184,7 +212,7 @@ class SearchPanelDeviceComponent extends Component {
          info_field.style.display = "inline-block";
 
 
-        info_field.innerHTML = this.props.intl.formatMessage(messages.differ_firm_msg) + "<br/><br/>" + this.props.intl.formatMessage(messages.cr_firm_msg,{current_firmware:result.current_device_firmware,required_firmware:result.need_firmware}) +  "<br/><br/>" + this.props.intl.formatMessage(messages.update_firm_msg);
+        info_field.innerHTML = this.props.intl.formatMessage(messages.differ_firm_msg) + "<br/><br/>" + this.props.intl.formatMessage(messages.cr_firm_msg,{current_firmware:result.current_device_firmware,required_firmware:result.need_firmware}) +  "<br/><br/>" + this.props.intl.formatMessage(messages.differ_firm_msg_device_maybe_incorrect) + "<br/><br/>" + this.props.intl.formatMessage(messages.update_firm_msg);
 
 
         var flashing_button =  document.getElementById(`search-panel-device-flash-button-${this.props.Id}`);
@@ -458,7 +486,7 @@ class SearchPanelDeviceComponent extends Component {
 
                     }else{
 
-                        info_field.innerHTML = result_obj.error.msg;
+                        info_field.innerHTML = result_obj.error.msg + "<br/>" +  this.props.intl.formatMessage(messages.device_try_to_reconnect);
 
                     }
 

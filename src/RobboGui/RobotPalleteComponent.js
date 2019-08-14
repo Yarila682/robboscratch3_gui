@@ -60,6 +60,13 @@ const messages = defineMessages({
 
 class RobotPalleteComponent extends Component {
 
+  constructor(){
+
+     super();
+
+     this.getDataInterval = null;
+  }
+
 
 
   startGetDataLoop(){
@@ -84,6 +91,8 @@ class RobotPalleteComponent extends Component {
 
     console.log("startRobotGetData");
   //  this.props.startRobotGetData(0,this.props.RCA);
+
+   
 
   this.props.setRCALocal(this.props.RCA);
 
@@ -223,7 +232,7 @@ componentDidUpdate(){
 
     }
 
-      setInterval(() => {
+     this.getDataInterval =  setInterval(() => {
 
           this.robotGetData.call(this);
 

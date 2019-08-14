@@ -186,6 +186,10 @@ class RobboMenu extends Component {
     let self_time_summ = 0;
     let total_time_summ = 0;
 
+    let recieve_time_delta = 0;
+    let recieve_time_delta_sum = 0;
+    let recieve_time_delta_average = 0;
+
     let profiler_window_average_time_field =  document.getElementById("profiler-window-average-time");
 
       this.props.VM.runtime.enableProfiling((frame) => {
@@ -204,17 +208,37 @@ class RobboMenu extends Component {
                 self_time_summ+= frame.selfTime;
                 total_time_summ+= frame.totalTime;
 
+                 recieve_time_delta = this.RCA.getRecieveTimeDelta();
+                 recieve_time_delta_sum+= recieve_time_delta;
+
+              //   if (time_counter == 5){
+
+              //      recieve_time_delta = this.RCA.getRecieveTimeDelta().toFixed(7);
+
+              //       profiler_window_average_time_field.innerHTML = `<div>Runtime._step total_time:${average_total_time} self_time: ${average_self_time} </div>
+              //                                                       <div>Recieve time delta: ${recieve_time_delta}</div>
+              //                                                       <div>Recieve time delta average: ${recieve_time_delta_average}</div>`;
+
+              //  }
+
                 if (time_counter == 100){
 
                     average_self_time = (self_time_summ / time_counter).toFixed(7);
                     average_total_time = (total_time_summ / time_counter).toFixed(7);
 
+                    recieve_time_delta_average = ( recieve_time_delta_sum / time_counter).toFixed(7);
+
                     time_counter = 0;
 
-                    profiler_window_average_time_field.innerHTML = `Runtime._step total_time:${average_total_time} self_time: ${average_self_time}`;
+                  
+
+                    profiler_window_average_time_field.innerHTML = `<div>Runtime._step total_time:${average_total_time} self_time: ${average_self_time} </div>
+                                                                    <div>Recieve time delta: ${recieve_time_delta}</div>
+                                                                    <div>Recieve time delta average: ${recieve_time_delta_average}</div>`;
 
                     self_time_summ = 0;
                     total_time_summ = 0;
+                    recieve_time_delta_sum = 0;
                 }
 
               }
