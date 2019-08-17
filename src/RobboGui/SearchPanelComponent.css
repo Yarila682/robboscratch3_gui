@@ -30,6 +30,12 @@
   min-width: 200px;
 
   min-height: 70px;
+
+  max-height: 300px;
+
+  overflow-y: scroll;
+
+  z-index: 1000 !important;
 }
 
 .search_panel_tittle_old{
