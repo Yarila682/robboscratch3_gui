@@ -154,6 +154,24 @@ const messages = defineMessages({
         description: ' ',
         defaultMessage: 'Попробуйте переподключить устройство. Или использовать другой usb разъём.'
 
+    },
+    device_cannot_open_old_bluetooth_com:{
+
+
+        id: 'gui.SearchPanel.device_cannot_open_old_bluetooth_com',
+        description: ' ',
+        defaultMessage: `Не удаётся открыть блютуз порт. 
+Вероятно этот порт остался после предыдущего подключения по блютуз. 
+Пожалуйста, удалите старые устройства из списка блютуз устройств.`
+
+    },
+    try_connect_to_port:{
+
+
+        id: 'gui.SearchPanel.try_connect_to_port',
+        description: ' ',
+        defaultMessage: 'Пролбуем подключиться к порту...'
+
     }
     
 
@@ -242,6 +260,8 @@ class SearchPanelDeviceComponent extends Component {
             //let deviceId =  result_obj.deviceId;
             this.deviceId =  result_obj.deviceId;
 
+
+
             let status_field = document.getElementById(`search-panel-device-status-${this.props.Id}`);
 
             let info_field = document.getElementById(`search-panel-device-info-${this.props.Id}`);
@@ -309,16 +329,25 @@ class SearchPanelDeviceComponent extends Component {
 
                     //init here
 
-                   this.firmware_version_differs = false; 
-                   this.isFlashing = false;
+                    this.firmware_version_differs = false; 
+                    this.isFlashing = false;
+ 
+                   
+                    status_field.innerHTML = this.props.intl.formatMessage(messages.try_connect_to_port);
 
-                   info_field.innerHTML = "";
-
-                   info_field.style.display = "none";
-
-                   flashing_button.style.backgroundColor = "";  
-                   flashing_button.innerText = this.props.intl.formatMessage(messages.flash_device);
-
+                    device_status_icon.innerHTML = `<img src = "/build/static/robbo_assets/yellow.png" />`;
+ 
+                    info_field.innerHTML = "";
+ 
+                    info_field.style.display = "none";
+ 
+                    flashing_button.style.backgroundColor = "";  
+                    flashing_button.style.backgroundImage = "-webkit-linear-gradient(top,#00af41,#008a00)";
+                    flashing_button.innerText = this.props.intl.formatMessage(messages.flash_device);  
+ 
+                    flashing_show_details_icon.style.display = "none";
+                    flashing_button.style.display = "none";
+ 
                     this.flashingHideDetails();
 
 
@@ -361,6 +390,9 @@ class SearchPanelDeviceComponent extends Component {
 
                     device_status_icon.innerHTML = `<img src = "/build/static/robbo_assets/green.png" />`;
 
+
+                     info_field.innerHTML = "";
+
                      let firm_differs_msg = this.props.intl.formatMessage(messages.differ_firm_msg) + this.props.intl.formatMessage(messages.cr_firm_msg,{current_firmware:result.current_device_firmware,required_firmware:result.need_firmware})  
                      +  this.props.intl.formatMessage(messages.flash_device) + "?";
                     
@@ -368,7 +400,7 @@ class SearchPanelDeviceComponent extends Component {
 
                     let need_flash_device = false; 
 
-                    if ((this.firmware_version_differs) && (this.props.devicePort.indexOf("rfcomm") == -1) ){
+                    if ((this.firmware_version_differs) && (this.props.devicePort.indexOf("rfcomm") == -1) && (!this.props.isBluetooth) ){
 
                    // if (true){
 
@@ -445,7 +477,17 @@ class SearchPanelDeviceComponent extends Component {
                         //  info_field.innerHTML = this.props.intl.formatMessage(messages.device_no_response_details) + " " + DEVICE_HANDLE_TIMEOUT
                         //         + " " + this.props.intl.formatMessage(messages.milliseconds);
 
-                         info_field.innerHTML = this.props.intl.formatMessage(messages.device_no_response_details);
+                        if (this.props.isBluetooth){
+
+                            info_field.innerHTML = this.props.intl.formatMessage(messages.device_cannot_open_old_bluetooth_com);
+
+                        }else{
+
+                            info_field.innerHTML = this.props.intl.formatMessage(messages.device_no_response_details);
+
+                        }
+
+                         
 
                         status_field.innerHTML =  this.props.intl.formatMessage(messages.device_no_response); 
 
@@ -457,7 +499,7 @@ class SearchPanelDeviceComponent extends Component {
 
                        // if (true){
 
-                         if (this.props.devicePort.indexOf("rfcomm") == -1){
+                         if ((this.props.devicePort.indexOf("rfcomm") == -1) && (!this.props.isBluetooth)){
 
                              flashing_show_details_icon.style.display = "inline-block";
                              flashing_button.style.display = "inline-block";
@@ -503,7 +545,13 @@ class SearchPanelDeviceComponent extends Component {
 
                          info_field.innerHTML = result_obj.error.msg + "<br/>" + this.props.intl.formatMessage(messages.bluetooth_linux_hint) ;
 
-                    }else{
+                    }else if ((this.props.isBluetooth) && (this.props.devicePort.indexOf("blue_") == -1)){
+
+                        info_field.innerHTML = result_obj.error.msg + "<br/>" +  this.props.intl.formatMessage(messages.device_cannot_open_old_bluetooth_com);
+                        
+                    }
+                    
+                    else{
 
                         info_field.innerHTML = result_obj.error.msg + "<br/>" +  this.props.intl.formatMessage(messages.device_try_to_reconnect);
 
@@ -546,8 +594,11 @@ searchDevices(){
 
 flashingShowDetails(){
 
+ //console.log("flashingShowDetails")   
+
 if (this.props.draggable_window[this.props.draggableWindowId].isShowing !== true){
 
+   // console.log(`onShowFlashingStatusWindow draggableWindowId: ${this.props.draggableWindowId}`);      
     this.props.onShowFlashingStatusWindow(this.props.draggableWindowId);
 
   }

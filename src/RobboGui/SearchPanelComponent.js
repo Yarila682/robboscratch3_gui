@@ -22,7 +22,19 @@ const messages = defineMessages({
         id: 'gui.RobboGui.devices_not_found',
         description: ' ',
         defaultMessage: 'No devices available for connection.'
-    } 
+    },
+    bluetooth_devices_not_found: {
+
+      id: 'gui.RobboGui.bluetooth_devices_not_found',
+      description: ' ',
+      defaultMessage: 'Не обнаружены доступные для подключения блютуз устройства. Обратитесь к инструкции пользователя (FAQ).'
+  },
+  bluetooth_searching: {
+
+    id: 'gui.RobboGui.bluetooth_searching',
+    description: ' ',
+    defaultMessage: 'Ищем блютуз устройства'
+}
 });
 
 
@@ -38,6 +50,8 @@ class SearchPanelComponent extends Component {
         }; 
         
         this.device_list = [];
+
+        this.bluetooth_devices_state = "searching";
         
    }
 
@@ -62,6 +76,19 @@ class SearchPanelComponent extends Component {
 
     this.draggableWindowId = this.props.draggableWindowId;
 
+    this.DCA.registerBluetoothDevicesFoundCallback(() => {
+
+      this.bluetooth_devices_state = "found";
+
+    });
+
+    this.DCA.registerDevicesStartSearchingCallback(() => {
+
+
+      this.bluetooth_devices_state = "searching";
+
+    });
+
     this.DCA.registerDevicesNotFoundCallback(() => {
 
 
@@ -74,10 +101,37 @@ class SearchPanelComponent extends Component {
 
      });
 
+     this.DCA.registerBluetoothDevicesNotFoundCallback(() => {
+
+      this.bluetooth_devices_state = "not_found";
+
+          if (this.device_list.length > 0){
+
+            this.setState((previousState, currentProps) => {
+
+              return {
+                  devices:this.device_list
+                };
+              });
+
+          }else{
+
+            this.setState((previousState, currentProps) => {
+
+              return {
+                  devices:[]
+                };
+              });
+          }
+
+          
+     });
+
    
 
      this.DCA.registerDeviceFoundCallback(() => {
 
+      this.is_bluetooth_devices_not_found = false;
 
        let devices = this.DCA.getDevices();
 
@@ -91,7 +145,8 @@ class SearchPanelComponent extends Component {
              let device = {
 
                      
-                devicePort: devices[index].getPortName()
+                devicePort: devices[index].getPortName(),
+                isBluetooth: devices[index].isBluetoothDevice()
               //  deviceId: devices[index].getDeviceID() 
             
             }
@@ -184,7 +239,7 @@ class SearchPanelComponent extends Component {
 
 
 
-                         return  <SearchPanelDeviceComponent Id={index} flashingStatusComponentId={index} draggableWindowId={7+index}  key={index + "search-panel-devices-list"}  devicePort={device.devicePort}   DCA={this.DCA} RCA={this.RCA} LCA={this.LCA} OCA={this.OCA} ACA={this.ACA}/>
+                         return  <SearchPanelDeviceComponent Id={index} flashingStatusComponentId={index} draggableWindowId={7+index}  key={index + "search-panel-devices-list"}  devicePort={device.devicePort} isBluetooth={device.isBluetooth}   DCA={this.DCA} RCA={this.RCA} LCA={this.LCA} OCA={this.OCA} ACA={this.ACA}/>
 
 
 
@@ -225,6 +280,17 @@ class SearchPanelComponent extends Component {
           {
 
              ( this.state.devices.length == 0)?<div className={styles.devices_not_found}>{this.props.intl.formatMessage(messages.devices_not_found)}</div>:""
+
+          }
+
+          {
+
+            ( (this.bluetooth_devices_state == "searching") && (node_process.platform === "win32"))?<div className={styles.bluetooth_devices_not_found}>{this.props.intl.formatMessage(messages.bluetooth_searching)}</div>:""
+
+          }
+
+          {
+             ( (this.bluetooth_devices_state == "not_found") && (node_process.platform === "win32")) ? <div className={styles.bluetooth_devices_not_found}>{this.props.intl.formatMessage(messages.bluetooth_devices_not_found)}</div>:""
 
           }
 

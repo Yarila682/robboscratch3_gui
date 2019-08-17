@@ -35,7 +35,7 @@
 
   overflow-y: scroll;
 
-  z-index: 1000 !important;
+  /*z-index: 1000 !important;*/
 }
 
 .search_panel_tittle_old{
@@ -90,6 +90,13 @@ text-align: center;
 }
 
 .devices_not_found{
+
+  font-size: 14px;
+  padding:7px;
+
+}
+
+.bluetooth_devices_not_found{
 
   font-size: 14px;
   padding:7px;
