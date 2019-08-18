@@ -10,83 +10,16 @@ class RobotPreviewComponent extends Component {
 
 
 
-  startRobotConnectionStatusCheck(){
-
-
-      var robot_searching_icon;
-      var robot_connection_status;
-
-       setInterval(function(self){
-
-          self.isRobotConnected      =    self.props.RCA.isRobotConnected(0);
-          self.robot_is_searching    =    self.props.RCA.isRobotSearching();
-
-           robot_searching_icon = document.getElementById(`robot-${self.props.robotIndex}-searching-icon`);
-
-           if ( (typeof(robot_searching_icon) != 'undefined') && (robot_searching_icon != null) ){
-
-             if (self.robot_is_searching){
-
-
-
-
-                robot_searching_icon.classList.remove(styles.robot_loading_icon_hidden);
-                robot_searching_icon.classList.remove(styles.robot_loading_icon_showing);
-                robot_searching_icon.classList.add(styles.robot_loading_icon_showing);
-
-
-             }else{
-
-
-               robot_searching_icon.classList.remove(styles.robot_loading_icon_hidden);
-               robot_searching_icon.classList.remove(styles.robot_loading_icon_showing);
-               robot_searching_icon.classList.add(styles.robot_loading_icon_hidden);
-
-
-             }
-
-             robot_connection_status = document.getElementById(`robot-${self.props.robotIndex}-connection-status`);
-
-             if (self.isRobotConnected){
-
-
-
-
-                robot_connection_status.classList.remove(styles.robot_status_connected);
-                robot_connection_status.classList.remove(styles.robot_status_disconnected);
-                robot_connection_status.classList.add(styles.robot_status_connected);
-
-             }else{
-
-
-               robot_connection_status.classList.remove(styles.robot_status_disconnected);
-               robot_connection_status.classList.remove(styles.robot_status_connected);
-               robot_connection_status.classList.add(styles.robot_status_disconnected);
-
-
-             }
-
-
-           }
-
-
-
-
-
-
-
-       },300,this);
-
-
-
-  }
-
   onRobotStatusChange(robot_state,is_robot_searching){
 
     var robot_searching_icon;
     var robot_connection_status;
 
-    robot_searching_icon = document.getElementById(`robot-${this.props.robotIndex}-searching-icon`);
+    is_robot_searching = false;
+
+    //robot_searching_icon = document.getElementById(`robot-${this.props.robotIndex}-searching-icon`);
+    robot_searching_icon = document.getElementById(`robot-preview-${this.props.robotIndex}`);
+
 
     if (typeof(robot_searching_icon) != 'undefined'){
 
@@ -95,22 +28,32 @@ class RobotPreviewComponent extends Component {
 
 
 
-         robot_searching_icon.classList.remove(styles.robot_loading_icon_hidden);
-         robot_searching_icon.classList.remove(styles.robot_loading_icon_showing);
-         robot_searching_icon.classList.add(styles.robot_loading_icon_showing);
+        //  robot_searching_icon.classList.remove(styles.robot_loading_icon_hidden);
+        //  robot_searching_icon.classList.remove(styles.robot_loading_icon_showing);
+        //  robot_searching_icon.classList.add(styles.robot_loading_icon_showing);
+
+            robot_searching_icon.style.backgroundImage = " url(/build/static/robbo_assets/searching.gif)";
+            robot_searching_icon.style.backgroundRepeat = "no-repeat";
+            robot_searching_icon.style.backgroundPosition = "center";
+
 
 
       }else{
 
 
-        robot_searching_icon.classList.remove(styles.robot_loading_icon_hidden);
-        robot_searching_icon.classList.remove(styles.robot_loading_icon_showing);
-        robot_searching_icon.classList.add(styles.robot_loading_icon_hidden);
+        // robot_searching_icon.classList.remove(styles.robot_loading_icon_hidden);
+        // robot_searching_icon.classList.remove(styles.robot_loading_icon_showing);
+        // robot_searching_icon.classList.add(styles.robot_loading_icon_hidden);
+
+         robot_searching_icon.style.backgroundImage = "";
 
 
       }
 
-      robot_connection_status = document.getElementById(`robot-${this.props.robotIndex}-connection-status`);
+     // robot_connection_status = document.getElementById(`robot-${this.props.robotIndex}-connection-status`);
+       robot_connection_status = document.getElementById(`robot-preview-${this.props.robotIndex}`);
+
+    
 
       if (robot_state == 6){
 
@@ -159,7 +102,17 @@ class RobotPreviewComponent extends Component {
 
     return (
 
-          <div id={`robot-preview-${this.props.robotIndex}`} className={styles.robotPreview} onClick={this.props.onTriggerRobotPallete}>
+          <div id={`robot-preview-${this.props.robotIndex}`} 
+          
+          className={classNames(
+
+                              {[styles.robotPreview]: true},
+                              {[styles.robot_status_connected]: this.isrobotConnected},
+                              {[styles.robot_status_disconnected]: !this.isrobotConnected}
+                                )} 
+          
+          
+            onClick={this.props.onTriggerRobotPallete}>
 
 
                 <div id={`robot-${this.props.robotIndex}-preview-pic`}  className={styles.robotPreviewPic} >

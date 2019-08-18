@@ -2,17 +2,23 @@
 
   display: inline-block;
 
-  border: 2px outset rgba(0,0,0,0.5);
+  border: 1px solid rgba(0,0,0,0.5);
 
   /*box-shadow: 4px 4px 10px rgba(0,0,0,0.5);*/
 
   height:30px;
-  width:80px;
+  width:50px;
 
   vertical-align: top;
 
   margin-top: 5px;
   margin-left: 20px;
+
+  border-radius: 18px;
+
+  color:white;
+
+  font-family: "Proxima Nova Extrabold",Helvetica,Arial, sans-serif;
 
 
 }
@@ -27,6 +33,7 @@
     margin: 5px 5px;
     min-height: 15px;
     min-width: 15px;
+    display:none;
 }
 
 .lab_status_connected{
@@ -52,6 +59,7 @@
   /*  display: inline-block; */
     margin-left: 5px;
     margin-right: 5px;
+    display:none;
 
 
 
@@ -59,11 +67,14 @@
 
 .labPreviewPic{
 
-    display: inline-block;
-    margin-left: 5px;
+   display: inline-block;
+    margin-left: 19px;
     margin-bottom: 5px;
     padding-bottom: 5px;
     vertical-align: middle;
+    margin-top: 4px;
+    font-weight: bold;
+    font-size: medium;
 
 }
 

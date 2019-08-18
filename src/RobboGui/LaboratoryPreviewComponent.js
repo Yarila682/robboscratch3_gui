@@ -10,111 +10,41 @@ class LaboratoryPreviewComponent extends Component {
 
 
 
-  startlabConnectionStatusCheck(){
-
-
-      var lab_searching_icon;
-      var lab_connection_status;
-
-       setInterval(function(self){
-
-          self.isLabConnected      =    self.props.LCA.isLaboratoryConnected(0);
-          self.lab_is_searching    =    self.props.LCA.isLaboratorySearching();
-
-           lab_searching_icon = document.getElementById(`lab-${self.props.labIndex}-searching-icon`);
-
-            if (typeof( lab_searching_icon) != 'undefined'){
-
-
-              if (self.lab_is_searching){
-
-
-
-
-                 lab_searching_icon.classList.remove(styles.lab_loading_icon_hidden);
-                 lab_searching_icon.classList.remove(styles.lab_loading_icon_showing);
-                 lab_searching_icon.classList.add(styles.lab_loading_icon_showing);
-
-
-              }else{
-
-
-                lab_searching_icon.classList.remove(styles.lab_loading_icon_hidden);
-                lab_searching_icon.classList.remove(styles.lab_loading_icon_showing);
-                lab_searching_icon.classList.add(styles.lab_loading_icon_hidden);
-
-
-              }
-
-              lab_connection_status = document.getElementById(`lab-${self.props.labIndex}-connection-status`);
-
-              if (self.isLabConnected){
-
-
-
-
-                 lab_connection_status.classList.remove(styles.lab_status_connected);
-                 lab_connection_status.classList.remove(styles.lab_status_disconnected);
-                 lab_connection_status.classList.add(styles.lab_status_connected);
-
-              }else{
-
-
-                lab_connection_status.classList.remove(styles.lab_status_disconnected);
-                lab_connection_status.classList.remove(styles.lab_status_connected);
-                lab_connection_status.classList.add(styles.lab_status_disconnected);
-
-
-              }
-
-
-
-            }
-
-
-
-
-
-
-       },300,this);
-
-
-
-  }
 
   onLabStatusChange(lab_state,is_lab_searching){
 
     var lab_searching_icon;
     var lab_connection_status;
 
+    is_lab_searching = false;
 
 
-    lab_searching_icon = document.getElementById(`lab-${this.props.labIndex}-searching-icon`);
+    lab_searching_icon = document.getElementById(`lab-preview-${this.props.labIndex}`);
 
      if (typeof( lab_searching_icon) != 'undefined'){
 
 
        if (is_lab_searching){
 
+            lab_searching_icon.style.backgroundImage = " url(/build/static/robbo_assets/searching.gif)";
+            lab_searching_icon.style.backgroundRepeat = "no-repeat";
+            lab_searching_icon.style.backgroundPosition = "center";
 
 
 
-          lab_searching_icon.classList.remove(styles.lab_loading_icon_hidden);
-          lab_searching_icon.classList.remove(styles.lab_loading_icon_showing);
-          lab_searching_icon.classList.add(styles.lab_loading_icon_showing);
+         
+          
 
 
        }else{
 
 
-         lab_searching_icon.classList.remove(styles.lab_loading_icon_hidden);
-         lab_searching_icon.classList.remove(styles.lab_loading_icon_showing);
-         lab_searching_icon.classList.add(styles.lab_loading_icon_hidden);
+         lab_searching_icon.style.backgroundImage = "";
 
 
        }
 
-       lab_connection_status = document.getElementById(`lab-${this.props.labIndex}-connection-status`);
+       lab_connection_status = document.getElementById(`lab-preview-${this.props.labIndex}`);
 
        if (lab_state == 6){
 
@@ -164,7 +94,16 @@ class LaboratoryPreviewComponent extends Component {
     return (
 
 
-      <div id={`lab-preview-${this.props.labIndex}`} className={styles.labPreview} onClick={this.props.onTriggerLabPallete}>
+      <div id={`lab-preview-${this.props.labIndex}`} 
+      
+                className={classNames(
+
+                          {[styles.labPreview]: true},
+                          {[styles.lab_status_connected]: this.isLabConnected},
+                          {[styles.lab_status_disconnected]: !this.isLabConnected}
+                            )} 
+                            
+                onClick={this.props.onTriggerLabPallete}>
 
 
             <div id={`lab-${this.props.labIndex}-preview-pic`}  className={styles.labPreviewPic} >

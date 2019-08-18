@@ -32,6 +32,11 @@ const messages = defineMessages({
         description: ' ',
         defaultMessage: 'Otto'
     },
+     device_arduino: {
+        id: 'gui.FirmwareFlasherDeviceComponent.device_arduino',
+        description: ' ',
+        defaultMessage: 'Ардуино'
+    },
     device_unknown: {
         id: 'gui.FirmwareFlasherDeviceComponent.device_unknown',
         description: ' ',
@@ -321,6 +326,12 @@ class SearchPanelDeviceComponent extends Component {
 
           break;
 
+      case 6:
+
+                device_name = this.props.intl.formatMessage(messages.device_arduino);
+
+         break;    
+
 
       default:
 
@@ -390,8 +401,12 @@ class SearchPanelDeviceComponent extends Component {
 
                     device_status_icon.innerHTML = `<img src = "/build/static/robbo_assets/green.png" />`;
 
+                    if (!this.firmware_version_differs){
 
-                     info_field.innerHTML = "";
+                         info_field.innerHTML = "";
+                    }
+
+                    
 
                      let firm_differs_msg = this.props.intl.formatMessage(messages.differ_firm_msg) + this.props.intl.formatMessage(messages.cr_firm_msg,{current_firmware:result.current_device_firmware,required_firmware:result.need_firmware})  
                      +  this.props.intl.formatMessage(messages.flash_device) + "?";
@@ -456,6 +471,7 @@ class SearchPanelDeviceComponent extends Component {
                         //         + " " + this.props.intl.formatMessage(messages.milliseconds);
 
                         status_field.innerHTML = this.props.intl.formatMessage(messages.device_connection_lost);
+                        info_field.innerHTML = "";
 
 
                         let search_panel = document.getElementById(`SearchPanelComponent`);
@@ -689,6 +705,11 @@ flashDevice(){
           this.OCA.stopDataRecievingProcess();
           this.OCA.discon();
 
+    }else if ([6].indexOf(this.deviceId) != -1){
+
+          this.ACA.stopDataRecievingProcess();
+          this.ACA.discon();
+
     }else{
 
               this.RCA.stopDataRecievingProcess();
@@ -696,6 +717,7 @@ flashDevice(){
 
               this.LCA.stopDataRecievingProcess();
               this.OCA.stopDataRecievingProcess();
+              this.ACA.stopDataRecievingProcess();
             //  this.LCA.discon();
     }
 

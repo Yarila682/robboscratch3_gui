@@ -12,7 +12,9 @@ class ArduinoPreviewComponent extends Component {
     var Arduino_searching_icon;
     var Arduino_connection_status;
 
-    Arduino_searching_icon = document.getElementById(`arduino-${this.props.arduinoIndex}-searching-icon`);
+    arduino_is_searching = false;
+
+    Arduino_searching_icon = document.getElementById(`arduino-preview-${this.props.arduinoIndex}`);
 
     if (typeof( Arduino_searching_icon) != 'undefined'){
 
@@ -22,22 +24,24 @@ class ArduinoPreviewComponent extends Component {
 
 
 
-         Arduino_searching_icon.classList.remove(styles.arduino_loading_icon_hidden);
-         Arduino_searching_icon.classList.remove(styles.arduino_loading_icon_showing);
-         Arduino_searching_icon.classList.add(styles.arduino_loading_icon_showing);
+
+            Arduino_searching_icon.style.backgroundImage = " url(/build/static/robbo_assets/searching.gif)";
+            Arduino_searching_icon.style.backgroundRepeat = "no-repeat";
+            Arduino_searching_icon.style.backgroundPosition = "center";
+
 
 
       }else{
 
 
-        Arduino_searching_icon.classList.remove(styles.arduino_loading_icon_hidden);
-        Arduino_searching_icon.classList.remove(styles.arduino_loading_icon_showing);
-        Arduino_searching_icon.classList.add(styles.arduino_loading_icon_hidden);
+
+         Arduino_searching_icon.style.backgroundImage = "";
 
 
       }
 
-      Arduino_connection_status = document.getElementById(`arduino-${this.props.arduinoIndex}-connection-status`);
+
+      Arduino_connection_status = document.getElementById(`arduino-preview-${this.props.arduinoIndex}`);
 
       if (arduino_state == 6){
 
@@ -76,7 +80,18 @@ class ArduinoPreviewComponent extends Component {
 
     return (
 
-          <div id={`arduino-preview-${this.props.arduinoIndex}`} className={styles.arduinoPreview} onClick={this.props.onTriggerArduinoPallete}>
+          <div id={`arduino-preview-${this.props.arduinoIndex}`} 
+          
+                      className={classNames(
+
+                              {[styles.arduinoPreview]: true},
+                              {[styles.arduino_status_connected]: this.isArduinoConnected},
+                              {[styles.arduino_status_disconnected]: !this.isArduinoConnected}
+
+
+                              )} 
+                          
+                         onClick={this.props.onTriggerArduinoPallete}>
 
 
                 <div id={`arduino-${this.props.arduinoIndex}-preview-pic`}  className={styles.arduinoPreviewPic} >

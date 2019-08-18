@@ -42,7 +42,7 @@
   .content_expand{
 
 
-      height:7%;
+    /*  height:7%;*/
 
 
   }
@@ -54,7 +54,7 @@
   .content_expand{
 
 
-      height:10%;
+     /* height:10%;*/
 
 
   }
@@ -67,9 +67,9 @@
 
   position: absolute;
   top:1%;
-  left:700px;
+  left: 460px;
 
-  width:200px;
+  width:180px;
   /*height: 30px;*/
 
     color: white;
@@ -84,9 +84,16 @@
 
     align-items: center;
     min-width: 100px;
-    padding-left: 35px;
+    padding-left: 40px;
     display: flex;
-    font-weight: bold;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    font-weight:bold;
+
+    background-image: url('/build/static/robbo_assets/plug_devices.svg');
+    background-position: left;
+    background-repeat: no-repeat;
+
     
 
 }

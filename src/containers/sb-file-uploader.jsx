@@ -114,6 +114,7 @@ class SBFileUploader extends React.Component {
                     if (filename) {
                         const uploadedProjectTitle = this.getProjectTitleFromFilename(filename);
                         this.props.onUpdateProjectTitle(uploadedProjectTitle);
+                        window.document.title = uploadedProjectTitle;//modified_by_Yaroslav
                     }
                     this.resetFileInput();
                 })

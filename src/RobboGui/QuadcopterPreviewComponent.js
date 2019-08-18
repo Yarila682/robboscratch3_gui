@@ -10,76 +10,7 @@ class QuadcopterPreviewComponent extends Component {
 
 
 
-  startQuadcopterConnectionStatusCheck(){
-
-
-      var copter_searching_icon;
-      var copter_connection_status;
-
-       setInterval(function(self){
-
-          self.isQuadcopterConnected      =    self.props.QCA.isQuadcopterConnected();
-          self.quadcopter_is_searching    =    self.props.QCA.isQuadcopterSearching();
-
-           copter_searching_icon = document.getElementById(`quadcopter-${self.props.quadcopterIndex}-searching-icon`);
-
-           if (typeof( copter_searching_icon) != 'undefined'){
-
-
-             if (self.quadcopter_is_searching){
-
-
-
-
-                copter_searching_icon.classList.remove(styles.quadcopter_loading_icon_hidden);
-                copter_searching_icon.classList.remove(styles.quadcopter_loading_icon_showing);
-                copter_searching_icon.classList.add(styles.quadcopter_loading_icon_showing);
-
-
-             }else{
-
-
-               copter_searching_icon.classList.remove(styles.quadcopter_loading_icon_hidden);
-               copter_searching_icon.classList.remove(styles.quadcopter_loading_icon_showing);
-               copter_searching_icon.classList.add(styles.quadcopter_loading_icon_hidden);
-
-
-             }
-
-             copter_connection_status = document.getElementById(`quadcopter-${self.props.quadcopterIndex}-connection-status`);
-
-             if (self.isQuadcopterConnected){
-
-
-
-
-                copter_connection_status.classList.remove(styles.quadcopter_status_connected);
-                copter_connection_status.classList.remove(styles.quadcopter_status_disconnected);
-                copter_connection_status.classList.add(styles.quadcopter_status_connected);
-
-             }else{
-
-
-               copter_connection_status.classList.remove(styles.quadcopter_status_disconnected);
-               copter_connection_status.classList.remove(styles.quadcopter_status_connected);
-               copter_connection_status.classList.add(styles.quadcopter_status_disconnected);
-
-
-             }
-
-           }
-
-
-
-
-
-
-
-       },30,this);
-
-
-
-  }
+  
 
   onQuadcopterStatusChange(quadcopter_state,quadcopter_is_searching){
 
@@ -87,7 +18,7 @@ class QuadcopterPreviewComponent extends Component {
     var copter_searching_icon;
     var copter_connection_status;
 
-    copter_searching_icon = document.getElementById(`quadcopter-${this.props.quadcopterIndex}-searching-icon`);
+    copter_searching_icon = document.getElementById(`quadcopter-preview-${this.props.quadcopterIndex}`);
 
     if (typeof( copter_searching_icon) != 'undefined'){
 
@@ -97,22 +28,23 @@ class QuadcopterPreviewComponent extends Component {
 
 
 
-         copter_searching_icon.classList.remove(styles.quadcopter_loading_icon_hidden);
-         copter_searching_icon.classList.remove(styles.quadcopter_loading_icon_showing);
-         copter_searching_icon.classList.add(styles.quadcopter_loading_icon_showing);
+        
+
+            copter_searching_icon.style.backgroundImage = " url(/build/static/robbo_assets/searching.gif)";
+            copter_searching_icon.style.backgroundRepeat = "no-repeat";
+            copter_searching_icon.style.backgroundPosition = "center";
+
 
 
       }else{
 
 
-        copter_searching_icon.classList.remove(styles.quadcopter_loading_icon_hidden);
-        copter_searching_icon.classList.remove(styles.quadcopter_loading_icon_showing);
-        copter_searching_icon.classList.add(styles.quadcopter_loading_icon_hidden);
+       
+        copter_searching_icon.style.backgroundImage = "";
 
 
       }
-
-      copter_connection_status = document.getElementById(`quadcopter-${this.props.quadcopterIndex}-connection-status`);
+      copter_connection_status = document.getElementById(`quadcopter-preview-${this.props.quadcopterIndex}`);
 
       if (quadcopter_state == "connected"){
 
@@ -158,7 +90,18 @@ class QuadcopterPreviewComponent extends Component {
 
     return (
 
-          <div id={`quadcopter-preview-${this.props.quadcopterIndex}`} className={styles.quadcopterPreview} onClick={this.props.onTriggerQuadcopterPallete}>
+          <div id={`quadcopter-preview-${this.props.quadcopterIndex}`} 
+                        
+                        className={classNames(
+
+                              {[styles.quadcopterPreview]: true},
+                              {[styles.quadcopter_status_connected]: this.isQuadcopterConnected},
+                              {[styles.quadcopter_status_disconnected]: !this.isQuadcopterConnected}
+
+
+                              )} 
+
+                            onClick={this.props.onTriggerQuadcopterPallete}>
 
 
                 <div id={`quadcopter-${this.props.quadcopterIndex}-preview-pic`}  className={styles.quadcopterPreviewPic} >

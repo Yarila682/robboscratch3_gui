@@ -490,7 +490,7 @@ class MenuBar extends React.Component {
                     </div>
                     <Divider className={classNames(styles.divider)} />
 
-                    {this.props.canEditTitle ? (
+                    {/*this.props.canEditTitle ? (
                         <div className={classNames(styles.menuBarItem, styles.growable)}>
                             <MenuBarItemTooltip
                                 enable
@@ -510,7 +510,7 @@ class MenuBar extends React.Component {
                             userId={this.props.authorId}
                             username={this.props.authorUsername}
                         />
-                    ) : null)}
+                    ) : null)*/}
 
                     <div className={styles.trigger_robbo_menu} onClick={this.props.onTriggerRobboMenu}>
 

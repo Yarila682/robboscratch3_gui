@@ -22,11 +22,31 @@ const messages = defineMessages({
         description: ' ',
         defaultMessage: 'Extension pack '
     },
+    extension_pack_enable: {
+        id: 'gui.RobboMenu.extension_pack_enable',
+        description: ' ',
+        defaultMessage: 'Включить расширенный набор датчиков робота'
+    },
+    extension_pack_disable: {
+        id: 'gui.RobboMenu.extension_pack_disable',
+        description: ' ',
+        defaultMessage: 'Выключить расширенный набор датчиков робота'
+    }, 
     lab_ext_sensors: {
         id: 'gui.RobboMenu.lab_ext_sensors',
         description: ' ',
         defaultMessage: 'Laboratory external sensors'
     },
+      lab_ext_sensors_enable: {
+        id: 'gui.RobboMenu.lab_ext_sensors_enable',
+        description: ' ',
+        defaultMessage: 'Включить внешние датчики лаборатории'
+    },
+     lab_ext_sensors_disable: {
+        id: 'gui.RobboMenu.lab_ext_sensors_disable',
+        description: ' ',
+        defaultMessage: 'Выключить внешние датчики лаборатории'
+    }, 
     trigger_logging:{
 
       id: 'gui.RobboMenu.trigger_logging',
@@ -88,6 +108,14 @@ const messages = defineMessages({
 
 class RobboMenu extends Component {
 
+  constructor(){
+    super();
+
+    this.is_extension_pack_enabled = false;
+    this.is_lab_ext_enabled = false;
+
+  }
+
 
   searchDevices(){
 
@@ -132,6 +160,8 @@ class RobboMenu extends Component {
     console.log("triggerExtensionPack");
     this.props.onTriggerExtensionPack();
 
+    this.is_extension_pack_enabled = !this.is_extension_pack_enabled
+
 
   }
 
@@ -139,6 +169,8 @@ class RobboMenu extends Component {
 
     console.log("triggerLabExtSensors");
     this.props.onTriggerLabExtSensors();
+
+    this.is_lab_ext_enabled = !this.is_lab_ext_enabled;
 
   }
 
@@ -347,13 +379,13 @@ class RobboMenu extends Component {
 
                         {[styles.robbo_menu_item]: true}
 
-                      )}> {this.props.intl.formatMessage(messages.extension_pack)}  </div>
+                      )}>{ (this.is_extension_pack_enabled)?this.props.intl.formatMessage(messages.extension_pack_disable):this.props.intl.formatMessage(messages.extension_pack_enable)  }</div>
 
                         <div id="trigger-lab-ext-sensors" onClick={this.triggerLabExtSensors.bind(this)} className={classNames(
 
                         {[styles.robbo_menu_item]: true}
 
-                      )}> {this.props.intl.formatMessage(messages.lab_ext_sensors)} </div>
+                      )}>{ (this.is_lab_ext_enabled)?this.props.intl.formatMessage(messages.lab_ext_sensors_disable):this.props.intl.formatMessage(messages.lab_ext_sensors_enable)  } </div>
 
                  {/*   <div id="trigger-logging" onClick={this.triggerLogging.bind(this)} className={classNames(
 
@@ -361,11 +393,11 @@ class RobboMenu extends Component {
 
                     )}> {this.props.intl.formatMessage(messages.trigger_logging)} </div> */}
 
-                {  <div id="trigger-firmware-flasher" onClick={this.triggerFirmwareFlasher.bind(this)} className={classNames(
+                {/*  <div id="trigger-firmware-flasher" onClick={this.triggerFirmwareFlasher.bind(this)} className={classNames(
 
                       {[styles.robbo_menu_item]: true}
 
-                    )}> {this.props.intl.formatMessage(messages.trigger_firmware_flasher)} </div> }
+                    )}> {this.props.intl.formatMessage(messages.trigger_firmware_flasher)} </div> */}
 
 
 
@@ -438,7 +470,9 @@ class RobboMenu extends Component {
 const mapStateToProps =  state => ({
 
 
-    robbo_menu:state.scratchGui.robbo_menu
+    robbo_menu:state.scratchGui.robbo_menu,
+    robot_sensors:state.scratchGui.robot_sensors,
+    settings:state.scratchGui.settings
 
 
   });

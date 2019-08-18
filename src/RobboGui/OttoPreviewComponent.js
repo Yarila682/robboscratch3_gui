@@ -12,7 +12,9 @@ class OttoPreviewComponent extends Component {
     var Otto_searching_icon;
     var Otto_connection_status;
 
-    Otto_searching_icon = document.getElementById(`otto-${this.props.ottoIndex}-searching-icon`);
+    otto_is_searching = false;
+
+    Otto_searching_icon = document.getElementById(`otto-preview-${this.props.ottoIndex}`);
 
     if (typeof( Otto_searching_icon) != 'undefined'){
 
@@ -21,23 +23,21 @@ class OttoPreviewComponent extends Component {
 
 
 
+            Otto_searching_icon.style.backgroundImage = " url(/build/static/robbo_assets/searching.gif)";
+            Otto_searching_icon.style.backgroundRepeat = "no-repeat";
+            Otto_searching_icon.style.backgroundPosition = "center";
 
-         Otto_searching_icon.classList.remove(styles.otto_loading_icon_hidden);
-         Otto_searching_icon.classList.remove(styles.otto_loading_icon_showing);
-         Otto_searching_icon.classList.add(styles.otto_loading_icon_showing);
 
 
       }else{
 
 
-        Otto_searching_icon.classList.remove(styles.otto_loading_icon_hidden);
-        Otto_searching_icon.classList.remove(styles.otto_loading_icon_showing);
-        Otto_searching_icon.classList.add(styles.otto_loading_icon_hidden);
+          Otto_searching_icon.style.backgroundImage = "";
 
 
       }
 
-      Otto_connection_status = document.getElementById(`otto-${this.props.ottoIndex}-connection-status`);
+      Otto_connection_status = document.getElementById(`otto-preview-${this.props.ottoIndex}`);
 
       if (otto_state == 6){
 
@@ -76,7 +76,18 @@ class OttoPreviewComponent extends Component {
 
     return (
 
-          <div id={`otto-preview-${this.props.ottoIndex}`} className={styles.ottoPreview} onClick={this.props.onTriggerOttoPallete}>
+          <div id={`otto-preview-${this.props.ottoIndex}`} 
+          
+                      className={classNames(
+
+                              {[styles.ottoPreview]: true},
+                              {[styles.otto_status_connected]: this.isOttoConnected},
+                              {[styles.otto_status_disconnected]: !this.isOttoConnected}
+
+
+                              )} 
+                              
+                        onClick={this.props.onTriggerOttoPallete}>
 
 
                 <div id={`otto-${this.props.ottoIndex}-preview-pic`}  className={styles.ottoPreviewPic} >
