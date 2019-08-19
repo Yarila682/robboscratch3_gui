@@ -219,6 +219,10 @@ class SearchPanelDeviceComponent extends Component {
     this.OCA =  this.props.OCA;
     this.ACA =  this.props.ACA;
 
+    this.dots_counter = 1;
+
+   
+
         this.props.onCreateDraggableWindow(this.props.draggableWindowId);
 
 
@@ -631,6 +635,119 @@ flashingHideDetails(){
 
 }
 
+onFlashingStatusChanged(status){
+
+    var cId =  this.props.flashingStatusComponentId;
+
+    var firmwareFlasherFlashingStatusComponent =  document.getElementById(`firmware-flasher-flashing-status-component-${cId}`);
+
+
+   var flashingStatusComponent = firmwareFlasherFlashingStatusComponent.children[1];
+
+   var flashingLogComponent =  firmwareFlasherFlashingStatusComponent.children[2];
+
+   var block_ids_component = null;
+
+    //flashingStatusComponent.innerHTML = "";
+    //flashingLogComponent.innerHTML = "";
+
+    
+
+    
+
+    var styles = {
+
+        margin: '10px'
+
+  }
+
+  if ( (status.indexOf("Block") == -1) &&  (status.indexOf("Error") == -1)  && (status.indexOf("Uploading") == -1) && (status.indexOf("Port closed") == -1) ){
+
+      createDiv(flashingLogComponent,null,null,null,null,styles,status,null);
+    //    block_ids_component.innerHTML = "";
+
+        var dots = "";
+
+        for (var i = 0; i < this.dots_counter; i++) {
+
+            dots += ".";
+        }
+
+        flashingStatusComponent.innerHTML = "Waiting.." + dots;
+
+        if (this.dots_counter == 1 ){
+
+            this.dots_counter = 2;
+
+        }else{
+
+            this.dots_counter = 1;
+
+        }
+
+  }else{
+
+     
+
+              flashingStatusComponent.innerHTML = status;
+
+   
+
+
+  }
+
+  flashingLogComponent.scrollTop = flashingLogComponent.scrollHeight;
+
+  if ((status.indexOf("Port closed") !== -1)){
+
+        flashingStatusComponent.style.backgroundColor = "green";
+
+        search_device_button.removeAttribute("disabled");
+
+        //flashing_short_status_field.style.backgroundImage = " url(/build/static/robbo_assets/status_ok.svg)";
+       
+        flashing_button.style.backgroundImage = "";
+
+
+        flashing_button.removeAttribute("disabled");
+        flashing_button.style.display = "inline-block";
+
+        this.searchDevices(); //search devices
+
+  }else if ((status.indexOf("Error") !== -1)){
+
+        flashingStatusComponent.style.backgroundColor = "red";
+        search_device_button.removeAttribute("disabled");
+
+      //  flashing_short_status_field.style.backgroundImage = " url(/build/static/robbo_assets/status_error.svg)";
+
+
+      //  flashing_button.style.backgroundImage = "";
+        flashing_button.style.backgroundImage = "-webkit-linear-gradient(top,#ff0000,#ff0000)";
+        flashing_button.style.backgroundColor = "#ff0000";
+        flashing_button.style.textAlign = "center";
+        flashing_button.innerText = this.props.intl.formatMessage(messages.error);
+
+        flashing_button.removeAttribute("disabled");
+
+        let device_status_icon = document.getElementById(`search-panel-device-status-icon-${this.props.Id}`);
+        device_status_icon.innerHTML = `<img src = "/build/static/robbo_assets/red.png" />`;
+
+        let search_panel = document.getElementById(`SearchPanelComponent`);
+        search_panel.style.display = "block";
+
+        // flashing_short_status_field.style.display = "none";
+
+  }else{
+
+      flashingStatusComponent.style.backgroundColor = "#FFFF99"; //Light yellow2
+
+  }
+
+
+
+}
+
 
 flashDevice(){
 
@@ -668,21 +785,18 @@ flashDevice(){
      device_status_icon.innerHTML = `<img src = "/build/static/robbo_assets/yellow.png" />`;
 
 
-
     var cId =  this.props.flashingStatusComponentId;
 
     var firmwareFlasherFlashingStatusComponent =  document.getElementById(`firmware-flasher-flashing-status-component-${cId}`);
 
-  //  var flashingStatusComponent = document.getElementById(`firmware-flasher-flashing-status-component-${cId}`).children[2];
 
    var flashingStatusComponent = firmwareFlasherFlashingStatusComponent.children[1];
 
-   var flashingLogComponent = firmwareFlasherFlashingStatusComponent.children[2];
-
-    var block_ids_component = null;
+   var flashingLogComponent =  firmwareFlasherFlashingStatusComponent.children[2];
 
     flashingStatusComponent.innerHTML = "";
     flashingLogComponent.innerHTML = "";
+   
 
     var config = {};
     config.device   = {};
@@ -690,142 +804,163 @@ flashDevice(){
     config.device.device_id = this.deviceId;
    // config.device.device_firmware_version = this.props.deviceFirmwareVersion;
 
-    if ([0,3].indexOf(this.deviceId) != -1){
+   //var dots_counter = 1;
 
-        this.RCA.stopDataRecievingProcess();
-        this.RCA.discon();
+   this.dots_counter = 1;
 
-    }else if ([1,2,4].indexOf(this.deviceId) != -1){
+   var styles = {
 
-          this.LCA.stopDataRecievingProcess();
-          this.LCA.discon();
+    margin: '10px'
 
-    }else if ([5].indexOf(this.deviceId) != -1){
+    }
 
-          this.OCA.stopDataRecievingProcess();
-          this.OCA.discon();
 
-    }else if ([6].indexOf(this.deviceId) != -1){
+    // if ([0,3].indexOf(this.deviceId) != -1){
 
-          this.ACA.stopDataRecievingProcess();
-          this.ACA.discon();
+    //     this.RCA.stopDataRecievingProcess();
+    //     this.RCA.discon(()=>{
 
-    }else{
+    //         this.DCA.flashFirmware(this.props.devicePort,config,this.onFlashingStatusChanged.bind(this));
+    //     });
+
+    // }else if ([1,2,4].indexOf(this.deviceId) != -1){
+
+    //       this.LCA.stopDataRecievingProcess();
+    //       this.LCA.discon(()=>{
+
+    //         this.DCA.flashFirmware(this.props.devicePort,config,this.onFlashingStatusChanged.bind(this));
+    //     });
+
+    // }else if ([5].indexOf(this.deviceId) != -1){
+
+    //       this.OCA.stopDataRecievingProcess();
+    //       this.OCA.discon(()=>{
+
+    //         this.DCA.flashFirmware(this.props.devicePort,config,this.onFlashingStatusChanged.bind(this));
+    //     });
+
+    // }else if ([6].indexOf(this.deviceId) != -1){
+
+    //       this.ACA.stopDataRecievingProcess();
+    //       this.ACA.discon(()=>{
+
+    //         this.DCA.flashFirmware(this.props.devicePort,config,this.onFlashingStatusChanged.bind(this));
+    //     });
+
+    // }else{
 
               this.RCA.stopDataRecievingProcess();
-              this.RCA.discon();
-
               this.LCA.stopDataRecievingProcess();
               this.OCA.stopDataRecievingProcess();
               this.ACA.stopDataRecievingProcess();
-            //  this.LCA.discon();
-    }
 
-    var styles = {
+              this.DCA.discon(this.props.devicePort,() => {
 
-          margin: '20px 10px',
-          fontWeight:'bold',
-          fontSize:"16px"
+                this.DCA.flashFirmware(this.props.devicePort,config,(status) => {
 
-    }
+                    if ( (status.indexOf("Block") == -1) &&  (status.indexOf("Error") == -1)  && (status.indexOf("Uploading") == -1) && (status.indexOf("Port closed") == -1) ){
 
+                        createDiv(flashingLogComponent,null,null,null,null,styles,status,null);
+                      //    block_ids_component.innerHTML = "";
+                  
+                          var dots = "";
+                  
+                          for (var i = 0; i < this.dots_counter; i++) {
+                  
+                              dots += ".";
+                          }
+                  
+                          flashingStatusComponent.innerHTML = "Waiting.." + dots;
+                  
+                          if (this.dots_counter == 1 ){
+                  
+                              this.dots_counter = 2;
+                  
+                          }else{
+                  
+                              this.dots_counter = 1;
+                  
+                          }
+                  
+                    }else{
+                  
+                       
+                  
+                                flashingStatusComponent.innerHTML = status;
+                  
+                     
+                  
+                  
+                    }
+                  
+                    flashingLogComponent.scrollTop = flashingLogComponent.scrollHeight;
+                  
+                    if ((status.indexOf("Port closed") !== -1)){
+                  
+                          flashingStatusComponent.style.backgroundColor = "green";
+                  
+                          search_device_button.removeAttribute("disabled");
+                  
+                          //flashing_short_status_field.style.backgroundImage = " url(/build/static/robbo_assets/status_ok.svg)";
+                         
+                          flashing_button.style.backgroundImage = "";
+                  
+                  
+                          flashing_button.removeAttribute("disabled");
+                          flashing_button.style.display = "inline-block";
+                  
+                          this.searchDevices(); //search devices
+                  
+                    }else if ((status.indexOf("Error") !== -1)){
+                  
+                          flashingStatusComponent.style.backgroundColor = "red";
+                          search_device_button.removeAttribute("disabled");
+                  
+                        //  flashing_short_status_field.style.backgroundImage = " url(/build/static/robbo_assets/status_error.svg)";
+                  
+                  
+                        //  flashing_button.style.backgroundImage = "";
+                          flashing_button.style.backgroundImage = "-webkit-linear-gradient(top,#ff0000,#ff0000)";
+                          flashing_button.style.backgroundColor = "#ff0000";
+                          flashing_button.style.textAlign = "center";
+                          flashing_button.innerText = this.props.intl.formatMessage(messages.error);
+                  
+                          flashing_button.removeAttribute("disabled");
+                  
+                          let device_status_icon = document.getElementById(`search-panel-device-status-icon-${this.props.Id}`);
+                          device_status_icon.innerHTML = `<img src = "/build/static/robbo_assets/red.png" />`;
+                  
+                          let search_panel = document.getElementById(`SearchPanelComponent`);
+                          search_panel.style.display = "block";
+                  
+                          // flashing_short_status_field.style.display = "none";
+                  
+                    }else{
+                  
+                        flashingStatusComponent.style.backgroundColor = "#FFFF99"; //Light yellow2
+                  
+                    }
 
-    var dots_counter = 1;
-
-    this.DCA.flashFirmware(this.props.devicePort,config,(status) => {
-
-           styles = {
-
-                margin: '10px'
-
-          }
-
-          if ( (status.indexOf("Block") == -1) &&  (status.indexOf("Error") == -1)  && (status.indexOf("Uploading") == -1) && (status.indexOf("Port closed") == -1) ){
-
-              createDiv(flashingLogComponent,null,null,null,null,styles,status,null);
-            //    block_ids_component.innerHTML = "";
-
-                var dots = "";
-
-                for (var i = 0; i < dots_counter; i++) {
-
-                    dots += ".";
-                }
-
-                flashingStatusComponent.innerHTML = "Waiting.." + dots;
-
-                if (dots_counter == 1 ){
-
-                    dots_counter = 2;
-
-                }else{
-
-                    dots_counter = 1;
-
-                }
-
-          }else{
+                });
+              });
 
              
+            //  this.LCA.discon();
+    //}
 
-                      flashingStatusComponent.innerHTML = status;
+    // var styles = {
 
-           
+    //       margin: '20px 10px',
+    //       fontWeight:'bold',
+    //       fontSize:"16px"
 
-
-          }
-
-          flashingLogComponent.scrollTop = flashingLogComponent.scrollHeight;
-
-          if ((status.indexOf("Port closed") !== -1)){
-
-                flashingStatusComponent.style.backgroundColor = "green";
-
-                search_device_button.removeAttribute("disabled");
-
-                //flashing_short_status_field.style.backgroundImage = " url(/build/static/robbo_assets/status_ok.svg)";
-               
-                flashing_button.style.backgroundImage = "";
-        
-
-                flashing_button.removeAttribute("disabled");
-                flashing_button.style.display = "inline-block";
-
-                this.searchDevices(); //search devices
-
-          }else if ((status.indexOf("Error") !== -1)){
-
-                flashingStatusComponent.style.backgroundColor = "red";
-                search_device_button.removeAttribute("disabled");
-
-              //  flashing_short_status_field.style.backgroundImage = " url(/build/static/robbo_assets/status_error.svg)";
-
-
-              //  flashing_button.style.backgroundImage = "";
-                flashing_button.style.backgroundImage = "-webkit-linear-gradient(top,#ff0000,#ff0000)";
-                flashing_button.style.backgroundColor = "#ff0000";
-                flashing_button.style.textAlign = "center";
-                flashing_button.innerText = this.props.intl.formatMessage(messages.error);
-
-                flashing_button.removeAttribute("disabled");
-
-                let device_status_icon = document.getElementById(`search-panel-device-status-icon-${this.props.Id}`);
-                device_status_icon.innerHTML = `<img src = "/build/static/robbo_assets/red.png" />`;
-
-                let search_panel = document.getElementById(`SearchPanelComponent`);
-                search_panel.style.display = "block";
-
-                // flashing_short_status_field.style.display = "none";
-
-          }else{
-
-              flashingStatusComponent.style.backgroundColor = "#FFFF99"; //Light yellow2
-
-          }
+    // }
 
 
 
-    });
+    // 
+
+   // this.DCA.flashFirmware(this.props.devicePort,config,this.onFlashingStatusChanged.bind(this, dots_counter));
 
   }
 
