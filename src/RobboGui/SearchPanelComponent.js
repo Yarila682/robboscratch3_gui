@@ -285,12 +285,12 @@ class SearchPanelComponent extends Component {
 
           {
 
-            ( (this.bluetooth_devices_state == "searching") /*&& (node_process.platform === "win32")*/)?<div className={styles.bluetooth_devices_not_found}>{this.props.intl.formatMessage(messages.bluetooth_searching)}</div>:""
+            ( (this.bluetooth_devices_state == "searching") && (node_process.platform === "win32"))?<div className={styles.bluetooth_devices_not_found}>{this.props.intl.formatMessage(messages.bluetooth_searching)}</div>:""
 
           }
 
           {
-             ( (this.bluetooth_devices_state == "not_found") /*&& (node_process.platform === "win32")*/) ? <div className={styles.bluetooth_devices_not_found}>{this.props.intl.formatMessage(messages.bluetooth_devices_not_found)}</div>:""
+             ( (this.bluetooth_devices_state == "not_found") && (node_process.platform === "win32")) ? <div className={styles.bluetooth_devices_not_found}>{this.props.intl.formatMessage(messages.bluetooth_devices_not_found)}</div>:""
 
           }
 
