@@ -68,6 +68,13 @@ const messages = defineMessages({
       defaultMessage: 'Trigger settings window'
 
     },
+    trigger_about_window:{
+
+      id: 'gui.RobboMenu.trigger_about_window',
+      description: ' ',
+      defaultMessage: 'О программе'
+
+    },
     color_sensor_correction1:{
 
       id: 'gui.RobboMenu.color_sensor_correction1',
@@ -201,6 +208,11 @@ class RobboMenu extends Component {
 
     this.props.onTriggerSettingsWindow();
 
+  }
+
+  triggerAboutWindow(){
+
+      this.props.onTriggerAboutWindow("about-window");
   }
 
   enableProfiling(){
@@ -436,7 +448,7 @@ class RobboMenu extends Component {
 
           <hr className={styles.hrDevider}/>    
 
-                 <div id="enable-profiling" onClick={this.enableProfiling.bind(this)} className={classNames(
+               {/*  <div id="enable-profiling" onClick={this.enableProfiling.bind(this)} className={classNames(
 
                         {[styles.robbo_menu_item]: true}
 
@@ -452,7 +464,13 @@ class RobboMenu extends Component {
 
                         {[styles.robbo_menu_item]: true}
 
-                      )}>{"Trigger profiler window"} </div>            
+                      )}>{"Trigger profiler window"} </div>   */}  
+
+              <div id="trigger-about-window" onClick={this.triggerAboutWindow.bind(this)} className={classNames(
+
+                        {[styles.robbo_menu_item]: true}
+
+                      )}>{this.props.intl.formatMessage(messages.trigger_about_window)} </div>                   
 
 
       </div>
@@ -485,31 +503,36 @@ const mapDispatchToProps = dispatch => ({
         dispatch(ActionTriggerExtensionPack());
       },
 
-      onTriggerLabExtSensors: () => {
+    onTriggerLabExtSensors: () => {
 
           dispatch(ActionTriggerLabExtSensors());
         },
 
 
-      onTriggerColorCorrectorTable:  (sensor_caller_id) => {
+    onTriggerColorCorrectorTable:  (sensor_caller_id) => {
 
           dispatch(ActionTriggerColorCorrectorTable(sensor_caller_id));
         },
 
-        onTriggerFirmwareFlasher: () => {
+    onTriggerFirmwareFlasher: () => {
 
             dispatch(ActionTriggerDraggableWindow(3));
           },
 
-        onTriggerSettingsWindow: () => {
+    onTriggerSettingsWindow: () => {
 
               dispatch(ActionTriggerDraggableWindow(4));
             },
 
-         onTriggerProfilerWindow: (window_id) => {
+    onTriggerProfilerWindow: (window_id) => {
 
               dispatch(ActionTriggerNewDraggableWindow(window_id));
-            }    
+            },
+    
+    onTriggerAboutWindow: (window_id) => {
+
+              dispatch(ActionTriggerNewDraggableWindow(window_id));
+            }               
 
 });
 

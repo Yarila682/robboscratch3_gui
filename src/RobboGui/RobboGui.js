@@ -23,6 +23,7 @@ import SettingsWindowComponent from './SettingsWindowComponent';
 import styles from './RobboGui.css';
 
 import SearchPanelComponent from './SearchPanelComponent';
+import AboutWindowComponent from './AboutWindowComponent';
 
 import NewDraggableWindowComponent from './NewDraggableWindowComponent';
 import ProfilerWindowComponent from './ProfilerWindowComponent';
@@ -230,6 +231,8 @@ class RobboGui extends Component {
 
   var initial_coords_profiler = [300,300];
 
+  var initial_coords_about = [350,350];
+
   return (
 
     <div className={classNames(
@@ -242,7 +245,7 @@ class RobboGui extends Component {
                   )}>
 
 
-          <div className={styles.version}> Robbo Scratch ver. 3.17.0-new-ui </div>
+          <div className={styles.version}> </div>
 
          {
               (!this.props.sensorsPalette.sensors_pallete_collapsed)?  <SensorPallete RCA={this.RCA} LCA={this.LCA} QCA={this.QCA} OCA={this.OCA} ACA={this.ACA} />: <SensorPaletteCollapsed />
@@ -283,6 +286,13 @@ class RobboGui extends Component {
 
           </NewDraggableWindowComponent>
 
+         
+
+         <NewDraggableWindowComponent draggableWindowId={"about-window"} initialCoords={initial_coords_about}>
+
+            <AboutWindowComponent VM={this.props.vm} RCA={this.RCA} DCA={this.DCA}/>
+
+          </NewDraggableWindowComponent>
         
 
        {/* <button id={`robbo_search_devices`} className={styles.robbo_search_devices} onClick={this.searchDevices.bind(this)}>{this.props.intl.formatMessage(messages.search_devices)} </button>*/}

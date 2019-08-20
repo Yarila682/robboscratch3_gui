@@ -175,7 +175,15 @@ const messages = defineMessages({
 
         id: 'gui.SearchPanel.try_connect_to_port',
         description: ' ',
-        defaultMessage: 'Пролбуем подключиться к порту...'
+        defaultMessage: 'Пробуем подключиться к порту...'
+
+    },
+    port_opened:{
+
+
+        id: 'gui.SearchPanel.port_opened',
+        description: ' ',
+        defaultMessage: 'Порт открыт'
 
     }
     
@@ -374,7 +382,7 @@ class SearchPanelDeviceComponent extends Component {
                    this.isFlashing = false;
 
                   // status_field.innerHTML = "Connected";
-                     status_field.innerHTML = "";
+                     status_field.innerHTML = this.props.intl.formatMessage(messages.port_opened);;
 
                    info_field.innerHTML = "";
 

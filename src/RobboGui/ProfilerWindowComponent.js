@@ -19,7 +19,7 @@ const messages = defineMessages({
 
   });
 
-class SettingsWindowComponent extends Component {
+class ProfilerWindowComponent extends Component {
 
   // constructor(){
   //
@@ -124,4 +124,4 @@ const mapDispatchToProps = dispatch => ({
 export default injectIntl(connect(
   mapStateToProps,
   mapDispatchToProps
-)(SettingsWindowComponent));
+)(ProfilerWindowComponent));
