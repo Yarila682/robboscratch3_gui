@@ -573,7 +573,7 @@ class SearchPanelDeviceComponent extends Component {
 
                          info_field.innerHTML = result_obj.error.msg + "<br/>" + this.props.intl.formatMessage(messages.bluetooth_linux_hint) ;
 
-                    }else if ((this.props.isBluetooth) && (this.props.devicePort.indexOf("blue_") == -1)){
+                    }else if ((this.props.isBluetooth) && (this.props.devicePort.indexOf("bluetooth_") !== -1)){
 
                         info_field.innerHTML = result_obj.error.msg + "<br/>" +  this.props.intl.formatMessage(messages.device_cannot_open_old_bluetooth_com);
                         

@@ -51,7 +51,7 @@ class AboutWindowComponent extends Component {
 
                  console.warn(os);   
           
-                 os_field.innerHTML = os.os + " " + os.dist + " " + ((typeof(os.release) !== 'undefined')?os.release:"");   
+            os_field.innerHTML = os.os + " " +  node_os.release()  + " " + ((typeof(os.dist) !== 'undefined')?os.dist:"") + " " + ((typeof(os.release) !== 'undefined')?os.release:"");   
             })  
 
   }
