@@ -8,7 +8,6 @@ import {defineMessages, intlShape, injectIntl, FormattedMessage} from 'react-int
 import styles from  './AboutWindowComponent.css';
 import {ActionTriggerNewDraggableWindow,ActionCreateNewDraggableWindow} from './actions/sensor_actions';
 
-const os = require('os');
 
 
 const messages = defineMessages({
@@ -44,6 +43,16 @@ class AboutWindowComponent extends Component {
       this.VM = this.props.VM;
       this.RCA = this.props.RCA;
       this.DCA = this.props.DCA;
+
+      let os_field = document.getElementById(`raw-5-about-window-content-column-2`);
+
+      getos((e,os) => {
+            if(e) return console.error(e);
+
+                 console.warn(os);   
+          
+                 os_field.innerHTML = os.os + " " + os.dist + " " + ((typeof(os.release) !== 'undefined')?os.release:"");   
+            })  
 
   }
 
@@ -158,7 +167,7 @@ class AboutWindowComponent extends Component {
 
                      <div id="raw-1-about-window-content-column-1" className={styles.about_window_content_column}>
 
-                     Robbo Scratch v.3.18.0-new-ui
+                     Robbo Scratch v.3.19.0-new-ui
 
                      </div>
 
@@ -230,7 +239,7 @@ class AboutWindowComponent extends Component {
 
                      <div id="raw-5-about-window-content-column-2" className={styles.about_window_content_column}>
 
-                       {node_process.platform + " " + node_os.release()}
+                       {/*node_process.platform + " " + node_os.release()*/}
 
                      </div>
 
