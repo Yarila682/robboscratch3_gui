@@ -186,7 +186,7 @@ class ColorCorrectorTableComponent extends Component {
               color_box.style.minWidth = '40px';
               color_box.style.minHeight = '40px';
               color_box.style.border = '2px solid';
-              color_box.style.backgroundImage = "url('/build/static/robbo_assets/icon_close_window.svg')";
+              color_box.style.backgroundImage = "url('/build/static/robbo_assets/icon_close_window.png')";
               color_box.style.backgroundColor = `rgb(255,255,255)`;
 
             }

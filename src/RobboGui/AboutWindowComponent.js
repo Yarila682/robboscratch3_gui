@@ -35,7 +35,7 @@ const messages = defineMessages({
     recieve_delta: {
         id: 'gui.RobboGui.recieve_delta',
         description: ' ',
-        defaultMessage: 'Задержка между получение полного пакета телеметрии (в мс): '
+        defaultMessage: 'Задержка между получением полного пакета телеметрии (в мс): '
     },
     os_name_and_version: {
         id: 'gui.RobboGui.os_name_and_version',
@@ -202,7 +202,7 @@ class AboutWindowComponent extends Component {
 
                      <div id="raw-1-about-window-content-column-1" className={styles.about_window_content_column}>
 
-                     Robbo Scratch v.3.19.0-new-ui
+                     Robbo Scratch v.3.19.0
 
                      </div>
 

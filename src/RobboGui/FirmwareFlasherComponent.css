@@ -100,7 +100,7 @@ text-align: center;
 .close_icon{
 
     float:right;
-    background-image: url('/build/static/robbo_assets/icon_close_window.svg');
+    background-image: url('/build/static/robbo_assets/icon_close_window.png');
     width: 16px;
     height: 16px;
 

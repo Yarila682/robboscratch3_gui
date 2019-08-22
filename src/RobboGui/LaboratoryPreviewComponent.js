@@ -108,7 +108,7 @@ class LaboratoryPreviewComponent extends Component {
 
             <div id={`lab-${this.props.labIndex}-preview-pic`}  className={styles.labPreviewPic} >
 
-                L
+                
 
             </div>
 

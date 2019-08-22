@@ -17,12 +17,9 @@
 .close_icon{
 
     float:right;
-    background-image: url('/build/static/robbo_assets/icon_close_window.svg');
-    width: 16px;
-    height: 16px;
-
-    margin-right: 4px;
-    margin-top: 4px;
+    background-image: url('/build/static/robbo_assets/icon_close_window.png');
+    width: 27px;
+    height: 27px;
 
     cursor: pointer;
 

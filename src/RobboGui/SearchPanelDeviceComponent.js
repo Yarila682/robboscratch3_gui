@@ -75,7 +75,7 @@ const messages = defineMessages({
 
         id: 'gui.RobboGui.differ_firm_msg_device_maybe_incorrect',
         description: ' ',
-        defaultMessage: 'Возможна неккоректная работа устройства.'
+        defaultMessage: 'Возможна некорректная работа устройства.'
     },
     error:{
 
@@ -208,6 +208,8 @@ class SearchPanelDeviceComponent extends Component {
         this.firmware_version_differs_cb_result = {};
 
         this.isFlashing = false;
+
+        this.isRasberry = false;
         
    }
 
@@ -427,7 +429,7 @@ class SearchPanelDeviceComponent extends Component {
 
                     let need_flash_device = false; 
 
-                    if ((this.firmware_version_differs) && (this.props.devicePort.indexOf("rfcomm") == -1) && (!this.props.isBluetooth) ){
+                    if ((this.firmware_version_differs) && (this.props.devicePort.indexOf("rfcomm") == -1) && (!this.props.isBluetooth) && (!this.isRasberry) ){
 
                    // if (true){
 
@@ -527,7 +529,7 @@ class SearchPanelDeviceComponent extends Component {
 
                        // if (true){
 
-                         if ((this.props.devicePort.indexOf("rfcomm") == -1) && (!this.props.isBluetooth)){
+                         if ((this.props.devicePort.indexOf("rfcomm") == -1) && (!this.props.isBluetooth)  && (!this.isRasberry)){
 
                              flashing_show_details_icon.style.display = "inline-block";
                              flashing_button.style.display = "inline-block";
@@ -613,10 +615,10 @@ searchDevices(){
 
    this.RCA.searchRobotDevices();
    this.LCA.searchLaboratoryDevices();
-   this.OCA.searchOttoDevices();
+   //this.OCA.searchOttoDevices();
    this.ACA.searchArduinoDevices();
 
-   this.QCA.searchQuadcopterDevices();
+   //this.QCA.searchQuadcopterDevices();
 }
 
 

@@ -96,7 +96,7 @@ class ArduinoPreviewComponent extends Component {
 
                 <div id={`arduino-${this.props.arduinoIndex}-preview-pic`}  className={styles.arduinoPreviewPic} >
 
-                  A
+                  
 
                 </div>
 

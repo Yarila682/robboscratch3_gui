@@ -167,10 +167,10 @@ class RobboGui extends Component {
 
    this.props.vm.getRCA().searchRobotDevices();
    this.props.vm.getLCA().searchLaboratoryDevices();
-   this.OCA.searchOttoDevices();
+   //this.OCA.searchOttoDevices();
    this.ACA.searchArduinoDevices();
 
-   this.QCA.searchQuadcopterDevices();
+   //this.QCA.searchQuadcopterDevices();
 
   }
 

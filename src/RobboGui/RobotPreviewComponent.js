@@ -117,7 +117,7 @@ class RobotPreviewComponent extends Component {
 
                 <div id={`robot-${this.props.robotIndex}-preview-pic`}  className={styles.robotPreviewPic} >
 
-                    R
+                    
 
                 </div>
 

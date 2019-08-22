@@ -3,7 +3,7 @@
     display: inline-block;
    /* display:none;*/
 
-  border: 1px solid rgba(0,0,0,0.5);
+  /*border: 1px solid rgba(0,0,0,0.5);*/
 
   /*box-shadow: 4px 4px 10px rgba(0,0,0,0.5);*/
 
@@ -12,10 +12,10 @@
 
   vertical-align: top;
 
-  margin-top: 5px;
-  margin-left: 18px;
+  margin-top: 8px;
+  /*margin-left: 18px;*/
 
-  border-radius: 18px;
+  /*border-radius: 18px;*/
 
   color:white;
 
@@ -39,13 +39,18 @@
 
 .arduino_status_connected{
 
-    background-color: green;
+   /* background-color: green;*/
+   background-image: url('/build/static/robbo_assets/arduino_status_connected.png');
+   background-repeat: no-repeat;
 
 }
 
 .arduino_status_disconnected{
 
-    background-color: red;
+   /* background-color: red;*/
+
+    background-image: url('/build/static/robbo_assets/arduino_status_disconnected.png');
+    background-repeat: no-repeat;
 
 }
 
