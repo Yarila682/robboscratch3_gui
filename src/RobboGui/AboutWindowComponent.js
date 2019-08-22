@@ -16,6 +16,41 @@ const messages = defineMessages({
         id: 'gui.RobboGui.about_window',
         description: ' ',
         defaultMessage: 'О программе'
+    },
+    start_profiling: {
+        id: 'gui.RobboGui.start_profiling',
+        description: ' ',
+        defaultMessage: 'Включить измерение производительности'
+    },
+    stop_profiling: {
+        id: 'gui.RobboGui.stop_profiling',
+        description: ' ',
+        defaultMessage: 'Выключить измерение производительности'
+    },
+    step_duration: {
+        id: 'gui.RobboGui.step_duration',
+        description: ' ',
+        defaultMessage: 'Время полного выполнения цепочки блоков (в мс): '
+    },
+    recieve_delta: {
+        id: 'gui.RobboGui.recieve_delta',
+        description: ' ',
+        defaultMessage: 'Задержка между получение полного пакета телеметрии (в мс): '
+    },
+    os_name_and_version: {
+        id: 'gui.RobboGui.os_name_and_version',
+        description: ' ',
+        defaultMessage: 'Операционная система: '
+    },
+    arch: {
+        id: 'gui.RobboGui.arch',
+        description: ' ',
+        defaultMessage: 'Разрядность: '
+    },
+    cpu: {
+        id: 'gui.RobboGui.cpu',
+        description: ' ',
+        defaultMessage: 'Процессор: '
     }
 
   });
@@ -51,7 +86,7 @@ class AboutWindowComponent extends Component {
 
                  console.warn(os);   
           
-            os_field.innerHTML = os.os + " " +  node_os.release()  + " " + ((typeof(os.dist) !== 'undefined')?os.dist:"") + " " + ((typeof(os.release) !== 'undefined')?os.release:"");   
+            os_field.innerHTML = os.os + " " + ((typeof(node_os.release()) !== 'undefined')?node_os.release():"")  + " " + ((typeof(os.dist) !== 'undefined')?os.dist:"") + " " + ((typeof(os.release) !== 'undefined')?os.release:"");   
             })  
 
   }
@@ -184,13 +219,13 @@ class AboutWindowComponent extends Component {
 
                      <div id="raw-2-about-window-content-column-1" className={styles.about_window_content_column}>
 
-                      <button id={`about-window-start-profiling`} onClick={this.startProfiling.bind(this)}>{"Start profiling"} </button>
+                      <button id={`about-window-start-profiling`} onClick={this.startProfiling.bind(this)}>{this.props.intl.formatMessage(messages.start_profiling)} </button>
 
                      </div>
 
                      <div id="raw-2-about-window-content-column-2" className={styles.about_window_content_column}>
 
-                       <button id={`about-window-stop-profiling`} onClick={this.stopProfiling.bind(this)}>{"Stop profiling"} </button>
+                       <button id={`about-window-stop-profiling`} onClick={this.stopProfiling.bind(this)}>{this.props.intl.formatMessage(messages.stop_profiling)} </button>
 
                      </div>
 
@@ -200,7 +235,7 @@ class AboutWindowComponent extends Component {
 
                      <div id="raw-3-about-window-content-column-1" className={styles.about_window_content_column}>
 
-                     {"Step duration (in ms): "}
+                     {this.props.intl.formatMessage(messages.step_duration)}
                      </div>
 
                      <div id="raw-3-about-window-content-column-2" className={styles.about_window_content_column}>
@@ -215,7 +250,7 @@ class AboutWindowComponent extends Component {
 
                      <div id="raw-4-about-window-content-column-1" className={styles.about_window_content_column}>
 
-                         {"Recieve time delta (in ms): "}
+                         {this.props.intl.formatMessage(messages.recieve_delta)}
 
                      </div>
 
@@ -233,7 +268,7 @@ class AboutWindowComponent extends Component {
 
                      <div id="raw-5-about-window-content-column-1" className={styles.about_window_content_column}>
 
-                         {"OS: "}
+                         {this.props.intl.formatMessage(messages.os_name_and_version)}
 
                      </div>
 
@@ -250,7 +285,7 @@ class AboutWindowComponent extends Component {
 
                      <div id="raw-6-about-window-content-column-1" className={styles.about_window_content_column}>
 
-                         {"Arch: "}
+                         {this.props.intl.formatMessage(messages.arch)}
 
                      </div>
 
@@ -267,7 +302,7 @@ class AboutWindowComponent extends Component {
 
                      <div id="raw-7-about-window-content-column-1" className={styles.about_window_content_column}>
 
-                         {"Cpu: "}
+                         {this.props.intl.formatMessage(messages.cpu)}
 
                      </div>
 
