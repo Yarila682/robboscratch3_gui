@@ -217,6 +217,29 @@ class SearchPanelDeviceComponent extends Component {
 
      this.props.DCA.registerDeviceStatusChangeCallback(this.props.devicePort,this.onStatusChange.bind(this));
 
+     this.props.DCA.registerFirmwareVersionDiffersCallback(this.props.devicePort, (result) => {
+
+
+         this.firmware_version_differs = true;     
+         this.firmware_version_differs_cb_result = result;  
+
+
+        let info_field = document.getElementById(`search-panel-device-info-${this.props.Id}`);
+
+         info_field.style.display = "inline-block";
+
+
+        info_field.innerHTML = this.props.intl.formatMessage(messages.differ_firm_msg) + "<br/><br/>" + this.props.intl.formatMessage(messages.cr_firm_msg,{current_firmware:result.current_device_firmware,required_firmware:result.need_firmware}) +  "<br/><br/>" + this.props.intl.formatMessage(messages.differ_firm_msg_device_maybe_incorrect) + "<br/><br/>" + this.props.intl.formatMessage(messages.update_firm_msg);
+
+
+        var flashing_button =  document.getElementById(`search-panel-device-flash-button-${this.props.Id}`);
+        flashing_button.style.backgroundColor = "";  
+
+
+       
+
+             });
+
    }
 
     componentDidMount(){
@@ -236,40 +259,32 @@ class SearchPanelDeviceComponent extends Component {
         this.props.onCreateDraggableWindow(this.props.draggableWindowId);
 
 
-        // this.props.DCA.registerDeviceStatusChangeCallback(this.props.devicePort,this.onStatusChange.bind(this));
+       
 
 
 
-           this.props.DCA.registerFirmwareVersionDiffersCallback(this.props.devicePort, (result) => {
-
-              //{this.props.intl.formatMessage(messages.cr_firm_msg,{current_firmware:result.current_device_firmware,required_firmware:result.need_firmware})}  {this.props.intl.formatMessage(messages.update_firm_msg)} 
-
-         this.firmware_version_differs = true;     
-         this.firmware_version_differs_cb_result = result;  
+        //    this.props.DCA.registerFirmwareVersionDiffersCallback(this.props.devicePort, (result) => {
 
 
-        let info_field = document.getElementById(`search-panel-device-info-${this.props.Id}`);
-
-         info_field.style.display = "inline-block";
-
-
-        info_field.innerHTML = this.props.intl.formatMessage(messages.differ_firm_msg) + "<br/><br/>" + this.props.intl.formatMessage(messages.cr_firm_msg,{current_firmware:result.current_device_firmware,required_firmware:result.need_firmware}) +  "<br/><br/>" + this.props.intl.formatMessage(messages.differ_firm_msg_device_maybe_incorrect) + "<br/><br/>" + this.props.intl.formatMessage(messages.update_firm_msg);
+        //  this.firmware_version_differs = true;     
+        //  this.firmware_version_differs_cb_result = result;  
 
 
-        var flashing_button =  document.getElementById(`search-panel-device-flash-button-${this.props.Id}`);
-        flashing_button.style.backgroundColor = "";  
+        // let info_field = document.getElementById(`search-panel-device-info-${this.props.Id}`);
+
+        //  info_field.style.display = "inline-block";
 
 
-        // let firm_differs_msg = this.props.intl.formatMessage(messages.differ_firm_msg) + "<br/><br/>" + this.props.intl.formatMessage(messages.cr_firm_msg,{current_firmware:result.current_device_firmware,required_firmware:result.need_firmware}) +  "<br/><br/>" + "Прошить устройство?" ;
-        
-        // let flash_or_not = confirm(firm_differs_msg);
+        // info_field.innerHTML = this.props.intl.formatMessage(messages.differ_firm_msg) + "<br/><br/>" + this.props.intl.formatMessage(messages.cr_firm_msg,{current_firmware:result.current_device_firmware,required_firmware:result.need_firmware}) +  "<br/><br/>" + this.props.intl.formatMessage(messages.differ_firm_msg_device_maybe_incorrect) + "<br/><br/>" + this.props.intl.formatMessage(messages.update_firm_msg);
 
-        // if (flash_or_not){
 
-        //     this.flashDevice();
-        // }
+        // var flashing_button =  document.getElementById(`search-panel-device-flash-button-${this.props.Id}`);
+        // flashing_button.style.backgroundColor = "";  
 
-             });
+
+       
+
+        //      });
     }
 
 

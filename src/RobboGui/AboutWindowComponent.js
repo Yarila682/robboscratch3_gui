@@ -45,7 +45,7 @@ const messages = defineMessages({
     arch: {
         id: 'gui.RobboGui.arch',
         description: ' ',
-        defaultMessage: 'Разрядность: '
+        defaultMessage: 'Архитектура: '
     },
     cpu: {
         id: 'gui.RobboGui.cpu',
