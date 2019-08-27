@@ -26,6 +26,7 @@ class StageHeader extends React.Component {
     }
     handleKeyPress (event) {
         if (event.key === 'Escape' && this.props.isFullScreen) {
+            this.props.vm.triggerCurrentStepTime(false); //isFullScreen?
             this.props.onSetStageUnFull(false);
         }
     }
@@ -61,7 +62,11 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
     onSetStageLarge: () => dispatch(setStageSize(STAGE_SIZE_MODES.large)),
     onSetStageSmall: () => dispatch(setStageSize(STAGE_SIZE_MODES.small)),
-    onSetStageFull: () => dispatch(setFullScreen(true)),
+    onSetStageFull: () => {
+
+        dispatch(setFullScreen(true))
+    },
+
     onSetStageUnFull: () => dispatch(setFullScreen(false))
 });
 
