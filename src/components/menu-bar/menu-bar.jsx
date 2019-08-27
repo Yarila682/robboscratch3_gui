@@ -75,6 +75,11 @@ const messages = defineMessages({
         id: 'gui.menuBar.confirmNewWithoutSaving',
         defaultMessage: 'Replace contents of the current project?',
         description: 'message for prompting user to confirm that they want to create new project without saving'
+    },
+     new_project: {
+        id: 'gui.menuBar.new_project',
+        defaultMessage: 'Новый проект',
+        description: ''
     }
 });
 const ariaMessages = defineMessages({
@@ -186,6 +191,7 @@ class MenuBar extends React.Component {
         // }
         // this.props.onRequestCloseFile();
 
+    window.document.title = this.props.intl.formatMessage(messages.new_project);    
 
     storage
       .load(storage.AssetType.Project, 0, storage.DataFormat.JSON)
@@ -204,6 +210,7 @@ class MenuBar extends React.Component {
         this.props.onRequestCloseFile();
     }
     handleClickSave () {
+        
         this.props.onClickSave();
         this.props.onRequestCloseFile();
     }
@@ -382,7 +389,7 @@ class MenuBar extends React.Component {
                                 <MenuSection>
                                     <MenuItem
                                         isRtl={this.props.isRtl}
-                                        onClick={this.handleClickNew}
+                                        onClick={this.handleClickNew.bind(this)}
                                     >
                                         {newProjectMessage}
                                     </MenuItem>
