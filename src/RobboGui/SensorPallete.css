@@ -8,7 +8,7 @@
 
     position: fixed;
     top: 5px;
-    z-index: 1000;
+    z-index: 500;
     left: 640px;
 
       height:50px;
@@ -31,7 +31,7 @@
 
     position: fixed;
     top: 5px;
-    z-index: 1000;
+    z-index: 500;
     left: 640px;
 
       height:50px;
