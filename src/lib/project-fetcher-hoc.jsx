@@ -174,7 +174,7 @@ const ProjectFetcherHOC = function (WrappedComponent) {
 
               //window.requestFileSystem  = window.requestFileSystem || window.webkitRequestFileSystem;
               //window.requestFileSystem(window.TEMPORARY, 5*1024*1024 /*5MB*/, onInitFs, errorHandler);
-              navigator.webkitPersistentStorage.requestQuota(50*1024*1024,
+              navigator.webkitPersistentStorage.requestQuota(500*1024*1024,
                  function(grantedBytes){
                     console.log("checkLocallySavedProject byte granted=" + grantedBytes);
                     window.webkitRequestFileSystem(PERSISTENT, grantedBytes, onInitFs, errorHandler);

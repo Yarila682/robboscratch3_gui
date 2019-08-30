@@ -65,7 +65,7 @@ const messages = defineMessages({
 
       id: 'gui.RobboMenu.trigger_settings_window',
       description: ' ',
-      defaultMessage: 'Trigger settings window'
+      defaultMessage: 'Настройки'
 
     },
     trigger_about_window:{
@@ -465,6 +465,13 @@ class RobboMenu extends Component {
                         {[styles.robbo_menu_item]: true}
 
                       )}>{"Trigger profiler window"} </div>   */}  
+
+               <div id="trigger-settings-window" onClick={this.triggerSettingsWindow.bind(this)} className={classNames(
+
+                        {[styles.robbo_menu_item]: true}
+
+                      )}>{this.props.intl.formatMessage(messages.trigger_settings_window)} </div>           
+
 
               <div id="trigger-about-window" onClick={this.triggerAboutWindow.bind(this)} className={classNames(
 

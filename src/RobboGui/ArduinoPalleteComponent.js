@@ -11,103 +11,103 @@ const messages = defineMessages({
     pin0: {
         id: 'gui.RobboGui.ArduinoPalette.pin0',
         description: ' ',
-        defaultMessage: 'ПИН 0: '
+        defaultMessage: 'D0: '
     },
 
     pin1: {
         id: 'gui.RobboGui.ArduinoPalette.pin1',
         description: ' ',
-        defaultMessage: 'ПИН 1: '
+        defaultMessage: 'D1: '
     },
     pin2: {
         id: 'gui.RobboGui.ArduinoPalette.pin2',
         description: ' ',
-        defaultMessage: 'ПИН 2: '
+        defaultMessage: 'D2: '
     },
     pin3: {
         id: 'gui.RobboGui.ArduinoPalette.pin3',
         description: ' ',
-        defaultMessage: 'ПИН 3: '
+        defaultMessage: 'D3: '
     },
     pin4: {
         id: 'gui.RobboGui.ArduinoPalette.pin4',
         description: ' ',
-        defaultMessage: 'ПИН 4: '
+        defaultMessage: 'D4: '
     },
     pin5: {
         id: 'gui.RobboGui.ArduinoPalette.pin5',
         description: ' ',
-        defaultMessage: 'ПИН 5: '
+        defaultMessage: 'D5: '
     },
     pin6: {
         id: 'gui.RobboGui.ArduinoPalette.pin6',
         description: ' ',
-        defaultMessage: 'ПИН 6: '
+        defaultMessage: 'D6: '
     },
     pin7: {
         id: 'gui.RobboGui.ArduinoPalette.pin7',
         description: ' ',
-        defaultMessage: 'ПИН 7: '
+        defaultMessage: 'D7: '
     },
     pin8: {
         id: 'gui.RobboGui.ArduinoPalette.pin8',
         description: ' ',
-        defaultMessage: 'ПИН 8: '
+        defaultMessage: 'D8: '
     },
     pin9: {
         id: 'gui.RobboGui.ArduinoPalette.pin9',
         description: ' ',
-        defaultMessage: 'ПИН 9: '
+        defaultMessage: 'D9: '
     },
     pin10: {
         id: 'gui.RobboGui.ArduinoPalette.pin10',
         description: ' ',
-        defaultMessage: 'ПИН 10: '
+        defaultMessage: 'D10: '
     },
     pin11: {
         id: 'gui.RobboGui.ArduinoPalette.pin11',
         description: ' ',
-        defaultMessage: 'ПИН 11: '
+        defaultMessage: 'D11: '
     },
     pin12: {
         id: 'gui.RobboGui.ArduinoPalette.pin12',
         description: ' ',
-        defaultMessage: 'ПИН 12: '
+        defaultMessage: 'D12: '
     },
     pin13: {
         id: 'gui.RobboGui.ArduinoPalette.pin13',
         description: ' ',
-        defaultMessage: 'ПИН 13: '
+        defaultMessage: 'D13: '
     },
     pin14: {
         id: 'gui.RobboGui.ArduinoPalette.pin14',
         description: ' ',
-        defaultMessage: 'ПИН 14: '
+        defaultMessage: 'A0: '
     },
     pin15: {
         id: 'gui.RobboGui.ArduinoPalette.pin15',
         description: ' ',
-        defaultMessage: 'ПИН 15: '
+        defaultMessage: 'A1: '
     },
     pin16: {
         id: 'gui.RobboGui.ArduinoPalette.pin16',
         description: ' ',
-        defaultMessage: 'ПИН 16: '
+        defaultMessage: 'A2: '
     },
     pin17: {
         id: 'gui.RobboGui.ArduinoPalette.pin17',
         description: ' ',
-        defaultMessage: 'ПИН 17: '
+        defaultMessage: 'A3: '
     },
     pin18: {
         id: 'gui.RobboGui.ArduinoPalette.pin18',
         description: ' ',
-        defaultMessage: 'ПИН 18: '
+        defaultMessage: 'A4: '
     },
     pin19: {
         id: 'gui.RobboGui.ArduinoPalette.pin19',
         description: ' ',
-        defaultMessage: 'ПИН 19: '
+        defaultMessage: 'A5: '
     },
     pin20: {
         id: 'gui.RobboGui.ArduinoPalette.pin20',
@@ -174,10 +174,10 @@ class ArduinoPalleteComponent extends Component {
     var pin18_sensor_value_field = pin18_sensor_component.children[0].children[1].children[0];
     var pin19_sensor_component = document.getElementById(`arduino_sensor-data-block-arduino-${this.props.arduinoIndex}-pin19_type-analog`);
     var pin19_sensor_value_field = pin19_sensor_component.children[0].children[1].children[0];
-    var pin20_sensor_component = document.getElementById(`arduino_sensor-data-block-arduino-${this.props.arduinoIndex}-pin20_type-analog`);
-    var pin20_sensor_value_field = pin20_sensor_component.children[0].children[1].children[0];
-    var pin21_sensor_component = document.getElementById(`arduino_sensor-data-block-arduino-${this.props.arduinoIndex}-pin21_type-analog`);
-    var pin21_sensor_value_field = pin21_sensor_component.children[0].children[1].children[0];
+    // var pin20_sensor_component = document.getElementById(`arduino_sensor-data-block-arduino-${this.props.arduinoIndex}-pin20_type-analog`);
+    // var pin20_sensor_value_field = pin20_sensor_component.children[0].children[1].children[0];
+    // var pin21_sensor_component = document.getElementById(`arduino_sensor-data-block-arduino-${this.props.arduinoIndex}-pin21_type-analog`);
+    // var pin21_sensor_value_field = pin21_sensor_component.children[0].children[1].children[0];
     var getDataLoopInterval = setInterval(() => {
           pin0_sensor_value_field.innerHTML = this.props.ACA.get_pin(0);
           pin1_sensor_value_field.innerHTML = this.props.ACA.get_pin(1);
@@ -199,8 +199,8 @@ class ArduinoPalleteComponent extends Component {
           pin17_sensor_value_field.innerHTML = this.props.ACA.get_pin(17);
           pin18_sensor_value_field.innerHTML = this.props.ACA.get_pin(18);
           pin19_sensor_value_field.innerHTML = this.props.ACA.get_pin(19);
-          pin20_sensor_value_field.innerHTML = this.props.ACA.get_pin(20);
-          pin21_sensor_value_field.innerHTML = this.props.ACA.get_pin(21);
+          // pin20_sensor_value_field.innerHTML = this.props.ACA.get_pin(20);
+          // pin21_sensor_value_field.innerHTML = this.props.ACA.get_pin(21);
 
           },50);
   }
@@ -346,7 +346,7 @@ class ArduinoPalleteComponent extends Component {
                                    sensorName={`pin19`}
                                    sensorData={`0`} />
 
-                                 <SensorDataBlockComponent key={`arduino-${this.props.arduinoIndex}-pin20`} sensorId={`arduino-${this.props.arduinoIndex}-pin20`}
+                                 {/*<SensorDataBlockComponent key={`arduino-${this.props.arduinoIndex}-pin20`} sensorId={`arduino-${this.props.arduinoIndex}-pin20`}
                                    deviceName={`arduino`} sensorType={`analog`}
                                    sensorFieldText={this.props.intl.formatMessage(messages.pin20)}
                                    sensorName={`pin20`}
@@ -356,7 +356,7 @@ class ArduinoPalleteComponent extends Component {
                                    deviceName={`arduino`} sensorType={`analog`}
                                    sensorFieldText={this.props.intl.formatMessage(messages.pin21)}
                                    sensorName={`pin21`}
-                                   sensorData={`0`} />
+                                   sensorData={`0`} /> */}
 
                             </div>
           </div>

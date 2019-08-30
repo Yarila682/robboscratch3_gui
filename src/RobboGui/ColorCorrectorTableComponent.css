@@ -30,12 +30,7 @@
 
 .color_corrector_table_tittle{
 
-  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#b4ddb4+0,83c783+17,52b152+33,008a00+67,005700+83,002400+100;Green+3D+%231 */
-  background: #b4ddb4; /* Old browsers */
-  background: -moz-linear-gradient(top, #b4ddb4 0%, #83c783 17%, #52b152 33%, #008a00 67%, #005700 83%, #002400 100%); /* FF3.6-15 */
-  background: -webkit-linear-gradient(top, #b4ddb4 0%,#83c783 17%,#52b152 33%,#008a00 67%,#005700 83%,#002400 100%); /* Chrome10-25,Safari5.1-6 */
-  background: linear-gradient(to bottom, #b4ddb4 0%,#83c783 17%,#52b152 33%,#008a00 67%,#005700 83%,#002400 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b4ddb4', endColorstr='#002400',GradientType=0 ); /* IE6-9 */
+ 
 
 
 height: 30px;
@@ -43,6 +38,11 @@ height: 30px;
 text-align: center;
 
 padding: 5px 5px;
+
+    background-color: #00af41;
+    color: white;
+    font-family: "Proxima Nova Regular",Helvetica,Arial, sans-serif;
+  
 
 }
 

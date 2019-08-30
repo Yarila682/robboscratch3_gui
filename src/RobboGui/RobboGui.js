@@ -261,7 +261,7 @@ class RobboGui extends Component {
 
         <DraggableWindowComponent draggableWindowId={4}>
 
-          <SettingsWindowComponent />
+          <SettingsWindowComponent VM={this.props.vm} />
 
         </DraggableWindowComponent>
 
