@@ -117,6 +117,9 @@ class SBFileUploader extends React.Component {
                         window.document.title = uploadedProjectTitle;//modified_by_Yaroslav
                     }
                     this.resetFileInput();
+
+                    this.props.vm.runtime.setMaxAverageStepDeltaTime(0); //modified_by_Yaroslav //set to 0 cause delay changes from project to project
+
                 })
                 .catch(error => {
                     log.warn(error);

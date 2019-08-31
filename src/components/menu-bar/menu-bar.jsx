@@ -191,7 +191,9 @@ class MenuBar extends React.Component {
         // }
         // this.props.onRequestCloseFile();
 
-    window.document.title = this.props.intl.formatMessage(messages.new_project);    
+    window.document.title = this.props.intl.formatMessage(messages.new_project);   
+    
+    this.props.vm.runtime.setMaxAverageStepDeltaTime(0);//modified_by_Yaroslav  //set to 0 cause delay changes from project to project
 
     storage
       .load(storage.AssetType.Project, 0, storage.DataFormat.JSON)

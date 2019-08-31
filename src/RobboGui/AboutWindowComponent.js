@@ -148,12 +148,12 @@ class AboutWindowComponent extends Component {
           time_delta_sum+=time_delta;
           counter++;
 
-          if (counter>=100){
+          if (counter>=300){
               this.averageTime = time_delta_sum / counter;
               counter = 0;
 
               //console.log(`RobboGui average_time: ${average_time}`);
-              av_time_comp.innerHTML =  this.averageTime;
+              av_time_comp.innerHTML =  this.averageTime.toFixed(7);
 
               time_delta_sum = 0;
 
