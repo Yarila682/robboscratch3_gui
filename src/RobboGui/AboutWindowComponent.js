@@ -37,6 +37,11 @@ const messages = defineMessages({
         description: ' ',
         defaultMessage: 'Задержка между получением полного пакета телеметрии (в мс): '
     },
+    average_step_delay_time:{
+        id: 'gui.RobboGui.average_step_delay_time',
+        description: ' ',
+        defaultMessage: 'Среднее время задержки между итерациями выполнения цепочки блоков (в мс): '
+    },
     os_name_and_version: {
         id: 'gui.RobboGui.os_name_and_version',
         description: ' ',
@@ -79,6 +84,11 @@ class AboutWindowComponent extends Component {
       this.RCA = this.props.RCA;
       this.DCA = this.props.DCA;
 
+      this.avTimeInterval = null;
+      this.averageTime = 0;
+
+
+
       let os_field = document.getElementById(`raw-5-about-window-content-column-2`);
 
       getos((e,os) => {
@@ -112,6 +122,50 @@ class AboutWindowComponent extends Component {
 
     let step_time_field = document.getElementById(`raw-3-about-window-content-column-2`);
     let robot_recieve_time_field = document.getElementById(`raw-4-about-window-content-column-2`);
+
+
+    /////////////////////av_time
+     
+      const performance = typeof window === 'object' && window.performance;
+
+        let time_1 = performance.now();
+        let time_2 = performance.now();
+        let counter = 0;
+       // let average_time = 0;
+        let time_delta = 0;
+        let time_delta_sum = 0;
+
+        let av_time_comp = document.getElementById(`raw-8-about-window-content-column-2`);
+
+
+
+       this.avTimeInterval = setInterval(() => {
+
+          time_2 = performance.now();
+          time_delta = time_2 - time_1;
+          time_1 = performance.now();
+
+          time_delta_sum+=time_delta;
+          counter++;
+
+          if (counter>=100){
+              this.averageTime = time_delta_sum / counter;
+              counter = 0;
+
+              //console.log(`RobboGui average_time: ${average_time}`);
+              av_time_comp.innerHTML =  this.averageTime;
+
+              time_delta_sum = 0;
+
+              //this.VM.runtime.setFullscreenInterval(this.averageTime);
+
+          }
+
+        },0);
+
+
+        ///////////////////////////////////end of av_time
+
 
 
     this.VM.runtime.enableProfiling((frame) => {
@@ -172,6 +226,8 @@ class AboutWindowComponent extends Component {
 
      console.warn(`stop profiling`); 
 
+     clearInterval(this.avTimeInterval);
+
        this.VM.runtime.disableProfiling();
 
   }
@@ -202,7 +258,7 @@ class AboutWindowComponent extends Component {
 
                      <div id="raw-1-about-window-content-column-1" className={styles.about_window_content_column}>
 
-                     Robbo Scratch v.3.20.0-V
+                     Robbo Scratch v.3.21.0-V
 
                      </div>
 
@@ -262,6 +318,22 @@ class AboutWindowComponent extends Component {
 
              </div>
 
+              <div id="about-window-content-raw-8" className={styles.about_window_content_raw}>
+
+                     <div id="raw-7-about-window-content-column-1" className={styles.about_window_content_column}>
+
+                         {this.props.intl.formatMessage(messages.average_step_delay_time)}
+
+                     </div>
+
+                     <div id="raw-8-about-window-content-column-2" className={styles.about_window_content_column}>
+
+                       
+
+                     </div>
+
+             </div>  
+
 
 
               <div id="about-window-content-raw-5" className={styles.about_window_content_raw}>
@@ -313,6 +385,8 @@ class AboutWindowComponent extends Component {
                      </div>
 
              </div>  
+
+             
 
 
           </div>

@@ -320,7 +320,7 @@ class SettingsWindowComponent extends Component {
                  normal_mode_interval_component.value = normal_mode_interval;
 
                  this.VM.runtime.setFullscreenInterval(fullscreen_interval);
-                 this.VM.runtime.setNormalInterval(fullscreen_interval);
+                 this.VM.runtime.setNormalInterval(normal_mode_interval);
 
                 
               } catch (error) {

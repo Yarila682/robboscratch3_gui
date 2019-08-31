@@ -146,6 +146,39 @@ class RobboGui extends Component {
     //  });
 
         // this.props.alert.info(<div className={styles.alert}><button> {"test"} </button> </div>)
+
+        // const performance = typeof window === 'object' && window.performance;
+
+        // let time_1 = performance.now();
+        // let time_2 = performance.now();
+        // let counter = 0;
+        // let average_time = 0;
+        // let time_delta = 0;
+        // let time_delta_sum = 0;
+
+        // var av_time_comp = document.getElementById(`raw-8-about-window-content-column-2`);
+
+
+
+        // setInterval(() => {
+
+        //   time_2 = performance.now();
+        //   time_delta = time_2 - time_1;
+        //   time_1 = performance.now();
+
+        //   time_delta_sum+=time_delta;
+        //   counter++;
+
+        //   if (counter>=100){
+        //       average_time = time_delta_sum / counter;
+        //       counter = 0;
+
+        //       //console.log(`RobboGui average_time: ${average_time}`);
+        //       av_time_comp.innerHTML = average_time;
+
+        //   }
+
+        // },0);
   }
 
 
