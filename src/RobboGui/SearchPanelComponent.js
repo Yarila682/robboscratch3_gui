@@ -34,6 +34,12 @@ const messages = defineMessages({
     id: 'gui.RobboGui.bluetooth_searching',
     description: ' ',
     defaultMessage: 'Ищем блютуз устройства'
+},
+  try_to_install_drivers: {
+
+    id: 'gui.RobboGui.try_to_install_drivers',
+    description: ' ',
+    defaultMessage: 'Попробуйте установить или обновить драйвера для usb порта.'
 }
 });
 

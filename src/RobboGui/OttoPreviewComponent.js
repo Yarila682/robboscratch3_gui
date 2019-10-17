@@ -19,7 +19,7 @@ class OttoPreviewComponent extends Component {
     if (typeof( Otto_searching_icon) != 'undefined'){
 
 
-      if (otto_is_searching){
+      if (false){
 
 
 
@@ -92,7 +92,7 @@ class OttoPreviewComponent extends Component {
 
                 <div id={`otto-${this.props.ottoIndex}-preview-pic`}  className={styles.ottoPreviewPic} >
 
-                  O
+                  
 
                 </div>
 

@@ -30,7 +30,7 @@ const messages = defineMessages({
     device_otto: {
         id: 'gui.FirmwareFlasherDeviceComponent.device_otto',
         description: ' ',
-        defaultMessage: 'Otto'
+        defaultMessage: 'Отто'
     },
      device_arduino: {
         id: 'gui.FirmwareFlasherDeviceComponent.device_arduino',
@@ -138,7 +138,7 @@ const messages = defineMessages({
 
         id: 'gui.SearchPanel.bluetooth_linux_hint',
         description: ' ',
-        defaultMessage: 'В силу особенностей устройства Линукс Robbo Scratch нужно запустить с правами пользоваетля root.'
+        defaultMessage: 'В силу особенностей устройства Линукс Robbo Scratch нужно запустить с правами пользователя root.'
     }, 
     flashing_in_progress:{
 
@@ -630,7 +630,7 @@ searchDevices(){
 
    this.RCA.searchRobotDevices();
    this.LCA.searchLaboratoryDevices();
-   //this.OCA.searchOttoDevices();
+   this.OCA.searchOttoDevices();
    this.ACA.searchArduinoDevices();
 
    //this.QCA.searchQuadcopterDevices();

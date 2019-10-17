@@ -23,7 +23,7 @@ const messages = defineMessages({
     otto: {
         id: 'gui.RobboGui.OttoPalette.otto',
         description: ' ',
-        defaultMessage: 'Otto'
+        defaultMessage: 'Отто'
     }
   });
 

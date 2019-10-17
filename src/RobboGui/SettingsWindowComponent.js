@@ -63,6 +63,15 @@ class SettingsWindowComponent extends Component {
 
               function errorHandler(e){
                 console.error("File error during settings reading: " + e);
+
+                 let res = {};
+
+                res.file_exists = false;
+                res.file = null;
+                res.err = e;
+
+                resolve(res);
+
               };
 
               function onInitFs(fs) {
@@ -159,6 +168,9 @@ class SettingsWindowComponent extends Component {
 
        if ((fullscreen_interval > 500) || (fullscreen_interval < 1) ) return;
 
+       this.VM.runtime.clearAvTimeInterval();
+       this.VM.runtime.setSettingsSaved();
+
        this.VM.runtime.setFullscreenInterval(fullscreen_interval);
 
 
@@ -172,6 +184,7 @@ class SettingsWindowComponent extends Component {
 
        this.VM.runtime.setNormalInterval(normal_mode_interval);
 
+       
 
        this.saveSettingsData(settings_data_serialized);
 

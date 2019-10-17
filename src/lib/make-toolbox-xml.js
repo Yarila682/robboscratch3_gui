@@ -1553,7 +1553,7 @@ const makeToolboxXML = function (isStage, targetId,config, categoriesXML,
         robot(false, targetId,isExtensionPackActivated,robot_is_scratchduino),gap, //modified_by_Yaroslav //toolbox generator main
         laboratory(false, targetId,isExternalSensorsActivated),gap, //modified_by_Yaroslav
       //  quadcopter(isStage, targetId), gap, //modified_by_Yaroslav
-      //  otto(isStage, targetId), gap,
+        otto(false, targetId), gap,
         newcat(false),gap,
         motion(isStage, targetId), gap,
         looks(isStage, targetId, costumeName, backdropName), gap,

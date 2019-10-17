@@ -19,6 +19,11 @@ import {defineMessages, intlShape, injectIntl, FormattedMessage} from 'react-int
         id: 'gui.FirmwareFlasherFlashingStatusComponent.close_window',
         description: ' ',
         defaultMessage: 'Close window'
+    },
+    flashing_status: {
+        id: 'gui.FirmwareFlasherFlashingStatusComponent.flashing_status',
+        description: ' ',
+        defaultMessage: 'Лог процесса прошивки '
     }
 
   });
@@ -62,7 +67,7 @@ class FirmwareFlasherFlashingStatusComponent extends Component {
 
           <div id={`firmware-flasher-flashing-status-component-${this.props.componentId}-tittle`} className={styles.firmware_flasher_flashing_status_component_tittle}>
 
-              Flashing status {this.props.componentId}
+              {this.props.intl.formatMessage(messages.flashing_status) + " " + this.props.componentId }
 
               <div className={styles.close_icon} onClick={this.closeWindow.bind(this)}>
 

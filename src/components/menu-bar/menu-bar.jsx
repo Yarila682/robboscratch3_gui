@@ -521,7 +521,7 @@ class MenuBar extends React.Component {
                         />
                     ) : null)*/}
 
-                    <div className={styles.trigger_robbo_menu} onClick={this.props.onTriggerRobboMenu}>
+                    <div id={`trigger-robbo-menu`} className={styles.trigger_robbo_menu} onClick={this.props.onTriggerRobboMenu}>
 
                       <FormattedMessage
                           defaultMessage="Robbo menu"

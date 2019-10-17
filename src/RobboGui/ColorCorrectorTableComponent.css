@@ -6,9 +6,10 @@
     top:500px;
     left: 500px; */
 
-    border: 2px outset rgba(0,0,0,0.5);
+    border: 1px solid #00af41;
 
-    box-shadow: 4px 4px 10px rgba(0,0,0,0.5);
+
+    
 
     z-index: 100;
 

@@ -6,7 +6,7 @@ import {ActionTriggerExtensionPack} from './actions/sensor_actions';
 import {ActionTriggerLabExtSensors} from  './actions/sensor_actions';
 import {ActionTriggerColorCorrectorTable} from './actions/sensor_actions';
 import {ActionTriggerDraggableWindow} from './actions/sensor_actions';
-
+import {ActionTriggerRobboMenu} from './actions/sensor_actions.js'; 
 import {ActionTriggerNewDraggableWindow} from './actions/sensor_actions'
 
 import {defineMessages, intlShape, injectIntl, FormattedMessage} from 'react-intl';
@@ -123,6 +123,12 @@ class RobboMenu extends Component {
 
   }
 
+  componentDidMount(){
+
+       document.addEventListener('click', this.closeRobboMenu.bind(this));
+
+  }
+
 
   searchDevices(){
 
@@ -160,6 +166,22 @@ class RobboMenu extends Component {
   this.RCA.stopDataRecievingProcess();
   this.LCA.stopDataRecievingProcess();
 
+  }
+
+  closeRobboMenu(e){
+
+    let trigger_menu = document.getElementById(`trigger-robbo-menu`);
+    let menu = document.getElementById(`robbo-menu`);
+
+    if ( ( this.props.robbo_menu.isShowing) && (!trigger_menu.contains(e.target)) && (!menu.contains(e.target)) ){
+
+       /* && (e.target !== trigger_menu) && (e.target !== menu)*/
+
+        this.props.onTriggerRobboMenu();
+
+    }
+
+     
   }
 
   triggerExtensionPack(){
@@ -539,7 +561,11 @@ const mapDispatchToProps = dispatch => ({
     onTriggerAboutWindow: (window_id) => {
 
               dispatch(ActionTriggerNewDraggableWindow(window_id));
-            }               
+            },
+    onTriggerRobboMenu: () => {
+
+      dispatch(ActionTriggerRobboMenu());
+    }        
 
 });
 
