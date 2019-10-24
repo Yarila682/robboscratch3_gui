@@ -139,7 +139,7 @@ class GUI extends React.Component {
 
         if (this.props.isError) {
 
-      //  if (true){
+      // if (true){
 
             this.props.alert.error(<div>{`Error in Scratch GUI:  ${this.props.error}`}</div>,{timeout:0});
 
