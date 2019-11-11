@@ -502,6 +502,8 @@ class SearchPanelDeviceComponent extends Component {
                         status_field.innerHTML = this.props.intl.formatMessage(messages.device_connection_lost);
                         info_field.innerHTML = "";
 
+                        alert(this.props.devicePort + " " + this.props.intl.formatMessage(messages.device_connection_lost));
+
 
                         let search_panel = document.getElementById(`SearchPanelComponent`);
                         search_panel.style.display = "block";
