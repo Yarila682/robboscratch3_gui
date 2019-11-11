@@ -94,7 +94,7 @@ class GUI extends React.Component {
 
   startProjectAutosaving(){
 
-      setInterval(() => { // TODO: not to save when error
+    this.autoSaveInterval =   setInterval(() => { // TODO: not to save when error
 
           this.autoSaveProject();
 
@@ -107,7 +107,13 @@ class GUI extends React.Component {
         this.setReduxTitle(this.props.projectTitle);
         this.props.onStorageInit(storage);
 
-        this.startProjectAutosaving(); //added_by_Yaroslav not original
+        console.warn(`this.props.isError: ${this.props.isError}`);
+
+       if (!this.props.isError) {
+           
+             this.startProjectAutosaving(); //added_by_Yaroslav not original
+       }
+       
 
 
     }
@@ -140,6 +146,8 @@ class GUI extends React.Component {
         if (this.props.isError) {
 
       // if (true){
+
+            clearInterval(this.autoSaveInterval);
 
             this.props.alert.error(<div>{`Error in Scratch GUI:  ${this.props.error}`}</div>,{timeout:0});
 
