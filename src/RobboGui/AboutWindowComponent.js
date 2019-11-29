@@ -10,6 +10,7 @@ import {ActionTriggerNewDraggableWindow,ActionCreateNewDraggableWindow} from './
 
 
 
+
 const messages = defineMessages({
 
     about_window: {
@@ -56,6 +57,13 @@ const messages = defineMessages({
         id: 'gui.RobboGui.cpu',
         description: ' ',
         defaultMessage: 'Процессор: '
+    },
+    copy_to_clipboard:{
+
+        id: 'gui.RobboGui.copy_to_clipboard',
+        description: ' ',
+        defaultMessage: 'Copy to clipboard'      
+
     }
 
   });
@@ -232,6 +240,41 @@ class AboutWindowComponent extends Component {
 
   }
 
+  copyToClipboard(param){
+
+    console.warn(`copyToClipboard()`); 
+
+    let  text_to_copy = "";
+
+    switch (param) {
+        case "os":
+                
+
+                 text_to_copy =  document.getElementById(`raw-5-about-window-content-column-2`).innerHTML;
+
+            break;
+
+        case "arch":
+
+                text_to_copy =  document.getElementById(`raw-6-about-window-content-column-2`).innerHTML;
+        
+        break;
+
+        case "cpu":
+
+                text_to_copy =  document.getElementById(`raw-7-about-window-content-column-2`).innerHTML;
+
+        break;
+    
+        default:
+            break;
+    }
+
+    
+    clipboardy.writeSync(text_to_copy);
+
+  }
+
   render() {
 
 
@@ -258,7 +301,7 @@ class AboutWindowComponent extends Component {
 
                      <div id="raw-1-about-window-content-column-1" className={styles.about_window_content_column}>
 
-                     Robbo Scratch v.3.30.2
+                     Robbo Scratch v.3.35.0-bluetooth-test
 
                      </div>
 
@@ -350,6 +393,13 @@ class AboutWindowComponent extends Component {
 
                      </div>
 
+                      <div id="raw-5-about-window-content-column-3" className={styles.about_window_content_column}>
+
+                         <button id={`about-window-copy-to-clipboard-os`} onClick={this.copyToClipboard.bind(this,"os")}>{this.props.intl.formatMessage(messages.copy_to_clipboard)} </button>
+  
+
+                     </div>
+
              </div>
 
 
@@ -367,6 +417,13 @@ class AboutWindowComponent extends Component {
 
                      </div>
 
+                     <div id="raw-6-about-window-content-column-3" className={styles.about_window_content_column}>
+
+                         <button id={`about-window-copy-to-clipboard-arch`} onClick={this.copyToClipboard.bind(this,"arch")}>{this.props.intl.formatMessage(messages.copy_to_clipboard)} </button>
+  
+
+                     </div>
+
              </div>
 
 
@@ -381,6 +438,13 @@ class AboutWindowComponent extends Component {
                      <div id="raw-7-about-window-content-column-2" className={styles.about_window_content_column}>
 
                        {node_os.cpus()[0].model}
+
+                     </div>
+
+                     <div id="raw-7-about-window-content-column-3" className={styles.about_window_content_column}>
+
+                         <button id={`about-window-copy-to-clipboard-cpu`} onClick={this.copyToClipboard.bind(this,"cpu")}>{this.props.intl.formatMessage(messages.copy_to_clipboard)} </button>
+  
 
                      </div>
 
