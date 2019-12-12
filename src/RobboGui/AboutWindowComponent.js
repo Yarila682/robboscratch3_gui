@@ -247,6 +247,13 @@ class AboutWindowComponent extends Component {
     let  text_to_copy = "";
 
     switch (param) {
+
+       case "ver":
+        
+         text_to_copy =  document.getElementById(`raw-1-about-window-content-column-1`).innerHTML;
+       
+       break;
+
         case "os":
                 
 
@@ -299,15 +306,16 @@ class AboutWindowComponent extends Component {
 
              <div id="about-window-content-raw-1" className={styles.about_window_content_raw}>
 
-                     <div id="raw-1-about-window-content-column-1" className={styles.about_window_content_column}>
+                     <div id="raw-1-about-window-content-column-1"  className={styles.about_window_content_column}>
 
-                     Robbo Scratch v.3.35.0-bluetooth-test
+                     Robbo Scratch v.3.36.0
 
                      </div>
 
                      <div id="raw-1-about-window-content-column-2" className={styles.about_window_content_column}>
 
-                       
+                        <button id={`about-window-copy-to-clipboard-version`} onClick={this.copyToClipboard.bind(this,"ver")}>{this.props.intl.formatMessage(messages.copy_to_clipboard)} </button>
+
 
                      </div>
 
@@ -387,7 +395,7 @@ class AboutWindowComponent extends Component {
 
                      </div>
 
-                     <div id="raw-5-about-window-content-column-2" className={styles.about_window_content_column}>
+                     <div id="raw-5-about-window-content-column-2" className={styles.about_window_value_column}>
 
                        {/*node_process.platform + " " + node_os.release()*/}
 
@@ -411,7 +419,7 @@ class AboutWindowComponent extends Component {
 
                      </div>
 
-                     <div id="raw-6-about-window-content-column-2" className={styles.about_window_content_column}>
+                     <div id="raw-6-about-window-content-column-2" className={styles.about_window_value_column}>
 
                        {node_process.arch}
 
@@ -435,7 +443,7 @@ class AboutWindowComponent extends Component {
 
                      </div>
 
-                     <div id="raw-7-about-window-content-column-2" className={styles.about_window_content_column}>
+                     <div id="raw-7-about-window-content-column-2" className={styles.about_window_value_column}>
 
                        {node_os.cpus()[0].model}
 
