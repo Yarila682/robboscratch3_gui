@@ -58,6 +58,11 @@ const messages_for_DCA_intervals = defineMessages({
     description: ' ',
     defaultMessage: 'UNO TIMEOUT'
   },
+  for_bluetooth: {
+    id: 'dca.for_bluetooth',
+    description: ' ',
+    defaultMessage: 'Intervals for bluetooth'
+  },
 });
 
 class SettingsWindowComponent extends Component {
@@ -68,7 +73,6 @@ class SettingsWindowComponent extends Component {
 
   }
 
-  
   readSettings(){
       console.warn(`readSettings`);
       return new Promise((resolve,reject)=>{
@@ -134,34 +138,89 @@ class SettingsWindowComponent extends Component {
 
   saveDCASettings(){
     let DCA_settings_data = {
-      device_response_timeout: 3000,
-      device_no_start_timeout: 1000,
-      device_handle_timeout: 1 * 4 * 1000,
-      device_uno_start_search_timeout: 3000,
+      device_response_timeout: this.DCA_defaults.NO_RESPONSE_TIME_DEFAULT,
+      device_no_start_timeout: this.DCA_defaults.NO_START_TIMEOUT_DEFAULT,
+      device_handle_timeout: this.DCA_defaults.DEVICE_HANDLE_TIMEOUT_DEFAULT,
+      device_uno_start_search_timeout: this.DCA_defaults.UNO_TIMEOUT_DEFAULT,
     };
 
     var DCA_no_response_time = document.getElementById("raw-3-settings-window-content-column-2").children[0];
     let no_response_time = Math.round(Number(DCA_no_response_time.value));
-    if(typeof(no_response_time) === 'number' && no_response_time>0 && no_response_time<=10000){
+    if(typeof(no_response_time) === 'number' && no_response_time>0 && no_response_time<=this.DCA_maxes.NO_RESPONSE_TIME_MAX){
       DCA_settings_data.device_response_timeout = no_response_time;
+    } else {
+      DCA_settings_data.device_response_timeout = this.DCA_defaults.NO_RESPONSE_TIME_DEFAULT;
     }
 
     var DCA_no_start_timeout = document.getElementById("raw-4-settings-window-content-column-2").children[0];
     let no_start_timeout = Math.round(Number(DCA_no_start_timeout.value));
-    if(typeof(no_start_timeout) === 'number' && no_start_timeout>0 && no_start_timeout<=10000){
+    if(typeof(no_start_timeout) === 'number' && no_start_timeout>0 && no_start_timeout<=this.DCA_maxes.NO_START_TIMEOUT_MAX){
       DCA_settings_data.device_no_start_timeout = no_start_timeout;
+    } else {
+      DCA_settings_data.device_no_start_timeout = this.DCA_defaults.NO_START_TIMEOUT_DEFAULT;
     }
     
     var DCA_device_handle_timeout = document.getElementById("raw-5-settings-window-content-column-2").children[0];
     let device_handle_timeout = Math.round(Number(DCA_device_handle_timeout.value));
-    if(typeof(device_handle_timeout) === 'number' && device_handle_timeout>0 && device_handle_timeout<=100000){
-      DCA_settings_data.device_handle_timeout = 1 * 1000 * device_handle_timeout;
+    if(typeof(device_handle_timeout) === 'number' && device_handle_timeout>0 && device_handle_timeout<=this.DCA_maxes.DEVICE_HANDLE_TIMEOUT_MAX){
+      DCA_settings_data.device_handle_timeout = device_handle_timeout;
+    } else {
+      DCA_settings_data.device_handle_timeout = this.DCA_defaults.DEVICE_HANDLE_TIMEOUT_DEFAULT;
     }
 
     var DCA_uno_search_timeout = document.getElementById("raw-6-settings-window-content-column-2").children[0];
     let uno_search_timeout = Math.round(Number(DCA_uno_search_timeout.value));
-    if(typeof(uno_search_timeout) === 'number' && uno_search_timeout>0 && uno_search_timeout<=100000){
+    if(typeof(uno_search_timeout) === 'number' && uno_search_timeout>0 && uno_search_timeout<=device_handle_timeout){
       DCA_settings_data.device_uno_start_search_timeout = uno_search_timeout;
+    } else {
+      DCA_settings_data.device_uno_start_search_timeout = Math.round(device_handle_timeout/2);
+      var uno_timeout_component =  document.getElementById("raw-6-settings-window-content-column-2").children[0];
+      uno_timeout_component.value = DCA_settings_data.device_uno_start_search_timeout;
+    }
+
+    return DCA_settings_data;
+  }
+
+  saveDCASettingsBluetooth(){
+    let DCA_settings_data = {
+      device_response_timeout_bluetooth: this.DCA_defaults_bluetooth.NO_RESPONSE_TIME_DEFAULT_BLUETOOTH   ,
+      device_no_start_timeout_bluetooth: this.DCA_defaults_bluetooth.NO_START_TIMEOUT_DEFAULT_BLUETOOTH   ,
+      device_handle_timeout_bluetooth: this.DCA_defaults_bluetooth.DEVICE_HANDLE_TIMEOUT_DEFAULT_BLUETOOTH,
+      device_uno_start_search_timeout_bluetooth: this.DCA_defaults_bluetooth.UNO_TIMEOUT_DEFAULT_BLUETOOTH,
+    };
+
+    var DCA_no_response_time = document.getElementById("raw-7-settings-window-content-column-2").children[0];
+    let no_response_time = Math.round(Number(DCA_no_response_time.value));
+    if(typeof(no_response_time) === 'number' && no_response_time>0 && no_response_time<=this.DCA_maxes_bluetooth.NO_RESPONSE_TIME_MAX_BLUETOOTH){
+      DCA_settings_data.device_response_timeout_bluetooth = no_response_time;
+    } else {
+      DCA_settings_data.device_response_timeout_bluetooth = this.DCA_defaults_bluetooth.NO_RESPONSE_TIME_DEFAULT_BLUETOOTH;
+    }
+
+    var DCA_no_start_timeout = document.getElementById("raw-8-settings-window-content-column-2").children[0];
+    let no_start_timeout = Math.round(Number(DCA_no_start_timeout.value));
+    if(typeof(no_start_timeout) === 'number' && no_start_timeout>0 && no_start_timeout<=this.DCA_maxes_bluetooth.NO_START_TIMEOUT_MAX_BLUETOOTH){
+      DCA_settings_data.device_no_start_timeout = no_start_timeout;
+    } else {
+      DCA_settings_data.device_no_start_timeout_bluetooth = this.DCA_defaults_bluetooth.NO_START_TIMEOUT_DEFAULT_BLUETOOTH;
+    }
+    
+    var DCA_device_handle_timeout = document.getElementById("raw-9-settings-window-content-column-2").children[0];
+    let device_handle_timeout = Math.round(Number(DCA_device_handle_timeout.value));
+    if(typeof(device_handle_timeout) === 'number' && device_handle_timeout>0 && device_handle_timeout<=this.DCA_maxes.DEVICE_HANDLE_TIMEOUT_MAX){
+      DCA_settings_data.device_handle_timeout_bluetooth = device_handle_timeout;
+    } else {
+      DCA_settings_data.device_handle_timeout_bluetooth = this.DCA_defaults_bluetooth.DEVICE_HANDLE_TIMEOUT_DEFAULT_BLUETOOTH;
+    }
+
+    var DCA_uno_search_timeout = document.getElementById("raw-10-settings-window-content-column-2").children[0];
+    let uno_search_timeout = Math.round(Number(DCA_uno_search_timeout.value));
+    if(typeof(uno_search_timeout) === 'number' && uno_search_timeout>0 && uno_search_timeout<=device_handle_timeout){
+      DCA_settings_data.device_uno_start_search_timeout_bluetooth = uno_search_timeout;
+    } else {
+      DCA_settings_data.device_uno_start_search_timeout_bluetooth = Math.round(device_handle_timeout/2);
+      var uno_timeout_component_bluetooth =  document.getElementById("raw-10-settings-window-content-column-2").children[0];
+      uno_timeout_component_bluetooth.value=DCA_settings_data.device_uno_start_search_timeout_bluetooth;
     }
 
     return DCA_settings_data;
@@ -169,12 +228,7 @@ class SettingsWindowComponent extends Component {
 
   saveSettings(){
     let settings_data = {};
-    
-    var fullscreen_interval_component =  document.getElementById("raw-1-settings-window-content-column-2").children[0];
-    settings_data.fullscreen_interval = fullscreen_interval_component.value;
 
-    var normal_mode_interval_component =  document.getElementById("raw-2-settings-window-content-column-2").children[0];
-    settings_data.normal_mode_interval =  normal_mode_interval_component.value;
 
     //This settings are DCA settings
     let DCA_settings_data = this.saveDCASettings();
@@ -183,32 +237,54 @@ class SettingsWindowComponent extends Component {
     });
     //End of saving DCA settings
 
+    //Saving DCA for bluetooth
+    if(node_process.platform === "win32"){ //CHANGE TO "win32"
+      DCA_settings_data = this.saveDCASettingsBluetooth();
+      Object.keys(DCA_settings_data).map((key) => {
+        settings_data[key]=DCA_settings_data[key];
+      });
+    }
+    //End of saving DCA settings
+    
+    var fullscreen_interval_component =  document.getElementById("raw-1-settings-window-content-column-2").children[0];
+    let fullscreen_interval =  Math.round(Number(fullscreen_interval_component.value));
+    if(typeof(fullscreen_interval) === 'number' && fullscreen_interval>0 && typeof(settings_data.device_handle_timeout)!=='undefined'){
+      settings_data.fullscreen_interval = fullscreen_interval;
+    } else {
+      settings_data.fullscreen_interval = this.VM.runtime.getFullscreenInterval();
+    }
+
+    var normal_mode_interval_component =  document.getElementById("raw-2-settings-window-content-column-2").children[0];
+    let normal_mode_interval =  Math.round(Number(normal_mode_interval_component.value));
+    if(typeof(normal_mode_interval) === 'number' && normal_mode_interval>0 && typeof(settings_data.device_handle_timeout)!=='undefined'){
+      settings_data.normal_mode_interval =  normal_mode_interval;
+    } else {
+      settings_data.normal_mode_interval = this.VM.runtime.getNormalInterval();
+    }
+
     let settings_data_serialized = JSON.stringify(settings_data);
 
     console.log(settings_data_serialized);
 
-    let fullscreen_interval =  Math.round(Number(fullscreen_interval_component.value));
-    //if ( (isNaN(fullscreen_interval)) || (typeof(fullscreen_interval) === 'undefined')) return;
-    if (typeof(fullscreen_interval) !== 'number') return;
-    if ((fullscreen_interval > 500) || (fullscreen_interval < 1) ) return;
+    //if ( (isNaN(fullscreen_interval)) || (typeof(fullscreen_interval) === 'undefined')) return
 
-    this.VM.runtime.clearAvTimeInterval();
+    this.VM.runtime.clearAvTimeInterval();  
     this.VM.runtime.setSettingsSaved();
 
     this.VM.runtime.setFullscreenInterval(fullscreen_interval);
 
-    let normal_mode_interval =  Math.round(Number(normal_mode_interval_component.value));
-
     //  if ( (isNaN(normal_mode_interval)) || (typeof(normal_mode_interval) === 'undefined')) return;
-    if (typeof(normal_mode_interval) !== 'number') return;
-
-    if ((normal_mode_interval > 500) || (normal_mode_interval < 1) ) return;
 
     this.VM.runtime.setNormalInterval(normal_mode_interval);
 
-    this.VM.DCA.set_all_intervals_in_dca(settings_data);
 
-    this.deleteSettingsFile(() => this.saveSettingsData(settings_data_serialized));
+     this.VM.DCA.set_all_intervals_in_dca(settings_data);
+     this.VM.DCA.set_all_intervals_in_bluetooth(settings_data);
+
+
+    this.deleteSettingsFile(() => {
+      this.saveSettingsData(settings_data_serialized);
+    });
   }
 
   saveSettingsData(settings_data){
@@ -246,17 +322,16 @@ class SettingsWindowComponent extends Component {
     var  errorHandler = function(e){
       if((''+e).localeCompare("NotFoundError: A requested file or directory could not be found at the time an operation was processed.")!=0)
         console.error("File error during removing bad settings file: " + e);
-
-      if(typeof(callback)!=='undefined') callback();
-
+      else
+        if(typeof(callback) === 'function') callback();
     };
 
     var _onInitFs = function(fs){
           fs.root.getFile("settings.json", {create: false}, function(fileEntry) {
             fileEntry.remove(() => {
                 console.log('File settings.json was removed.');
+                if(typeof(callback) === 'function') callback();
               }, errorHandler);
-            if(typeof(callback)!=='undefined') callback();
       }, errorHandler);
     }
 
@@ -267,9 +342,45 @@ class SettingsWindowComponent extends Component {
       }, errorHandler);
   }
 
+  setDefaultsDCAValues(){
+
+      var no_response_time_component =  document.getElementById("raw-3-settings-window-content-column-2").children[0];
+      var no_start_timeout_component =  document.getElementById("raw-4-settings-window-content-column-2").children[0];
+      var device_handle_timeout_component =  document.getElementById("raw-5-settings-window-content-column-2").children[0];
+      var uno_timeout_component =  document.getElementById("raw-6-settings-window-content-column-2").children[0];
+
+      no_response_time_component.value =  this.DCA_defaults.NO_RESPONSE_TIME_DEFAULT;
+      no_start_timeout_component.value =  this.DCA_defaults.NO_START_TIMEOUT_DEFAULT;
+      device_handle_timeout_component.value =  this.DCA_defaults.DEVICE_HANDLE_TIMEOUT_DEFAULT;
+      uno_timeout_component.value =  this.DCA_defaults.UNO_TIMEOUT_DEFAULT;
+
+      if(node_process.platform === "win32"){ //CHANGE TO "win32"
+
+        var no_response_time_component_bluetooth =  document.getElementById("raw-7-settings-window-content-column-2").children[0];
+        var no_start_timeout_component_bluetooth =  document.getElementById("raw-8-settings-window-content-column-2").children[0];
+        var device_handle_timeout_component_bluetooth =  document.getElementById("raw-9-settings-window-content-column-2").children[0];
+        var uno_timeout_component_bluetooth =  document.getElementById("raw-10-settings-window-content-column-2").children[0];
+
+        no_response_time_component_bluetooth.value = this.DCA_defaults_bluetooth.NO_RESPONSE_TIME_DEFAULT_BLUETOOTH;
+        no_start_timeout_component_bluetooth.value =  this.DCA_defaults_bluetooth.NO_START_TIMEOUT_DEFAULT_BLUETOOTH;
+        device_handle_timeout_component_bluetooth.value =  this.DCA_defaults_bluetooth.DEVICE_HANDLE_TIMEOUT_DEFAULT_BLUETOOTH;
+        uno_timeout_component_bluetooth.value =  this.DCA_defaults_bluetooth.UNO_TIMEOUT_DEFAULT_BLUETOOTH;
+      }
+
+     
+
+
+  }
+
+
   componentDidMount(){
 
     this.VM = this.props.VM;
+
+    this.DCA_defaults = this.VM.DCA.getDefaultValuesOfIntervals();
+    this.DCA_maxes = this.VM.DCA.getMaxValuesOfIntervals();
+    this.DCA_defaults_bluetooth = this.VM.DCA.getDefaultValuesOfIntervalsBluetooth();
+    this.DCA_maxes_bluetooth = this.VM.DCA.getMaxValuesOfIntervalsBluetooth();
 
     this.readSettings().then((result) => {
       var fullscreen_interval_component =  document.getElementById("raw-1-settings-window-content-column-2").children[0];
@@ -279,11 +390,16 @@ class SettingsWindowComponent extends Component {
       var device_handle_timeout_component =  document.getElementById("raw-5-settings-window-content-column-2").children[0];
       var uno_timeout_component =  document.getElementById("raw-6-settings-window-content-column-2").children[0];
 
+      if(node_process.platform === "win32"){ //CHANGE TO "win32"
+        var no_response_time_component_bluetooth =  document.getElementById("raw-7-settings-window-content-column-2").children[0];
+        var no_start_timeout_component_bluetooth =  document.getElementById("raw-8-settings-window-content-column-2").children[0];
+        var device_handle_timeout_component_bluetooth =  document.getElementById("raw-9-settings-window-content-column-2").children[0];
+        var uno_timeout_component_bluetooth =  document.getElementById("raw-10-settings-window-content-column-2").children[0];
+      }
+
       if (result.file_exists){
         try {
           let settings_data =  JSON.parse(result.file);
-
-          console.warn(`settings dada: ${settings_data}`);
 
           let fullscreen_interval = settings_data.fullscreen_interval || this.VM.runtime.getFullscreenInterval();
           let normal_mode_interval = settings_data.normal_mode_interval || this.VM.runtime.getNormalInterval();
@@ -293,16 +409,28 @@ class SettingsWindowComponent extends Component {
           let no_response_timeout = Math.round(Number(settings_data.device_response_timeout));
           let no_start_timeout = Math.round(Number(settings_data.device_no_start_timeout));
           let uno_timeout = Math.round(Number(settings_data.device_uno_start_search_timeout));
-          let device_handle_timeout = Math.round(Number(settings_data.device_handle_timeout)/1000);
+          let device_handle_timeout = Math.round(Number(settings_data.device_handle_timeout));
           no_response_time_component.value=no_response_timeout;
           no_start_timeout_component.value=no_start_timeout;
           device_handle_timeout_component.value=device_handle_timeout;
           uno_timeout_component.value=uno_timeout;
 
+          if(node_process.platform === "win32"){ //CHANGE TO "win32"
+            let no_response_timeout_bluetooth = Math.round(Number(settings_data.device_response_timeout_bluetooth));
+            let no_start_timeout_bluetooth = Math.round(Number(settings_data.device_no_start_timeout_bluetooth));
+            let uno_timeout_bluetooth = Math.round(Number(settings_data.device_uno_start_search_timeout_bluetooth));
+            let device_handle_timeout_bluetooth = Math.round(Number(settings_data.device_handle_timeout_bluetooth));
+            no_response_time_component_bluetooth.value=no_response_timeout_bluetooth;
+            no_start_timeout_component_bluetooth.value=no_start_timeout_bluetooth;
+            device_handle_timeout_component_bluetooth.value=device_handle_timeout_bluetooth;
+            uno_timeout_component_bluetooth.value=uno_timeout_bluetooth;
+          }
+
           this.VM.runtime.setFullscreenInterval(fullscreen_interval);
           this.VM.runtime.setNormalInterval(normal_mode_interval);
 
           this.VM.DCA.set_all_intervals_in_dca(settings_data);
+          this.VM.DCA.set_all_intervals_in_bluetooth(settings_data);
         } catch (error) {
           console.error(error);
 
@@ -313,6 +441,9 @@ class SettingsWindowComponent extends Component {
 
           let normal_mode_interval =  this.VM.runtime.getNormalInterval();
           normal_mode_interval_component.value = normal_mode_interval; 
+
+          this.setDefaultsDCAValues();
+
         }
       }else{
           let fullscreen_interval =  this.VM.runtime.getFullscreenInterval();
@@ -320,6 +451,8 @@ class SettingsWindowComponent extends Component {
 
           let normal_mode_interval =  this.VM.runtime.getNormalInterval();
           normal_mode_interval_component.value = normal_mode_interval;
+
+          this.setDefaultsDCAValues();
       }
     });
   }
@@ -358,7 +491,7 @@ class SettingsWindowComponent extends Component {
                 <input type="number" />
             </div>
           </div>
-
+        
           <div id="settings-window-content-raw-2" className={styles.settings_window_content_raw}>
             <div id="raw-3-settings-window-content-column-1" className={styles.settings_window_content_column}>
               {this.props.intl.formatMessage(messages_for_DCA_intervals.no_response_time)}
@@ -368,6 +501,7 @@ class SettingsWindowComponent extends Component {
                 <input type="number" />
             </div>
           </div>
+        
 
           <div id="settings-window-content-raw-2" className={styles.settings_window_content_raw}>
             <div id="raw-4-settings-window-content-column-1" className={styles.settings_window_content_column}>
@@ -378,8 +512,9 @@ class SettingsWindowComponent extends Component {
                 <input type="number" />
             </div>
           </div>
+        
 
-          <div id="settings-window-content-raw-2" className={styles.settings_window_content_raw}>
+          <div id="settings-window-content-raw-2" className={styles.settings_window_content_raw} >
             <div id="raw-5-settings-window-content-column-1" className={styles.settings_window_content_column}>
               {this.props.intl.formatMessage(messages_for_DCA_intervals.device_handle_timeout)}
             </div>
@@ -389,22 +524,76 @@ class SettingsWindowComponent extends Component {
             </div>
           </div>
 
-          <div id="settings-window-content-raw-2" className={styles.settings_window_content_raw}>
+          <div id="settings-window-content-raw-2" className={styles.settings_window_content_raw} >
             <div id="raw-6-settings-window-content-column-1" className={styles.settings_window_content_column}>
               {this.props.intl.formatMessage(messages_for_DCA_intervals.uno_timeout)}
             </div>
 
             <div id="raw-6-settings-window-content-column-2" className={styles.settings_window_content_column}>
                 <input type="number" />
-            </div>
+            </div>  
           </div>
+
+          {(node_process.platform === "win32")? //CHANGE TO "win32"
+            <div>
+
+              <div id="settings-window-content-raw-2" className={styles.settings_window_content_raw}>
+                <div id="raw-1337-settings-window-content-column-1" className={styles.settings_window_content_column}>
+                  {this.props.intl.formatMessage(messages_for_DCA_intervals.for_bluetooth)}
+                </div>
+              </div>
+            
+            
+              <div id="settings-window-content-raw-2" className={styles.settings_window_content_raw}>
+                <div id="raw-7-settings-window-content-column-1" className={styles.settings_window_content_column}>
+                  {this.props.intl.formatMessage(messages_for_DCA_intervals.no_response_time)}
+                </div>
+
+                <div id="raw-7-settings-window-content-column-2" className={styles.settings_window_content_column}>
+                    <input type="number" />
+                </div>
+              </div>
+            
+
+              <div id="settings-window-content-raw-2" className={styles.settings_window_content_raw}>
+                <div id="raw-8-settings-window-content-column-1" className={styles.settings_window_content_column}>
+                  {this.props.intl.formatMessage(messages_for_DCA_intervals.no_start_timeout)}
+                </div>
+
+                <div id="raw-8-settings-window-content-column-2" className={styles.settings_window_content_column}>
+                    <input type="number" />
+                </div>
+              </div>
+            
+
+              <div id="settings-window-content-raw-2" className={styles.settings_window_content_raw} >
+                <div id="raw-9-settings-window-content-column-1" className={styles.settings_window_content_column}>
+                  {this.props.intl.formatMessage(messages_for_DCA_intervals.device_handle_timeout)}
+                </div>
+
+                <div id="raw-9-settings-window-content-column-2" className={styles.settings_window_content_column}>
+                    <input type="number" />
+                </div>
+              </div>
+
+              <div id="settings-window-content-raw-2" className={styles.settings_window_content_raw} >
+                <div id="raw-10-settings-window-content-column-1" className={styles.settings_window_content_column}>
+                  {this.props.intl.formatMessage(messages_for_DCA_intervals.uno_timeout)}
+                </div>
+
+                <div id="raw-10-settings-window-content-column-2" className={styles.settings_window_content_column}>
+                    <input type="number" />
+                </div>  
+              </div>
+            </div>:""
+          }          
 
           <div id="settings-window-content-raw-3" className={styles.settings_window_content_raw}>
 
-            <div id="raw-7-settings-window-content-column-1" className={styles.settings_window_content_column}>
+            <div id="raw-11-settings-window-content-column-1" className={styles.settings_window_content_column}>
               <button onClick={this.saveSettings.bind(this)}> {this.props.intl.formatMessage(messages.save_settings)} </button>
             </div>
-            <div id="raw-7-settings-window-content-column-2" className={styles.settings_window_content_column}></div>
+            <div id="raw-11-settings-window-content-column-2" className={styles.settings_window_content_column}></div>
 
           </div>
         </div>
