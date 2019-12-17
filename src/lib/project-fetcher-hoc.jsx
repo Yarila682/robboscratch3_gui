@@ -112,6 +112,15 @@ const ProjectFetcherHOC = function (WrappedComponent) {
 
               function errorHandler(e){
                 console.error("File error during checkLocallySavedProject: " + e);
+
+                 let res = {};
+
+                res.file_exists = false;
+                res.file = null;
+                res.err = e;
+
+                resolve(res);
+
               };
 
               function onInitFs(fs) {
