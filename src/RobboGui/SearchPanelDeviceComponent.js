@@ -444,7 +444,7 @@ class SearchPanelDeviceComponent extends Component {
 
                     let need_flash_device = false; 
 
-                    if ((this.firmware_version_differs) && (this.props.devicePort.indexOf("rfcomm") == -1) && (!this.props.isBluetooth) && (!this.isRasberry) ){
+                    if ((this.firmware_version_differs) && (this.props.devicePort.indexOf("rfcomm") == -1) && (this.props.devicePort.indexOf("/dev/tty.") == -1) && (!this.props.isBluetooth) && (!this.isRasberry) ){
 
                    // if (true){
 
@@ -545,8 +545,8 @@ class SearchPanelDeviceComponent extends Component {
                        let  need_flash_device = false;
 
                        // if (true){
-
-                         if ((this.props.devicePort.indexOf("rfcomm") == -1) && (!this.props.isBluetooth)  && (!this.isRasberry)){
+                                                                                //macos
+                         if ((this.props.devicePort.indexOf("rfcomm") == -1) && (this.props.devicePort.indexOf("/dev/tty.") == -1) && (!this.props.isBluetooth)  && (!this.isRasberry)){
 
                              flashing_show_details_icon.style.display = "inline-block";
                              flashing_button.style.display = "inline-block";
