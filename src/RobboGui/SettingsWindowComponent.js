@@ -15,6 +15,12 @@ const messages = defineMessages({
     description: ' ',
     defaultMessage: 'Настройки'
   },
+  intervals_for_blocks_chain:{
+    id: 'gui.RobboGui.intervals_for_blocks_chain',
+    description: ' ',
+    defaultMessage: 'Intervals for blocks chain' 
+
+  },
   uno_search_timeout: {
     id: 'gui.RobboGui.uno_search_timeout',
     description: ' ',
@@ -38,28 +44,55 @@ const messages = defineMessages({
 });
 
 const messages_for_DCA_intervals = defineMessages({
+   for_usb: {
+    id: 'gui.dca.for_usb',
+    description: ' ',
+    defaultMessage: 'Intervals for usb'
+  },
   no_response_time: {
-    id: 'dca.no_response_time',
+    id: 'gui.dca.no_response_time',
     description: ' ',
     defaultMessage: 'NO RESPONSE TIME'
   },
   no_start_timeout: {
-    id: 'dca.no_start_timeout',
+    id: 'gui.dca.no_start_timeout',
     description: ' ',
     defaultMessage: 'NO START TIMEOUT'
   },
   device_handle_timeout: {
-    id: 'dca.device_handle_timeout',
+    id: 'gui.dca.device_handle_timeout',
     description: ' ',
     defaultMessage: 'DEVICE HANDLE TIMEOUT'
   },
   uno_timeout: {
-    id: 'dca.uno_timeout',
+    id: 'gui.dca.uno_timeout',
     description: ' ',
     defaultMessage: 'UNO TIMEOUT'
   },
+
+  no_response_time_bluetooth: {
+    id: 'gui.dca.no_response_time_bluetooth',
+    description: ' ',
+    defaultMessage: 'NO RESPONSE TIME'
+  },
+  no_start_timeout_bluetooth: {
+    id: 'gui.dca.no_start_timeout_bluetooth',
+    description: ' ',
+    defaultMessage: 'NO START TIMEOUT'
+  },
+  device_handle_timeout_bluetooth: {
+    id: 'gui.dca.device_handle_timeout_bluetooth',
+    description: ' ',
+    defaultMessage: 'DEVICE HANDLE TIMEOUT'
+  },
+  uno_timeout_bluetooth: {
+    id: 'gui.dca.uno_timeout_bluetooth',
+    description: ' ',
+    defaultMessage: 'UNO TIMEOUT'
+  },
+
   for_bluetooth: {
-    id: 'dca.for_bluetooth',
+    id: 'gui.dca.for_bluetooth',
     description: ' ',
     defaultMessage: 'Intervals for bluetooth'
   },
@@ -470,6 +503,18 @@ class SettingsWindowComponent extends Component {
 
         <div id="settings-window-content" className={styles.settings_window_content}>
 
+          <div id="settings-window-content-raw-intervals-title" className={styles.settings_window_content_raw}>
+
+            <div id="raw-intervals-title-settings-window-content-column-1" className={styles.settings_window_content_column}>
+
+                   <b>{this.props.intl.formatMessage(messages.intervals_for_blocks_chain)}</b>
+
+            </div>
+
+          
+          </div>
+
+
           <div id="settings-window-content-raw-1" className={styles.settings_window_content_raw}>
 
             <div id="raw-1-settings-window-content-column-1" className={styles.settings_window_content_column}>
@@ -490,6 +535,17 @@ class SettingsWindowComponent extends Component {
             <div id="raw-2-settings-window-content-column-2" className={styles.settings_window_content_column}>
                 <input type="number" />
             </div>
+          </div>
+
+            <div id="settings-window-content-raw-intervals-for-usb" className={styles.settings_window_content_raw}>
+
+            <div id="raw-intervals-for-usb-settings-window-content-column-1" className={styles.settings_window_content_column}>
+
+                   <b>{this.props.intl.formatMessage(messages_for_DCA_intervals.for_usb)}</b>
+
+            </div>
+
+          
           </div>
         
           <div id="settings-window-content-raw-2" className={styles.settings_window_content_raw}>
@@ -539,14 +595,14 @@ class SettingsWindowComponent extends Component {
 
               <div id="settings-window-content-raw-2" className={styles.settings_window_content_raw}>
                 <div id="raw-1337-settings-window-content-column-1" className={styles.settings_window_content_column}>
-                  {this.props.intl.formatMessage(messages_for_DCA_intervals.for_bluetooth)}
+                  <b>{this.props.intl.formatMessage(messages_for_DCA_intervals.for_bluetooth)}</b>
                 </div>
               </div>
             
             
               <div id="settings-window-content-raw-2" className={styles.settings_window_content_raw}>
                 <div id="raw-7-settings-window-content-column-1" className={styles.settings_window_content_column}>
-                  {this.props.intl.formatMessage(messages_for_DCA_intervals.no_response_time)}
+                  {this.props.intl.formatMessage(messages_for_DCA_intervals.no_response_time_bluetooth)}
                 </div>
 
                 <div id="raw-7-settings-window-content-column-2" className={styles.settings_window_content_column}>
@@ -557,7 +613,7 @@ class SettingsWindowComponent extends Component {
 
               <div id="settings-window-content-raw-2" className={styles.settings_window_content_raw}>
                 <div id="raw-8-settings-window-content-column-1" className={styles.settings_window_content_column}>
-                  {this.props.intl.formatMessage(messages_for_DCA_intervals.no_start_timeout)}
+                  {this.props.intl.formatMessage(messages_for_DCA_intervals.no_start_timeout_bluetooth)}
                 </div>
 
                 <div id="raw-8-settings-window-content-column-2" className={styles.settings_window_content_column}>
@@ -568,7 +624,7 @@ class SettingsWindowComponent extends Component {
 
               <div id="settings-window-content-raw-2" className={styles.settings_window_content_raw} >
                 <div id="raw-9-settings-window-content-column-1" className={styles.settings_window_content_column}>
-                  {this.props.intl.formatMessage(messages_for_DCA_intervals.device_handle_timeout)}
+                  {this.props.intl.formatMessage(messages_for_DCA_intervals.device_handle_timeout_bluetooth)}
                 </div>
 
                 <div id="raw-9-settings-window-content-column-2" className={styles.settings_window_content_column}>
@@ -578,7 +634,7 @@ class SettingsWindowComponent extends Component {
 
               <div id="settings-window-content-raw-2" className={styles.settings_window_content_raw} >
                 <div id="raw-10-settings-window-content-column-1" className={styles.settings_window_content_column}>
-                  {this.props.intl.formatMessage(messages_for_DCA_intervals.uno_timeout)}
+                  {this.props.intl.formatMessage(messages_for_DCA_intervals.uno_timeout_bluetooth)}
                 </div>
 
                 <div id="raw-10-settings-window-content-column-2" className={styles.settings_window_content_column}>
