@@ -317,6 +317,7 @@ class ColorCorrectorTableComponent extends Component {
 
       console.log("one_slider_percent_value: " + one_slider_percent_value);
 
+     
       let value = 0;
       let value_is_negative = false;
       unchecked_sliders_arr.forEach(function(slider,index){
@@ -325,7 +326,12 @@ class ColorCorrectorTableComponent extends Component {
               value_buf = (Number(document.getElementById(slider).value) -  one_slider_percent_value);
               value +=  value_buf;
 
-             value_is_negative = ((value_buf < 0) || (value_is_negative))?true:false;
+               
+              // Может быть так, что тянем рычажок вверх, а другой уже в 0. В этом случае действие нужно запретить. 
+
+      
+
+             value_is_negative = ((value_buf < 0) || (value_is_negative))?true:false; 
 
                 console.log("Number(document.getElementById(slider).value): " + Number(document.getElementById(slider).value));
                 console.log("value1: " + value);
@@ -340,7 +346,7 @@ class ColorCorrectorTableComponent extends Component {
 
       }
 
-
+      //проверяем, что текущеее значение слайдера + текущие значения неомеченных слайдеров не превышают общую сумму процентов. 
       if (((slider_value_now + value ) <= percents) && ((value) >= 0) && (!value_is_negative)) {
 
       one_slider_percent_value_old = one_slider_percent_value;
