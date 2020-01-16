@@ -149,7 +149,7 @@ padding: 5px 5px;
 
   margin-top: 20px;
   margin-left: 50px;
-
+  display: inline;
 
 }
 
@@ -161,10 +161,13 @@ padding: 5px 5px;
 }
 
 .color_col{
-
-
       display: inline-block;
+}
 
+.color_col_percent{
+      font-weight: bold;
+      margin-left: 9%;  
+      margin-right: 1%;
 }
 
 .color_col_header_label{
