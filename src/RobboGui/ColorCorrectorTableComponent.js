@@ -433,8 +433,16 @@ class ColorCorrectorTableComponent extends Component {
 		var checkboxAdv = document.getElementById("showAdvancedOptions");
 		var advOpt = document.getElementById("right-slider-block");
 
+    var buttonSave = document.getElementById("buttons-row-save");
+    var buttonLoad = document.getElementById("buttons-row-load");
+    var buttonAppl = document.getElementById("buttons-row-apply");
+
 		if(checkboxAdv.checked == true){
-			advOpt.style.display = "inline-block";
+      advOpt.style.display = "inline-block";
+      
+      buttonAppl.style.display = "inline-block";
+      buttonLoad.style.display = "inline-block";
+      buttonSave.style.display = "inline-block";
 		} else {
 			advOpt.style.display = "none";
 		}
@@ -443,10 +451,20 @@ class ColorCorrectorTableComponent extends Component {
 		var advOptMax = document.getElementById("data-block");
 
 		if(checkboxAdvMax.checked == true){
-			advOptMax.style.display = "inline-block";
+      advOptMax.style.display = "inline-block";
+      
+      buttonAppl.style.display = "inline-block";
+      buttonLoad.style.display = "inline-block";
+      buttonSave.style.display = "inline-block";
 		} else {
 			advOptMax.style.display = "none";
-		}
+    }
+    
+    if(!checkboxAdv.checked && !checkboxAdvMax.checked){
+      buttonAppl.style.display = "none";
+      buttonLoad.style.display = "none";
+      buttonSave.style.display = "none";
+    }
   }
   
   calculatePercents(color, id) {
@@ -874,10 +892,10 @@ class ColorCorrectorTableComponent extends Component {
 								</div>
 
 								<div id="buttons-row" className={styles.row}>
-									<button className={styles.buttons} onClick={this.onThisWindowClose.bind(this)}>{this.props.intl.formatMessage(messages.mclose)}</button>
-									<button className={styles.buttons} onClick={this.onButtonSaveClick.bind(this)}>{this.props.intl.formatMessage(messages.msave)}</button>
-									<button className={styles.buttons} onClick={this.onButtonLoadClick.bind(this)}>{this.props.intl.formatMessage(messages.mload)}</button>
-									<button className={styles.buttons} onClick={this.onButtonApplyChangesClick.bind(this, this.props.RCA, this.props.color_corrector_table.sensor_caller_id)}>{this.props.intl.formatMessage(messages.mapply)}</button>
+									<button id="buttons-row-close" className={styles.button_cancel} onClick={this.onThisWindowClose.bind(this)} >{this.props.intl.formatMessage(messages.mclose)}</button>
+									<button id="buttons-row-save" className={styles.buttons} onClick={this.onButtonSaveClick.bind(this)}>{this.props.intl.formatMessage(messages.msave)}</button>
+									<button id="buttons-row-load" className={styles.buttons} onClick={this.onButtonLoadClick.bind(this)}>{this.props.intl.formatMessage(messages.mload)}</button>
+									<button id="buttons-row-apply" className={styles.buttons} onClick={this.onButtonApplyChangesClick.bind(this, this.props.RCA, this.props.color_corrector_table.sensor_caller_id)}>{this.props.intl.formatMessage(messages.mapply)}</button>
 							</div>
 						</div>
 				</div>
