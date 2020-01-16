@@ -236,30 +236,45 @@ class ColorCorrectorTableComponent extends Component {
 
        var slider =  document.getElementById(slider_id);
 
-       var slider_value_now = Number(slider.value);
+       var slider_value_now = Number(slider.value);//текущее значение пересчиываемого датчикаы
 
        console.log("slider_value_now: " + slider_value_now);
 
-       var slider_value_old = Number(document.getElementById(slider_id+"-value").innerHTML.replace("%",""));
+       var slider_value_old = Number(document.getElementById(slider_id+"-value").innerHTML.replace("%","")); //старое значение показаний датчика (до начала drag) 
 
        console.log("slider_value_old: " + slider_value_old);
 
-       var filtered_sliders_arr =  sliders_arr.filter(slider => slider != slider_id);
+       var filtered_sliders_arr =  sliders_arr.filter(slider => slider != slider_id); //все слайдеры кроме пересчитываемого 
 
-       var checked_sliders_arr =   filtered_sliders_arr.filter(slider => document.getElementById(slider+"-checkbox").checked == true);
+       var checked_sliders_arr =   filtered_sliders_arr.filter(slider => document.getElementById(slider+"-checkbox").checked == true);//слайдеры, отмеченные галочкой
 
        var unchecked_sliders_arr =   filtered_sliders_arr.filter(slider => document.getElementById(slider+"-checkbox").checked != true);
 
 
        checked_sliders_arr.forEach(function(slider,index){
-              percents  =  percents -  Number(document.getElementById(slider).value);
+
+              
+
+          percents  =  percents -  Number(document.getElementById(slider).value); //галочка закрепляет значение слайдера, поэтому вычитаем его из общей суммы процентов 
+
+
+
        });
+            
+
+       /*
+        Когда мы тянем слайдер, у нас образуется дельта со старым значением. 
+        Для сохранения суммы процентов эта дельта по-равному распределяется  между всеми неомеченными слайдерами.  
+
+     */ 
 
 
-      var percent_delta = slider_value_now - slider_value_old;
+      var percent_delta = slider_value_now - slider_value_old; //дельта нового значения слайдера и старого 
 
-        var one_slider_percent_value;
-      var one_slider_percent_value_without_round = percent_delta / unchecked_sliders_arr.length;
+    
+
+      var one_slider_percent_value;
+      var one_slider_percent_value_without_round = percent_delta / unchecked_sliders_arr.length; //распределение дельты на каждый неотмеченный слайдер
       console.log("one_slider_percent_value_without_round: " + one_slider_percent_value_without_round);
       one_slider_percent_value = one_slider_percent_value_without_round;
 
@@ -312,6 +327,7 @@ class ColorCorrectorTableComponent extends Component {
 
       console.log("one_slider_percent_value: " + one_slider_percent_value);
 
+     
       let value = 0;
       let value_is_negative = false;
       unchecked_sliders_arr.forEach(function(slider,index){
@@ -320,7 +336,12 @@ class ColorCorrectorTableComponent extends Component {
               value_buf = (Number(document.getElementById(slider).value) -  one_slider_percent_value);
               value +=  value_buf;
 
-             value_is_negative = ((value_buf < 0) || (value_is_negative))?true:false;
+               
+              // Может быть так, что тянем рычажок вверх, а другой уже в 0. В этом случае действие нужно запретить. 
+
+      
+
+             value_is_negative = ((value_buf < 0) || (value_is_negative))?true:false; 
 
                 console.log("Number(document.getElementById(slider).value): " + Number(document.getElementById(slider).value));
                 console.log("value1: " + value);
@@ -335,7 +356,7 @@ class ColorCorrectorTableComponent extends Component {
 
       }
 
-
+      //проверяем, что текущеее значение слайдера + текущие значения неомеченных слайдеров не превышают общую сумму процентов. 
       if (((slider_value_now + value ) <= percents) && ((value) >= 0) && (!value_is_negative)) {
 
       one_slider_percent_value_old = one_slider_percent_value;
