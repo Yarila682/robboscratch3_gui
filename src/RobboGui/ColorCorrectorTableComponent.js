@@ -460,10 +460,6 @@ class ColorCorrectorTableComponent extends Component {
 
 		if(checkboxAdv.checked == true){
       advOpt.style.display = "inline-block";
-      
-      buttonAppl.style.display = "inline-block";
-      buttonLoad.style.display = "inline-block";
-      buttonSave.style.display = "inline-block";
 		} else {
 			advOpt.style.display = "none";
 		}
@@ -478,10 +474,8 @@ class ColorCorrectorTableComponent extends Component {
       buttonLoad.style.display = "inline-block";
       buttonSave.style.display = "inline-block";
 		} else {
-			advOptMax.style.display = "none";
-    }
-    
-    if(!checkboxAdv.checked && !checkboxAdvMax.checked){
+      advOptMax.style.display = "none";
+      
       buttonAppl.style.display = "none";
       buttonLoad.style.display = "none";
       buttonSave.style.display = "none";
