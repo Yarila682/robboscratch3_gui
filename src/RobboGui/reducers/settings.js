@@ -1,8 +1,8 @@
 const initialState = {
 
   is_lab_ext_enabled:false,
-  robot_is_scratchduino:false
-
+  robot_is_scratchduino:false,
+  is_sim_activated:false
 
 
 };
@@ -19,17 +19,18 @@ const  reducer = function (state, action) {
 
 switch (action.type) {
 
-  case 'TRIGGER_LAB_EXT_SENSORS':
-
+  case 'TRIGGER_SIM_EN':
 
   settings_state = Object.assign({}, state);
-
-  settings_state.is_lab_ext_enabled = !settings_state.is_lab_ext_enabled;
-
-
-
+  settings_state.is_sim_activated = !settings_state.is_sim_activated;
   return   settings_state;
+  break;
 
+  case 'TRIGGER_LAB_EXT_SENSORS':
+
+  settings_state = Object.assign({}, state);
+  settings_state.is_lab_ext_enabled = !settings_state.is_lab_ext_enabled;
+  return   settings_state;
 
     break;
 
