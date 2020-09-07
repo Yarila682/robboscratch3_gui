@@ -205,19 +205,20 @@ class RobboMenu extends Component {
     item.name="Robbo Robot";
     this.is_sim_en=!this.is_sim_en;
     this.props.VM.runtime.sim_ac=!this.props.VM.runtime.sim_ac;
-    console.warn(this.props.VM.editingTarget);
-    this.props.VM.runtime.util=this.props.VM.editingTarget;
+
     if(this.props.VM.runtime.sim_ac)
       {
-//        let promise = new Promise(resolve => {
-          this.props.VM.addSprite(item.json);
 
-//          console.warn(this.props.send_workspace);
-//          let workspace = this.props.send_workspace.workspace;
-//          console.warn("WORKSPACE!!!");
-//          console.warn(workspace);
+          this.props.VM.addSprite(item.json).then((result) => {
 
-//        }
+            this.props.VM.setUTIL();
+
+          }).catch ((error) => {
+
+
+          });
+
+          //setTimeout(()=>{},1000);
     }
     this.props.onTriggerSimEn();
   }
