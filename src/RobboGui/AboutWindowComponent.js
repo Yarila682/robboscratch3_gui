@@ -62,7 +62,7 @@ const messages = defineMessages({
 
         id: 'gui.RobboGui.copy_to_clipboard',
         description: ' ',
-        defaultMessage: 'Copy to clipboard'      
+        defaultMessage: 'Copy to clipboard'
 
     }
 
@@ -71,11 +71,11 @@ const messages = defineMessages({
 class AboutWindowComponent extends Component {
 
   constructor(){
-  
+
       super();
 
-     
-  
+
+
   }
 
 
@@ -102,16 +102,16 @@ class AboutWindowComponent extends Component {
       getos((e,os) => {
             if(e) return console.error(e);
 
-                 console.warn(os);   
-          
-            os_field.innerHTML = os.os + " " + ((typeof(node_os.release()) !== 'undefined')?node_os.release():"")  + " " + ((typeof(os.dist) !== 'undefined')?os.dist:"") + " " + ((typeof(os.release) !== 'undefined')?os.release:"");   
-            })  
+                 console.warn(os);
+
+            os_field.innerHTML = os.os + " " + ((typeof(node_os.release()) !== 'undefined')?node_os.release():"")  + " " + ((typeof(os.dist) !== 'undefined')?os.dist:"") + " " + ((typeof(os.release) !== 'undefined')?os.release:"");
+            })
 
   }
 
   startProfiling(){
 
-   console.warn(`start profiling`); 
+   console.warn(`start profiling`);
 
     let time_counter = 0;
 
@@ -133,7 +133,7 @@ class AboutWindowComponent extends Component {
 
 
     /////////////////////av_time
-     
+
       const performance = typeof window === 'object' && window.performance;
 
         let time_1 = performance.now();
@@ -178,7 +178,7 @@ class AboutWindowComponent extends Component {
 
     this.VM.runtime.enableProfiling((frame) => {
 
-            
+
 
              let frame_id = this.VM.runtime.profiler.nameById(frame.id);
 
@@ -192,7 +192,7 @@ class AboutWindowComponent extends Component {
                  recieve_time_delta = this.DCA.getRecieveTimeDelta();
                  recieve_time_delta_sum+= recieve_time_delta;
 
-             
+
 
                 if (time_counter == 100){
 
@@ -203,7 +203,7 @@ class AboutWindowComponent extends Component {
 
                     time_counter = 0;
 
-                    
+
                     step_time_field.innerHTML = average_total_time;
                     robot_recieve_time_field.innerHTML = recieve_time_delta_average;
 
@@ -232,7 +232,7 @@ class AboutWindowComponent extends Component {
 
   stopProfiling(){
 
-     console.warn(`stop profiling`); 
+     console.warn(`stop profiling`);
 
      clearInterval(this.avTimeInterval);
 
@@ -242,20 +242,20 @@ class AboutWindowComponent extends Component {
 
   copyToClipboard(param){
 
-    console.warn(`copyToClipboard()`); 
+    console.warn(`copyToClipboard()`);
 
     let  text_to_copy = "";
 
     switch (param) {
 
        case "ver":
-        
+
          text_to_copy =  document.getElementById(`raw-1-about-window-content-column-1`).innerHTML;
-       
+
        break;
 
         case "os":
-                
+
 
                  text_to_copy =  document.getElementById(`raw-5-about-window-content-column-2`).innerHTML;
 
@@ -264,7 +264,7 @@ class AboutWindowComponent extends Component {
         case "arch":
 
                 text_to_copy =  document.getElementById(`raw-6-about-window-content-column-2`).innerHTML;
-        
+
         break;
 
         case "cpu":
@@ -272,12 +272,12 @@ class AboutWindowComponent extends Component {
                 text_to_copy =  document.getElementById(`raw-7-about-window-content-column-2`).innerHTML;
 
         break;
-    
+
         default:
             break;
     }
 
-    
+
     clipboardy.writeSync(text_to_copy);
 
   }
@@ -308,7 +308,7 @@ class AboutWindowComponent extends Component {
 
                      <div id="raw-1-about-window-content-column-1"  className={styles.about_window_content_column}>
 
-                     Robbo Scratch v.3.50.0
+                     Robbo Scratch v.3.51.0-simulator-preview 
                      </div>
 
                      <div id="raw-1-about-window-content-column-2" className={styles.about_window_content_column}>
@@ -346,7 +346,7 @@ class AboutWindowComponent extends Component {
 
                      <div id="raw-3-about-window-content-column-2" className={styles.about_window_content_column}>
 
-                       
+
 
                      </div>
 
@@ -362,7 +362,7 @@ class AboutWindowComponent extends Component {
 
                      <div id="raw-4-about-window-content-column-2" className={styles.about_window_content_column}>
 
-                       
+
 
                      </div>
 
@@ -378,11 +378,11 @@ class AboutWindowComponent extends Component {
 
                      <div id="raw-8-about-window-content-column-2" className={styles.about_window_content_column}>
 
-                       
+
 
                      </div>
 
-             </div>  
+             </div>
 
 
 
@@ -403,7 +403,7 @@ class AboutWindowComponent extends Component {
                       <div id="raw-5-about-window-content-column-3" className={styles.about_window_content_column}>
 
                          <button id={`about-window-copy-to-clipboard-os`} onClick={this.copyToClipboard.bind(this,"os")}>{this.props.intl.formatMessage(messages.copy_to_clipboard)} </button>
-  
+
 
                      </div>
 
@@ -427,7 +427,7 @@ class AboutWindowComponent extends Component {
                      <div id="raw-6-about-window-content-column-3" className={styles.about_window_content_column}>
 
                          <button id={`about-window-copy-to-clipboard-arch`} onClick={this.copyToClipboard.bind(this,"arch")}>{this.props.intl.formatMessage(messages.copy_to_clipboard)} </button>
-  
+
 
                      </div>
 
@@ -451,13 +451,13 @@ class AboutWindowComponent extends Component {
                      <div id="raw-7-about-window-content-column-3" className={styles.about_window_content_column}>
 
                          <button id={`about-window-copy-to-clipboard-cpu`} onClick={this.copyToClipboard.bind(this,"cpu")}>{this.props.intl.formatMessage(messages.copy_to_clipboard)} </button>
-  
+
 
                      </div>
 
-             </div>  
+             </div>
 
-             
+
 
 
           </div>
@@ -491,7 +491,7 @@ const mapDispatchToProps = dispatch => ({
    createWindow: (top,left,window_id) => {
 
       ActionCreateNewDraggableWindow(top,left,window_id);
-   } 
+   }
 
 
 });

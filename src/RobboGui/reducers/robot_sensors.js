@@ -92,8 +92,23 @@ const  reducer = function (state, action) {
 
 
 switch (action.type) {
+  case 'TRIGGER_SIM_EN':
 
-  case 'TRIGGER_EXTENSION_PACK':
+
+
+
+          //  sensors = [...state];
+
+            sensors = immutable_copy(state);
+
+            sensors = handler_trigger_extension_pack(sensors,action.payload);
+
+
+            return sensors;
+
+
+    break;
+case 'TRIGGER_EXTENSION_PACK':
 
 
 
@@ -196,6 +211,10 @@ const handler_robot_get_sensors_data = function (initial_sensors_state,payload){
 
 
       if (sensor.sensor_active){
+//        console.warn("painload");
+//        console.warn(payload);
+//        sensor.sensor_data = payload.VM.getSensorData(sensor_index);
+
 
             if (sensor.sensor_name == "color"){
 
@@ -207,7 +226,7 @@ const handler_robot_get_sensors_data = function (initial_sensors_state,payload){
                   sensor.sensor_data = payload.RCA.getSensorData(sensor_index);
 
             }
-
+//*/
 
       }
 
@@ -263,6 +282,8 @@ const handler_trigger_extension_pack = function (initial_sensors_state,payload){
 
   return sensors_state;
 }
+
+
 
 
 export {

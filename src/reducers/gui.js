@@ -45,8 +45,10 @@ import settings,{settings_InitialState} from '../RobboGui/reducers/settings';
 import draggable_window,{draggable_window_InitialState} from '../RobboGui/reducers/draggable_window';
 import new_draggable_window,{new_draggable_window_InitialState} from '../RobboGui/reducers/new_draggable_window';
 import devices_firmware_flasher,{devices_firmware_flasher_InitialState} from '../RobboGui/reducers/devices_firmware_flasher';
+import send_workspace,{SendWorkspaceInitialState} from '../RobboGui/reducers/send_workspace';
 
 import thunk from 'redux-thunk';
+
 
 const guiMiddleware = compose(applyMiddleware(throttle(300, {leading: true, trailing: true}),thunk));
 
@@ -92,7 +94,8 @@ const guiInitialState = {
   settings:settings_InitialState,
   draggable_window: draggable_window_InitialState,
   new_draggable_window: new_draggable_window_InitialState,
-  devices_firmware_flasher:devices_firmware_flasher_InitialState
+  devices_firmware_flasher:devices_firmware_flasher_InitialState,
+  send_workspace:SendWorkspaceInitialState
 };
 
 const initPlayer = function (currentState) {
@@ -217,7 +220,8 @@ const guiReducer = combineReducers({
   settings:settings,
   draggable_window: draggable_window,
   new_draggable_window: new_draggable_window,
-  devices_firmware_flasher:devices_firmware_flasher
+  devices_firmware_flasher:devices_firmware_flasher,
+  send_workspace:send_workspace
 });
 
 export {

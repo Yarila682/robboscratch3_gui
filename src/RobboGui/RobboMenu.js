@@ -2,25 +2,42 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import styles from './RobboMenu.css';
 import classNames from 'classnames';
+import costumeLibraryContent from '../lib/libraries/costumes.json';
+import spriteLibraryContent from '../lib/libraries/sprites.json';
+import {ActionTriggerSim} from './actions/sensor_actions';
 import {ActionTriggerExtensionPack} from './actions/sensor_actions';
 import {ActionTriggerLabExtSensors} from  './actions/sensor_actions';
 import {ActionTriggerColorCorrectorTable} from './actions/sensor_actions';
 import {ActionTriggerDraggableWindow} from './actions/sensor_actions';
-import {ActionTriggerRobboMenu} from './actions/sensor_actions.js'; 
+import {ActionTriggerRobboMenu} from './actions/sensor_actions.js';
 import {ActionTriggerNewDraggableWindow} from './actions/sensor_actions'
-
+import Blocks from '../containers/blocks.jsx';
 import {defineMessages, intlShape, injectIntl, FormattedMessage} from 'react-intl';
-
 import {createDiv,createDivShort} from './lib/lib.js';
 
 //import Blockly_Arduino from 'blocks-compiler';
 
 
 const messages = defineMessages({
+    sim_en:{
+      id:'gui.RobboMenu.sim_en',
+      description:'',
+      defaultMessage:'Enable Simulator'
+    },
     extension_pack: {
         id: 'gui.RobboMenu.extension_pack',
         description: ' ',
         defaultMessage: 'Extension pack '
+    },
+    sim_enable: {
+        id: 'gui.RobboMenu.sim_enable',
+        description: ' ',
+        defaultMessage: 'Включить симуляцию робота'
+    },
+    sim_disable: {
+        id: 'gui.RobboMenu.sim_disable',
+        description: ' ',
+        defaultMessage: 'Выключить симуляцию робота'
     },
     extension_pack_enable: {
         id: 'gui.RobboMenu.extension_pack_enable',
@@ -31,7 +48,7 @@ const messages = defineMessages({
         id: 'gui.RobboMenu.extension_pack_disable',
         description: ' ',
         defaultMessage: 'Выключить расширенный набор датчиков робота'
-    }, 
+    },
     lab_ext_sensors: {
         id: 'gui.RobboMenu.lab_ext_sensors',
         description: ' ',
@@ -46,7 +63,7 @@ const messages = defineMessages({
         id: 'gui.RobboMenu.lab_ext_sensors_disable',
         description: ' ',
         defaultMessage: 'Выключить внешние датчики лаборатории'
-    }, 
+    },
     trigger_logging:{
 
       id: 'gui.RobboMenu.trigger_logging',
@@ -117,7 +134,7 @@ class RobboMenu extends Component {
 
   constructor(){
     super();
-
+    this.is_sim_en = false;
     this.is_extension_pack_enabled = false;
     this.is_lab_ext_enabled = false;
 
@@ -181,7 +198,29 @@ class RobboMenu extends Component {
 
     }
 
-     
+
+  }
+  triggerSimEn(){
+    const item = spriteLibraryContent[12];
+    item.name="Robbo Robot";
+    this.is_sim_en=!this.is_sim_en;
+    this.props.VM.runtime.sim_ac=!this.props.VM.runtime.sim_ac;
+
+    if(this.props.VM.runtime.sim_ac)
+      {
+
+          this.props.VM.addSprite(item.json).then((result) => {
+
+            this.props.VM.setUTIL();
+
+          }).catch ((error) => {
+
+
+          });
+
+          //setTimeout(()=>{},1000);
+    }
+    this.props.onTriggerSimEn();
   }
 
   triggerExtensionPack(){
@@ -215,7 +254,7 @@ class RobboMenu extends Component {
         console.log("triggerLogging");
         this.DCA.triggerLogging();
 
-       
+
 
   }
 
@@ -296,7 +335,7 @@ class RobboMenu extends Component {
 
                     time_counter = 0;
 
-                  
+
 
                     profiler_window_average_time_field.innerHTML = `<div>Runtime._step total_time:${average_total_time} self_time: ${average_self_time} </div>
                                                                     <div>Recieve time delta: ${recieve_time_delta}</div>
@@ -330,8 +369,8 @@ class RobboMenu extends Component {
 
                 let  profiler_window_content_body_row = createDivShort(profiler_window_content_body,styles,"",{id:`profiler_window_content_body_row-${frame_id}`});
 
-                
-                
+
+
                 let column_style = {
 
                     marginLeft:'7px',
@@ -343,31 +382,31 @@ class RobboMenu extends Component {
                     minWidth: '100px'
                 }
 
-                 createDivShort(profiler_window_content_body_row,column_style,"",{id:`profiler_window_content_body_row-${frame_id}-column_id`});      
+                 createDivShort(profiler_window_content_body_row,column_style,"",{id:`profiler_window_content_body_row-${frame_id}-column_id`});
 
-                 createDivShort(profiler_window_content_body_row,column_style,self_time,{id:`profiler_window_content_body_row-${frame_id}-column_self_time`});      
+                 createDivShort(profiler_window_content_body_row,column_style,self_time,{id:`profiler_window_content_body_row-${frame_id}-column_self_time`});
 
-                 createDivShort(profiler_window_content_body_row,column_style,total_time,{id:`profiler_window_content_body_row-${frame_id}-column_total_time`});      
-              
+                 createDivShort(profiler_window_content_body_row,column_style,total_time,{id:`profiler_window_content_body_row-${frame_id}-column_total_time`});
+
 
             }else{
 
-                let profiler_window_content_body_row_column_id =  document.getElementById(`profiler_window_content_body_row-${frame_id}-column_id`); 
+                let profiler_window_content_body_row_column_id =  document.getElementById(`profiler_window_content_body_row-${frame_id}-column_id`);
                 profiler_window_content_body_row_column_id.innerHTML = frame_id;
 
 
-                let profiler_window_content_body_row_column_self_time = document.getElementById(`profiler_window_content_body_row-${frame_id}-column_self_time`); 
+                let profiler_window_content_body_row_column_self_time = document.getElementById(`profiler_window_content_body_row-${frame_id}-column_self_time`);
                 profiler_window_content_body_row_column_self_time.innerHTML = self_time;
 
 
-                let profiler_window_content_body_row_column_total_time = document.getElementById(`profiler_window_content_body_row-${frame_id}-column_total_time`); 
+                let profiler_window_content_body_row_column_total_time = document.getElementById(`profiler_window_content_body_row-${frame_id}-column_total_time`);
                 profiler_window_content_body_row_column_total_time.innerHTML = total_time;
 
 
             }
 
-            
-  
+
+
 
         });
   }
@@ -407,6 +446,11 @@ class RobboMenu extends Component {
 
 
 
+                    <div id="trigger-sim-en" onClick={this.triggerSimEn.bind(this)} className={classNames(
+
+                                  {[styles.robbo_menu_item]: true}
+
+                                )}>{ (this.is_sim_en)?this.props.intl.formatMessage(messages.sim_disable):this.props.intl.formatMessage(messages.sim_enable)  }</div>
 
 
           <div id="trigger-extension-pack" onClick={this.triggerExtensionPack.bind(this)} className={classNames(
@@ -468,7 +512,7 @@ class RobboMenu extends Component {
 
                       )}>{this.props.intl.formatMessage(messages.color_sensor_correction5)} </div>
 
-          <hr className={styles.hrDevider}/>    
+          <hr className={styles.hrDevider}/>
 
                {/*  <div id="enable-profiling" onClick={this.enableProfiling.bind(this)} className={classNames(
 
@@ -480,26 +524,26 @@ class RobboMenu extends Component {
 
                         {[styles.robbo_menu_item]: true}
 
-                      )}>{"Disable profiling"} </div>     
+                      )}>{"Disable profiling"} </div>
 
              <div id="trigger-profiler-window" onClick={this.triggerProfilerWindow.bind(this)} className={classNames(
 
                         {[styles.robbo_menu_item]: true}
 
-                      )}>{"Trigger profiler window"} </div>   */}  
+                      )}>{"Trigger profiler window"} </div>   */}
 
                <div id="trigger-settings-window" onClick={this.triggerSettingsWindow.bind(this)} className={classNames(
 
                         {[styles.robbo_menu_item]: true}
 
-                      )}>{this.props.intl.formatMessage(messages.trigger_settings_window)} </div>           
+                      )}>{this.props.intl.formatMessage(messages.trigger_settings_window)} </div>
 
 
               <div id="trigger-about-window" onClick={this.triggerAboutWindow.bind(this)} className={classNames(
 
                         {[styles.robbo_menu_item]: true}
 
-                      )}>{this.props.intl.formatMessage(messages.trigger_about_window)} </div>                   
+                      )}>{this.props.intl.formatMessage(messages.trigger_about_window)} </div>
 
 
       </div>
@@ -519,14 +563,17 @@ const mapStateToProps =  state => ({
 
     robbo_menu:state.scratchGui.robbo_menu,
     robot_sensors:state.scratchGui.robot_sensors,
-    settings:state.scratchGui.settings
-
+    settings:state.scratchGui.settings,
+  //  send_workspace:state.scratchGui.send_workspace
 
   });
 
 const mapDispatchToProps = dispatch => ({
 
+    onTriggerSimEn: () => {
 
+      dispatch(ActionTriggerSim());
+    },
     onTriggerExtensionPack: () => {
 
         dispatch(ActionTriggerExtensionPack());
@@ -557,7 +604,7 @@ const mapDispatchToProps = dispatch => ({
 
               dispatch(ActionTriggerNewDraggableWindow(window_id));
             },
-    
+
     onTriggerAboutWindow: (window_id) => {
 
               dispatch(ActionTriggerNewDraggableWindow(window_id));
@@ -565,7 +612,7 @@ const mapDispatchToProps = dispatch => ({
     onTriggerRobboMenu: () => {
 
       dispatch(ActionTriggerRobboMenu());
-    }        
+    }
 
 });
 

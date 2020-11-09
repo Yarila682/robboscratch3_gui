@@ -98,9 +98,9 @@ class SensorPallete extends Component {
 
        {/* <QuadcopterPreviewComponent QCA={this.props.QCA} quadcopterIndex={0} /> */}
 
-        <OttoPreviewComponent OCA={this.props.OCA} ottoIndex={0} />  
+        <OttoPreviewComponent OCA={this.props.OCA} ottoIndex={0} />
 
-        <ArduinoPreviewComponent ACA={this.props.ACA} arduinoIndex={0}/> 
+        <ArduinoPreviewComponent ACA={this.props.ACA} arduinoIndex={0}/>
 
 
       {/*  <DraggableWindowComponent draggableWindowId={0} initialCoords={initial_coords_quadcopter}>
@@ -112,11 +112,11 @@ class SensorPallete extends Component {
 
         <DraggableWindowComponent draggableWindowId={1} initialCoords={initial_coords_robot}>
 
-              <RobotPalleteComponent RCA={this.props.RCA} robotIndex={0}/>
+              <RobotPalleteComponent RCA={this.props.RCA} VM={this.props.VM} robotIndex={0}/>
 
         </DraggableWindowComponent>
 
-        
+
 
         <DraggableWindowComponent draggableWindowId={2} initialCoords={initial_coords_lab}>
 
@@ -128,13 +128,13 @@ class SensorPallete extends Component {
 
               <OttoPalleteComponent OCA={this.props.OCA} ottoIndex={0}/>
 
-        </DraggableWindowComponent>  
+        </DraggableWindowComponent>
 
         <DraggableWindowComponent draggableWindowId={6} initialCoords={initial_coords_arduino}>
 
               <ArduinoPalleteComponent ACA={this.props.ACA} arduinoIndex={0}/>
 
-        </DraggableWindowComponent> 
+        </DraggableWindowComponent>
 
 
 
