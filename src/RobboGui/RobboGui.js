@@ -191,6 +191,9 @@ class RobboGui extends Component {
 
     search_panel.style.display = "block";
 
+    let search_device_button =  document.getElementById(`robbo_search_devices`);
+    search_device_button.style.pointerEvents = "none";
+
     
 
    this.props.vm.getDCA().searchAllDevices();

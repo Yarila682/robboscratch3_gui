@@ -97,6 +97,8 @@ class SearchPanelComponent extends Component {
 
     this.DCA.registerDevicesNotFoundCallback(() => {
 
+      let search_device_button =  document.getElementById(`robbo_search_devices`);
+      search_device_button.style.pointerEvents = "auto";
 
         this.setState((previousState, currentProps) => {
 
@@ -152,7 +154,8 @@ class SearchPanelComponent extends Component {
 
                      
                 devicePort: devices[index].getPortName(),
-                isBluetooth: devices[index].isBluetoothDevice()
+                isBluetooth: devices[index].isBluetoothDevice(),
+                isMacBluetooth: devices[index].isMacBluetooth()
               //  deviceId: devices[index].getDeviceID() 
             
             }
@@ -245,7 +248,7 @@ class SearchPanelComponent extends Component {
 
 
 
-                         return  <SearchPanelDeviceComponent Id={index} flashingStatusComponentId={index} draggableWindowId={7+index}  key={index + "search-panel-devices-list"}  devicePort={device.devicePort} isBluetooth={device.isBluetooth}   DCA={this.DCA} RCA={this.RCA} LCA={this.LCA} OCA={this.OCA} ACA={this.ACA}/>
+                         return  <SearchPanelDeviceComponent Id={index} flashingStatusComponentId={index} draggableWindowId={7+index}  key={index + "search-panel-devices-list"}  devicePort={device.devicePort} isBluetooth={device.isBluetooth} isMacBluetooth={device.isMacBluetooth}   DCA={this.DCA} RCA={this.RCA} LCA={this.LCA} OCA={this.OCA} ACA={this.ACA}/>
 
 
 

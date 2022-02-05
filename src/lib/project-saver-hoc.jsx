@@ -106,11 +106,11 @@ const ProjectSaverHOC = function (WrappedComponent) {
             // window.onbeforeunload = undefined; // eslint-disable-line no-undefined
         }
         leavePageConfirm (e) {
-            if (this.props.projectChanged) {
+           /* if (this.props.projectChanged) {
                 // both methods of returning a value may be necessary for browser compatibility
                 (e || window.event).returnValue = true;
                 return true;
-            }
+            } */
             return; // Returning undefined prevents the prompt from coming up
         }
         clearAutoSaveTimeout () {

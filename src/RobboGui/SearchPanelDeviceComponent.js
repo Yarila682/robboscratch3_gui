@@ -305,6 +305,9 @@ class SearchPanelDeviceComponent extends Component {
            let flashing_show_details_icon = document.getElementById(`search-panel-flashing-show-details-${this.props.Id}`);
 
            let device_status_icon = document.getElementById(`search-panel-device-status-icon-${this.props.Id}`);
+
+           let search_device_button =  document.getElementById(`robbo_search_devices`);
+
        
 
 
@@ -424,6 +427,8 @@ class SearchPanelDeviceComponent extends Component {
 
                 }else if (state == 6){
 
+                    search_device_button.style.pointerEvents = "auto";
+
                     let result =  this.firmware_version_differs_cb_result;
 
                     status_field.innerHTML = device_name + " " + this.props.intl.formatMessage(messages.device_connected);
@@ -443,8 +448,8 @@ class SearchPanelDeviceComponent extends Component {
                     //let firm_differs_msg = "Flash?";
 
                     let need_flash_device = false; 
-
-                    if ((this.firmware_version_differs) && (this.props.devicePort.indexOf("rfcomm") == -1) && (this.props.devicePort.indexOf("/dev/tty.") == -1) && (!this.props.isBluetooth) && (!this.isRasberry) ){
+                                                                                                                //Mac OS    
+                    if ((this.firmware_version_differs) && (this.props.devicePort.indexOf("rfcomm") == -1) && (!this.props.isMacBluetooth) && (!this.props.isBluetooth) && (!this.isRasberry) ){
 
                    // if (true){
 
@@ -487,7 +492,9 @@ class SearchPanelDeviceComponent extends Component {
 
                 } else if (state == 8){ //Port doesn't respond (state - TIMEOUT)
 
-                     let info_field = document.getElementById(`search-panel-device-info-${this.props.Id}`);
+                    search_device_button.style.pointerEvents = "auto";
+
+                    let info_field = document.getElementById(`search-panel-device-info-${this.props.Id}`);
 
                     info_field.style.display = "inline-block";
 
@@ -546,7 +553,7 @@ class SearchPanelDeviceComponent extends Component {
 
                        // if (true){
                                                                                 //macos
-                         if ((this.props.devicePort.indexOf("rfcomm") == -1) && (this.props.devicePort.indexOf("/dev/tty.") == -1) && (!this.props.isBluetooth)  && (!this.isRasberry)){
+                         if ((this.props.devicePort.indexOf("rfcomm") == -1) && (!this.props.isMacBluetooth) && (!this.props.isBluetooth)  && (!this.isRasberry)){
 
                              flashing_show_details_icon.style.display = "inline-block";
                              flashing_button.style.display = "inline-block";
@@ -568,6 +575,7 @@ class SearchPanelDeviceComponent extends Component {
 
                 } else if (state == 7){
 
+                    search_device_button.style.pointerEvents = "auto";
 
                     let info_field = document.getElementById(`search-panel-device-info-${this.props.Id}`);
 
@@ -626,6 +634,8 @@ searchDevices(){
     let search_panel = document.getElementById(`SearchPanelComponent`);
 
     search_panel.style.display = "block";
+
+
 
 
    this.DCA.searchAllDevices();
