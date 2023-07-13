@@ -386,20 +386,6 @@
         ]
     },
     {
-        "name": "Hay Field",
-        "md5": "da102a69d135973e0fc139131dec785a.png",
-        "type": "backdrop",
-        "tags": [
-            "outdoors",
-            "farm"
-        ],
-        "info": [
-            960,
-            720,
-            2
-        ]
-    },
-    {
         "name": "Hearts",
         "md5": "26d3418b2fbc1af2c5fea82e1c3df1db.svg",
         "type": "backdrop",

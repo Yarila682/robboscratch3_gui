@@ -3,7 +3,7 @@ import {FormattedMessage} from 'react-intl';
 
 import musicImage from './music.png';
 import musicInsetImage from './music-small.svg';
-import penImage from './pen.png';
+import penImage from './pen.jpg';
 import penInsetImage from './pen-small.svg';
 import videoImage from './video-sensing.png';
 import videoInsetImage from './video-sensing-small.svg';
@@ -108,43 +108,43 @@ export default [
     //     featured: true,
     //     internetConnectionRequired: true
     // },
-    {
-        name: (
-            <FormattedMessage
-                defaultMessage="Translate"
-                description="Name for the Translate extension"
-                id="gui.extension.translate.name"
-            />
-        ),
-        extensionId: 'translate',
-        collaborator: 'Google',
-        iconURL: translateImage,
-        insetIconURL: translateInsetImage,
-        description: (
-            <FormattedMessage
-                defaultMessage="Translate text into many languages."
-                description="Description for the Translate extension"
-                id="gui.extension.translate.description"
-            />
-        ),
-        featured: true,
-        internetConnectionRequired: true
-    },
-    {
-        name: 'Makey Makey',
-        extensionId: 'makeymakey',
-        collaborator: 'JoyLabz',
-        iconURL: makeymakeyImage,
-        insetIconURL: makeymakeyInsetImage,
-        description: (
-            <FormattedMessage
-                defaultMessage="Make anything into a key."
-                description="Description for the 'Makey Makey' extension"
-                id="gui.extension.makeymakey.description"
-            />
-        ),
-        featured: true
-    }
+    // {
+    //     name: (
+    //         <FormattedMessage
+    //             defaultMessage="Translate"
+    //             description="Name for the Translate extension"
+    //             id="gui.extension.translate.name"
+    //         />
+    //     ),
+    //     extensionId: 'translate',
+    //     collaborator: 'Google',
+    //     iconURL: translateImage,
+    //     insetIconURL: translateInsetImage,
+    //     description: (
+    //         <FormattedMessage
+    //             defaultMessage="Translate text into many languages."
+    //             description="Description for the Translate extension"
+    //             id="gui.extension.translate.description"
+    //         />
+    //     ),
+    //     featured: true,
+    //     internetConnectionRequired: true
+    // },
+    // {
+    //     name: 'Makey Makey',
+    //     extensionId: 'makeymakey',
+    //     collaborator: 'JoyLabz',
+    //     iconURL: makeymakeyImage,
+    //     insetIconURL: makeymakeyInsetImage,
+    //     description: (
+    //         <FormattedMessage
+    //             defaultMessage="Make anything into a key."
+    //             description="Description for the 'Makey Makey' extension"
+    //             id="gui.extension.makeymakey.description"
+    //         />
+    //     ),
+    //     featured: true
+    // }
     //,
     // {
     //     name: 'micro:bit',
