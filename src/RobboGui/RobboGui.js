@@ -28,6 +28,8 @@ import AboutWindowComponent from './AboutWindowComponent';
 import NewDraggableWindowComponent from './NewDraggableWindowComponent';
 import ProfilerWindowComponent from './ProfilerWindowComponent';
 
+import IotConnectionComponent from './IotConnectionComponent';
+
 
 import { withAlert } from 'react-alert';
 
@@ -265,9 +267,13 @@ class RobboGui extends Component {
   this.OCA =  this.props.vm.getOCA();
   this.ACA =  this.props.vm.getACA();
 
+  //this.IOT = this.props.vm.getIOT();
+
   var initial_coords_profiler = [300,300];
 
   var initial_coords_about = [350,350];
+
+  var initial_coords_iot = [500,500];
 
   return (
 
@@ -328,7 +334,14 @@ class RobboGui extends Component {
 
             <AboutWindowComponent VM={this.props.vm} RCA={this.RCA} DCA={this.DCA}/>
 
-          </NewDraggableWindowComponent>
+         </NewDraggableWindowComponent>
+
+
+        {/*  <NewDraggableWindowComponent draggableWindowId={"iot_connection"} initialCoords={initial_coords_iot}>
+
+            <IotConnectionComponent VM={this.props.vm} IOT={this.IOT}/>
+
+          </NewDraggableWindowComponent> */}
         
 
        {/* <button id={`robbo_search_devices`} className={styles.robbo_search_devices} onClick={this.searchDevices.bind(this)}>{this.props.intl.formatMessage(messages.search_devices)} </button>*/}

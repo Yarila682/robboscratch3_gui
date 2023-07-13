@@ -155,8 +155,10 @@ class SearchPanelComponent extends Component {
                      
                 devicePort: devices[index].getPortName(),
                 isBluetooth: devices[index].isBluetoothDevice(),
-                isMacBluetooth: devices[index].isMacBluetooth()
-              //  deviceId: devices[index].getDeviceID() 
+                isMacBluetooth: false
+                // isMacBluetooth: devices[index].isMacBluetooth()
+                
+                //  deviceId: devices[index].getDeviceID() 
             
             }
 

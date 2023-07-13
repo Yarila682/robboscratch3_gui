@@ -46,6 +46,8 @@ import draggable_window,{draggable_window_InitialState} from '../RobboGui/reduce
 import new_draggable_window,{new_draggable_window_InitialState} from '../RobboGui/reducers/new_draggable_window';
 import devices_firmware_flasher,{devices_firmware_flasher_InitialState} from '../RobboGui/reducers/devices_firmware_flasher';
 
+import iot_blocks,{iot_blocks_InitialState} from '../RobboGui/reducers/iot_blocks';
+
 import thunk from 'redux-thunk';
 
 const guiMiddleware = compose(applyMiddleware(throttle(300, {leading: true, trailing: true}),thunk));
@@ -92,7 +94,8 @@ const guiInitialState = {
   settings:settings_InitialState,
   draggable_window: draggable_window_InitialState,
   new_draggable_window: new_draggable_window_InitialState,
-  devices_firmware_flasher:devices_firmware_flasher_InitialState
+  devices_firmware_flasher:devices_firmware_flasher_InitialState,
+  iot_blocks:iot_blocks_InitialState
 };
 
 const initPlayer = function (currentState) {
@@ -217,7 +220,9 @@ const guiReducer = combineReducers({
   settings:settings,
   draggable_window: draggable_window,
   new_draggable_window: new_draggable_window,
-  devices_firmware_flasher:devices_firmware_flasher
+  devices_firmware_flasher:devices_firmware_flasher,
+  iot_blocks:iot_blocks
+  
 });
 
 export {

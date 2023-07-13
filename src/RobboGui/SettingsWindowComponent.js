@@ -43,6 +43,31 @@ const messages = defineMessages({
   },
 });
 
+const messages_for_Motor_settings = defineMessages({
+
+  set_motors_invertion: {
+    id: 'gui.RobboGui.settings_window.set_motors_invertion',
+    description: ' ',
+    defaultMessage: 'Set motors invertion '
+  },
+  set_left_motor_invertion: {
+    id: 'gui.RobboGui.settings_window.set_left_motor_invertion',
+    description: ' ',
+    defaultMessage: 'Set left motor invertion '
+  },
+  set_right_motor_invertion: {
+    id: 'gui.RobboGui.settings_window.set_right_motor_invertion',
+    description: ' ',
+    defaultMessage: 'Set right  motor invertion '
+  },
+  motor_settings_tittle: {
+    id: 'gui.RobboGui.settings_window.motor_settings_tittle',
+    description: ' ',
+    defaultMessage: 'Motor settings: '
+  },
+
+});
+
 const messages_for_DCA_intervals = defineMessages({
    for_usb: {
     id: 'gui.dca.for_usb',
@@ -295,9 +320,27 @@ class SettingsWindowComponent extends Component {
       settings_data.normal_mode_interval = this.VM.runtime.getNormalInterval();
     }
 
+    var left_motor_inverted_component = document.getElementById("raw-11-settings-window-content-column-2").children[0];
+    var left_motor_inverted_setting_checked = Number(left_motor_inverted_component.checked);
+    console.warn(`left_motor_inverted_setting_checked: ${left_motor_inverted_setting_checked}`);
+    if (typeof(left_motor_inverted_setting_checked) !== 'undefined'){
+      settings_data.left_motor_inverted_setting_checked =  left_motor_inverted_setting_checked;
+    } else {
+      settings_data.left_motor_inverted_setting_checked =  false;
+    }
+
+    var right_motor_inverted_component = document.getElementById("raw-12-settings-window-content-column-2").children[0];
+    var right_motor_inverted_setting_checked = Number(right_motor_inverted_component.checked);
+    console.warn(`right_motor_inverted_setting_checked: ${right_motor_inverted_setting_checked}`);
+    if (typeof(right_motor_inverted_setting_checked) !== 'undefined'){
+      settings_data.right_motor_inverted_setting_checked =  right_motor_inverted_setting_checked;
+    } else {
+      settings_data.right_motor_inverted_setting_checked =  false;
+    }
+
     let settings_data_serialized = JSON.stringify(settings_data);
 
-    console.log(settings_data_serialized);
+    console.warn(settings_data_serialized);
 
     //if ( (isNaN(fullscreen_interval)) || (typeof(fullscreen_interval) === 'undefined')) return
 
@@ -313,6 +356,10 @@ class SettingsWindowComponent extends Component {
 
      this.VM.DCA.set_all_intervals_in_dca(settings_data);
      this.VM.DCA.set_all_intervals_in_bluetooth(settings_data);
+
+     
+     this.VM.runtime.left_motor_inverted  =  left_motor_inverted_setting_checked; 
+     this.VM.runtime.right_motor_inverted =  right_motor_inverted_setting_checked; 
 
 
     this.deleteSettingsFile(() => {
@@ -430,6 +477,11 @@ class SettingsWindowComponent extends Component {
         var uno_timeout_component_bluetooth =  document.getElementById("raw-10-settings-window-content-column-2").children[0];
       }
 
+     // var motors_inverted_component = document.getElementById("raw-11-settings-window-content-column-2").children[0];
+
+      var left_motor_inverted_component = document.getElementById("raw-11-settings-window-content-column-2").children[0];
+      var right_motor_inverted_component = document.getElementById("raw-12-settings-window-content-column-2").children[0];
+
       if (result.file_exists){
         try {
           let settings_data =  JSON.parse(result.file);
@@ -459,11 +511,33 @@ class SettingsWindowComponent extends Component {
             uno_timeout_component_bluetooth.value=uno_timeout_bluetooth;
           }
 
+
           this.VM.runtime.setFullscreenInterval(fullscreen_interval);
           this.VM.runtime.setNormalInterval(normal_mode_interval);
 
           this.VM.DCA.set_all_intervals_in_dca(settings_data);
           this.VM.DCA.set_all_intervals_in_bluetooth(settings_data);
+
+          console.warn(`Read completed for left_motors_inverted_setting_checked: ${settings_data.left_motor_inverted_setting_checked}`);
+          console.warn(`Read completed for right_motors_inverted_setting_checked: ${settings_data.right_motor_inverted_setting_checked}`);
+          if (typeof(settings_data.left_motor_inverted_setting_checked) !== 'undefined'){
+            left_motor_inverted_component.checked = settings_data.left_motor_inverted_setting_checked;
+            this.VM.runtime.left_motor_inverted = settings_data.left_motor_inverted_setting_checked; 
+
+          }else{
+            left_motor_inverted_component.checked = false;
+            this.VM.runtime.left_motor_inverted = false; 
+          }
+
+          if (typeof(settings_data.right_motor_inverted_setting_checked) !== 'undefined'){
+            right_motor_inverted_component.checked = settings_data.right_motor_inverted_setting_checked;
+            this.VM.runtime.right_motor_inverted = settings_data.right_motor_inverted_setting_checked; 
+
+          }else{
+            right_motor_inverted_component.checked = false;
+            this.VM.runtime.right_motor_inverted = false; 
+          }
+
         } catch (error) {
           console.error(error);
 
@@ -477,6 +551,15 @@ class SettingsWindowComponent extends Component {
 
           this.setDefaultsDCAValues();
 
+         
+          this.VM.runtime.left_motor_inverted = false; 
+          this.VM.runtime.right_motor_inverted = false; 
+          left_motor_inverted_component.checked = false;
+          right_motor_inverted_component.checked = false;
+        
+          console.warn(`Set left_motor_inverted and right_motor_inverted  to FALSE due to the occured error.`);
+
+
         }
       }else{
           let fullscreen_interval =  this.VM.runtime.getFullscreenInterval();
@@ -486,6 +569,13 @@ class SettingsWindowComponent extends Component {
           normal_mode_interval_component.value = normal_mode_interval;
 
           this.setDefaultsDCAValues();
+
+          this.VM.runtime.left_motor_inverted = false; 
+          this.VM.runtime.right_motor_inverted = false; 
+          left_motor_inverted_component.checked = false;
+          right_motor_inverted_component.checked = false;
+
+          console.warn(`Set left_motor_inverted and right_motor_inverted to FALSE due to settings data doesn't exist.`);
       }
     });
   }
@@ -642,14 +732,46 @@ class SettingsWindowComponent extends Component {
                 </div>  
               </div>
             </div>:""
-          }          
+          } 
+
+          <div id="settings-window-content-raw-motor-settings" className={styles.settings_window_content_raw}>
+
+            <div id="raw-motor-settings-window-content-column-1" className={styles.settings_window_content_column}>
+
+                <b>{this.props.intl.formatMessage(messages_for_Motor_settings.motor_settings_tittle)}</b>
+
+            </div>
+
+
+          </div>
+
+          <div id="settings-window-content-raw-2" className={styles.settings_window_content_raw} >
+                <div id="raw-11-settings-window-content-column-1" className={styles.settings_window_content_column}>
+                  {this.props.intl.formatMessage(messages_for_Motor_settings.set_left_motor_invertion)}
+                </div>
+
+                <div id="raw-11-settings-window-content-column-2" className={styles.settings_window_content_column}>
+                    <input type="checkbox" />
+                </div>
+          </div>    
+
+          <div id="settings-window-content-raw-2" className={styles.settings_window_content_raw} >
+                <div id="raw-12-settings-window-content-column-1" className={styles.settings_window_content_column}>
+                  {this.props.intl.formatMessage(messages_for_Motor_settings.set_right_motor_invertion)}
+                </div>
+
+                <div id="raw-12-settings-window-content-column-2" className={styles.settings_window_content_column}>
+                    <input type="checkbox" />
+                </div>
+          </div>
+
 
           <div id="settings-window-content-raw-3" className={styles.settings_window_content_raw}>
 
-            <div id="raw-11-settings-window-content-column-1" className={styles.settings_window_content_column}>
+            <div id="raw-13-settings-window-content-column-1" className={styles.settings_window_content_column}>
               <button onClick={this.saveSettings.bind(this)}> {this.props.intl.formatMessage(messages.save_settings)} </button>
             </div>
-            <div id="raw-11-settings-window-content-column-2" className={styles.settings_window_content_column}></div>
+            <div id="raw-13-settings-window-content-column-2" className={styles.settings_window_content_column}></div>
 
           </div>
         </div>

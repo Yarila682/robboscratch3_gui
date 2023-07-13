@@ -3,6 +3,8 @@ var LCA_local;
 
 var robot_get_data_order = true;
 
+var mqtt = require('../../../../robboscratch3_vm/node_modules/mqtt');
+
 
 const ActionTriggerExtensionPack = function(){
 
@@ -753,8 +755,93 @@ const ActionFirmwareFlasherGetDevicesInfo = function(DCA,RCA,LCA,QCA,OCA){
     //  }, 300);
   };
 
+}
 
 
+const ActionUpdateIotBlockLogin = function (login) {
+  return {
+    type: 'UPDATE_IOT_BLOCK_LOGIN',
+    login: login
+  }
+};
+
+const ActionUpdateIotBlockPass = function (pass) {
+  return {
+    type: 'UPDATE_IOT_BLOCK_PASS',
+    pass: pass
+  }
+};
+
+const ActionUpdateIotBlockProtocol = function (protocol) {
+  return {
+    type: 'UPDATE_IOT_BLOCK_PROTOCOL',
+    broker_protocol: protocol
+  }
+};
+
+const ActionUpdateIotBlockAdress = function (adress) {
+  return {
+    type: 'UPDATE_IOT_BLOCK_ADRESS',
+    broker_adress: adress
+  }
+};
+
+const ActionUpdateIotBlockPort = function (port) {
+  return {
+    type: 'UPDATE_IOT_BLOCK_PORT',
+    broker_port: port
+  }
+};
+
+const ActionUpdateIotBlockConnection = function (connection) {
+  return {
+    type: 'UPDATE_IOT_BLOCK_CONNECTION',
+    connection_status: connection
+  }
+};
+
+const ActionUpdateIotBlockLog = function (log) {
+  return {
+    type: 'UPDATE_IOT_BLOCK_LOG',
+    connection_log: log
+  }
+};
+
+const ActionMqttConnect = function (options, IOT) {
+  console.warn(`options: `);
+  console.warn(options);
+  return (dispatch) => {
+    let client = mqtt.connect(options);
+    client.on('connect', () => {
+      IOT.connectionLog = "Client is connected!";
+      dispatch(ActionUpdateIotBlockLog("Client is connected!"));
+      IOT.connectionStatus = client.connected;
+      dispatch(ActionUpdateIotBlockConnection(client.connected));
+    });
+    if (client !== 'undefined') {
+      client.on("error", (error) => {
+        IOT.connectionLog = error.toString();
+        dispatch(ActionUpdateIotBlockLog(error.toString()));
+        IOT.connectionStatus = client.connected;
+        dispatch(ActionUpdateIotBlockConnection(client.connected));        
+      })
+    } else {
+      IOT.connectionLog = "Client is undefined!";
+      dispatch(ActionUpdateIotBlockLog("Client is undefined!"));
+    }
+    IOT.client = client;
+  };
+};
+
+const ActionGreenFlag = function (vm) {
+  vm.runtime.greenFlag();
+}
+
+const ActionGenerateIotBlocks = function (generate) {
+  return {
+    type: 'GENERATE_IOT_BLOCK',
+    generate: generate
+  };
 }
 
 export {
@@ -787,7 +874,19 @@ export {
     ActionSetRCALocal,
     ActionSetLCALocal,
     ActionHideNoneScratchduinoBlocks,
-    ActionShowRobboBlocks
+    ActionShowRobboBlocks,
+
+    ActionUpdateIotBlockLogin,
+    ActionUpdateIotBlockPass,
+    ActionUpdateIotBlockProtocol,
+    ActionUpdateIotBlockAdress,
+    ActionUpdateIotBlockPort,
+    ActionUpdateIotBlockConnection,
+    ActionUpdateIotBlockLog,
+    ActionMqttConnect,
+    ActionGreenFlag,
+    ActionGenerateIotBlocks
+
   //  ActionTriggerNeedLanguageReload
 
 };

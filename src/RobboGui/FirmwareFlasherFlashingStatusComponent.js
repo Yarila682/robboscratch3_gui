@@ -23,7 +23,7 @@ import {defineMessages, intlShape, injectIntl, FormattedMessage} from 'react-int
     flashing_status: {
         id: 'gui.FirmwareFlasherFlashingStatusComponent.flashing_status',
         description: ' ',
-        defaultMessage: 'Лог процесса прошивки '
+        defaultMessage: 'Firmware process log'
     }
 
   });

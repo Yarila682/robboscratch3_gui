@@ -4,6 +4,207 @@ const categorySeparator = '<sep gap="36"/>';
 
 const blockSeparator = '<sep gap="36"/>'; // At default scale, about 28px
 
+
+const iotBlocks = function () {
+    const default_baddr = "test.mosquitto.org";
+    const default_bport = 8080;
+    const default_protocol = "ws";
+    const default_topicname = "lux";
+    const actuator_topicname = "lux";
+    const default_message = "1";
+    const default_uname = "mail@domain";
+    const default_pass = "pass";
+    const default_client_id = "";
+    const default_delay = 0;
+    const default_pref = "default_robbo_prefix/";
+
+    const removed_blocks = 
+        `<block type="iot_trigger_on_topic">
+        <value name="TNAME">
+            <shadow type="text">
+                <field name="TEXT">${default_topicname}</field>
+            </shadow>
+        </value>
+    </block>
+    <block type="iot_parse_data">
+        <value name="TNAME">
+            <shadow type="text">
+                <field name="TEXT">${default_topicname}</field>
+            </shadow>
+        </value>
+    </block> `;
+
+    return `
+    <category name="%{BKY_CATEGORY_IOT}" id="iotblocks" colour="#383838" secondaryColour="#383838">
+        <block type="iot_broker_init">
+            <value name="BPROTCOL">
+                <shadow type="text">
+                    <field name="TEXT">${default_protocol}</field>
+                </shadow>
+            </value>
+            <value name="BADDR">
+                <shadow type="text">
+                    <field name="TEXT">${default_baddr}</field>
+                </shadow>
+            </value>
+            <value name="BPORT">
+                <shadow type="math_number">
+                    <field name="NUM">${default_bport}</field>
+                </shadow>
+            </value>
+        </block>
+        <block type="iot_set_prefix">
+          <value name="PREFIX">
+            <shadow type="text">
+                <field name="TEXT">${default_pref}</field>
+            </shadow>
+          </value>
+        </block>
+        <block type="iot_mess_to_topic">
+            <value name="TNAME">
+                <shadow type="text">
+                    <field name="TEXT">${actuator_topicname}</field>
+                </shadow>
+            </value>
+            <value name="MESSAGE">
+                <shadow type="text">
+                    <field name="TEXT">${default_message}</field>
+                </shadow>
+            </value>
+        </block>
+        <block type="iot_subscribe_to_topic">
+            <value name="TNAME">
+                <shadow type="text">
+                    <field name="TEXT">${default_topicname}</field>
+                </shadow>
+            </value>
+        </block>
+        <block type="iot_receive_message">
+            <value name="TNAME">
+                <shadow type="text">
+                    <field name="TEXT">${default_topicname}</field>
+                </shadow>
+            </value>
+        </block>
+        <block type="iot_set_logpass">
+            <value name="UNAME">
+                <shadow type="text">
+                    <field name="TEXT">${default_uname}</field>
+                </shadow>
+            </value>
+            <value name="PASS">
+                <shadow type="text">
+                    <field name="TEXT">${default_pass}</field>
+                </shadow>
+            </value>
+        </block>
+        <block type="iot_set_wifi">
+            <value name="SSID">
+                <shadow type="text">
+                    <field name="TEXT">${default_uname}</field>
+                </shadow>
+            </value>
+            <value name="PASS">
+                <shadow type="text">
+                    <field name="TEXT">${default_pass}</field>
+                </shadow>
+            </value>
+        </block>
+        <block type="iot_set_client_id">
+            <value name="ID">
+                <shadow type="text">
+                    <field name="TEXT">${default_client_id}</field>
+                </shadow>
+            </value>
+        </block>
+        <block type="iot_set_delay_for_topic">
+            <value name="DELAY">
+                <shadow type="math_number">
+                    <field name="NUM">${default_delay}</field>
+                </shadow>
+            </value>
+            <value name="TNAME">
+                <shadow type="text">
+                    <field name="TEXT">${default_topicname}</field>
+                </shadow>
+            </value>
+        </block>
+      
+        <block type="iot_event_more">
+          <value name="TNAME">
+            <shadow type="iot_topic">
+              <field name="TEXT">${default_topicname}</field>
+            </shadow>
+           </value>
+        </block>
+    <block type="iot_event_less">
+        <value name="TNAME">
+            <shadow type="iot_topic">
+              <field name="TEXT">${default_topicname}</field>
+            </shadow>
+        </value>
+    </block>
+    <block type="iot_set_under_treshold">
+        <value name="TRESH">
+            <shadow type="math_number">
+                <field name="NUM">${default_delay}</field>
+            </shadow>
+        </value>
+        <value name="TNAME">
+            <shadow type="iot_topic">
+                <field name="TEXT">${default_topicname}</field>
+            </shadow>
+        </value>
+    </block>
+    <block type="iot_set_upper_treshold">
+        <value name="TRESH">
+            <shadow type="math_number">
+                <field name="NUM">${default_delay}</field>
+            </shadow>
+        </value>
+        <value name="TNAME">
+            <shadow type="iot_topic">
+                <field name="TEXT">${default_topicname}</field>
+            </shadow>
+        </value>
+    </block>
+    <block type="iot_set_both_treshold">
+        <value name="TRESH">
+            <shadow type="math_number">
+                <field name="NUM">${default_delay}</field>
+            </shadow>
+        </value>
+        <value name="TRESH2">
+            <shadow type="math_number">
+                <field name="NUM">${default_delay}</field>
+            </shadow>
+        </value>
+        <value name="TNAME">
+            <shadow type="iot_topic">
+                <field name="TEXT">${default_topicname}</field>
+            </shadow>
+        </value>
+    </block>
+    <block type="iot_connection_status">
+    </block>
+    <block type="iot_connection_log">
+    </block>
+    <block type="iot_set_delay_for_publish">
+            <value name="DELAY">
+                <shadow type="math_number">
+                    <field name="NUM">${default_delay}</field>
+                </shadow>
+            </value>
+            <value name="TNAME">
+                <shadow type="text">
+                    <field name="TEXT">${default_topicname}</field>
+                </shadow>
+            </value>
+    </block>
+    </category>
+    `;
+}
+
 const newcat = function (isStage) {
       const hello = ScratchBlocks.ScratchMsgs.translate('LOOKS_HELLO', 'Hello!');
     return `
@@ -1555,6 +1756,7 @@ const makeToolboxXML = function (isStage, targetId,config, categoriesXML,
         //quadcopter(isStage, targetId), gap, //modified_by_Yaroslav
         otto(false, targetId), gap,
         newcat(false),gap,
+        //iotBlocks(isStage, targetId),
         motion(isStage, targetId), gap,
         looks(isStage, targetId, costumeName, backdropName), gap,
         sound(isStage, targetId, soundName), gap,

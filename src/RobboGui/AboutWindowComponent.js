@@ -308,7 +308,10 @@ class AboutWindowComponent extends Component {
 
                      <div id="raw-1-about-window-content-column-1"  className={styles.about_window_content_column}>
 
-                     Robbo Scratch v.3.71.0-MacOS
+                    {/* Robbo Scratch v.3.75.0-ble-research-dev2 */}
+                    {/*     Robbo Scratch v.3.77.0-bluetooth-firmware */}
+                    {/* Robbo Scratch v.3.76-Otto-test-dev */}
+                       Robbo Scratch v.3.93.0
                      </div>
 
                      <div id="raw-1-about-window-content-column-2" className={styles.about_window_content_column}>

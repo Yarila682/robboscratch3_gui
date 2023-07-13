@@ -109,6 +109,11 @@ const messages = defineMessages({
       description: ' ',
       defaultMessage: 'Color sensor correction 5'
 
+    },
+    iot_connection: {
+      id: 'gui.RobboMenu.iot_connection',
+      description: ' ',
+      defaultMessage: 'Iot connection'
     }
 });
 
@@ -235,6 +240,12 @@ class RobboMenu extends Component {
   triggerAboutWindow(){
 
       this.props.onTriggerAboutWindow("about-window");
+  }
+
+  triggerIotConnectionWindow() {
+
+        this.props.onTriggerIotConnection("iot_connection");
+
   }
 
   enableProfiling(){
@@ -488,6 +499,13 @@ class RobboMenu extends Component {
 
                       )}>{"Trigger profiler window"} </div>   */}  
 
+            {/*  <div id="trigger-iot-connection" onClick={this.triggerIotConnectionWindow.bind(this)} className={classNames(
+ 
+                         { [styles.robbo_menu_item]: true }
+ 
+                        )}>{this.props.intl.formatMessage(messages.iot_connection)}</div>  */}
+
+
                <div id="trigger-settings-window" onClick={this.triggerSettingsWindow.bind(this)} className={classNames(
 
                         {[styles.robbo_menu_item]: true}
@@ -565,7 +583,12 @@ const mapDispatchToProps = dispatch => ({
     onTriggerRobboMenu: () => {
 
       dispatch(ActionTriggerRobboMenu());
-    }        
+    },
+    
+    onTriggerIotConnection: (window_id) => {
+            
+      dispatch(ActionTriggerNewDraggableWindow(window_id));
+    }
 
 });
 
